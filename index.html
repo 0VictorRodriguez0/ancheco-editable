@@ -2782,6 +2782,9 @@ document.querySelectorAll('[data-bg]').forEach(el=>bgIO.observe(el));
 updateProgress('stage-hero');
 </script>
 
+<!-- ============ EDITOR IN-PLACE (solo se activa con ?edit=1) ============ -->
+<script src="edit.js"></script>
+
 <!-- ============ CMS HIDRATACIÓN ============
      Los textos marcados con data-cms="path.to.field" o data-cms-html="..."
      se sobrescriben con el contenido de content/content.json al cargar.
