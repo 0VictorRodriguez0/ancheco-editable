@@ -2,7 +2,7 @@
   "hero": {
     "eyebrow": "Andy Cherro Corallo · Agente de Seguros · México · cédula profesional V338401",
     "title_pre": "¿Qué quieres ",
-    "title_accent": "proteger",
+    "title_accent": "protegel",
     "title_post": "?",
     "sub": "Cada decisión tomada hoy — salud, protección, retiro digno — tiene una consecuencia concreta. Te damos las herramientas para tomar la mejor decisión.",
     "script": "Elección consciente."
@@ -34,10 +34,22 @@
     }
   },
   "trust": [
-    { "num": "GNP", "lbl": "+120 años en el mercado" },
-    { "num": "5 min", "lbl": "Cotización completa" },
-    { "num": "México", "lbl": "Presencial o remoto" },
-    { "num": "Personal", "lbl": "Andy te contacta directo" }
+    {
+      "num": "GNP",
+      "lbl": "+120 años en el mercado"
+    },
+    {
+      "num": "5 min",
+      "lbl": "Cotización completa"
+    },
+    {
+      "num": "México",
+      "lbl": "Presencial o remoto"
+    },
+    {
+      "num": "Personal",
+      "lbl": "Andy te contacta directo"
+    }
   ],
   "about": {
     "eyebrow": "¿Quiénes somos?",
