@@ -2084,14 +2084,15 @@ function autoStepCoverage(){
   return `${stepDotsHTML(2, autoSteps.length)}
   <h3 class="step-title"><span data-cms-html="auto.step_title.10">Tipo de cobertura</span></h3>
   ${explainerHTML({_cmsKey:'auto.exp.10', intro:'La decisión más importante del seguro de auto',
-    body:`Hay <strong>3 niveles</strong> de cobertura. La diferencia entre ellos es enorme — define qué cubre y qué no cuando hay un siniestro.`,
+    body:`Hay <strong>4 niveles</strong> de cobertura. La diferencia entre ellos es enorme — define qué cubre y qué no cuando hay un siniestro.`,
     bullets:[
       `<strong>RC (Responsabilidad Civil):</strong> solo daños a TERCEROS — otra persona, otro auto. Tu auto no está cubierto en ningún caso. Es el mínimo legal.`,
       `<strong>Limitada:</strong> RC + robo total + asistencia vial. Si chocas tu propio auto, no entra.`,
-      `<strong>Amplia:</strong> todo lo anterior + daños materiales (choques, vandalismo, fenómenos naturales). Cubre TU auto pase lo que pase.`
+      `<strong>Amplia:</strong> todo lo anterior + daños materiales (choques, vandalismo, fenómenos naturales) + cristales amparados + Club GNP + Protección Legal + Gastos médicos ocupantes $1M.`,
+      `<strong>Amplia Total:</strong> Amplia + <strong>Eliminación de Deducible en Pérdidas Parciales</strong> + Club GNP Plus. Requiere inspección vehicular acreditada.`
     ],
-    example:`Chocas tu auto contra un poste. Daños $80,000. <strong>Con RC:</strong> tú pagas todo. <strong>Con Amplia:</strong> pagas el deducible (5% del valor del auto, ~$15k) y la aseguradora paga el resto.`,
-    rec:`<strong>Si tu auto vale más de $150,000, contrata Amplia.</strong> La diferencia de anualidad la recuperas en un solo siniestro. RC solo tiene sentido para autos viejos que ya no valen mucho.`
+    example:`Mazda CX-5 2015, valor $178,000, conductor 51 años en Cancún (caso real GNP): <strong>Amplia $10,318/año</strong> · <strong>Amplia Total $12,130/año</strong> (+$1,812).`,
+    rec:`<strong>Si tu auto vale más de $150,000, contrata Amplia.</strong> Si además vas a la agencia con frecuencia y quieres no pagar deducible en choques parciales, <strong>Amplia Total</strong> compensa.`
   })}
   <div class="opts">
     <button class="opt ${state.auto.coverage==='rc'?'selected':''}" data-coverage="rc">
@@ -2105,8 +2106,12 @@ function autoStepCoverage(){
     </button>
     <button class="opt ${state.auto.coverage==='amplia'?'selected':''}" data-coverage="amplia">
       ${state.auto.vehicleValue>150000?REC_BADGE:''}
-      <div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.9">Amplia</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.28">Todo: RC + robo + daños + fenómenos naturales. La que tiene sentido si tu auto vale +$150k.</span></div></div>
+      <div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.9">Amplia</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.28">Daños materiales + Robo total + Cristales (deducible 20%) + RC $3M + Gastos médicos ocupantes $1M + Protección Legal + Club GNP.</span></div></div>
       <span class="opt-pill" style="background:var(--orange)"><span data-cms-html="auto.opt_pill.44">base</span></span>
+    </button>
+    <button class="opt ${state.auto.coverage==='ampliaTotal'?'selected':''}" data-coverage="ampliaTotal">
+      <div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.ampliaTotal">Amplia Total</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.ampliaTotal">Todo lo de Amplia + <strong>Eliminación de Deducible en Pérdidas Parciales</strong> + Club GNP Plus. <em>Requiere inspección vehicular acreditada — sin la inspección no aplica la eliminación del deducible.</em></span></div></div>
+      <span class="opt-pill" style="background:var(--orange-dark);color:#fff"><span data-cms-html="auto.opt_pill.ampliaTotal">+18%</span></span>
     </button>
   </div>`;
 }
@@ -2173,14 +2178,17 @@ function bindAuto(){
   }));
 }
 function autoCalcPrice(){
-  // Anualidad auto ≈ 3.5%-5% del valor del auto. Personaliza Variable es ANUAL.
+  // Anualidad auto calibrada al PDF GNP real CIANNE260608055850:
+  // Mazda CX-5 2015 (11 años) · valor $178,000 · particular · 51 años · Cancún
+  //   Amplia $10,318  ·  Amplia Total $12,130 (+17.6%)
+  // Fórmula:  v * 0.05 * factorEdad * factorUso * covMult * factorDed
   const v = state.auto.vehicleValue || 300000;
-  let base = v * 0.04; // anualidad base cobertura amplia
+  let base = v * 0.05; // tasa base Amplia (5% del valor)
   const age = Math.max(0, 2026 - state.auto.year);
   if(age >= 8) base *= 1.18;
   else if(age >= 5) base *= 1.08;
   if(state.auto.use==='comercial') base *= 1.3;
-  const covMult = {rc:0.35,limitada:0.65,amplia:1.0}[state.auto.coverage];
+  const covMult = {rc:0.35,limitada:0.65,amplia:1.0,ampliaTotal:1.176}[state.auto.coverage];
   base *= covMult;
   if(state.auto.coverage!=='rc'){
     const dtMult = {5:1.15,10:1.0,15:0.9}[state.auto.deductibleTheft];
@@ -2194,7 +2202,7 @@ function autoCalcPrice(){
   return Math.round(base + addonsCost);
 }
 function autoSummaryLines(){
-  const covLbl = {rc:'Solo RC',limitada:'Limitada',amplia:'Amplia'}[state.auto.coverage];
+  const covLbl = {rc:'Solo RC',limitada:'Limitada',amplia:'Amplia',ampliaTotal:'Amplia Total'}[state.auto.coverage];
   const lines = [
     ['Vehículo',((state.auto.brand||'-')+' '+(state.auto.model||'')).trim()+' '+state.auto.year],
     ['Valor','$'+fmt(state.auto.vehicleValue)],
@@ -2204,6 +2212,11 @@ function autoSummaryLines(){
   if(state.auto.coverage!=='rc'){
     lines.push(['Deducible robo',state.auto.deductibleTheft+'%']);
     lines.push(['Deducible daños',state.auto.deductibleDamage+'%']);
+  }
+  if(state.auto.coverage==='ampliaTotal'){
+    lines.push(['Incluido','Eliminación deducible en pérdidas parciales']);
+    lines.push(['Requiere','Inspección vehicular acreditada']);
+    lines.push(['Plus','Club GNP Plus']);
   }
   if(state.auto.addons.length){
     lines.push(['Extras',state.auto.addons.map(a=>({sustituto:'Auto sustituto',llantas:'Llantas y rines',llave:'Llave de repuesto',cero:'Deducible 0',agencia:'Siempre en agencia'}[a])).filter(Boolean).join(', ')]);
