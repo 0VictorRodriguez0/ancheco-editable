@@ -1207,10 +1207,10 @@ const state = {
 
 /* ============ DATOS REALES GNP PERSONALIZA VARIABLE ============ */
 const NIVEL_DATA = {
-  A: {coaseguro:20, topeCoaseguro:94000, deducibles:[21000,32000,45000,56000,68000,87000,111000,128000,175000,233000], label:'A · Top tier', desc:'Hospitales premium · ABC, Ángeles del Pedregal, Amerimed, Cozumel International', hospitales:['ABC Observatorio (CDMX)','ABC Santa Fe (CDMX)','Ángeles del Pedregal (CDMX)','Ángeles Universidad (CDMX)','Amerimed (Cancún)','Cozumel International Clinic','Faro del Mayab (Mérida)']},
-  B: {coaseguro:15, topeCoaseguro:70000, deducibles:[17000,21000,32000,45000,56000,68000,87000,111000,128000,175000], label:'B · Alta gama', desc:'Hospitales sólidos · Galenia, Médica Sur, Star Médica, Costamed', hospitales:['Galenia (Cancún)','Costamed (Q.Roo)','Playamed (Playa del Carmen)','Médica Sur (CDMX)','Star Médica (CDMX/Mérida)','Hospital Español (CDMX)','Mérida CEM','Clínica de Mérida','Medimac Mérida']},
-  C: {coaseguro:10, topeCoaseguro:53000, deducibles:[11000,17000,21000,32000,45000,56000,68000,87000,111000,128000], label:'C · Media', desc:'Hospitales privados regionales — Hospiten, Quirúrgica del Sur, Hospital de Tulum', hospitales:['Hospiten (Cancún)','Quirúrgica del Sur (Q.Roo)','Clínica Carranza','Clínica Nazareth','Hospital de Tulum','Médica San Miguel (Cozumel)','Centro Médico de las Américas (Mérida)','Star Médica Centro (CDMX)','Hospital Bite Médica (CDMX)']},
-  D: {coaseguro:5, topeCoaseguro:35000, deducibles:[8000,11000,17000,21000,32000,45000,56000,68000,87000,111000], label:'D · Esencial', desc:'Hospitales privados básicos — Mayan Medical, Group Onco Center, UMIS', hospitales:['Mayan Medical (Cancún)','Group Onco Center Cancún','UMIS (Q.Roo)','Clínica Quirúrgica Berlín (CDMX)','FUCAM','Centro Oncológico de Alta Especialidad']}
+  A: {coaseguro:20, topeCoaseguro:94000, deducibles:[21000,32000,45000,56000,68000,87000,111000,128000,175000,233000], label:'A · Top tier', desc:'Hospitales premium · ABC, Ángeles del Pedregal, Amerimed, Cozumel International', hospitales:['ABC Observatorio (CDMX)','<span data-cms-html="auto.arr_meta.1">ABC Santa Fe (CDMX)</span>','<span data-cms-html="auto.arr_meta.2">Ángeles del Pedregal (CDMX)</span>','<span data-cms-html="auto.arr_meta.3">Ángeles Universidad (CDMX)</span>','<span data-cms-html="auto.arr_meta.4">Amerimed (Cancún)</span>','<span data-cms-html="auto.arr_meta.5">Cozumel International Clinic</span>','<span data-cms-html="auto.arr_meta.6">Faro del Mayab (Mérida)</span>']},
+  B: {coaseguro:15, topeCoaseguro:70000, deducibles:[17000,21000,32000,45000,56000,68000,87000,111000,128000,175000], label:'B · Alta gama', desc:'Hospitales sólidos · Galenia, Médica Sur, Star Médica, Costamed', hospitales:['Galenia (Cancún)','Costamed (Q.Roo)','<span data-cms-html="auto.arr_meta.7">Playamed (Playa del Carmen)</span>','<span data-cms-html="auto.arr_meta.8">Médica Sur (CDMX)</span>','<span data-cms-html="auto.arr_meta.9">Star Médica (CDMX/Mérida)</span>','<span data-cms-html="auto.arr_meta.10">Hospital Español (CDMX)</span>','<span data-cms-html="auto.arr_meta.11">Mérida CEM</span>','<span data-cms-html="auto.arr_meta.12">Clínica de Mérida</span>','<span data-cms-html="auto.arr_meta.13">Medimac Mérida</span>']},
+  C: {coaseguro:10, topeCoaseguro:53000, deducibles:[11000,17000,21000,32000,45000,56000,68000,87000,111000,128000], label:'C · Media', desc:'Hospitales privados regionales — Hospiten, Quirúrgica del Sur, Hospital de Tulum', hospitales:['Hospiten (Cancún)','Quirúrgica del Sur (Q.Roo)','<span data-cms-html="auto.arr_meta.14">Clínica Carranza</span>','<span data-cms-html="auto.arr_meta.15">Clínica Nazareth</span>','<span data-cms-html="auto.arr_meta.16">Hospital de Tulum</span>','<span data-cms-html="auto.arr_meta.17">Médica San Miguel (Cozumel)</span>','<span data-cms-html="auto.arr_meta.18">Centro Médico de las Américas (Mérida)</span>','<span data-cms-html="auto.arr_meta.19">Star Médica Centro (CDMX)</span>','<span data-cms-html="auto.arr_meta.20">Hospital Bite Médica (CDMX)</span>']},
+  D: {coaseguro:5, topeCoaseguro:35000, deducibles:[8000,11000,17000,21000,32000,45000,56000,68000,87000,111000], label:'D · Esencial', desc:'Hospitales privados básicos — Mayan Medical, Group Onco Center, UMIS', hospitales:['Mayan Medical (Cancún)','<span data-cms-html="auto.arr_meta.21">Group Onco Center Cancún</span>','UMIS (Q.Roo)','<span data-cms-html="auto.arr_meta.22">Clínica Quirúrgica Berlín (CDMX)</span>','<span data-cms-html="auto.arr_meta.23">FUCAM</span>','<span data-cms-html="auto.arr_meta.24">Centro Oncológico de Alta Especialidad</span>']}
 };
 
 const PRODUCTOS_AHORRO = {
@@ -1256,7 +1256,7 @@ const PRODUCTOS_PATRIMONIAL = {
   // Anclas reales: Vital casa $2.196M + cont $878k = $4,018 · Plus = $5,365 · A tu medida casa $2.196M + cont $300k = $8,794
   VITAL:{name:'VITAL',tag:'Lo esencial cubierto',homeRate:0.00095,contentsRate:0.00220,fixedBase:0,coberturas:[['Edificio (incendio + fenómenos naturales)','100% del valor asegurado'],['Contenidos generales','100% del valor declarado'],['Robo con violencia','100% de contenidos'],['Responsabilidad civil familiar','$500,000'],['Gastos extra por inhabitabilidad','$50,000'],['Remoción de escombros','10% suma asegurada']],bestFor:'Casa familiar estándar sin objetos de alto valor declarados.',deducibleNote:'Equipo electrónico 20% · Cristales $700 · Hidromet 5% + coaseguro 10%'},
   PLUS:{name:'PLUS',tag:'Cobertura amplia con sumas mayores',homeRate:0.00093,contentsRate:0.00380,fixedBase:0,coberturas:[['Edificio (incendio + fenómenos naturales)','120% del valor asegurado'],['Contenidos generales','120% del valor declarado'],['Robo con violencia','100% de contenidos'],['Artículos en tránsito','$35,000 incluido'],['Menaje de casa','$88,000 incluido'],['Responsabilidad civil familiar','$1,000,000'],['Cristales y rotura','$50,000 incluido'],['Gastos extra por inhabitabilidad','$120,000']],bestFor:'Casa con electrónica/electrodomésticos premium o zona de mayor exposición.',deducibleNote:'Equipo electrónico 20% · Artículos/Menaje $1,700 · Cristales $700'},
-  AMEDIDA:{name:'A TU MEDIDA',tag:'Cobertura premium con extras incluidos',homeRate:0.00098,contentsRate:0.00220,fixedBase:5978,coberturas:[['Edificio (incendio + fenómenos naturales)','125% del valor asegurado'],['Contenidos generales','125% del valor declarado'],['Robo con/sin violencia','100% / 50% de contenidos'],['Responsabilidad civil familiar','$3,000,000'],['Cristales y rotura','$50,000 incluido'],['Equipo de teletrabajo','$25,000 incluido (vale $541/año aparte)'],['Servicios funerarios para mascotas','Amparada (vale $365/año aparte)'],['Menaje de casa premium','$150,000 incluido (vale $1,721/año aparte)'],['Artículos en tránsito','$50,000 incluido (vale $1,102/año aparte)'],['Asistencia hogar 24/7','Plomería, cerrajería, electricidad']],bestFor:'Casa con home office, mascotas, contenido de alto valor o quien quiere paz total.',deducibleNote:'Equipo electrónico 20% · Teletrabajo 35% · Artículos/Menaje $1,700 · Cristales $700'}
+  AMEDIDA:{name:'A TU MEDIDA',tag:'Cobertura premium con extras incluidos',homeRate:0.00098,contentsRate:0.00220,fixedBase:5978,coberturas:[['Edificio (incendio + fenómenos naturales)','125% del valor asegurado'],['Contenidos generales','125% del valor declarado'],['Robo con/sin violencia','100% / 50% de contenidos'],['Responsabilidad civil familiar','$3,000,000'],['Cristales y rotura','$50,000 incluido'],['Equipo de teletrabajo','$25,000 incluido (vale $541/año aparte)'],['Servicios funerarios para mascotas','Amparada (vale $365/año aparte)'],['Menaje de casa premium','$150,000 incluido (vale $1,721/año aparte)'],['Artículos en tránsito','$50,000 incluido (vale $1,102/año aparte)'],['Asistencia hogar 24/7','<span data-cms-html="auto.arr_meta.25">Plomería, cerrajería, electricidad</span>']],bestFor:'Casa con home office, mascotas, contenido de alto valor o quien quiere paz total.',deducibleNote:'Equipo electrónico 20% · Teletrabajo 35% · Artículos/Menaje $1,700 · Cristales $700'}
 };
 
 /* Suma asegurada de vida real GNP — depende de edad y producto.
@@ -1702,15 +1702,15 @@ function gmmStepHospital(){
       <button class="opt ${state.gmm.hospitalTier===t.k?'selected':''}" data-tier="${t.k}">
         ${t.rec?REC_BADGE:''}
         <div class="opt-body">
-          <div class="opt-label">${t.label}</div>
-          <div class="opt-meta">${t.desc} · ${t.extra}</div>
-          <div class="opt-meta" style="font-size:11px;color:var(--gray-400);margin-top:4px">Hospitales en ${state.gmm.region==='qroo'?'Q.Roo':state.gmm.region==='yucatan'?'Yucatán':'CDMX'}: ${t.hospitales}</div>
+          <div class="opt-label">${T('gmm.tiers.'+t.k+'.label', t.label)}</div>
+          <div class="opt-meta">${T('gmm.tiers.'+t.k+'.desc', t.desc)} · ${T('gmm.tiers.'+t.k+'.extra', t.extra)}</div>
+          <div class="opt-meta" style="font-size:11px;color:var(--gray-400);margin-top:4px"><span data-cms-html="gmm.tiers.${t.k}.hospitales_label">Hospitales en ${state.gmm.region==='qroo'?'Q.Roo':state.gmm.region==='yucatan'?'Yucatán':'CDMX'}</span>: ${t.hospitales}</div>
         </div>
       </button>`).join('')}
   </div>
-  <p class="step-help" style="margin-top:10px;font-size:11px;color:var(--gray-400)">Deducibles anuales por padecimiento, tope de 2 deducibles por año por póliza.</p>
+  <p class="step-help" style="margin-top:10px;font-size:11px;color:var(--gray-400)"><span data-cms-html="gmm.deducibles_note">Deducibles anuales por padecimiento, tope de 2 deducibles por año por póliza.</span></p>
   ${comparativeTiersHTML(200000)}
-  <p class="step-help" style="margin-top:16px;font-weight:800;color:var(--navy);background:var(--orange-light);padding:12px 14px;border-radius:10px">El nivel hospitalario lo eliges en el momento de usar tu seguro, no al contratarlo. Atenderte en un hospital de menor nivel reduce tu deducible y coaseguro.</p>`;
+  <p class="step-help" style="margin-top:16px;font-weight:800;color:var(--navy);background:var(--orange-light);padding:12px 14px;border-radius:10px"><span data-cms-html="gmm.tier_choice_note">El nivel hospitalario lo eliges en el momento de usar tu seguro, no al contratarlo. Atenderte en un hospital de menor nivel reduce tu deducible y coaseguro.</span></p>`;
 }
 function comparativeTiersHTML(ex){
   const rows = [
@@ -1726,19 +1726,19 @@ function comparativeTiersHTML(ex){
     return {...t, you, gnp};
   });
   return `<div class="viz" style="margin-top:18px">
-    <div class="viz-title">Mismo ejemplo en los 4 niveles · hospitalización ${fmtMx(ex)}</div>
+    <div class="viz-title"><span data-cms-html="gmm.compare.title">Mismo ejemplo en los 4 niveles · hospitalización</span> ${fmtMx(ex)}</div>
     ${rows.map(r=>`
       <div style="margin:10px 0">
         <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:4px">
-          <span>Nivel ${r.k} · deducible ${fmtMx(r.ded)} · coaseguro ${r.co}%</span>
-          <span>Tú ${fmtMx(Math.round(r.you))} · GNP ${fmtMx(Math.round(r.gnp))}</span>
+          <span><span data-cms-html="gmm.compare.level_label">Nivel</span> ${r.k} · <span data-cms-html="gmm.compare.deductible_label">deducible</span> ${fmtMx(r.ded)} · <span data-cms-html="gmm.compare.coinsurance_label">coaseguro</span> ${r.co}%</span>
+          <span><span data-cms-html="gmm.compare.you_label">Tú</span> ${fmtMx(Math.round(r.you))} · <span data-cms-html="gmm.compare.gnp_label">GNP</span> ${fmtMx(Math.round(r.gnp))}</span>
         </div>
         <div class="viz-bar" style="height:18px">
           <div class="viz-bar-you" style="width:${(r.you/ex)*100}%;font-size:10px">${Math.round((r.you/ex)*100)}%</div>
         </div>
       </div>`).join('')}
     <div class="viz-legend" style="margin-top:8px">
-      <span><span class="viz-dot you"></span>Lo que tú pagas (deducible + coaseguro hasta tope)</span>
+      <span><span class="viz-dot you"></span><span data-cms-html="gmm.compare.legend">Lo que tú pagas (deducible + coaseguro hasta tope)</span></span>
     </div>
   </div>`;
 }
@@ -1826,7 +1826,7 @@ function gmmStepSum(){
     rec:`Recomendado: <strong>$40,800,000</strong> para cubrir cualquier posible evento o enfermedad catastrófica. Bajar la suma casi no abarata la anualidad (a veces ~$200 al año) pero te deja expuesto a un gasto grande, por eso conviene mantenerla alta.`
   })}
   <div class="opts opts-3">
-    ${[[2.2,'$2.2M','Básica'],[17.5,'$17.5M','Intermedia'],[40.8,'$40.8M','Personaliza estándar',true],[58.3,'$58.3M','Mayor cobertura']].map(([v,l,m,r])=>`
+    ${[[2.2,'$2.2M','<span data-cms-html="auto.arr_meta.26">Básica</span>'],[17.5,'$17.5M','<span data-cms-html="auto.arr_meta.27">Intermedia</span>'],[40.8,'$40.8M','<span data-cms-html="auto.arr_meta.28">Personaliza estándar</span>',true],[58.3,'$58.3M','<span data-cms-html="auto.arr_meta.29">Mayor cobertura</span>']].map(([v,l,m,r])=>`
       <button class="opt ${state.gmm.sumInsured===v?'selected':''}" data-sum="${v}">
         ${r?REC_BADGE:''}
         <div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div>
@@ -1986,7 +1986,7 @@ function gmmSummaryLines(){
   const data = NIVEL_DATA[tier];
   const whoLbl = {individual:'Individual',pareja:'Pareja',familia:'Familia'}[state.gmm.who];
   const lines = [
-    ['Plan','Personaliza Variable GNP'],
+    ['Plan','<span data-cms-html="auto.arr_meta.30">Personaliza Variable GNP</span>'],
     ['Cobertura',whoLbl],
     ['Tu edad',state.gmm.age+' años · '+(state.gmm.sex==='F'?'F':'M')],
   ];
@@ -2226,7 +2226,7 @@ document.getElementById('autoNext').addEventListener('click',()=>{
 const GENERIC_FLOWS = {
   mascota:{
     title:'GNP Mi Mascota',
-    steps:['species','sumInsured','deductible','addons'],
+    steps:['species','<span data-cms-html="auto.arr_meta.31">sumInsured</span>','<span data-cms-html="auto.arr_meta.32">deductible</span>','<span data-cms-html="auto.arr_meta.33">addons</span>'],
     render:{
       species:()=>`${stepDotsHTML(0, 4)}
         <h3 class="step-title"><span data-cms-html="auto.step_title.14">Empezamos: tu mascota</span></h3>
@@ -2331,7 +2331,7 @@ const GENERIC_FLOWS = {
   },
   ahorro:{
     title:'Plan Ahorro / Retiro',
-    steps:['product','age','contribution','years'],
+    steps:['product','age','<span data-cms-html="auto.arr_meta.34">contribution</span>','<span data-cms-html="auto.arr_meta.35">years</span>'],
     render:{
       product:()=>{
         const productos = Object.values(PRODUCTOS_AHORRO);
@@ -2441,7 +2441,7 @@ const GENERIC_FLOWS = {
   },
   educativo:{
     title:'Plan Educativo · Profesional',
-    steps:['proteccion','plazo'],
+    steps:['proteccion','<span data-cms-html="auto.arr_meta.36">plazo</span>'],
     // Casos reales GNP Profesional (material AnCheco 19-may, proyección al 5% de inflación)
     cases:{
       500000:{
@@ -2464,7 +2464,7 @@ const GENERIC_FLOWS = {
           rec:`$1,000,000 es la protección más contratada para una meta universitaria completa.`
         })}
         <div class="opts opts-2">
-          ${[[500000,'$500,000','Meta universitaria base'],[1000000,'$1,000,000','Universidad completa o posgrado']].map(([v,l,m])=>`
+          ${[[500000,'$500,000','<span data-cms-html="auto.arr_meta.37">Meta universitaria base</span>'],[1000000,'$1,000,000','<span data-cms-html="auto.arr_meta.38">Universidad completa o posgrado</span>']].map(([v,l,m])=>`
             <button class="opt ${state.educativo.proteccion===v?'selected':''}" data-edprot="${v}">
               ${v===1000000?REC_BADGE:''}
               <div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div>
@@ -2504,14 +2504,14 @@ const GENERIC_FLOWS = {
     summary:()=>{
       const c=GENERIC_FLOWS.educativo.cases[state.educativo.proteccion][state.educativo.plazo];
       return [
-        ['Plan','Educativo · Profesional GNP'],
+        ['Plan','<span data-cms-html="auto.arr_meta.39">Educativo · Profesional GNP</span>'],
         ['Protección garantizada','$'+fmt(state.educativo.proteccion)],
         ['Plazo de pago',state.educativo.plazo+' años'],
         ['Prima anual','$'+fmt(c.prima)],
         ['Total que aportas','$'+fmt(c.total)],
         ['Tu hijo/a recibe (~'+c.entrega+' años)','$'+fmt(c.valor)],
         ['Recuperación',c.rec+'% de lo aportado'],
-        ['Exención de prima','Si faltas, GNP completa los aportes'],
+        ['Exención de prima','<span data-cms-html="auto.arr_meta.40">Si faltas, GNP completa los aportes</span>'],
         ['Incapacidad total','Anticipo de $2,000,000'],
         ['Enfermedad terminal','Anticipo de $600,000 + gastos funerarios']
       ];
@@ -2519,7 +2519,7 @@ const GENERIC_FLOWS = {
   },
   patrimonial:{
     title:'Plan Casa / Patrimonial',
-    steps:['homeValue','contentsValue','package','addons'],
+    steps:['homeValue','<span data-cms-html="auto.arr_meta.41">contentsValue</span>','<span data-cms-html="auto.arr_meta.42">package</span>','<span data-cms-html="auto.arr_meta.43">addons</span>'],
     render:{
       homeValue:()=>`${stepDotsHTML(0, 4)}
         <h3 class="step-title">${T('wizards.patrimonial.steps.homeValue.title','¿Cuánto vale tu casa (sin contar el terreno)?')}</h3>
@@ -2690,7 +2690,7 @@ document.getElementById('cSubmit').addEventListener('click',()=>{
   state.contact.city = document.getElementById('cCity').value.trim();
   state.contact.timing = document.getElementById('cTiming').value;
   if(!state.contact.name || !state.contact.phone){
-    showInfo('','Faltan datos','Por favor ingresa al menos tu nombre y WhatsApp para que Andy pueda contactarte.');
+    showInfo('','<span data-cms-html="auto.arr_meta.44">Faltan datos</span>','Por favor ingresa al menos tu nombre y WhatsApp para que Andy pueda contactarte.');
     return;
   }
   // Fire-and-forget al webhook n8n → GHL CRM (state completo)
