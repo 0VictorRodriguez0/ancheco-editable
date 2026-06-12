@@ -1532,9 +1532,9 @@ function explainerHTML({intro, body, example, rec, bullets, _cmsKey}){
     ${rec?`<div class="explainer-block rec"><strong>Lo que te recomiendo:</strong> ${wrap('rec', rec)}</div>`:''}
   </div>`;
 }
-const REC_BADGE = '<span class="opt-rec-badge">Recomendado</span>';
-const POPULAR_BADGE = '<span class="opt-rec-badge" style="background:var(--navy);color:var(--white)">Más solicitado</span>';
-const PREMIUM_BADGE = '<span class="opt-rec-badge" style="background:var(--orange);color:var(--white)">Premium</span>';
+const REC_BADGE = '<span class="opt-rec-badge"><span data-cms-html="auto.badge.46">Recomendado</span></span>';
+const POPULAR_BADGE = '<span class="opt-rec-badge" style="background:var(--navy);color:var(--white)"><span data-cms-html="auto.badge.47">Más solicitado</span></span>';
+const PREMIUM_BADGE = '<span class="opt-rec-badge" style="background:var(--orange);color:var(--white)"><span data-cms-html="auto.badge.48">Premium</span></span>';
 const OPT_HINT = '<div class="opt-hint">Si dudas, deja la recomendación de Andy.</div>';
 
 /* ============================================== */
@@ -1566,7 +1566,7 @@ function gmmStepWho(){
     rec:`El descuento familiar aplica a partir de 4 integrantes. Con menos personas cada quien paga según su propia edad, sin descuento.`
   })}
   <div class="opts opts-3">
-    ${[['individual','Individual',false],['pareja','Pareja',false],['familia','Familiar',true]].map(([k,l,r])=>`
+    ${[['individual','<span data-cms-html="auto.arr_label.81">Individual</span>',false],['pareja','<span data-cms-html="auto.arr_label.82">Pareja</span>',false],['familia','<span data-cms-html="auto.arr_label.83">Familiar</span>',true]].map(([k,l,r])=>`
     <button class="opt ${state.gmm.who===k?'selected':''}" data-who="${k}">
       ${r?REC_BADGE:''}
       <div class="opt-body"><div class="opt-label">${l}</div></div>
@@ -1583,39 +1583,39 @@ function gmmStepAge(){
     example:`Persona sana, no fumadora, Tabulador B, suma 40M: 25 años ~$18,100/año. 35 años ~$25,812/año. 50 años ~$38,056/año. 65 años ~$101,664/año.${showKids?' Los hijos menores de 10 años son más baratos de asegurar.':''}`,
     rec:`Pon edades reales. Contratar joven sale mucho más barato a largo plazo — la anualidad se calcula con la edad de ingreso, y GNP financia con 3 y 6 MSI con tarjetas participantes el 1er año.`
   })}
-  <div class="step-help" style="margin-top:6px"><strong>${showPartner?'Tu edad':'Edad'}</strong></div>
+  <div class="step-help" style="margin-top:6px"><span data-cms-html="auto.step_help.49"><strong>${showPartner?'Tu edad':'Edad'}</strong></span></div>
   <div class="slider-wrap">
     <div class="slider-row">
       <div><span class="slider-value" id="ageVal">${state.gmm.age}</span><span class="slider-suffix">años</span></div>
     </div>
     <input type="range" min="18" max="75" value="${state.gmm.age}" class="slider" id="ageSlider">
-    <div class="slider-marks"><span>18</span><span>30</span><span>45</span><span>60</span><span>75</span></div>
+    <div class="slider-marks"><span data-cms-html="auto.slider_mark.61">18</span><span data-cms-html="auto.slider_mark.62">30</span><span data-cms-html="auto.slider_mark.63">45</span><span data-cms-html="auto.slider_mark.64">60</span><span data-cms-html="auto.slider_mark.65">75</span></div>
   </div>
-  <div class="step-help" style="margin-top:18px"><strong>Sexo</strong></div>
+  <div class="step-help" style="margin-top:18px"><span data-cms-html="auto.step_help.50"><strong>Sexo</strong></span></div>
   <div class="opts opts-2">
     <button class="opt ${state.gmm.sex==='F'?'selected':''}" data-sex="F">
-      <div class="opt-body"><div class="opt-label">Femenino</div></div>
+      <div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.1">Femenino</span></div></div>
     </button>
     <button class="opt ${state.gmm.sex==='M'?'selected':''}" data-sex="M">
-      <div class="opt-body"><div class="opt-label">Masculino</div></div>
+      <div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.2">Masculino</span></div></div>
     </button>
   </div>
   ${showPartner?`
-  <div class="step-help" style="margin-top:24px;padding-top:18px;border-top:1px solid var(--gray-100)"><strong>Edad de tu pareja</strong></div>
+  <div class="step-help" style="margin-top:24px;padding-top:18px;border-top:1px solid var(--gray-100)"><span data-cms-html="auto.step_help.51"><strong>Edad de tu pareja</strong></span></div>
   <div class="slider-wrap">
     <div class="slider-row"><div><span class="slider-value" id="partnerAgeVal">${state.gmm.partnerAge}</span><span class="slider-suffix">años</span></div></div>
     <input type="range" min="18" max="75" value="${state.gmm.partnerAge}" class="slider" id="partnerAgeSlider">
   </div>`:''}
   ${showKids?`
-  <div class="step-help" style="margin-top:24px;padding-top:18px;border-top:1px solid var(--gray-100)"><strong>¿Cuántos hijos van a estar cubiertos?</strong></div>
+  <div class="step-help" style="margin-top:24px;padding-top:18px;border-top:1px solid var(--gray-100)"><span data-cms-html="auto.step_help.52"><strong>¿Cuántos hijos van a estar cubiertos?</strong></span></div>
   <div class="opts opts-3">
     ${[1,2,3,4].map(n=>`<button class="opt ${state.gmm.kidsCount===n?'selected':''}" data-kidscount="${n}"><div class="opt-body"><div class="opt-label">${n}${n===4?'+':''}</div></div></button>`).join('')}
   </div>
-  <div class="step-help" style="margin-top:14px"><strong>Edad promedio de tus hijos</strong></div>
+  <div class="step-help" style="margin-top:14px"><span data-cms-html="auto.step_help.53"><strong>Edad promedio de tus hijos</strong></span></div>
   <div class="slider-wrap">
     <div class="slider-row"><div><span class="slider-value" id="kidsAgeVal">${state.gmm.kidsAvgAge}</span><span class="slider-suffix">años</span></div></div>
     <input type="range" min="0" max="25" value="${state.gmm.kidsAvgAge}" class="slider" id="kidsAgeSlider">
-    <div class="slider-marks"><span>0</span><span>10</span><span>18</span><span>25</span></div>
+    <div class="slider-marks"><span data-cms-html="auto.slider_mark.66">0</span><span data-cms-html="auto.slider_mark.67">10</span><span data-cms-html="auto.slider_mark.68">18</span><span data-cms-html="auto.slider_mark.69">25</span></div>
   </div>`:''}`;
 }
 function gmmStepHealth(){
@@ -1629,10 +1629,10 @@ function gmmStepHealth(){
   <div class="opts opts-2">
     <button class="opt ${!state.gmm.smoker?'selected':''}" data-smoker="false">
       ${REC_BADGE}
-      <div class="opt-body"><div class="opt-label">No fumo</div><div class="opt-meta">Prima base</div></div>
+      <div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.3">No fumo</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.19">Prima base</span></div></div>
     </button>
     <button class="opt ${state.gmm.smoker?'selected':''}" data-smoker="true">
-      <div class="opt-body"><div class="opt-label">Sí fumo</div><div class="opt-meta">+15-25% en anualidad · declaración obligatoria</div></div>
+      <div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.4">Sí fumo</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.20">+15-25% en anualidad · declaración obligatoria</span></div></div>
     </button>
   </div>
   <p class="step-help" style="margin-top:18px;font-size:12px;color:var(--gray-400)"><strong>Sobre condiciones preexistentes</strong> (diabetes, hipertensión, etc.): si las tienes, hay que declararlas. GNP cubre preexistencias después de 6 meses a 2 años de vigencia (con previa selección de riesgos), o después de 5 años sin tratamiento (cobertura $500K-$1M). Andy revisa cada caso.</p>`;
@@ -1667,7 +1667,7 @@ function gmmStepHospital(){
     {k:'D', label:'Nivel D · Clínicas de corta estancia', desc:'Privados básicos', extra:`Coaseguro 5% · Tope ${fmtMx(35000)}`, rec:false, hospitales:hb.D}
   ];
   const regionPicker = `<div class="opts opts-3" style="margin-bottom:14px">
-    ${[['qroo','Quintana Roo'],['yucatan','Yucatán'],['cdmx','CDMX']].map(([k,l])=>`
+    ${[['qroo','<span data-cms-html="auto.arr_label.84">Quintana Roo</span>'],['yucatan','<span data-cms-html="auto.arr_label.85">Yucatán</span>'],['cdmx','<span data-cms-html="auto.arr_label.86">CDMX</span>']].map(([k,l])=>`
       <button class="opt ${state.gmm.region===k?'selected':''}" data-region="${k}">
         <div class="opt-body"><div class="opt-label">${l}</div></div>
       </button>`).join('')}
@@ -1685,7 +1685,7 @@ function gmmStepHospital(){
     example:`<strong>Nivel A</strong>: vas al ABC en CDMX o Amerimed en Cancún, pero <strong>tú pagas 20%</strong> de la cuenta (máximo $94,000). <strong>Nivel D</strong> (Mayan, UMIS en Cancún): <strong>tú pagas solo 5%</strong> (máximo $35,000).`,
     rec:`<strong>Nivel B</strong> es el sweet spot para la mayoría — Galenia, Médica Sur, Costamed cubren bien sin el costo de Nivel A. Si vives en CDMX y quieres ABC sí o sí, ve a Nivel A.`
   })}
-  <div class="step-help" style="margin-top:14px;margin-bottom:8px"><strong>Tu región</strong> · los hospitales disponibles por nivel cambian por estado</div>
+  <div class="step-help" style="margin-top:14px;margin-bottom:8px"><span data-cms-html="auto.step_help.54"><strong>Tu región</strong> · los hospitales disponibles por nivel cambian por estado</span></div>
   ${regionPicker}
   <div class="opts">
     ${tiers.map(t=>`
@@ -1827,10 +1827,10 @@ function gmmStepAddons(){
   const ad = state.gmm.addons;
   // Costos anuales estimados de coberturas adicionales reales GNP Personaliza Variable
   const items = [
-    ['cda','Cero Deducible por Accidente (CDA)','Si te accidentas (caída, choque, etc.), no pagas deducible — GNP cubre desde el primer peso.',1800],
-    ['mp','Maternidad Plus Personaliza (MP)','3 opciones de cobertura: $47,000, $64,500 y $81,500. 10 meses de espera.',5200],
-    ['ahr','Ampliación Hospitalaria Nacional (AHR)','Acceso a hospitales de niveles superiores en otras regiones del país, no solo tu nivel base.',2800],
-    ['psico','Asistencia Psicológica','Ya viene incluida — 2 sesiones/mes por videollamada (50 min). Ansiedad, estrés, depresión, insomnio, problemas de pareja. Aplica para terapia de pareja y para menores con consentimiento del tutor.',0]
+    ['cda','<span data-cms-html="auto.arr_label.87">Cero Deducible por Accidente (CDA)</span>','Si te accidentas (caída, choque, etc.), no pagas deducible — GNP cubre desde el primer peso.',1800],
+    ['mp','<span data-cms-html="auto.arr_label.88">Maternidad Plus Personaliza (MP)</span>','3 opciones de cobertura: $47,000, $64,500 y $81,500. 10 meses de espera.',5200],
+    ['ahr','<span data-cms-html="auto.arr_label.89">Ampliación Hospitalaria Nacional (AHR)</span>','Acceso a hospitales de niveles superiores en otras regiones del país, no solo tu nivel base.',2800],
+    ['psico','<span data-cms-html="auto.arr_label.90">Asistencia Psicológica</span>','Ya viene incluida — 2 sesiones/mes por videollamada (50 min). Ansiedad, estrés, depresión, insomnio, problemas de pareja. Aplica para terapia de pareja y para menores con consentimiento del tutor.',0]
   ];
   return `${stepDotsHTML(6, gmmSteps.length)}
   <h3 class="step-title"><span data-cms-html="auto.step_title.7">Coberturas adicionales — Personaliza Variable</span></h3>
@@ -1843,7 +1843,7 @@ function gmmStepAddons(){
     ${items.map(([k,l,m,p])=>`
       <button class="opt ${ad.includes(k)?'selected':''}" data-addon="${k}">
         ${k==='cda'?REC_BADGE:''}
-        ${k==='psico'?'<span class="opt-pill" style="background:var(--success)">incluido</span>':''}
+        ${k==='psico'?'<span class="opt-pill" style="background:var(--success)"><span data-cms-html="auto.opt_pill.40">incluido</span></span>':''}
         <div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div>
         ${p>0?`<span class="opt-pill">+${fmtMx(p)}/año</span>`:''}
       </button>`).join('')}
@@ -2038,15 +2038,15 @@ function autoStepBasic(){
     <div class="field"><label class="field-label">Marca</label><input class="field-input" id="autoBrand" placeholder="Nissan, Toyota, etc." value="${state.auto.brand}"></div>
     <div class="field"><label class="field-label">Modelo</label><input class="field-input" id="autoModel" placeholder="Sentra, Corolla..." value="${state.auto.model}"></div>
   </div>
-  <div class="step-help" style="margin-top:18px"><strong>Año del modelo</strong></div>
+  <div class="step-help" style="margin-top:18px"><span data-cms-html="auto.step_help.55"><strong>Año del modelo</strong></span></div>
   <div class="slider-wrap">
     <div class="slider-row">
       <div><span class="slider-value" id="yearVal">${state.auto.year}</span><span class="slider-suffix">año</span></div>
     </div>
     <input type="range" min="2005" max="2026" value="${state.auto.year}" class="slider" id="yearSlider">
-    <div class="slider-marks"><span>2005</span><span>2015</span><span>2020</span><span>2026</span></div>
+    <div class="slider-marks"><span data-cms-html="auto.slider_mark.70">2005</span><span data-cms-html="auto.slider_mark.71">2015</span><span data-cms-html="auto.slider_mark.72">2020</span><span data-cms-html="auto.slider_mark.73">2026</span></div>
   </div>
-  <div class="step-help" style="margin-top:14px"><strong>Valor aproximado del auto</strong> · es el factor #1 que define tu anualidad de auto. Valor de mercado actual, no lo que pagaste cuando lo compraste nuevo.</div>
+  <div class="step-help" style="margin-top:14px"><span data-cms-html="auto.step_help.56"><strong>Valor aproximado del auto</strong> · es el factor #1 que define tu anualidad de auto. Valor de mercado actual, no lo que pagaste cuando lo compraste nuevo.</span></div>
   <div class="slider-wrap">
     <div class="slider-row"><div><span class="slider-value" id="vvalVal">$${fmt(state.auto.vehicleValue)}</span></div></div>
     <input type="range" min="80000" max="1500000" step="10000" value="${state.auto.vehicleValue}" class="slider" id="vvalSlider">
@@ -2063,10 +2063,10 @@ function autoStepUse(){
   <div class="opts opts-2">
     <button class="opt ${state.auto.use==='particular'?'selected':''}" data-use="particular">
       ${REC_BADGE}
-      <div class="opt-body"><div class="opt-label">Particular</div><div class="opt-meta">Uso personal/familiar</div></div>
+      <div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.5">Particular</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.24">Uso personal/familiar</span></div></div>
     </button>
     <button class="opt ${state.auto.use==='comercial'?'selected':''}" data-use="comercial">
-      <div class="opt-body"><div class="opt-label">Comercial</div><div class="opt-meta">Uber/DiDi, reparto, taxi, transporte</div></div>
+      <div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.6">Comercial</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.25">Uber/DiDi, reparto, taxi, transporte</span></div></div>
     </button>
   </div>`;
 }
@@ -2085,18 +2085,18 @@ function autoStepCoverage(){
   })}
   <div class="opts">
     <button class="opt ${state.auto.coverage==='rc'?'selected':''}" data-coverage="rc">
-      <div class="opt-body"><div class="opt-label">Solo RC (Responsabilidad Civil)</div><div class="opt-meta"><strong>Tu auto NO está cubierto.</strong> Solo pagas por daños a otros.</div></div>
-      <span class="opt-pill" style="background:var(--success)">−60%</span>
+      <div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.7">Solo RC (Responsabilidad Civil)</span></div><div class="opt-meta"><strong>Tu auto NO está cubierto.</strong> Solo pagas por daños a otros.</div></div>
+      <span class="opt-pill" style="background:var(--success)"><span data-cms-html="auto.opt_pill.42">−60%</span></span>
     </button>
     <button class="opt ${state.auto.coverage==='limitada'?'selected':''}" data-coverage="limitada">
       ${state.auto.vehicleValue<=150000?REC_BADGE:''}
-      <div class="opt-body"><div class="opt-label">Limitada</div><div class="opt-meta">RC + robo total + asistencia. Choques NO cubiertos.</div></div>
-      <span class="opt-pill" style="background:var(--gray-400)">−30%</span>
+      <div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.8">Limitada</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.27">RC + robo total + asistencia. Choques NO cubiertos.</span></div></div>
+      <span class="opt-pill" style="background:var(--gray-400)"><span data-cms-html="auto.opt_pill.43">−30%</span></span>
     </button>
     <button class="opt ${state.auto.coverage==='amplia'?'selected':''}" data-coverage="amplia">
       ${state.auto.vehicleValue>150000?REC_BADGE:''}
-      <div class="opt-body"><div class="opt-label">Amplia</div><div class="opt-meta">Todo: RC + robo + daños + fenómenos naturales. La que tiene sentido si tu auto vale +$150k.</div></div>
-      <span class="opt-pill" style="background:var(--orange)">base</span>
+      <div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.9">Amplia</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.28">Todo: RC + robo + daños + fenómenos naturales. La que tiene sentido si tu auto vale +$150k.</span></div></div>
+      <span class="opt-pill" style="background:var(--orange)"><span data-cms-html="auto.opt_pill.44">base</span></span>
     </button>
   </div>`;
 }
@@ -2114,7 +2114,7 @@ function autoStepDeductible(){
     example:`Auto valor $300,000 con deducible robo 10%: si te lo roban, tú pones $30,000 y la aseguradora $270,000. Con deducible robo 5%: pones solo $15,000 pero pagaste anualidad más alta todo el año.`,
     rec:`<strong>Daños materiales 5%, robo total 10%</strong> son los estándares de mercado y dan buen balance. Bajarlos sube tu anualidad; subirlos la baja.`
   })}
-  <div class="step-help" style="margin-top:14px"><strong>Robo total</strong> · si te roban el auto completo</div>
+  <div class="step-help" style="margin-top:14px"><span data-cms-html="auto.step_help.57"><strong>Robo total</strong> · si te roban el auto completo</span></div>
   <div class="opts opts-3">
     ${[5,10,15].map(v=>`
       <button class="opt ${state.auto.deductibleTheft===v?'selected':''}" data-dt="${v}">
@@ -2122,7 +2122,7 @@ function autoStepDeductible(){
         <div class="opt-body"><div class="opt-label">${v}%</div><div class="opt-meta">${v===5?'anualidad alta':v===10?'estándar':'anualidad baja'}</div></div>
       </button>`).join('')}
   </div>
-  <div class="step-help" style="margin-top:14px"><strong>Daños materiales</strong> · si chocas o te chocan</div>
+  <div class="step-help" style="margin-top:14px"><span data-cms-html="auto.step_help.58"><strong>Daños materiales</strong> · si chocas o te chocan</span></div>
   <div class="opts opts-3">
     ${[3,5,10].map(v=>`
       <button class="opt ${state.auto.deductibleDamage===v?'selected':''}" data-dd="${v}">
@@ -2140,7 +2140,7 @@ function autoStepAddons(){
     rec:`<strong>Auto sustituto</strong> solo si dependes diario del coche y no tienes otro. Llantas y rines vale la pena en zonas con baches. Los demás según tu uso.`
   })}
   <div class="opts">
-    ${[['sustituto','Auto sustituto','Auto rentado mientras reparan el tuyo (10-30 días).',960],['llantas','Ayuda para llantas y rines','Cubre hasta $25,000 con deducible del 25%.',1511],['llave','Llave de repuesto','Cubre hasta $5,000 con deducible del 20%.',621],['cero','Deducible cero','Si chocas tu auto, no pagas el deducible — la aseguradora cubre todo.',null],['agencia','Siempre en agencia','Reparan tu coche siempre en la agencia.',null]].map(([k,l,m,p])=>`
+    ${[['sustituto','<span data-cms-html="auto.arr_label.91">Auto sustituto</span>','Auto rentado mientras reparan el tuyo (10-30 días).',960],['llantas','<span data-cms-html="auto.arr_label.92">Ayuda para llantas y rines</span>','Cubre hasta $25,000 con deducible del 25%.',1511],['llave','<span data-cms-html="auto.arr_label.93">Llave de repuesto</span>','Cubre hasta $5,000 con deducible del 20%.',621],['cero','<span data-cms-html="auto.arr_label.94">Deducible cero</span>','Si chocas tu auto, no pagas el deducible — la aseguradora cubre todo.',null],['agencia','<span data-cms-html="auto.arr_label.95">Siempre en agencia</span>','Reparan tu coche siempre en la agencia.',null]].map(([k,l,m,p])=>`
       <button class="opt ${ad.includes(k)?'selected':''}" data-aaddon="${k}">
         <div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div>
         <span class="opt-pill">${p?('+'+fmtMx(p)+'/año'):'según vehículo'}</span>
@@ -2226,22 +2226,22 @@ const GENERIC_FLOWS = {
           rec:`Mientras más joven contratas, más barata la anualidad — y la mascota está protegida cuando empiezan las enfermedades de mayor edad.`
         })}
         <div class="opts opts-2">
-          <button class="opt ${state.mascota.species==='perro'?'selected':''}" data-pspecies="perro"><div class="opt-body"><div class="opt-label">Perro</div></div></button>
-          <button class="opt ${state.mascota.species==='gato'?'selected':''}" data-pspecies="gato"><div class="opt-body"><div class="opt-label">Gato</div></div></button>
+          <button class="opt ${state.mascota.species==='perro'?'selected':''}" data-pspecies="perro"><div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.10">Perro</span></div></div></button>
+          <button class="opt ${state.mascota.species==='gato'?'selected':''}" data-pspecies="gato"><div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.11">Gato</span></div></div></button>
         </div>
-        <div class="step-help" style="margin-top:18px"><strong>Edad de tu mascota</strong></div>
+        <div class="step-help" style="margin-top:18px"><span data-cms-html="auto.step_help.59"><strong>Edad de tu mascota</strong></span></div>
         <div class="slider-wrap">
           <div class="slider-row"><div><span class="slider-value" id="petAgeVal">${state.mascota.petAge}</span><span class="slider-suffix">años</span></div></div>
           <input type="range" min="0" max="9" value="${state.mascota.petAge}" class="slider" id="petAgeSlider">
-          <div class="slider-marks"><span>3 meses</span><span>5</span><span>9 años</span></div>
+          <div class="slider-marks"><span data-cms-html="auto.slider_mark.74">3 meses</span><span data-cms-html="auto.slider_mark.75">5</span><span data-cms-html="auto.slider_mark.76">9 años</span></div>
         </div>
         ${state.mascota.species==='perro'?`
-        <div class="step-help" style="margin-top:18px"><strong>Tamaño/raza</strong> · razas grandes y consideradas peligrosas suben anualidad por mayor riesgo de cirugías mayores y RC.</div>
+        <div class="step-help" style="margin-top:18px"><span data-cms-html="auto.step_help.60"><strong>Tamaño/raza</strong> · razas grandes y consideradas peligrosas suben anualidad por mayor riesgo de cirugías mayores y RC.</span></div>
         <div class="opts opts-2">
-          <button class="opt ${state.mascota.petSize==='pequeno'?'selected':''}" data-psize="pequeno"><div class="opt-body"><div class="opt-label">Pequeño</div><div class="opt-meta">menos de 10 kg (Chihuahua, Pug, Yorkie)</div></div></button>
-          <button class="opt ${state.mascota.petSize==='mediano'?'selected':''}" data-psize="mediano">${REC_BADGE}<div class="opt-body"><div class="opt-label">Mediano</div><div class="opt-meta">10-25 kg (Beagle, Bulldog Francés, Cocker)</div></div></button>
-          <button class="opt ${state.mascota.petSize==='grande'?'selected':''}" data-psize="grande"><div class="opt-body"><div class="opt-label">Grande</div><div class="opt-meta">25-40 kg (Labrador, Golden, Pastor)</div></div></button>
-          <button class="opt ${state.mascota.petSize==='peligrosa'?'selected':''}" data-psize="peligrosa"><div class="opt-body"><div class="opt-label">Raza considerada peligrosa</div><div class="opt-meta">Pitbull, Rottweiler, Doberman, Akita</div></div></button>
+          <button class="opt ${state.mascota.petSize==='pequeno'?'selected':''}" data-psize="pequeno"><div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.12">Pequeño</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.29">menos de 10 kg (Chihuahua, Pug, Yorkie)</span></div></div></button>
+          <button class="opt ${state.mascota.petSize==='mediano'?'selected':''}" data-psize="mediano">${REC_BADGE}<div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.13">Mediano</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.30">10-25 kg (Beagle, Bulldog Francés, Cocker)</span></div></div></button>
+          <button class="opt ${state.mascota.petSize==='grande'?'selected':''}" data-psize="grande"><div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.14">Grande</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.31">25-40 kg (Labrador, Golden, Pastor)</span></div></div></button>
+          <button class="opt ${state.mascota.petSize==='peligrosa'?'selected':''}" data-psize="peligrosa"><div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.15">Raza considerada peligrosa</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.32">Pitbull, Rottweiler, Doberman, Akita</span></div></div></button>
         </div>`:''}`,
       sumInsured:()=>`${stepDotsHTML(1, 4)}
         <h3 class="step-title"><span data-cms-html="auto.step_title.15">Suma asegurada anual</span></h3>
@@ -2267,7 +2267,7 @@ const GENERIC_FLOWS = {
         </div>`,
       addons:()=>{
         const ad = state.mascota.addons;
-        const items = [['fallece','Fallecimiento','Indemnización por fallecimiento por enfermedad o accidente. Espera 360 días desde la firma.',720],['robo','Robo con violencia','Indemnización tras presentar acta ante el MP.',480],['rc','RC mascota ampliada','Cobertura ampliada de daños a terceros — la mordida importa.',540]];
+        const items = [['fallece','<span data-cms-html="auto.arr_label.96">Fallecimiento</span>','Indemnización por fallecimiento por enfermedad o accidente. Espera 360 días desde la firma.',720],['robo','<span data-cms-html="auto.arr_label.97">Robo con violencia</span>','Indemnización tras presentar acta ante el MP.',480],['rc','<span data-cms-html="auto.arr_label.98">RC mascota ampliada</span>','Cobertura ampliada de daños a terceros — la mordida importa.',540]];
         return `${stepDotsHTML(3, 4)}
         <h3 class="step-title"><span data-cms-html="auto.step_title.17">Último paso: extras</span></h3>
         ${explainerHTML({_cmsKey:'auto.exp.17', intro:'Coberturas opcionales',
@@ -2357,7 +2357,7 @@ const GENERIC_FLOWS = {
         <div class="slider-wrap">
           <div class="slider-row"><div><span class="slider-value" id="ahAgeVal">${state.ahorro.age}</span><span class="slider-suffix">años</span></div></div>
           <input type="range" min="0" max="60" value="${state.ahorro.age}" class="slider" id="ahAgeSlider">
-          <div class="slider-marks"><span>0</span><span>20</span><span>40</span><span>60</span></div>
+          <div class="slider-marks"><span data-cms-html="auto.slider_mark.77">0</span><span data-cms-html="auto.slider_mark.78">20</span><span data-cms-html="auto.slider_mark.79">40</span><span data-cms-html="auto.slider_mark.80">60</span></div>
         </div>`;
       },
       contribution:()=>{
@@ -2559,7 +2559,7 @@ const GENERIC_FLOWS = {
               <div class="opt-body">
                 <div class="opt-label">${p.name} <span style="font-weight:400;color:var(--orange-dark);font-size:13px">— $${fmt(calcPrima(p))}/año</span></div>
                 <div class="opt-meta" style="font-size:13px;color:var(--gray-700);margin-bottom:6px"><em>${p.tag}</em></div>
-                <div class="opt-meta" style="font-size:12px;margin-top:6px">${p.coberturas.slice(0,4).map(c=>`<div style=\"display:flex;justify-content:space-between;gap:8px;padding:2px 0\"><span>${c[0]}</span><strong>${c[1]}</strong></div>`).join('')}${p.coberturas.length>4?`<div style=\"color:var(--gray-400);font-size:11px;margin-top:4px\">+${p.coberturas.length-4} coberturas más</div>`:''}</div>
+                <div class="opt-meta" style="font-size:12px;margin-top:6px">${p.coberturas.slice(0,4).map(c=>`<div style=\"display:flex;justify-content:space-between;gap:8px;padding:2px 0\"><span>${c[0]}<strong>${c[1]}</strong></span></div>`).join('')}${p.coberturas.length>4?`<div style=\"color:var(--gray-400);font-size:11px;margin-top:4px\">+${p.coberturas.length-4} coberturas más</div>`:''}</div>
                 <div class="opt-meta" style="margin-top:8px;font-size:11px;color:var(--orange-dark)"><strong>Ideal para:</strong> ${p.bestFor}</div>
               </div>
             </button>`).join('')}
@@ -2570,9 +2570,9 @@ const GENERIC_FLOWS = {
         const hv = state.patrimonial.homeValue;
         const hidrometCost = Math.round(hv * 0.003);
         const items = [
-          ['hidromet','Hidrometeorológicos','Cubre las pérdidas y/o daños físicos al inmueble, así como a sus cimentaciones e instalaciones fijas subterráneas, originados por avalanchas de lodo, granizo, helada, huracán, inundación, inundación por lluvia, golpe de mar, tsunami, marejada, nevada y vientos tempestuosos.',hidrometCost],
-          ['terremoto','Terremoto y/o erupción volcánica','Se cubren las pérdidas por daños materiales al inmueble asegurado, así como a sus cimientos e instalaciones fijas subterráneas, causados por terremoto y/o erupción volcánica.',0],
-          ['funmascotas','Servicio funerario para mascotas','En caso de fallecimiento de tu mascota, esta asistencia brinda los siguientes servicios: recolección del cuerpo, cremación individual de la mascota, urna básica y entrega a domicilio de las cenizas.',1200]
+          ['hidromet','<span data-cms-html="auto.arr_label.99">Hidrometeorológicos</span>','Cubre las pérdidas y/o daños físicos al inmueble, así como a sus cimentaciones e instalaciones fijas subterráneas, originados por avalanchas de lodo, granizo, helada, huracán, inundación, inundación por lluvia, golpe de mar, tsunami, marejada, nevada y vientos tempestuosos.',hidrometCost],
+          ['terremoto','<span data-cms-html="auto.arr_label.100">Terremoto y/o erupción volcánica</span>','Se cubren las pérdidas por daños materiales al inmueble asegurado, así como a sus cimientos e instalaciones fijas subterráneas, causados por terremoto y/o erupción volcánica.',0],
+          ['funmascotas','<span data-cms-html="auto.arr_label.101">Servicio funerario para mascotas</span>','En caso de fallecimiento de tu mascota, esta asistencia brinda los siguientes servicios: recolección del cuerpo, cremación individual de la mascota, urna básica y entrega a domicilio de las cenizas.',1200]
         ];
         return `${stepDotsHTML(3, 4)}
         <h3 class="step-title">${T('wizards.patrimonial.steps.addons.title','Último paso: extras opcionales')}</h3>
