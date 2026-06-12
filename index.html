@@ -947,7 +947,7 @@ img{max-width:100%;display:block}
           <div class="type-photo" data-bg='https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=520&q=72&fm=webp'></div>
           <div class="type-body">
             <div class="type-name" data-cms="cards.gmm.name">Gastos Médicos Mayores</div>
-            <div class="type-desc" data-cms="cards.gmm.desc">Los accidentes y enfermedades ocurren de un día para otro, preferible tener un seguro y no necesitarlo, que necesitarlo y no tenerlo; ¡PROTÉGETE!</div>
+            <div class="type-desc" data-cms="cards.gmm.desc">Los accidentes y enfermedades ocurren de un día para otro, preferible tener un seguro y no necesitarlo, que necesitarlo y no tenerlo; PROTEGETE!</div>
           </div>
         </button>
         <button class="type-card" data-type="auto">
@@ -1210,7 +1210,7 @@ const NIVEL_DATA = {
   A: {coaseguro:20, topeCoaseguro:94000, deducibles:[21000,32000,45000,56000,68000,87000,111000,128000,175000,233000], label:'A · Top tier', desc:'Hospitales premium · ABC, Ángeles del Pedregal, Amerimed, Cozumel International', hospitales:['ABC Observatorio (CDMX)','<span data-cms-html="auto.arr_meta.1">ABC Santa Fe (CDMX)</span>','<span data-cms-html="auto.arr_meta.2">Ángeles del Pedregal (CDMX)</span>','<span data-cms-html="auto.arr_meta.3">Ángeles Universidad (CDMX)</span>','<span data-cms-html="auto.arr_meta.4">Amerimed (Cancún)</span>','<span data-cms-html="auto.arr_meta.5">Cozumel International Clinic</span>','<span data-cms-html="auto.arr_meta.6">Faro del Mayab (Mérida)</span>']},
   B: {coaseguro:15, topeCoaseguro:70000, deducibles:[17000,21000,32000,45000,56000,68000,87000,111000,128000,175000], label:'B · Alta gama', desc:'Hospitales sólidos · Galenia, Médica Sur, Star Médica, Costamed', hospitales:['Galenia (Cancún)','Costamed (Q.Roo)','<span data-cms-html="auto.arr_meta.7">Playamed (Playa del Carmen)</span>','<span data-cms-html="auto.arr_meta.8">Médica Sur (CDMX)</span>','<span data-cms-html="auto.arr_meta.9">Star Médica (CDMX/Mérida)</span>','<span data-cms-html="auto.arr_meta.10">Hospital Español (CDMX)</span>','<span data-cms-html="auto.arr_meta.11">Mérida CEM</span>','<span data-cms-html="auto.arr_meta.12">Clínica de Mérida</span>','<span data-cms-html="auto.arr_meta.13">Medimac Mérida</span>']},
   C: {coaseguro:10, topeCoaseguro:53000, deducibles:[11000,17000,21000,32000,45000,56000,68000,87000,111000,128000], label:'C · Media', desc:'Hospitales privados regionales — Hospiten, Quirúrgica del Sur, Hospital de Tulum', hospitales:['Hospiten (Cancún)','Quirúrgica del Sur (Q.Roo)','<span data-cms-html="auto.arr_meta.14">Clínica Carranza</span>','<span data-cms-html="auto.arr_meta.15">Clínica Nazareth</span>','<span data-cms-html="auto.arr_meta.16">Hospital de Tulum</span>','<span data-cms-html="auto.arr_meta.17">Médica San Miguel (Cozumel)</span>','<span data-cms-html="auto.arr_meta.18">Centro Médico de las Américas (Mérida)</span>','<span data-cms-html="auto.arr_meta.19">Star Médica Centro (CDMX)</span>','<span data-cms-html="auto.arr_meta.20">Hospital Bite Médica (CDMX)</span>']},
-  D: {coaseguro:5, topeCoaseguro:35000, deducibles:[8000,11000,17000,21000,32000,45000,56000,68000,87000,111000], label:'D · Esencial', desc:'Hospitales privados básicos — Mayan Medical, Group Onco Center, UMIS', hospitales:['Mayan Medical (Cancún)','<span data-cms-html="auto.arr_meta.21">Group Onco Center Cancún</span>','UMIS (Q.Roo)','<span data-cms-html="auto.arr_meta.22">Clínica Quirúrgica Berlín (CDMX)</span>','<span data-cms-html="auto.arr_meta.23">FUCAM</span>','<span data-cms-html="auto.arr_meta.24">Centro Oncológico de Alta Especialidad</span>']}
+  D: {coaseguro:5, topeCoaseguro:35000, deducibles:[8000,11000,17000,21000,32000,45000,56000,68000,87000,111000], label:'D · Esencial', desc:'Hospitales privados básicos — Mayan Medical, Group Onco Center, UMIS', hospitales:['Mayan Medical (Cancún)','<span data-cms-html="auto.arr_meta.21">Group Onco Center Cancún</span>','UMIS (Q.Roo)','<span data-cms-html="auto.arr_meta.22">Clínica Quirúrgica Berlín (CDMX)</span>','FUCAM','<span data-cms-html="auto.arr_meta.24">Centro Oncológico de Alta Especialidad</span>']}
 };
 
 const PRODUCTOS_AHORRO = {
@@ -1570,10 +1570,10 @@ function renderGmm(){
 function gmmStepWho(){
   return `${stepDotsHTML(0, gmmSteps.length)}
   <h3 class="step-title"><span data-cms-html="auto.step_title.1">Empezamos: ¿quién va a estar cubierto?</span></h3>
-  ${explainerHTML({_cmsKey:'auto.exp.1', intro:'Antes de empezar',
-    body:`Los accidentes y enfermedades ocurren de un día para otro: preferible tener un seguro y no necesitarlo, que necesitarlo y no tenerlo. <strong>¡Protégete!</strong><br><br><strong>Terminología que vas a escuchar:</strong><br><br><strong>Suma asegurada</strong> — Monto total por el que estás protegido. Se elige al contratar y puede ser única o reinstalable anual, dependiendo de si el deducible es único o anual.<br><br><strong>Deducible</strong> — Cantidad fija que pagas cada vez que usas el seguro. Puede ser único (se paga una vez al inicio de cada enfermedad y al agotarse la suma, termina el seguro para ese padecimiento) o anual por enfermedad (se paga cada vez que se utiliza pero la suma asegurada se reinstala, volviéndose ilimitada). <em>Deducibles anuales por padecimiento, tope de 2 deducibles por año por póliza.</em><br><br><strong>Coaseguro</strong> — Porcentaje sobre la factura hospitalaria que tú pagas en cada siniestro, con tope. Su objetivo es que revises los gastos en factura y los prestadores no se excedan.<br><br><strong>Tabulador médico</strong> — Monto máximo que GNP acepta pagar al médico por consultas, cirugías, procedimientos, terapias, etc.; cuanto mejor sea el tabulador más alta será tu anualidad.<br><br><strong>Prima / costo del seguro</strong>.<br><br>El seguro de <strong>gastos médicos mayores</strong> cubre padecimientos <strong>grandes, cuando el gasto ocasionado es mayor a tu deducible</strong> — hospitalizaciones, cirugías, enfermedades graves. <strong>No</strong> cubre consultas preventivas con tu médico ni medicina del día a día.<br><br>Te voy a hacer algunas preguntas, y en cada una te explico qué significa, qué te recomiendo y cómo cambia la prima anual.`,
-    example:`Una familia de 4 (2 adultos + 2 hijos) con tabulador B y suma asegurada de $40 millones paga ~$66,500/año en una sola póliza.`,
-    rec:`El descuento familiar aplica a partir de 4 integrantes. Con menos personas cada quien paga según su propia edad, sin descuento.`
+  ${explainerHTML({_cmsKey:'auto.exp.1', intro:'Empezamos:',
+    body:`Los accidentes y enfermedades ocurren de un día para otro, preferible tener un seguro y no necesitarlo, que necesitarlo y no tenerlo; <strong>PROTEGETE!</strong><br><br><strong>Terminología que vas a escuchar</strong><br><br><strong>Suma asegurada</strong><br>Monto total por el que estás protegido.<br>Se elige al contratar y puede ser única o reinstalable anual, dependiendo de si el deducible es único o anual.<br><br><strong>Deducible</strong><br>Cantidad fija que pagas cada vez que usas el seguro. Puede ser único (se paga una vez al inicio de cada enfermedad y al agotarse la suma, termina el seguro para ese padecimiento) o anual por enfermedad (se paga cada vez que se utiliza pero la suma asegurada se reinstala, volviéndose ilimitada).<br><em>Deducibles anuales por padecimiento, tope de 2 deducibles por año por póliza</em><br><br><strong>Coaseguro</strong><br>Porcentaje sobre la factura hospitalaria que tú pagas en cada siniestro, con tope. Su objetivo es que revises los gastos en factura y los prestadores no se excedan.<br><br><strong>Tabulador médico</strong><br>Monto máximo que GNP acepta pagar al médico por consultas, cirugías, procedimientos, terapias, etc; cuanto mejor sea el tabulador más alta será tu anualidad.<br><br><strong>Prima / costo del seguro</strong><br><br>El seguro de <strong>gastos médicos mayores</strong> cubre padecimientos <strong>grandes, cuando el gasto ocasionado es mayor a tu deducible</strong> — hospitalizaciones, cirugías, enfermedades graves. <strong>No</strong> cubre consultas preventivas con tu médico ni medicina del día a día.<br><br>Te voy a hacer algunas preguntas, y en cada una te explico qué significa, qué te recomiendo y cómo cambia la prima anual.`,
+    example:`Una familia de 4 (2 adultos + 2 hijos) con tabulador B y suma asegurada de $40millones paga ~$66,500/año en una sola póliza.`,
+    rec:`El descuento familiar aplica a partir de 4 integrantes, con menos personas cada quien paga según su propia edad, sin descuento.`
   })}
   <div class="opts opts-3">
     ${[['individual','<span data-cms-html="auto.arr_label.81">Individual</span>',false],['pareja','<span data-cms-html="auto.arr_label.82">Pareja</span>',false],['familia','<span data-cms-html="auto.arr_label.83">Familiar</span>',true]].map(([k,l,r])=>`
@@ -1826,7 +1826,7 @@ function gmmStepSum(){
     rec:`Recomendado: <strong>$40,800,000</strong> para cubrir cualquier posible evento o enfermedad catastrófica. Bajar la suma casi no abarata la anualidad (a veces ~$200 al año) pero te deja expuesto a un gasto grande, por eso conviene mantenerla alta.`
   })}
   <div class="opts opts-3">
-    ${[[2.2,'$2.2M','<span data-cms-html="auto.arr_meta.26">Básica</span>'],[17.5,'$17.5M','<span data-cms-html="auto.arr_meta.27">Intermedia</span>'],[40.8,'$40.8M','<span data-cms-html="auto.arr_meta.28">Personaliza estándar</span>',true],[58.3,'$58.3M','<span data-cms-html="auto.arr_meta.29">Mayor cobertura</span>']].map(([v,l,m,r])=>`
+    ${[[2.2,'$2.2M','<span data-cms-html="auto.arr_meta.26">Básica</span>'],[17.5,'$17.5M','Intermedia'],[40.8,'$40.8M','<span data-cms-html="auto.arr_meta.28">Personaliza estándar</span>',true],[58.3,'$58.3M','<span data-cms-html="auto.arr_meta.29">Mayor cobertura</span>']].map(([v,l,m,r])=>`
       <button class="opt ${state.gmm.sumInsured===v?'selected':''}" data-sum="${v}">
         ${r?REC_BADGE:''}
         <div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div>
@@ -2226,7 +2226,7 @@ document.getElementById('autoNext').addEventListener('click',()=>{
 const GENERIC_FLOWS = {
   mascota:{
     title:'GNP Mi Mascota',
-    steps:['species','<span data-cms-html="auto.arr_meta.31">sumInsured</span>','<span data-cms-html="auto.arr_meta.32">deductible</span>','<span data-cms-html="auto.arr_meta.33">addons</span>'],
+    steps:['species','sumInsured','deductible','addons'],
     render:{
       species:()=>`${stepDotsHTML(0, 4)}
         <h3 class="step-title"><span data-cms-html="auto.step_title.14">Empezamos: tu mascota</span></h3>
@@ -2331,7 +2331,7 @@ const GENERIC_FLOWS = {
   },
   ahorro:{
     title:'Plan Ahorro / Retiro',
-    steps:['product','age','<span data-cms-html="auto.arr_meta.34">contribution</span>','<span data-cms-html="auto.arr_meta.35">years</span>'],
+    steps:['product','age','contribution','years'],
     render:{
       product:()=>{
         const productos = Object.values(PRODUCTOS_AHORRO);
@@ -2441,7 +2441,7 @@ const GENERIC_FLOWS = {
   },
   educativo:{
     title:'Plan Educativo · Profesional',
-    steps:['proteccion','<span data-cms-html="auto.arr_meta.36">plazo</span>'],
+    steps:['proteccion','plazo'],
     // Casos reales GNP Profesional (material AnCheco 19-may, proyección al 5% de inflación)
     cases:{
       500000:{
@@ -2519,14 +2519,14 @@ const GENERIC_FLOWS = {
   },
   patrimonial:{
     title:'Plan Casa / Patrimonial',
-    steps:['homeValue','<span data-cms-html="auto.arr_meta.41">contentsValue</span>','<span data-cms-html="auto.arr_meta.42">package</span>','<span data-cms-html="auto.arr_meta.43">addons</span>'],
+    steps:['homeValue','contentsValue','package','addons'],
     render:{
       homeValue:()=>`${stepDotsHTML(0, 4)}
         <h3 class="step-title">${T('wizards.patrimonial.steps.homeValue.title','¿Cuánto vale tu casa (sin contar el terreno)?')}</h3>
         ${explainerHTML({
           _cmsKey:'wizards.patrimonial.steps.homeValue',
           intro:'Sobre el seguro de hogar',
-          body:`Protege tu casa contra <strong>incendio, robo, fenómenos naturales</strong> (huracanes, sismos, inundaciones, etc), <strong>explosiones y daños eléctricos</strong>. Se toma en cuenta el <strong>valor de reconstrucción</strong> (no el valor comercial).`,
+          body:`Protege tu casa contra <strong>incendio, robo, fenómenos naturales</strong> (huracanes, sismos, inundaciones, etc), <strong>explosiones y daños eléctricos</strong>. Se toma en cuenta el <strong>valor de reconstrucción</strong>.`,
           example:`Si tu casa vale $4M a la venta pero reconstruirla costaría $2.5M (terreno aparte), se aseguran los $2.5M; pagar más es desperdicio y pagar menos te deja descubierta.`,
           rec:`Si no sabes el valor exacto de tu casa, te comparto una regla aproximada: <strong>$15,000-$25,000 por m²</strong> en zonas costeras (Cancún) y <strong>$10,000-$15,000</strong> en el interior (CDMX). Andy te ayuda a calcular preciso.`
         })}
@@ -2540,9 +2540,9 @@ const GENERIC_FLOWS = {
         ${explainerHTML({
           _cmsKey:'wizards.patrimonial.steps.contentsValue',
           intro:'Lo que hay dentro',
-          body:`Aquí proteges tres tipos de bienes que el plan unifica en un solo monto:<br><br><strong>CONTENIDOS:</strong> muebles, decoración, artículos personales y electrodomésticos. Joyas y arte de alto valor se aseguran aparte con cobertura específica.<br><br><strong>ELECTRÓNICOS:</strong> televisores, cómputo, celulares, audio, entretenimiento, etc (aplica deducible).<br><br><strong>BIENES EN TRÁNSITO:</strong> te cubre el robo de tus artículos portátiles de uso personal que se encuentren temporalmente fuera del inmueble — celulares, tabletas, ropa y accesorios, bolsas, carteras, relojes, binoculares, anteojos, plumas estilográficas, lapiceros, joyas, bicicletas, patines y patinetas, aparatos fotográficos o de video, artículos y aparatos deportivos. Se te reponen descontando el deducible correspondiente. <strong>Si se queman o roban, la aseguradora te lo repone.</strong>`,
+          body:`<strong>CONTENIDOS:</strong> Muebles, decoración, artículos personales y electrodomésticos. Joyas y arte de alto valor se aseguran aparte con cobertura específica.<br><br><strong>ELECTRONICOS:</strong> Televisores, computo, celulares, audio, entretenimiento, etc (aplica deducible).<br><br><strong>BIENES EN TRANSITO:</strong> Te cubre el robo de tus artículos portátiles de uso personal que se encuentren temporalmente fuera del inmueble, tales como celulares, tabletas, ropa y accesorios, bolsas, carteras, relojes, binoculares, anteojos, plumas estilográficas, lapiceros, joyas, bicicletas, patines y patinetas, aparatos fotográficos o de video, artículos y aparatos deportivos; se te repondrán descontándole el deducible correspondiente.<br><br>Si se queman o roban, la aseguradora te lo repone`,
           example:`Casa promedio amueblada: muebles $200,000 + electrodomésticos $50,000 + ropa $50,000 + electrónicos $100,000 = ~<strong>$400,000</strong>.`,
-          rec:`Suma todo lo que tengas de ambos rubros; sé realista y conserva facturas, recibos o fotos para que en caso de robo o ruptura compruebes que existían.`
+          rec:`Suma todo lo que tengas de ambos rubros, se realista y conserva facturas recibos o fotos, para que en caso de robo o ruptura compruebes que existían.`
         })}
         <div class="slider-wrap">
           <div class="slider-row"><div><span class="slider-value" id="cvVal">$${fmt(state.patrimonial.contentsValue)}</span></div></div>
@@ -2580,18 +2580,16 @@ const GENERIC_FLOWS = {
         const hv = state.patrimonial.homeValue;
         const hidrometCost = Math.round(hv * 0.003);
         const items = [
-          ['hidromet','<span data-cms-html="auto.arr_label.99">Hidrometeorológicos</span>','Cubre las pérdidas y/o daños físicos al inmueble, así como a sus cimentaciones e instalaciones fijas subterráneas, originados por avalanchas de lodo, granizo, helada, huracán, inundación, inundación por lluvia, golpe de mar, tsunami, marejada, nevada y vientos tempestuosos.',hidrometCost],
-          ['terremoto','<span data-cms-html="auto.arr_label.100">Terremoto y/o erupción volcánica</span>','Se cubren las pérdidas por daños materiales al inmueble asegurado, así como a sus cimientos e instalaciones fijas subterráneas, causados por terremoto y/o erupción volcánica.',0],
-          ['funmascotas','<span data-cms-html="auto.arr_label.101">Servicio funerario para mascotas</span>','En caso de fallecimiento de tu mascota, esta asistencia brinda los siguientes servicios: recolección del cuerpo, cremación individual de la mascota, urna básica y entrega a domicilio de las cenizas.',1200]
+          ['hidromet','<span data-cms-html="auto.arr_label.99">Hidrometereologicos</span>','Cubre las pérdidas y/o daños físicos al inmueble, así como a sus cimentaciones e instalaciones fijas subterráneas, originados por Avalanchas de lodo, Granizo, Helada, Huracán, Inundación, Inundación por lluvia, Golpe de mar, Tsunami, Marejada, Nevada y Vientos tempestuosos.',hidrometCost],
+          ['terremoto','<span data-cms-html="auto.arr_label.100">Terremoto</span>','Se cubren las pérdidas por daños materiales al inmueble Asegurado, así como a sus cimientos e instalaciones fijas subterráneas, causados por Terremoto y/o Erupción Volcánica.',0],
+          ['funmascotas','<span data-cms-html="auto.arr_label.101">Servicio funerario mascotas</span>','En caso de fallecimiento de tu mascota, esta asistencia brinda los siguientes servicios; Recolección del cuerpo, Cremación individual de la mascota, Urna básica y Entrega a domicilio de las cenizas.',1200]
         ];
         return `${stepDotsHTML(3, 4)}
-        <h3 class="step-title">${T('wizards.patrimonial.steps.addons.title','Último paso: extras opcionales')}</h3>
+        <h3 class="step-title">${T('wizards.patrimonial.steps.addons.title','Último paso: extras')}</h3>
         ${explainerHTML({
           _cmsKey:'wizards.patrimonial.steps.addons',
-          intro:'Coberturas adicionales',
-          body:`Tu paquete ya incluye lo principal (incendio, robo con violencia, daños materiales). Estas son protecciones adicionales que se contratan según la zona donde vives y lo que quieras proteger.`,
-          example:`<strong>Hidrometeorológicos:</strong> casa $2.2M en Cancún ≈ $6,600/año (cubre $300k edificio + $300k contenidos contra huracán). En zona costera es prácticamente obligatorio; en interior rara vez se justifica.`,
-          rec:`Si vives en <strong>zona costera</strong> (Cancún, Riviera Maya, Golfo, Pacífico), <strong>Hidrometeorológicos no es opcional</strong>: un huracán fuerte puede causar pérdidas por millones. En <strong>zonas sísmicas</strong> (CDMX, Puebla, Oaxaca, Guerrero) Terremoto cierra el hueco más grande del plan base. El Servicio Funerario para Mascotas es un extra de tranquilidad para quienes consideran a su perro o gato parte de la familia.`
+          intro:'Coberturas opcionales',
+          body:`El plan base ya cubre incendio, robo con violencia, bienes en tránsito y fenómenos naturales.<br>Estas son protecciones adicionales para situaciones específicas.`
         })}
         <div class="opts">
           ${items.map(([k,l,m,p])=>`<button class="opt ${ad.includes(k)?'selected':''}" data-padon="${k}" data-pcost="${p}">${k==='hidromet'?REC_BADGE:''}<div class="opt-body"><div class="opt-label">${T('wizards.patrimonial.addons.'+k+'.label', l)}</div><div class="opt-meta">${T('wizards.patrimonial.addons.'+k+'.desc', m)}</div></div><span class="opt-pill">${p===0?'Consultar':'+'+fmtMx(p)+'/año'}</span></button>`).join('')}
