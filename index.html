@@ -2337,10 +2337,10 @@ const GENERIC_FLOWS = {
             <button class="opt ${state.ahorro.product===p.name?'selected':''}" data-aproduct="${p.name}">
               ${p.name==='TRASCIENDE'?REC_BADGE:''}
               <div class="opt-body">
-                <div class="opt-label">${p.name}</div>
-                <div class="opt-meta" style="font-size:13px;color:var(--gray-700);margin-bottom:6px"><em>${p.tag}</em></div>
-                <div class="opt-meta">${p.description}</div>
-                <div class="opt-meta" style="margin-top:6px;font-size:11px;color:var(--orange-dark)"><strong>Ideal para:</strong> ${p.bestFor}</div>
+                <div class="opt-label">${T('productos.ahorro.'+p.name+'.name', p.name)}</div>
+                <div class="opt-meta" style="font-size:13px;color:var(--gray-700);margin-bottom:6px"><em>${T('productos.ahorro.'+p.name+'.tag', p.tag)}</em></div>
+                <div class="opt-meta">${T('productos.ahorro.'+p.name+'.description', p.description)}</div>
+                <div class="opt-meta" style="margin-top:6px;font-size:11px;color:var(--orange-dark)"><strong>Ideal para:</strong> ${T('productos.ahorro.'+p.name+'.bestFor', p.bestFor)}</div>
               </div>
             </button>`).join('')}
         </div>`;
@@ -2351,7 +2351,7 @@ const GENERIC_FLOWS = {
         <h3 class="step-title"><span data-cms-html="auto.step_title.19">Tu edad</span></h3>
         ${explainerHTML({_cmsKey:'auto.exp.19', intro:'El interés compuesto es matemática, no magia',
           body:`Empezar joven multiplica tu retiro <strong>exponencialmente</strong>. Mientras más años haya entre hoy y los 65, más crece tu dinero. Aportar el mismo monto a los 25 que a los 45 puede ser la diferencia entre <strong>$10M y $1.5M</strong> a los 65.`,
-          example:`<strong>${p.realCase}</strong>`,
+          example:`<strong>${T('productos.ahorro.'+p.name+'.realCase', p.realCase)}</strong>`,
           rec:`% recomendado a aportar de tu salario según edad: 25→10%, 35→15%, 45→25%, 55→55%. Mientras más tarde inicies, más esfuerzo necesitas.`
         })}
         <div class="slider-wrap">
@@ -2557,10 +2557,10 @@ const GENERIC_FLOWS = {
             <button class="opt ${state.patrimonial.package===p.name?'selected':''}" data-ppackage="${p.name}">
               ${p.name==='VITAL'?REC_BADGE:(p.name==='PLUS'?POPULAR_BADGE:PREMIUM_BADGE)}
               <div class="opt-body">
-                <div class="opt-label">${p.name} <span style="font-weight:400;color:var(--orange-dark);font-size:13px">— $${fmt(calcPrima(p))}/año</span></div>
-                <div class="opt-meta" style="font-size:13px;color:var(--gray-700);margin-bottom:6px"><em>${p.tag}</em></div>
-                <div class="opt-meta" style="font-size:12px;margin-top:6px">${p.coberturas.slice(0,4).map(c=>`<div style=\"display:flex;justify-content:space-between;gap:8px;padding:2px 0\"><span>${c[0]}<strong>${c[1]}</strong></span></div>`).join('')}${p.coberturas.length>4?`<div style=\"color:var(--gray-400);font-size:11px;margin-top:4px\">+${p.coberturas.length-4} coberturas más</div>`:''}</div>
-                <div class="opt-meta" style="margin-top:8px;font-size:11px;color:var(--orange-dark)"><strong>Ideal para:</strong> ${p.bestFor}</div>
+                <div class="opt-label">${T('productos.patrimonial.'+p.name+'.name', p.name)} <span style="font-weight:400;color:var(--orange-dark);font-size:13px">— $${fmt(calcPrima(p))}/año</span></div>
+                <div class="opt-meta" style="font-size:13px;color:var(--gray-700);margin-bottom:6px"><em>${T('productos.patrimonial.'+p.name+'.tag', p.tag)}</em></div>
+                <div class="opt-meta" style="font-size:12px;margin-top:6px">${p.coberturas.slice(0,4).map((c,i)=>`<div style=\"display:flex;justify-content:space-between;gap:8px;padding:2px 0\"><span>${T('productos.patrimonial.'+p.name+'.coberturas.'+i+'.name', c[0])}<strong>${T('productos.patrimonial.'+p.name+'.coberturas.'+i+'.value', c[1])}</strong></span></div>`).join('')}${p.coberturas.length>4?`<div style=\"color:var(--gray-400);font-size:11px;margin-top:4px\">+${p.coberturas.length-4} coberturas más</div>`:''}</div>
+                <div class="opt-meta" style="margin-top:8px;font-size:11px;color:var(--orange-dark)"><strong>Ideal para:</strong> ${T('productos.patrimonial.'+p.name+'.bestFor', p.bestFor)}</div>
               </div>
             </button>`).join('')}
         </div>`;
