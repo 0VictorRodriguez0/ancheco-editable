@@ -10,7 +10,8 @@
   "cards": {
     "gmm": {
       "name": "Gastos Médicos Mayores",
-      "desc": "Los accidentes y enfermedades ocurren de un día para otro, preferible tener un seguro y no necesitarlo, que necesitarlo y no tenerlo; ¡PROTÉGETE!"
+      "desc": "Los accidentes y enfermedades ocurren de un día para otro, preferible tener un seguro y no necesitarlo, que necesitarlo y no tenerlo; ¡PROTÉGETE!",
+      "badge": "Más solicitado"
     },
     "auto": {
       "name": "Auto",
@@ -68,7 +69,63 @@
     "ribbon_step1": "Andy Cherro Corallo te contacta personalmente con la cotización real, comparativos y siguiente paso. Sin spam, sin llamadas robot.",
     "ribbon_step2": "Andy Cherro Corallo revisa tu configuración y te devuelve una cotización real con tarifas vigentes de GNP en menos de 24 horas."
   },
+  "progress": {
+    "initial": "Empieza tu cotización",
+    "configuring": "Configurando tu plan",
+    "contact": "Último paso",
+    "done": "Pre-cotización lista"
+  },
+  "quote_panel": {
+    "tag": "Tu cotización en vivo",
+    "period_hero": "aprox. anual · simulación · GNP financia 3 y 6 MSI el 1er año",
+    "period_simple": "aprox. anual · simulación",
+    "disclaimer": "Pre-cotización informativa. La anualidad final se emite tras suscripción con la aseguradora."
+  },
+  "contact": {
+    "title_pre": "Último paso · ",
+    "title_accent": "tus datos",
+    "label_name": "Nombre completo",
+    "label_phone": "WhatsApp",
+    "label_email": "Email",
+    "label_city": "Ciudad",
+    "label_timing": "¿Cuándo te gustaría empezar?",
+    "placeholder_name": "Ej. María González",
+    "placeholder_phone": "998 000 0000",
+    "placeholder_email": "tu@email.com",
+    "placeholder_city": "Cancún, QR",
+    "timing_options": {
+      "ya": "Lo antes posible",
+      "mes": "En 1 mes",
+      "3meses": "En 3 meses",
+      "explorando": "Solo estoy explorando"
+    },
+    "btn_back": "← Atrás",
+    "btn_submit": "Ver mi pre-cotización →"
+  },
+  "wizard_nav": {
+    "back": "← Atrás",
+    "back_root": "← Cambiar tipo",
+    "next": "Siguiente →",
+    "continue": "Continuar →"
+  },
+  "final": {
+    "badge": "Pre-cotización lista",
+    "title_pre": "Listo, ",
+    "title_accent": "amig@",
+    "card_tag": "Pre-cotización · simulación",
+    "card_period": "aprox. anual MXN · GNP financia 3 y 6 MSI el 1er año · simulación basada en tus elecciones",
+    "summary_title": "Tu configuración",
+    "btn_whatsapp": "Mandar mi resumen por WhatsApp",
+    "btn_restart": "← Empezar otra cotización",
+    "legal_note": "Esta es una <strong>pre-cotización informativa</strong>. La anualidad exacta depende de cuestionario médico/revisión técnica y la calcula la aseguradora. Andy te explica todo personalmente, sin compromiso."
+  },
   "footer": {
-    "main": "<strong>ANCHECO</strong> · Andy Cherro Corallo · Agente profesional de seguros · Aliada GNP · cédula profesional V338401"
+    "main": "<strong>ANCHECO</strong> · Andy Cherro Corallo · Agente profesional de seguros · Aliada GNP · cédula profesional V338401",
+    "contact_pre": "Tel ",
+    "contact_phone": "998 163 3443",
+    "contact_mid": " · Email ",
+    "contact_email": "ancheco.gnp@gmail.com",
+    "contact_post": " · México",
+    "legal": "Pre-cotización informativa basada en parámetros de mercado 2026. La anualidad exacta la emite la aseguradora tras suscripción y cuestionario médico."
   }
 }

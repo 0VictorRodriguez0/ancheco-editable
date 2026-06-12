@@ -173,17 +173,45 @@
   }
 
   // ============= EDIT HANDLERS =============
-  function makeEditable() {
-    $$('[data-cms]').forEach(el => {
+  function attachOne(el) {
+    if (el.dataset.cmsBound === '1') return;
+    el.dataset.cmsBound = '1';
+    if (el.hasAttribute('data-cms')) {
       el.contentEditable = 'plaintext-only';
       el.spellcheck = false;
+      // Si el JSON ya tiene un valor para este path, hidratarlo ahora
+      // (cubre el caso de elementos renderizados después del fetch inicial).
+      const v = getByPath(workingContent, el.dataset.cms);
+      if (typeof v === 'string') el.textContent = v;
       el.addEventListener('input', () => onEdit(el, el.dataset.cms, el.textContent));
-    });
-    $$('[data-cms-html]').forEach(el => {
+    } else if (el.hasAttribute('data-cms-html')) {
       el.contentEditable = 'true';
       el.spellcheck = false;
+      const v = getByPath(workingContent, el.dataset.cmsHtml);
+      if (typeof v === 'string') el.innerHTML = v;
       el.addEventListener('input', () => onEdit(el, el.dataset.cmsHtml, el.innerHTML));
+    }
+  }
+
+  function makeEditable() {
+    $$('[data-cms]').forEach(attachOne);
+    $$('[data-cms-html]').forEach(attachOne);
+  }
+
+  // MutationObserver: el wizard genera elementos editables sobre la marcha
+  // (titles, explainers, addons). Cada vez que aparece un elemento nuevo con
+  // data-cms o data-cms-html lo conectamos para que sea editable.
+  function watchDOM() {
+    const obs = new MutationObserver(muts => {
+      for (const m of muts) {
+        m.addedNodes.forEach(n => {
+          if (n.nodeType !== 1) return;
+          if (n.matches?.('[data-cms], [data-cms-html]')) attachOne(n);
+          n.querySelectorAll?.('[data-cms], [data-cms-html]').forEach(attachOne);
+        });
+      }
     });
+    obs.observe(document.body, { childList: true, subtree: true });
   }
 
   function onEdit(el, path, value) {
@@ -272,6 +300,7 @@
     setTimeout(() => {
       hydrateAll();
       makeEditable();
+      watchDOM();
       renderBar();
       toast('Editor cargado. Click en cualquier texto resaltado para editar.');
     }, 400);

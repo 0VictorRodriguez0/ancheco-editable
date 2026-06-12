@@ -919,7 +919,7 @@ img{max-width:100%;display:block}
     </div>
     <div class="progress-wrap">
       <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-      <div class="progress-label" id="progressLabel">Empieza tu cotización</div>
+      <div class="progress-label" id="progressLabel" data-cms="progress.initial">Empieza tu cotización</div>
     </div>
     <a class="topbar-cta" href="https://wa.me/529981633443" target="_blank" data-cms="ctas.topbar">
       WhatsApp directo
@@ -943,7 +943,7 @@ img{max-width:100%;display:block}
       </div>
       <div class="type-grid">
         <button class="type-card" data-type="gmm">
-          <span class="type-badge popular">Más solicitado</span>
+          <span class="type-badge popular" data-cms="cards.gmm.badge">Más solicitado</span>
           <div class="type-photo" data-bg='https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=520&q=72&fm=webp'></div>
           <div class="type-body">
             <div class="type-name" data-cms="cards.gmm.name">Gastos Médicos Mayores</div>
@@ -1035,10 +1035,10 @@ img{max-width:100%;display:block}
           </div>
         </div>
         <aside class="quote-panel" id="gmmQuote">
-          <div class="quote-panel-tag">Tu cotización en vivo</div>
+          <div class="quote-panel-tag" data-cms="quote_panel.tag">Tu cotización en vivo</div>
           <div class="quote-panel-title">Plan Personaliza Variable</div>
           <div class="quote-amount"><span class="currency">$</span><span id="gmmAmount">—</span></div>
-          <div class="quote-period">aprox. anual · simulación · GNP financia 3 y 6 MSI el 1er año</div>
+          <div class="quote-period" data-cms="quote_panel.period_hero">aprox. anual · simulación · GNP financia 3 y 6 MSI el 1er año</div>
           <div class="quote-summary" id="gmmSummary"></div>
           <div class="quote-disclaimer">
             Pre-cotización informativa. La anualidad exacta depende de cuestionario médico y revisión personalizada.
@@ -1058,7 +1058,7 @@ img{max-width:100%;display:block}
           </div>
         </div>
         <aside class="quote-panel">
-          <div class="quote-panel-tag">Tu cotización en vivo</div>
+          <div class="quote-panel-tag" data-cms="quote_panel.tag">Tu cotización en vivo</div>
           <div class="quote-panel-title">Plan Auto</div>
           <div class="quote-amount"><span class="currency">$</span><span id="autoAmount">—</span></div>
           <div class="quote-period">aprox. anual · simulación</div>
@@ -1081,12 +1081,12 @@ img{max-width:100%;display:block}
           </div>
         </div>
         <aside class="quote-panel">
-          <div class="quote-panel-tag">Tu cotización en vivo</div>
+          <div class="quote-panel-tag" data-cms="quote_panel.tag">Tu cotización en vivo</div>
           <div class="quote-panel-title" id="genQuoteTitle">Plan</div>
           <div class="quote-amount"><span class="currency">$</span><span id="genAmount">—</span></div>
-          <div class="quote-period">aprox. anual · simulación</div>
+          <div class="quote-period" data-cms="quote_panel.period_simple">aprox. anual · simulación</div>
           <div class="quote-summary" id="genSummary"></div>
-          <div class="quote-disclaimer">
+          <div class="quote-disclaimer" data-cms="quote_panel.disclaimer">
             Pre-cotización informativa. La anualidad final se emite tras suscripción con la aseguradora.
           </div>
         </aside>
@@ -1096,42 +1096,42 @@ img{max-width:100%;display:block}
     <!-- =========== STAGE: CONTACT =========== -->
     <section class="stage" id="stage-contact">
       <div class="section-head">
-        <h2 class="section-title">Último paso · <span class="accent">tus datos</span></h2>
+        <h2 class="section-title"><span data-cms="contact.title_pre">Último paso · </span><span class="accent" data-cms="contact.title_accent">tus datos</span></h2>
         <p class="section-sub" data-cms="ctas.ribbon_step1">Andy Cherro Corallo te contacta personalmente con la cotización real, comparativos y siguiente paso. Sin spam, sin llamadas robot.</p>
       </div>
       <div class="wizard-main" style="max-width:640px;margin:0 auto">
         <div class="field-grid">
           <div class="field">
-            <label class="field-label">Nombre completo</label>
+            <label class="field-label" data-cms="contact.label_name">Nombre completo</label>
             <input class="field-input" id="cName" type="text" placeholder="Ej. María González">
           </div>
           <div class="field">
-            <label class="field-label">WhatsApp</label>
+            <label class="field-label" data-cms="contact.label_phone">WhatsApp</label>
             <input class="field-input" id="cPhone" type="tel" placeholder="998 000 0000">
           </div>
         </div>
         <div class="field-grid">
           <div class="field">
-            <label class="field-label">Email</label>
+            <label class="field-label" data-cms="contact.label_email">Email</label>
             <input class="field-input" id="cEmail" type="email" placeholder="tu@email.com">
           </div>
           <div class="field">
-            <label class="field-label">Ciudad</label>
+            <label class="field-label" data-cms="contact.label_city">Ciudad</label>
             <input class="field-input" id="cCity" type="text" placeholder="Cancún, QR">
           </div>
         </div>
         <div class="field">
-          <label class="field-label">¿Cuándo te gustaría empezar?</label>
+          <label class="field-label" data-cms="contact.label_timing">¿Cuándo te gustaría empezar?</label>
           <select class="field-input" id="cTiming">
-            <option value="ya">Lo antes posible</option>
-            <option value="mes">En 1 mes</option>
-            <option value="3meses">En 3 meses</option>
-            <option value="explorando">Solo estoy explorando</option>
+            <option value="ya" data-cms="contact.timing_options.ya">Lo antes posible</option>
+            <option value="mes" data-cms="contact.timing_options.mes">En 1 mes</option>
+            <option value="3meses" data-cms="contact.timing_options.3meses">En 3 meses</option>
+            <option value="explorando" data-cms="contact.timing_options.explorando">Solo estoy explorando</option>
           </select>
         </div>
         <div class="wizard-nav">
-          <button class="btn btn-ghost" id="cBack">← Atrás</button>
-          <button class="btn btn-primary" id="cSubmit">Ver mi pre-cotización →</button>
+          <button class="btn btn-ghost" id="cBack" data-cms="contact.btn_back">← Atrás</button>
+          <button class="btn btn-primary" id="cSubmit" data-cms="contact.btn_submit">Ver mi pre-cotización →</button>
         </div>
       </div>
     </section>
@@ -1139,30 +1139,30 @@ img{max-width:100%;display:block}
     <!-- =========== STAGE: FINAL =========== -->
     <section class="stage" id="stage-final">
       <div class="final">
-        <span class="final-badge">Pre-cotización lista</span>
-        <h2 class="section-title">Listo, <span id="fName" class="accent">amig@</span></h2>
+        <span class="final-badge" data-cms="final.badge">Pre-cotización lista</span>
+        <h2 class="section-title"><span data-cms="final.title_pre">Listo, </span><span id="fName" class="accent" data-cms="final.title_accent">amig@</span></h2>
         <p class="section-sub" style="margin-bottom:28px" data-cms="ctas.ribbon_step2">Andy Cherro Corallo revisa tu configuración y te devuelve una cotización real con tarifas vigentes de GNP en menos de 24 horas.</p>
 
         <div class="final-card">
-          <div class="quote-panel-tag" style="color:var(--orange)">Pre-cotización · simulación</div>
+          <div class="quote-panel-tag" style="color:var(--orange)" data-cms="final.card_tag">Pre-cotización · simulación</div>
           <div class="quote-panel-title" style="color:var(--gray-700)" id="fProductName">Plan Gastos Médicos Mayores</div>
           <div class="final-amount"><span class="currency">$</span><span id="fAmount">—</span></div>
-          <div class="final-period">aprox. anual MXN · GNP financia 3 y 6 MSI el 1er año · simulación basada en tus elecciones</div>
+          <div class="final-period" data-cms="final.card_period">aprox. anual MXN · GNP financia 3 y 6 MSI el 1er año · simulación basada en tus elecciones</div>
 
           <div class="final-summary">
-            <h4>Tu configuración</h4>
+            <h4 data-cms="final.summary_title">Tu configuración</h4>
             <div id="fSummary"></div>
           </div>
 
           <div class="text-center">
-            <button class="btn btn-primary" id="fWhats">Mandar mi resumen por WhatsApp</button>
+            <button class="btn btn-primary" id="fWhats" data-cms="final.btn_whatsapp">Mandar mi resumen por WhatsApp</button>
             <div class="spacer-sm"></div>
-            <button class="btn btn-link" data-go="stage-hero">← Empezar otra cotización</button>
+            <button class="btn btn-link" data-go="stage-hero" data-cms="final.btn_restart">← Empezar otra cotización</button>
           </div>
         </div>
 
         <div class="spacer-md"></div>
-        <p style="font-size:12px;color:var(--gray-400);max-width:540px;margin:18px auto 0;line-height:1.6">
+        <p style="font-size:12px;color:var(--gray-400);max-width:540px;margin:18px auto 0;line-height:1.6" data-cms-html="final.legal_note">
           Esta es una <strong>pre-cotización informativa</strong>. La anualidad exacta depende de cuestionario médico/revisión técnica
           y la calcula la aseguradora. Andy te explica todo personalmente, sin compromiso.
         </p>
@@ -1174,8 +1174,8 @@ img{max-width:100%;display:block}
   <!-- FOOTER -->
   <footer class="foot">
     <span data-cms-html="footer.main"><strong>ANCHECO</strong> · Andy Cherro Corallo · Agente profesional de seguros · Aliada GNP · cédula profesional V338401</span><br>
-    Tel <a href="https://wa.me/529981633443">998 163 3443</a> · Email <a href="mailto:ancheco.gnp@gmail.com">ancheco.gnp@gmail.com</a> · México<br>
-    <span style="opacity:.6">Pre-cotización informativa basada en parámetros de mercado 2026. La anualidad exacta la emite la aseguradora tras suscripción y cuestionario médico.</span>
+    <span data-cms="footer.contact_pre">Tel </span><a href="https://wa.me/529981633443" data-cms="footer.contact_phone">998 163 3443</a><span data-cms="footer.contact_mid"> · Email </span><a href="mailto:ancheco.gnp@gmail.com" data-cms="footer.contact_email">ancheco.gnp@gmail.com</a><span data-cms="footer.contact_post"> · México</span><br>
+    <span style="opacity:.6" data-cms="footer.legal">Pre-cotización informativa basada en parámetros de mercado 2026. La anualidad exacta la emite la aseguradora tras suscripción y cuestionario médico.</span>
   </footer>
 </div>
 
@@ -1513,13 +1513,23 @@ function stepDotsHTML(currentStep, totalSteps, label){
   return `<div class="step-dots">${dots}<span class="step-dots-label">${label||''}</span></div>`;
 }
 
-function explainerHTML({intro, body, example, rec, bullets}){
+/* explainerHTML — si se le pasa _cmsKey, cada parte se vuelve editable
+   leyendo de window.__cms con fallback al texto literal del código. */
+function explainerHTML({intro, body, example, rec, bullets, _cmsKey}){
+  const wrap = (sub, txt) => {
+    if (!txt) return '';
+    if (!_cmsKey) return txt;
+    const path = `${_cmsKey}.${sub}`;
+    const stored = window.__cms.get(path);
+    const final = (typeof stored === 'string') ? stored : txt;
+    return `<span data-cms-html="${path}">${final}</span>`;
+  };
   return `<div class="explainer">
-    ${intro?`<span class="explainer-tag">${intro}</span>`:''}
-    <div class="explainer-body">${body}</div>
-    ${bullets?`<ul class="explainer-bullets">${bullets.map(b=>`<li>${b}</li>`).join('')}</ul>`:''}
-    ${example?`<div class="explainer-block"><strong>Ejemplo real:</strong> ${example}</div>`:''}
-    ${rec?`<div class="explainer-block rec"><strong>Lo que te recomiendo:</strong> ${rec}</div>`:''}
+    ${intro?`<span class="explainer-tag">${wrap('intro', intro)}</span>`:''}
+    <div class="explainer-body">${wrap('body', body)}</div>
+    ${bullets?`<ul class="explainer-bullets">${bullets.map((b,i)=>`<li>${wrap('bullet'+i, b)}</li>`).join('')}</ul>`:''}
+    ${example?`<div class="explainer-block"><strong>Ejemplo real:</strong> ${wrap('example', example)}</div>`:''}
+    ${rec?`<div class="explainer-block rec"><strong>Lo que te recomiendo:</strong> ${wrap('rec', rec)}</div>`:''}
   </div>`;
 }
 const REC_BADGE = '<span class="opt-rec-badge">Recomendado</span>';
@@ -1549,9 +1559,8 @@ function renderGmm(){
 }
 function gmmStepWho(){
   return `${stepDotsHTML(0, gmmSteps.length)}
-  <h3 class="step-title">Empezamos: ¿quién va a estar cubierto?</h3>
-  ${explainerHTML({
-    intro:'Antes de empezar',
+  <h3 class="step-title"><span data-cms-html="auto.step_title.1">Empezamos: ¿quién va a estar cubierto?</span></h3>
+  ${explainerHTML({_cmsKey:'auto.exp.1', intro:'Antes de empezar',
     body:`Los accidentes y enfermedades ocurren de un día para otro: preferible tener un seguro y no necesitarlo, que necesitarlo y no tenerlo. <strong>¡Protégete!</strong><br><br><strong>Terminología que vas a escuchar:</strong><br><br><strong>Suma asegurada</strong> — Monto total por el que estás protegido. Se elige al contratar y puede ser única o reinstalable anual, dependiendo de si el deducible es único o anual.<br><br><strong>Deducible</strong> — Cantidad fija que pagas cada vez que usas el seguro. Puede ser único (se paga una vez al inicio de cada enfermedad y al agotarse la suma, termina el seguro para ese padecimiento) o anual por enfermedad (se paga cada vez que se utiliza pero la suma asegurada se reinstala, volviéndose ilimitada). <em>Deducibles anuales por padecimiento, tope de 2 deducibles por año por póliza.</em><br><br><strong>Coaseguro</strong> — Porcentaje sobre la factura hospitalaria que tú pagas en cada siniestro, con tope. Su objetivo es que revises los gastos en factura y los prestadores no se excedan.<br><br><strong>Tabulador médico</strong> — Monto máximo que GNP acepta pagar al médico por consultas, cirugías, procedimientos, terapias, etc.; cuanto mejor sea el tabulador más alta será tu anualidad.<br><br><strong>Prima / costo del seguro</strong>.<br><br>El seguro de <strong>gastos médicos mayores</strong> cubre padecimientos <strong>grandes, cuando el gasto ocasionado es mayor a tu deducible</strong> — hospitalizaciones, cirugías, enfermedades graves. <strong>No</strong> cubre consultas preventivas con tu médico ni medicina del día a día.<br><br>Te voy a hacer algunas preguntas, y en cada una te explico qué significa, qué te recomiendo y cómo cambia la prima anual.`,
     example:`Una familia de 4 (2 adultos + 2 hijos) con tabulador B y suma asegurada de $40 millones paga ~$66,500/año en una sola póliza.`,
     rec:`El descuento familiar aplica a partir de 4 integrantes. Con menos personas cada quien paga según su propia edad, sin descuento.`
@@ -1568,9 +1577,8 @@ function gmmStepAge(){
   const showPartner = state.gmm.who !== 'individual';
   const showKids = state.gmm.who === 'familia';
   return `${stepDotsHTML(1, gmmSteps.length)}
-  <h3 class="step-title">Edad${showKids||showPartner?'es':''} y sexo</h3>
-  ${explainerHTML({
-    intro:'¿Por qué te lo pregunto?',
+  <h3 class="step-title"><span data-cms-html="auto.step_title.2">Edad${showKids||showPartner?'es':''} y sexo</span></h3>
+  ${explainerHTML({_cmsKey:'auto.exp.2', intro:'¿Por qué te lo pregunto?',
     body:`La edad es el factor que <strong>más mueve la anualidad</strong>. Es así para todas las aseguradoras — son estadísticas de salud, no es personal.${showPartner?' En planes de pareja/familia, cada miembro suma según su propia edad.':''}`,
     example:`Persona sana, no fumadora, Tabulador B, suma 40M: 25 años ~$18,100/año. 35 años ~$25,812/año. 50 años ~$38,056/año. 65 años ~$101,664/año.${showKids?' Los hijos menores de 10 años son más baratos de asegurar.':''}`,
     rec:`Pon edades reales. Contratar joven sale mucho más barato a largo plazo — la anualidad se calcula con la edad de ingreso, y GNP financia con 3 y 6 MSI con tarjetas participantes el 1er año.`
@@ -1612,9 +1620,8 @@ function gmmStepAge(){
 }
 function gmmStepHealth(){
   return `${stepDotsHTML(2, gmmSteps.length)}
-  <h3 class="step-title">Hábitos: ¿fumas?</h3>
-  ${explainerHTML({
-    intro:'Por qué importa',
+  <h3 class="step-title"><span data-cms-html="auto.step_title.3">Hábitos: ¿fumas?</span></h3>
+  ${explainerHTML({_cmsKey:'auto.exp.3', intro:'Por qué importa',
     body:`Los fumadores pagan más anualidad — son estadísticas de salud. Si fumas y <strong>no lo declaras</strong>, cuando haya un siniestro y se compruebe (autopsia, expediente médico), <strong>la aseguradora anula tu póliza y no paga</strong>.`,
     example:`El factor exacto varía por aseguradora pero típicamente <strong>15-20%</strong> en GMM. Misma persona, 35 años, mismo plan: no fumadora ~$30,000/año vs fumadora ~$36,000/año. Diferencia anual: $6,000.`,
     rec:`Sé ${state.gmm.sex==='F'?'honesta':'honesto'}. Vale más pagar la anualidad correcta que dejar a tu familia sin cobertura cuando más se necesita. Si dejas de fumar 12 meses seguidos, casi todas las aseguradoras te bajan a tarifa de no fumador.`
@@ -1666,9 +1673,8 @@ function gmmStepHospital(){
       </button>`).join('')}
   </div>`;
   return `${stepDotsHTML(3, gmmSteps.length)}
-  <h3 class="step-title">Nivel hospitalario - Todo México</h3>
-  ${explainerHTML({
-    intro:'4 niveles de red hospitalaria',
+  <h3 class="step-title"><span data-cms-html="auto.step_title.4">Nivel hospitalario - Todo México</span></h3>
+  ${explainerHTML({_cmsKey:'auto.exp.4', intro:'4 niveles de red hospitalaria',
     body:`GNP <strong>Personaliza Variable</strong> tiene <strong>4 niveles</strong> de red hospitalaria. Cada nivel determina <strong>a qué hospitales puedes ir</strong> y <strong>cuánto absorbes tú</strong> en cada hospitalización (coaseguro y deducible mínimo).`,
     bullets:[
       `<strong>Nivel A:</strong> hospitales más caros del país. Coaseguro 20% (tope $94,000).`,
@@ -1740,9 +1746,8 @@ function gmmStepDeductible(){
   const youTotal = youDed + youCo;
   const insTotal = ex - youTotal;
   return `${stepDotsHTML(4, gmmSteps.length)}
-  <h3 class="step-title">Deducible</h3>
-  ${explainerHTML({
-    intro:'10 opciones del Nivel '+tier,
+  <h3 class="step-title"><span data-cms-html="auto.step_title.5">Deducible</span></h3>
+  ${explainerHTML({_cmsKey:'auto.exp.5', intro:'10 opciones del Nivel '+tier,
     body:`GNP te da <strong>10 opciones de deducible</strong>. Empezando desde <strong>$21,000</strong> pesos mexicanos hasta <strong>$233,000</strong>.`,
     example:`Eliges un hospital de Nivel ${tier} y la cuenta fue de ${fmtMx(ex)}. Deducible ${fmtMx(val)}. Coaseguro ${co}% — tú pones <strong>${fmtMx(Math.round(youTotal))}</strong>, GNP cubre <strong>${fmtMx(Math.round(insTotal))}</strong>. Mira la barra cómo cambia conforme eliges.`,
     rec:`Para arrancar, las <strong>2 opciones más bajas</strong> (${fmtMx(opts[0])}-${fmtMx(opts[1])}) dan el balance anualidad/protección que Andy recomienda. Si tienes ahorro de emergencia +$100K, salta a opción 4-5 y baja anualidad ~10%.`
@@ -1805,9 +1810,8 @@ function otherTiersDeductibleHTML(currentTier, idx, ex){
 }
 function gmmStepSum(){
   return `${stepDotsHTML(5, gmmSteps.length)}
-  <h3 class="step-title">Suma asegurada anual reinstalable</h3>
-  ${explainerHTML({
-    intro:'Tu tope anual reinstalable',
+  <h3 class="step-title"><span data-cms-html="auto.step_title.6">Suma asegurada anual reinstalable</span></h3>
+  ${explainerHTML({_cmsKey:'auto.exp.6', intro:'Tu tope anual reinstalable',
     body:`Es el <strong>máximo que GNP pagará</strong> en gastos médicos al año. En Personaliza Variable la suma se <strong>reinstala cada año</strong> automáticamente, así que vuelve a estar disponible aunque la hayas usado el año anterior.`,
     rec:`Recomendado: <strong>$40,800,000</strong> para cubrir cualquier posible evento o enfermedad catastrófica. Bajar la suma casi no abarata la anualidad (a veces ~$200 al año) pero te deja expuesto a un gasto grande, por eso conviene mantenerla alta.`
   })}
@@ -1829,9 +1833,8 @@ function gmmStepAddons(){
     ['psico','Asistencia Psicológica','Ya viene incluida — 2 sesiones/mes por videollamada (50 min). Ansiedad, estrés, depresión, insomnio, problemas de pareja. Aplica para terapia de pareja y para menores con consentimiento del tutor.',0]
   ];
   return `${stepDotsHTML(6, gmmSteps.length)}
-  <h3 class="step-title">Coberturas adicionales — Personaliza Variable</h3>
-  ${explainerHTML({
-    intro:'Lo que puedes agregar',
+  <h3 class="step-title"><span data-cms-html="auto.step_title.7">Coberturas adicionales — Personaliza Variable</span></h3>
+  ${explainerHTML({_cmsKey:'auto.exp.7', intro:'Lo que puedes agregar',
     body:`El plan base ya incluye <strong>Asistencia en Viajes</strong>, <strong>Membresía Médica Móvil</strong> (orientación médica telefónica, orientación por videollamada, consulta médica a domicilio, ambulancia por emergencia, traslados programados a costo preferencial, concierge para referencias médicas y hospitalarias) y <strong>Ayuda para Maternidad básica</strong>. Estas son las coberturas <strong>opcionales</strong> que puedes agregar.`,
     example:`<strong>CDA</strong> es el más popular: $1,800/año aprox que te ahorra el deducible cada vez que tengas un accidente. <strong>Maternidad Plus</strong>: si planeas embarazo en los próximos 2-3 años, vale la pena.`,
     rec:`<strong>CDA siempre vale la pena</strong>. <strong>MP</strong> solo si hay plan de embarazo cercano (10 meses de espera). <strong>AHR</strong> si viajas frecuentemente a otras regiones.`
@@ -2025,9 +2028,8 @@ function renderAuto(){
 }
 function autoStepBasic(){
   return `${stepDotsHTML(0, autoSteps.length)}
-  <h3 class="step-title">Empezamos: ¿qué auto vas a asegurar?</h3>
-  ${explainerHTML({
-    intro:'Antes de empezar',
+  <h3 class="step-title"><span data-cms-html="auto.step_title.8">Empezamos: ¿qué auto vas a asegurar?</span></h3>
+  ${explainerHTML({_cmsKey:'auto.exp.8', intro:'Antes de empezar',
     body:`Protege tu auto, tu patrimonio y a quienes más quieres. Conduce con confianza que nosotros te respaldamos en cada kilómetro; la protección que mereces al mejor costo.<br><br>Te voy a hacer 5 preguntas. Las respuestas determinan tu anualidad. <strong>Pon datos reales</strong> — la aseguradora los verifica con la factura del auto cuando emites la póliza.`,
     example:`Mientras más nuevo y más caro tu auto, más cara la anualidad. Un Versa 2018 cuesta mucho menos asegurar que un Honda HRV 2024.`,
     rec:`Si no recuerdas el modelo exacto, está bien. Andy te ayuda a confirmar después.`
@@ -2053,9 +2055,8 @@ function autoStepBasic(){
 }
 function autoStepUse(){
   return `${stepDotsHTML(1, autoSteps.length)}
-  <h3 class="step-title">¿Para qué usas tu auto?</h3>
-  ${explainerHTML({
-    intro:'Por qué importa',
+  <h3 class="step-title"><span data-cms-html="auto.step_title.9">¿Para qué usas tu auto?</span></h3>
+  ${explainerHTML({_cmsKey:'auto.exp.9', intro:'Por qué importa',
     body:`Si usas tu auto para <strong>generar ingreso</strong> (Uber, DiDi, repartos, taxi), la aseguradora lo considera comercial. La anualidad sube ~30%. Las aseguradoras lo verifican — y si reportas "particular" pero lo usas comercialmente, en un siniestro <strong>te pueden negar el pago</strong>.`,
     rec:`Conviene declararlo tal cual. Si usas tu auto comercialmente más del 20% del tiempo, declara comercial. La anualidad sube pero tienes cobertura real cuando algo pase.`
   })}
@@ -2071,9 +2072,8 @@ function autoStepUse(){
 }
 function autoStepCoverage(){
   return `${stepDotsHTML(2, autoSteps.length)}
-  <h3 class="step-title">Tipo de cobertura</h3>
-  ${explainerHTML({
-    intro:'La decisión más importante del seguro de auto',
+  <h3 class="step-title"><span data-cms-html="auto.step_title.10">Tipo de cobertura</span></h3>
+  ${explainerHTML({_cmsKey:'auto.exp.10', intro:'La decisión más importante del seguro de auto',
     body:`Hay <strong>3 niveles</strong> de cobertura. La diferencia entre ellos es enorme — define qué cubre y qué no cuando hay un siniestro.`,
     bullets:[
       `<strong>RC (Responsabilidad Civil):</strong> solo daños a TERCEROS — otra persona, otro auto. Tu auto no está cubierto en ningún caso. Es el mínimo legal.`,
@@ -2103,15 +2103,13 @@ function autoStepCoverage(){
 function autoStepDeductible(){
   if(state.auto.coverage==='rc'){
     return `${stepDotsHTML(3, autoSteps.length)}
-    <h3 class="step-title">RC no tiene deducible</h3>
-    ${explainerHTML({
-      body:`Como Responsabilidad Civil solo cubre a terceros, no hay deducible. Saltamos al siguiente paso.`
+    <h3 class="step-title"><span data-cms-html="auto.step_title.11">RC no tiene deducible</span></h3>
+    ${explainerHTML({_cmsKey:'auto.exp.11', body:`Como Responsabilidad Civil solo cubre a terceros, no hay deducible. Saltamos al siguiente paso.`
     })}`;
   }
   return `${stepDotsHTML(3, autoSteps.length)}
-  <h3 class="step-title">El deducible</h3>
-  ${explainerHTML({
-    intro:'¿Cuánto pones tú si pasa algo?',
+  <h3 class="step-title"><span data-cms-html="auto.step_title.12">El deducible</span></h3>
+  ${explainerHTML({_cmsKey:'auto.exp.12', intro:'¿Cuánto pones tú si pasa algo?',
     body:`En auto, el deducible <strong>NO es un monto fijo</strong> — es un <strong>porcentaje del valor de tu auto</strong>. Cuando hay siniestro, tú pones ese porcentaje y la aseguradora paga el resto.`,
     example:`Auto valor $300,000 con deducible robo 10%: si te lo roban, tú pones $30,000 y la aseguradora $270,000. Con deducible robo 5%: pones solo $15,000 pero pagaste anualidad más alta todo el año.`,
     rec:`<strong>Daños materiales 5%, robo total 10%</strong> son los estándares de mercado y dan buen balance. Bajarlos sube tu anualidad; subirlos la baja.`
@@ -2136,9 +2134,8 @@ function autoStepDeductible(){
 function autoStepAddons(){
   const ad = state.auto.addons;
   return `${stepDotsHTML(4, autoSteps.length)}
-  <h3 class="step-title">Último paso: extras</h3>
-  ${explainerHTML({
-    intro:'Servicios opcionales',
+  <h3 class="step-title"><span data-cms-html="auto.step_title.13">Último paso: extras</span></h3>
+  ${explainerHTML({_cmsKey:'auto.exp.13', intro:'Servicios opcionales',
     body:`Ninguno es obligatorio. Cada uno suma a tu anualidad.`,
     rec:`<strong>Auto sustituto</strong> solo si dependes diario del coche y no tienes otro. Llantas y rines vale la pena en zonas con baches. Los demás según tu uso.`
   })}
@@ -2222,9 +2219,8 @@ const GENERIC_FLOWS = {
     steps:['species','sumInsured','deductible','addons'],
     render:{
       species:()=>`${stepDotsHTML(0, 4)}
-        <h3 class="step-title">Empezamos: tu mascota</h3>
-        ${explainerHTML({
-          intro:'Sobre GNP Mi Mascota',
+        <h3 class="step-title"><span data-cms-html="auto.step_title.14">Empezamos: tu mascota</span></h3>
+        ${explainerHTML({_cmsKey:'auto.exp.14', intro:'Sobre GNP Mi Mascota',
           body:`Cubre <strong>gastos médicos veterinarios</strong> por accidente o enfermedad — cirugías, hospitalización, análisis. También incluye RC (si tu perro muerde a alguien), orientación vet 24/7 y cremación.<br><br><strong>Mascotas elegibles:</strong> perros y gatos entre 3 meses y 9 años. Razas peligrosas (Pitbull, Rottweiler, etc.) tienen condiciones especiales.`,
           example:`<strong>Periodos de espera:</strong> 10 días para accidentes, 180 días para enfermedades. Si contratas hoy, los accidentes están cubiertos en 10 días, pero las enfermedades hasta dentro de 6 meses.`,
           rec:`Mientras más joven contratas, más barata la anualidad — y la mascota está protegida cuando empiezan las enfermedades de mayor edad.`
@@ -2248,9 +2244,8 @@ const GENERIC_FLOWS = {
           <button class="opt ${state.mascota.petSize==='peligrosa'?'selected':''}" data-psize="peligrosa"><div class="opt-body"><div class="opt-label">Raza considerada peligrosa</div><div class="opt-meta">Pitbull, Rottweiler, Doberman, Akita</div></div></button>
         </div>`:''}`,
       sumInsured:()=>`${stepDotsHTML(1, 4)}
-        <h3 class="step-title">Suma asegurada anual</h3>
-        ${explainerHTML({
-          intro:'El tope anual',
+        <h3 class="step-title"><span data-cms-html="auto.step_title.15">Suma asegurada anual</span></h3>
+        ${explainerHTML({_cmsKey:'auto.exp.15', intro:'El tope anual',
           body:`Es el máximo que GNP cubrirá en gastos veterinarios al año. Pasada esa cifra, tú asumes el resto.`,
           example:`Costos típicos en hospital veterinario privado: obstrucción intestinal con hospitalización <strong>$8-25k</strong>. Tratamiento oncológico con seguimiento <strong>$10-30k</strong>. Hospitalización por accidente <strong>$5-15k</strong>.`,
           rec:`<strong>$30,000</strong> es el balance común — cubre la mayoría de eventos médicos sin pagar anualidad de lujo. Si tu mascota es de raza grande o ya tiene años, sube a $50k.`
@@ -2261,9 +2256,8 @@ const GENERIC_FLOWS = {
           <div class="slider-marks"><span>$15k</span><span>$30k</span><span>$50k</span><span>$80k</span></div>
         </div>`,
       deductible:()=>`${stepDotsHTML(2, 4)}
-        <h3 class="step-title">Deducible por evento</h3>
-        ${explainerHTML({
-          intro:'Estructura real GNP Mi Mascota',
+        <h3 class="step-title"><span data-cms-html="auto.step_title.16">Deducible por evento</span></h3>
+        ${explainerHTML({_cmsKey:'auto.exp.16', intro:'Estructura real GNP Mi Mascota',
           body:`En GNP Mi Mascota, el deducible aplica como <strong>50% del gasto veterinario por evento</strong> (estructural, no opcional). Los montos abajo son <em>simulación</em> aplicada a una cuenta veterinaria típica para que veas cómo se siente. La cifra exacta depende del costo real del evento.`,
           example:`Tu perro se intoxica. Cuenta vet: $8,000. GNP cubre el 50% = $4,000. Tú pones los otros $4,000.`,
           rec:`Lo que sí varía por póliza es la suma asegurada anual y los addons. Andy te ayuda a ajustar el plan a tu presupuesto.`
@@ -2275,9 +2269,8 @@ const GENERIC_FLOWS = {
         const ad = state.mascota.addons;
         const items = [['fallece','Fallecimiento','Indemnización por fallecimiento por enfermedad o accidente. Espera 360 días desde la firma.',720],['robo','Robo con violencia','Indemnización tras presentar acta ante el MP.',480],['rc','RC mascota ampliada','Cobertura ampliada de daños a terceros — la mordida importa.',540]];
         return `${stepDotsHTML(3, 4)}
-        <h3 class="step-title">Último paso: extras</h3>
-        ${explainerHTML({
-          intro:'Coberturas opcionales',
+        <h3 class="step-title"><span data-cms-html="auto.step_title.17">Último paso: extras</span></h3>
+        ${explainerHTML({_cmsKey:'auto.exp.17', intro:'Coberturas opcionales',
           body:`El plan base ya cubre lo principal. Estas son agregables.`,
           rec:`Si tu mascota es <strong>perro de raza grande o protección</strong>, agrega RC ampliada — una mordida puede costar caro en demanda. Los demás son opcionales según tu caso.`
         })}
@@ -2333,9 +2326,8 @@ const GENERIC_FLOWS = {
       product:()=>{
         const productos = Object.values(PRODUCTOS_AHORRO);
         return `${stepDotsHTML(0, 4)}
-        <h3 class="step-title">Elige tu producto GNP</h3>
-        ${explainerHTML({
-          intro:'Los 4 productos reales de Andy',
+        <h3 class="step-title"><span data-cms-html="auto.step_title.18">Elige tu producto GNP</span></h3>
+        ${explainerHTML({_cmsKey:'auto.exp.18', intro:'Los 4 productos reales de Andy',
           body:`GNP tiene <strong>4 productos de ahorro/inversión</strong>. Cada uno está diseñado para un objetivo distinto: flexibilidad, control activo, beneficio fiscal, o disciplina forzada. Todos incluyen <strong>seguro de vida</strong> desde el primer día.`,
           example:`<strong>Sofía, 18 años en TRASCIENDE:</strong> aportó $43,374/año durante 10 años ($545,554 total). A los 65 años, su saldo proyectado es $9,443,117 — <strong>17 veces lo aportado</strong>, libre de impuestos. Y tuvo $1.1M de seguro de vida desde el día 1.`,
           rec:`<strong>TRASCIENDE</strong> para flexibilidad y herencia. <strong>CAPITALIZA</strong> si quieres control activo de inversión. <strong>CONSOLIDA</strong> si tu prioridad es deducir ISR. <strong>PROYECTA</strong> si quieres meta rígida de retiro.`
@@ -2356,9 +2348,8 @@ const GENERIC_FLOWS = {
       age:()=>{
         const p = PRODUCTOS_AHORRO[state.ahorro.product];
         return `${stepDotsHTML(1, 4)}
-        <h3 class="step-title">Tu edad</h3>
-        ${explainerHTML({
-          intro:'El interés compuesto es matemática, no magia',
+        <h3 class="step-title"><span data-cms-html="auto.step_title.19">Tu edad</span></h3>
+        ${explainerHTML({_cmsKey:'auto.exp.19', intro:'El interés compuesto es matemática, no magia',
           body:`Empezar joven multiplica tu retiro <strong>exponencialmente</strong>. Mientras más años haya entre hoy y los 65, más crece tu dinero. Aportar el mismo monto a los 25 que a los 45 puede ser la diferencia entre <strong>$10M y $1.5M</strong> a los 65.`,
           example:`<strong>${p.realCase}</strong>`,
           rec:`% recomendado a aportar de tu salario según edad: 25→10%, 35→15%, 45→25%, 55→55%. Mientras más tarde inicies, más esfuerzo necesitas.`
@@ -2372,9 +2363,8 @@ const GENERIC_FLOWS = {
       contribution:()=>{
         const p = PRODUCTOS_AHORRO[state.ahorro.product];
         return `${stepDotsHTML(2, 4)}
-        <h3 class="step-title">¿Cuánto puedes aportar al año?</h3>
-        ${explainerHTML({
-          intro:'Casos reales del PDF de Andy',
+        <h3 class="step-title"><span data-cms-html="auto.step_title.20">¿Cuánto puedes aportar al año?</span></h3>
+        ${explainerHTML({_cmsKey:'auto.exp.20', intro:'Casos reales del PDF de Andy',
           body:`En ${p.name} aportas durante un plazo definido y luego dejas el dinero crecer. <strong>Aportas anual</strong> (puedes pagar mensual, trimestral o semestral si prefieres). <strong>Cualquier monto cuenta</strong> — lo crítico es la consistencia.${state.ahorro.product==='CONSOLIDA'?' <strong>Tope fiscal 2026:</strong> hasta 10% de tu ingreso anual o ~$213,973 (5 UMA), lo que sea menor.':''}`,
           example:`Casos reales: <strong>Carola (5 años) $23,426/año</strong>, <strong>Sofía (18 años) $43,374/año</strong>, <strong>Elia (43 años) $36,000/año</strong>.`,
           rec:`Si recién empiezas y tienes 30+ años para retiro, $24,000-$36,000/año ($2k-$3k/mes) es un arranque sólido.`
@@ -2391,9 +2381,8 @@ const GENERIC_FLOWS = {
         const validYears = state.ahorro.product==='PROYECTA' ? [10] : (state.ahorro.product==='TRASCIENDE' ? [5,10,15] : [10,15]);
         if(!validYears.includes(state.ahorro.years)) state.ahorro.years = validYears[Math.min(1, validYears.length-1)];
         return `${stepDotsHTML(3, 4)}
-        <h3 class="step-title">¿Por cuántos años aportas?</h3>
-        ${explainerHTML({
-          intro:`Plazos disponibles en ${p.name}`,
+        <h3 class="step-title"><span data-cms-html="auto.step_title.21">¿Por cuántos años aportas?</span></h3>
+        ${explainerHTML({_cmsKey:'auto.exp.21', intro:`Plazos disponibles en ${p.name}`,
           body:`En ${p.name} eliges <strong>cuántos años aportas</strong>. Después dejas el dinero crecer hasta cuando quieras retirarlo. ${state.ahorro.product==='TRASCIENDE'?'Desde el año 11 puedes hacer 3 retiros (hasta 50% del saldo). Después de 60 años, un retiro anual hasta el 50% del saldo.':state.ahorro.product==='CAPITALIZA'?'Retiros libres desde el año 11. Aportaciones adicionales cuando quieras desde $1,000.':state.ahorro.product==='CONSOLIDA'?'Retiros desde el año 3 si los necesitas. La deducción fiscal aplica cada año que aportas.':'Plazo único de 10 años. A los 65 o 70 recibes todo en una sola exhibición o como renta vitalicia.'}`,
           rec:`<strong>${validYears.length>1?'10 años':'10 años (único plazo)'}</strong> es el balance más común — total aportado manejable y suficiente tiempo para que el interés compuesto haga lo suyo.`
         })}
@@ -2458,9 +2447,8 @@ const GENERIC_FLOWS = {
     },
     render:{
       proteccion:()=>`${stepDotsHTML(0, 2)}
-        <h3 class="step-title">¿Cuánto quieres asegurar para tu hijo/a?</h3>
-        ${explainerHTML({
-          intro:'Sobre el plan Educativo · Profesional',
+        <h3 class="step-title"><span data-cms-html="auto.step_title.22">¿Cuánto quieres asegurar para tu hijo/a?</span></h3>
+        ${explainerHTML({_cmsKey:'auto.exp.22', intro:'Sobre el plan Educativo · Profesional',
           body:`Plan de ahorro <strong>garantizado</strong> para blindar el futuro académico de tus hijos. Aportas una prima fija durante el plazo que elijas y, al cumplir la meta, tu hijo/a recibe la <strong>suma asegurada garantizada</strong>. Se puede <strong>entregar hasta los 33 años</strong> — universidad, posgrado o un fondo para su proyecto.<br><br>Si algo te pasa en el camino, el plan te respalda: <strong>$2,000,000</strong> por incapacidad total y permanente, <strong>$600,000</strong> por enfermedad terminal, gastos funerarios, y <strong>exención del pago de prima</strong> — GNP completa tus aportes para que tu hijo/a igual reciba lo planeado.`,
           example:`Caso real: protección $1,000,000, pago 7 años a $75,670/año → tu hijo recibe ~$670,048 a los 18 (109% de lo aportado).`,
           rec:`$1,000,000 es la protección más contratada para una meta universitaria completa.`
@@ -2476,9 +2464,8 @@ const GENERIC_FLOWS = {
         const cases = GENERIC_FLOWS.educativo.cases[state.educativo.proteccion];
         const plazos = Object.keys(cases).map(Number).sort((a,b)=>a-b);
         return `${stepDotsHTML(1, 2)}
-        <h3 class="step-title">¿Durante cuántos años quieres pagar?</h3>
-        ${explainerHTML({
-          intro:'El plazo define tu prima',
+        <h3 class="step-title"><span data-cms-html="auto.step_title.23">¿Durante cuántos años quieres pagar?</span></h3>
+        ${explainerHTML({_cmsKey:'auto.exp.23', intro:'El plazo define tu prima',
           body:`Mientras <strong>más corto el plazo</strong>, mayor la prima anual pero terminas de pagar antes. Plazos más largos bajan la prima. Todos los montos son <strong>casos reales GNP</strong>, proyectados al 5% de inflación.`,
           rec:`Si tu hijo es pequeño, un plazo largo (11-14 años) baja la prima y deja crecer más el ahorro.`
         })}
@@ -2525,8 +2512,9 @@ const GENERIC_FLOWS = {
     steps:['homeValue','contentsValue','package','addons'],
     render:{
       homeValue:()=>`${stepDotsHTML(0, 4)}
-        <h3 class="step-title">¿Cuánto vale tu casa (sin contar el terreno)?</h3>
+        <h3 class="step-title">${T('wizards.patrimonial.steps.homeValue.title','¿Cuánto vale tu casa (sin contar el terreno)?')}</h3>
         ${explainerHTML({
+          _cmsKey:'wizards.patrimonial.steps.homeValue',
           intro:'Sobre el seguro de hogar',
           body:`Protege tu casa contra <strong>incendio, robo, fenómenos naturales</strong> (huracanes, sismos, inundaciones, etc), <strong>explosiones y daños eléctricos</strong>. Se toma en cuenta el <strong>valor de reconstrucción</strong> (no el valor comercial).`,
           example:`Si tu casa vale $4M a la venta pero reconstruirla costaría $2.5M (terreno aparte), se aseguran los $2.5M; pagar más es desperdicio y pagar menos te deja descubierta.`,
@@ -2538,8 +2526,9 @@ const GENERIC_FLOWS = {
           <div class="slider-marks"><span>$500k</span><span>$2M</span><span>$5M</span><span>$10M</span></div>
         </div>`,
       contentsValue:()=>`${stepDotsHTML(1, 4)}
-        <h3 class="step-title">¿Y los contenidos?</h3>
+        <h3 class="step-title">${T('wizards.patrimonial.steps.contentsValue.title','¿Y los contenidos?')}</h3>
         ${explainerHTML({
+          _cmsKey:'wizards.patrimonial.steps.contentsValue',
           intro:'Lo que hay dentro',
           body:`Aquí proteges tres tipos de bienes que el plan unifica en un solo monto:<br><br><strong>CONTENIDOS:</strong> muebles, decoración, artículos personales y electrodomésticos. Joyas y arte de alto valor se aseguran aparte con cobertura específica.<br><br><strong>ELECTRÓNICOS:</strong> televisores, cómputo, celulares, audio, entretenimiento, etc (aplica deducible).<br><br><strong>BIENES EN TRÁNSITO:</strong> te cubre el robo de tus artículos portátiles de uso personal que se encuentren temporalmente fuera del inmueble — celulares, tabletas, ropa y accesorios, bolsas, carteras, relojes, binoculares, anteojos, plumas estilográficas, lapiceros, joyas, bicicletas, patines y patinetas, aparatos fotográficos o de video, artículos y aparatos deportivos. Se te reponen descontando el deducible correspondiente. <strong>Si se queman o roban, la aseguradora te lo repone.</strong>`,
           example:`Casa promedio amueblada: muebles $200,000 + electrodomésticos $50,000 + ropa $50,000 + electrónicos $100,000 = ~<strong>$400,000</strong>.`,
@@ -2555,8 +2544,9 @@ const GENERIC_FLOWS = {
         const hv = state.patrimonial.homeValue, cv = state.patrimonial.contentsValue;
         const calcPrima = (p)=>Math.round(hv*p.homeRate + cv*p.contentsRate + p.fixedBase);
         return `${stepDotsHTML(2, 4)}
-        <h3 class="step-title">Elige tu paquete GNP Hogar</h3>
+        <h3 class="step-title">${T('wizards.patrimonial.steps.package.title','Elige tu paquete GNP Hogar')}</h3>
         ${explainerHTML({
+          _cmsKey:'wizards.patrimonial.steps.package',
           intro:'3 niveles de protección, mismas bases de cobertura',
           body:`GNP Hogar maneja <strong>3 paquetes</strong> que escalan en sumas aseguradas, deducibles y extras incluidos. La base (incendio, robo con violencia, fenómenos naturales) viene en los 3. Lo que cambia: <strong>topes de cobertura, deducibles y coberturas adicionales incluidas</strong>.`,
           example:`Casa $2M + $300k contenidos: <strong>Vital ~$2,560/año</strong> · <strong>Plus ~$3,000/año</strong> · <strong>A tu medida ~$8,600/año</strong>. Para casa $2.2M con contenidos $878k (cotización real GNP): <strong>Vital $4,018 · Plus $5,365 · A tu medida $8,794</strong>.`,
@@ -2585,15 +2575,16 @@ const GENERIC_FLOWS = {
           ['funmascotas','Servicio funerario para mascotas','En caso de fallecimiento de tu mascota, esta asistencia brinda los siguientes servicios: recolección del cuerpo, cremación individual de la mascota, urna básica y entrega a domicilio de las cenizas.',1200]
         ];
         return `${stepDotsHTML(3, 4)}
-        <h3 class="step-title">Último paso: extras opcionales</h3>
+        <h3 class="step-title">${T('wizards.patrimonial.steps.addons.title','Último paso: extras opcionales')}</h3>
         ${explainerHTML({
+          _cmsKey:'wizards.patrimonial.steps.addons',
           intro:'Coberturas adicionales',
           body:`Tu paquete ya incluye lo principal (incendio, robo con violencia, daños materiales). Estas son protecciones adicionales que se contratan según la zona donde vives y lo que quieras proteger.`,
           example:`<strong>Hidrometeorológicos:</strong> casa $2.2M en Cancún ≈ $6,600/año (cubre $300k edificio + $300k contenidos contra huracán). En zona costera es prácticamente obligatorio; en interior rara vez se justifica.`,
           rec:`Si vives en <strong>zona costera</strong> (Cancún, Riviera Maya, Golfo, Pacífico), <strong>Hidrometeorológicos no es opcional</strong>: un huracán fuerte puede causar pérdidas por millones. En <strong>zonas sísmicas</strong> (CDMX, Puebla, Oaxaca, Guerrero) Terremoto cierra el hueco más grande del plan base. El Servicio Funerario para Mascotas es un extra de tranquilidad para quienes consideran a su perro o gato parte de la familia.`
         })}
         <div class="opts">
-          ${items.map(([k,l,m,p])=>`<button class="opt ${ad.includes(k)?'selected':''}" data-padon="${k}" data-pcost="${p}">${k==='hidromet'?REC_BADGE:''}<div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div><span class="opt-pill">${p===0?'Consultar':'+'+fmtMx(p)+'/año'}</span></button>`).join('')}
+          ${items.map(([k,l,m,p])=>`<button class="opt ${ad.includes(k)?'selected':''}" data-padon="${k}" data-pcost="${p}">${k==='hidromet'?REC_BADGE:''}<div class="opt-body"><div class="opt-label">${T('wizards.patrimonial.addons.'+k+'.label', l)}</div><div class="opt-meta">${T('wizards.patrimonial.addons.'+k+'.desc', m)}</div></div><span class="opt-pill">${p===0?'Consultar':'+'+fmtMx(p)+'/año'}</span></button>`).join('')}
         </div>`;
       }
     },
@@ -2792,12 +2783,26 @@ updateProgress('stage-hero');
      muestra los textos hardcodeados como fallback — nada se rompe.
 -->
 <script>
+/* Helpers globales:
+   - window.__cms.data       → objeto completo del JSON
+   - window.__cms.get(path)  → lee del JSON (devuelve undefined si no existe)
+   - window.T(path, fallback)→ devuelve el valor del JSON envuelto en <span data-cms-html>
+                               para que el editor in-place lo detecte. Si el JSON
+                               no tiene la clave, usa el fallback.
+*/
+window.__cms = { data: null, get: () => undefined };
+window.T = function(path, fallback) {
+  const v = window.__cms.get(path);
+  const txt = (typeof v === 'string') ? v : fallback;
+  return `<span data-cms-html="${path}">${txt}</span>`;
+};
 (async function hydrateCMS(){
   try {
     const res = await fetch('content/content.json', { cache: 'no-store' });
     if (!res.ok) return;
     const data = await res.json();
     const get = (path) => path.split('.').reduce((o, k) => (o == null ? o : o[k]), data);
+    window.__cms = { data, get };
     document.querySelectorAll('[data-cms]').forEach(el => {
       const v = get(el.dataset.cms);
       if (typeof v === 'string') el.textContent = v;
@@ -2806,6 +2811,8 @@ updateProgress('stage-hero');
       const v = get(el.dataset.cmsHtml);
       if (typeof v === 'string') el.innerHTML = v;
     });
+    // Avisa al editor que los datos están listos (por si el editor cargó antes).
+    document.dispatchEvent(new CustomEvent('cms:ready', { detail: data }));
   } catch (e) {
     // Fallback silencioso a los textos hardcodeados.
   }
