@@ -1460,7 +1460,17 @@ const INFO = {
   }
 };
 
-function info(key){const i = INFO[key];if(i)showInfo(i.icon,i.title,i.body)}
+function info(key){
+  const i = INFO[key]; if (!i) return;
+  // Para que el cliente pueda editar título y cuerpo del modal in-place,
+  // envolvemos cada uno con su key en window.__cms (con fallback al texto del código).
+  const t = window.__cms.get('modales.'+key+'.title');
+  const b = window.__cms.get('modales.'+key+'.body');
+  modalIcon.textContent = i.icon || '';
+  modalTitle.innerHTML = `<span data-cms-html="modales.${key}.title">${typeof t==='string'?t:i.title}</span>`;
+  modalBody.innerHTML  = `<span data-cms-html="modales.${key}.body">${typeof b==='string'?b:i.body}</span>`;
+  modal.classList.add('open');
+}
 
 /* ============ FORMAT ============ */
 function fmt(n){return n.toLocaleString('es-MX',{maximumFractionDigits:0})}
@@ -1554,8 +1564,8 @@ function renderGmm(){
   const step = gmmSteps[state.gmm.step];
   document.getElementById('gmmContent').innerHTML = step.render();
   bindGmm();
-  document.getElementById('gmmBack').textContent = state.gmm.step===0 ? '← Cambiar tipo' : '← Atrás';
-  document.getElementById('gmmNext').textContent = state.gmm.step===gmmSteps.length-1 ? 'Continuar →' : 'Siguiente →';
+  document.getElementById('gmmBack').innerHTML = state.gmm.step===0 ? '<span data-cms-html="wizard_nav.back_root">← Cambiar tipo</span>' : '<span data-cms-html="wizard_nav.back">← Atrás</span>';
+  document.getElementById('gmmNext').innerHTML = state.gmm.step===gmmSteps.length-1 ? '<span data-cms-html="wizard_nav.continue">Continuar →</span>' : '<span data-cms-html="wizard_nav.next">Siguiente →</span>';
 }
 function gmmStepWho(){
   return `${stepDotsHTML(0, gmmSteps.length)}
@@ -2023,8 +2033,8 @@ const autoSteps = [
 function renderAuto(){
   document.getElementById('autoContent').innerHTML = autoSteps[state.auto.step].render();
   bindAuto();
-  document.getElementById('autoBack').textContent = state.auto.step===0 ? '← Cambiar tipo' : '← Atrás';
-  document.getElementById('autoNext').textContent = state.auto.step===autoSteps.length-1 ? 'Continuar →' : 'Siguiente →';
+  document.getElementById('autoBack').innerHTML = state.auto.step===0 ? '<span data-cms-html="wizard_nav.back_root">← Cambiar tipo</span>' : '<span data-cms-html="wizard_nav.back">← Atrás</span>';
+  document.getElementById('autoNext').innerHTML = state.auto.step===autoSteps.length-1 ? '<span data-cms-html="wizard_nav.continue">Continuar →</span>' : '<span data-cms-html="wizard_nav.next">Siguiente →</span>';
 }
 function autoStepBasic(){
   return `${stepDotsHTML(0, autoSteps.length)}
@@ -2647,8 +2657,8 @@ function renderGeneric(){
   document.getElementById('genContent').innerHTML = flow.render[stepKey]();
   document.getElementById('genQuoteTitle').textContent = productNames[state.type] || flow.title;
   flow.bind();
-  document.getElementById('genBack').textContent = cur.step===0 ? '← Cambiar tipo' : '← Atrás';
-  document.getElementById('genNext').textContent = cur.step===flow.steps.length-1 ? 'Continuar →' : 'Siguiente →';
+  document.getElementById('genBack').innerHTML = cur.step===0 ? '<span data-cms-html="wizard_nav.back_root">← Cambiar tipo</span>' : '<span data-cms-html="wizard_nav.back">← Atrás</span>';
+  document.getElementById('genNext').innerHTML = cur.step===flow.steps.length-1 ? '<span data-cms-html="wizard_nav.continue">Continuar →</span>' : '<span data-cms-html="wizard_nav.next">Siguiente →</span>';
 }
 function renderGenericQuote(){
   const flow = GENERIC_FLOWS[state.type] || GENERIC_FLOWS['ahorro'];
