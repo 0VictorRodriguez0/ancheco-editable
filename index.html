@@ -1,0 +1,2812 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANCHECO — Encuentra tu seguro perfecto</title>
+<meta name="description" content="Cotiza tu seguro paso a paso con ANCHECO. Aprende mientras eliges. Paz, tranquilidad y confianza.">
+<meta name="theme-color" content="#F26A2E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="dns-prefetch" href="https://images.unsplash.com">
+<link rel="preload" as="image" href="assets/andy.webp" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+/* ============ ANCHECO BRAND TOKENS ============ */
+:root{
+  --orange:#F26A2E;
+  --orange-dark:#D9521A;
+  --orange-light:#FFE5D6;
+  --navy:#1E3A5F;
+  --navy-dark:#142841;
+  --navy-light:#E8EEF5;
+  --white:#FFFFFF;
+  --gray-50:#F7F8FA;
+  --gray-100:#EDEFF3;
+  --gray-200:#D9DCE3;
+  --gray-400:#8B92A1;
+  --gray-700:#3A4253;
+  --success:#27AE60;
+  --warning:#F2B544;
+  --danger:#E74C3C;
+  --shadow-sm:0 2px 8px rgba(30,58,95,.08);
+  --shadow-md:0 8px 24px rgba(30,58,95,.12);
+  --shadow-lg:0 20px 60px rgba(30,58,95,.18);
+  --radius-sm:8px;
+  --radius-md:14px;
+  --radius-lg:24px;
+  --transition:cubic-bezier(.4,.0,.2,1);
+}
+
+/* ============ RESET ============ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  height:100%;
+  font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;
+  color:var(--navy);
+  background:var(--gray-50);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select{font-family:inherit;font-size:inherit;color:inherit}
+img{max-width:100%;display:block}
+
+/* ============ APP SHELL ============ */
+.app{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+}
+
+/* ============ TOP BAR ============ */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:var(--white);
+  border-bottom:1px solid var(--gray-100);
+  padding:14px 24px;
+  display:flex;align-items:center;gap:20px;
+  box-shadow:var(--shadow-sm);
+}
+.brand{
+  display:flex;align-items:center;gap:10px;
+  font-weight:900;font-size:22px;letter-spacing:1.5px;
+  color:var(--navy);
+}
+.brand-mark{
+  height:72px;
+  display:flex;align-items:center;
+}
+.brand-tag{
+  font-size:9px;font-weight:600;letter-spacing:1.5px;
+  color:var(--gray-400);
+  margin-top:-3px;
+}
+.brand-wrap{display:flex;flex-direction:column;line-height:1}
+.progress-wrap{flex:1;max-width:460px}
+.progress-bar{
+  height:8px;background:var(--gray-100);
+  border-radius:99px;overflow:hidden;position:relative;
+}
+.progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--orange) 0%,var(--orange-dark) 100%);
+  border-radius:99px;
+  width:0%;
+  transition:width .5s var(--transition);
+}
+.progress-label{
+  font-size:11px;font-weight:600;color:var(--gray-400);
+  margin-top:4px;letter-spacing:.5px;text-transform:uppercase;
+}
+.topbar-cta{
+  font-size:13px;font-weight:600;
+  color:var(--navy);text-decoration:none;
+  display:flex;align-items:center;gap:6px;
+}
+.topbar-cta:hover{color:var(--orange)}
+.topbar-agent{
+  display:flex;align-items:center;gap:10px;
+  padding:4px 12px 4px 4px;
+  border-radius:99px;
+  background:var(--gray-50);
+  border:1px solid var(--gray-100);
+}
+.topbar-agent-pic{
+  width:36px;height:36px;border-radius:50%;
+  background-size:cover;background-position:center top;
+  background-color:var(--navy-light);
+  flex:0 0 auto;
+  outline:2px solid var(--orange);outline-offset:-1px;
+}
+.topbar-agent-meta{display:flex;flex-direction:column;line-height:1.1}
+.topbar-agent-name{font-size:12px;font-weight:800;color:var(--navy)}
+.topbar-agent-role{font-size:10px;font-weight:600;color:var(--gray-400);letter-spacing:.3px}
+@media(max-width:780px){.topbar-agent-meta{display:none}}
+@media(max-width:520px){.topbar-agent{display:none}}
+
+/* ============ STAGE SYSTEM ============ */
+.stages{
+  flex:1;
+  position:relative;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:40px 24px 60px;
+}
+.stage{
+  display:none;
+  width:100%;
+  max-width:1100px;
+  animation:slideIn .55s var(--transition);
+  content-visibility:auto;
+  contain-intrinsic-size:auto 600px;
+}
+.stage.active{display:block;content-visibility:visible}
+@keyframes slideIn{
+  from{opacity:0;transform:translateX(40px)}
+  to{opacity:1;transform:translateX(0)}
+}
+
+/* ============ INTRO (compact hero + grid combined) ============ */
+.intro{
+  display:flex;
+  align-items:center;
+  gap:22px;
+  margin-bottom:28px;
+}
+.intro-portrait{
+  width:88px;height:88px;
+  border-radius:50%;
+  background-size:cover;
+  background-position:center top;
+  background-color:var(--navy-light);
+  flex:0 0 auto;
+  box-shadow:0 6px 18px rgba(30,58,95,.15);
+  border:3px solid var(--white);
+  outline:2px solid var(--orange);
+}
+.intro-text{flex:1;min-width:0}
+.intro-title{
+  font-size:clamp(28px,4.5vw,46px);
+  font-weight:900;line-height:1.05;
+  color:var(--navy);
+  margin:8px 0 6px;
+}
+.intro-title .accent{color:var(--orange)}
+.intro-sub{
+  font-size:15px;
+  color:var(--gray-700);
+  line-height:1.5;
+  max-width:680px;
+}
+.intro-sub .hero-script{
+  font-family:inherit;
+  font-weight:900;
+  color:var(--navy);
+  font-size:clamp(20px,3vw,28px);
+  margin-left:4px;
+  font-style:normal;
+}
+.intro-sub .hero-script::before{content:""}
+@media(max-width:600px){
+  .intro{flex-direction:column;text-align:center;gap:14px;align-items:center}
+  .intro-portrait{width:72px;height:72px}
+}
+.hero-eyebrow{
+  display:inline-block;
+  background:var(--orange-light);color:var(--orange-dark);
+  padding:6px 14px;border-radius:99px;
+  font-size:11px;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;
+}
+.hero-title{
+  font-size:clamp(34px,5vw,58px);
+  font-weight:900;line-height:1.05;
+  margin-bottom:18px;
+  color:var(--navy);
+}
+.hero-title .accent{color:var(--orange)}
+.hero-script{
+  font-family:'Great Vibes',cursive;
+  color:var(--orange);
+  font-size:clamp(26px,3.5vw,42px);
+  font-weight:400;
+  display:block;
+  margin-top:6px;
+  line-height:1;
+}
+.hero-sub{
+  font-size:17px;color:var(--gray-700);
+  margin:0 0 36px;
+  line-height:1.55;
+  max-width:540px;
+}
+@media(max-width:880px){.hero-sub{margin-left:auto;margin-right:auto}}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:18px 36px;
+  border-radius:99px;
+  font-weight:700;font-size:16px;letter-spacing:.4px;
+  transition:all .25s var(--transition);
+  white-space:nowrap;
+}
+.btn-primary{
+  background:var(--orange);color:var(--white);
+  box-shadow:0 10px 30px rgba(242,106,46,.35);
+}
+.btn-primary:hover{background:var(--orange-dark);transform:translateY(-2px);box-shadow:0 14px 36px rgba(242,106,46,.45)}
+.btn-primary:active{transform:translateY(0)}
+.btn-ghost{
+  background:transparent;color:var(--navy);
+  border:2px solid var(--gray-200);
+}
+.btn-ghost:hover{border-color:var(--navy);color:var(--navy)}
+.btn-link{
+  color:var(--gray-700);font-size:14px;font-weight:600;
+  padding:8px 0;
+}
+.btn-link:hover{color:var(--orange)}
+
+.hero-trust{
+  display:flex;gap:24px;flex-wrap:wrap;justify-content:center;
+  margin-top:32px;
+  padding-top:24px;
+  border-top:1px solid var(--gray-100);
+}
+.trust-item{
+  display:flex;flex-direction:column;gap:2px;
+  color:var(--gray-700);
+  text-align:center;align-items:center;
+  min-width:100px;
+}
+.trust-num{font-size:18px;font-weight:900;color:var(--navy)}
+.trust-lbl{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--gray-400)}
+
+/* ============ TYPE SELECTOR ============ */
+.section-head{
+  text-align:center;
+  margin-bottom:40px;
+}
+.section-title{
+  font-size:clamp(28px,4vw,42px);
+  font-weight:800;line-height:1.15;
+  color:var(--navy);
+  margin-bottom:12px;
+}
+.section-title .accent{color:var(--orange)}
+.section-sub{
+  font-size:16px;color:var(--gray-700);
+  max-width:560px;margin:0 auto;
+}
+.type-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:20px;
+}
+.type-card{
+  background:var(--white);
+  border:1px solid var(--gray-100);
+  border-radius:var(--radius-lg);
+  text-align:left;
+  transition:all .3s var(--transition);
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  display:flex;flex-direction:column;
+  min-height:280px;
+  box-shadow:var(--shadow-sm);
+}
+.type-card:hover{
+  transform:translateY(-6px);
+  box-shadow:var(--shadow-lg);
+  border-color:var(--orange);
+}
+.type-photo{
+  width:100%;
+  height:140px;
+  background-size:cover;
+  background-position:center;
+  background-color:var(--navy-light);
+  position:relative;
+  will-change:transform;
+}
+.type-photo::after{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(30,58,95,0) 40%,rgba(30,58,95,.45) 100%);
+}
+.type-body{
+  padding:20px 22px 24px;
+  display:flex;flex-direction:column;gap:8px;
+  flex:1;
+}
+.type-name{font-size:18px;font-weight:800;color:var(--navy)}
+.type-desc{font-size:13px;color:var(--gray-700);line-height:1.5}
+.type-badge{
+  position:absolute;top:14px;left:14px;
+  background:var(--white);color:var(--navy);
+  font-size:10px;font-weight:700;
+  padding:5px 10px;border-radius:99px;letter-spacing:.6px;
+  z-index:1;
+  box-shadow:var(--shadow-sm);
+}
+.type-badge.popular{background:var(--orange);color:var(--white)}
+
+/* ============ WIZARD ============ */
+.wizard{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 320px;
+  gap:32px;
+  align-items:start;
+}
+/* wizard collapse handled in MOBILE TWEAKS section below (with order:-1 for quote panel) */
+.wizard-main{
+  background:var(--white);
+  border-radius:var(--radius-lg);
+  padding:36px 36px 28px;
+  box-shadow:var(--shadow-sm);
+  min-height:480px;
+}
+.step-counter{
+  display:flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:1.2px;
+  color:var(--orange);text-transform:uppercase;
+  margin-bottom:8px;
+}
+.step-counter::before{
+  content:"";width:24px;height:2px;background:var(--orange);
+}
+.step-title{
+  font-size:clamp(22px,3vw,30px);
+  font-weight:800;color:var(--navy);
+  line-height:1.2;
+  margin-bottom:8px;
+}
+.step-help{
+  font-size:14px;color:var(--gray-700);
+  line-height:1.5;
+  margin-bottom:24px;
+}
+.step-help .info-btn{margin-left:6px}
+
+/* options grid */
+.opts{display:grid;gap:12px;margin-bottom:24px}
+.opts-2{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.opts-3{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.opt{
+  border:2px solid var(--gray-100);
+  background:var(--white);
+  border-radius:var(--radius-md);
+  padding:18px 16px;
+  text-align:left;
+  display:flex;align-items:center;gap:14px;
+  transition:all .2s var(--transition);
+  cursor:pointer;
+  width:100%;
+}
+.opt:hover{border-color:var(--orange-light);background:var(--gray-50)}
+.opt.selected{
+  border-color:var(--orange);
+  background:var(--orange-light);
+}
+.opt-thumb{
+  width:44px;height:44px;
+  background:var(--orange-light);
+  border-radius:10px;
+  background-size:cover;background-position:center;
+  flex:0 0 auto;
+}
+.opt-body{flex:1}
+.opt-label{font-weight:700;color:var(--navy);font-size:15px;margin-bottom:2px}
+.opt-meta{font-size:12px;color:var(--gray-700);line-height:1.4}
+.opt-pill{
+  font-size:10px;font-weight:700;
+  background:var(--navy);color:var(--white);
+  padding:3px 8px;border-radius:99px;
+  margin-left:auto;
+}
+
+/* sliders */
+.slider-wrap{margin:24px 0 28px}
+.slider-row{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-bottom:14px;
+}
+.slider-value{
+  font-size:34px;font-weight:900;color:var(--orange);
+  font-variant-numeric:tabular-nums;
+}
+.slider-suffix{font-size:13px;font-weight:600;color:var(--gray-400);margin-left:6px}
+.slider{
+  -webkit-appearance:none;width:100%;height:8px;
+  background:var(--gray-100);border-radius:99px;
+  outline:none;
+}
+.slider::-webkit-slider-thumb{
+  -webkit-appearance:none;width:26px;height:26px;
+  background:var(--orange);border-radius:50%;
+  border:4px solid var(--white);
+  box-shadow:0 4px 12px rgba(242,106,46,.4);
+  cursor:pointer;
+}
+.slider::-moz-range-thumb{
+  width:26px;height:26px;background:var(--orange);
+  border-radius:50%;border:4px solid var(--white);
+  box-shadow:0 4px 12px rgba(242,106,46,.4);cursor:pointer;
+}
+.slider-marks{
+  display:flex;justify-content:space-between;
+  font-size:11px;color:var(--gray-400);
+  margin-top:8px;
+}
+
+/* inputs */
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
+.field-label{font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.4px;text-transform:uppercase}
+.field-input{
+  border:2px solid var(--gray-100);
+  background:var(--white);
+  border-radius:var(--radius-md);
+  padding:14px 16px;
+  font-size:15px;font-weight:600;color:var(--navy);
+  transition:border-color .2s;
+  width:100%;
+}
+.field-input:focus{outline:none;border-color:var(--orange)}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:520px){.field-grid{grid-template-columns:1fr}}
+
+/* nav */
+.wizard-nav{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:12px;
+  padding-top:24px;
+  border-top:1px solid var(--gray-100);
+}
+
+/* explainer card — always-visible pedagogy */
+.explainer{
+  background:linear-gradient(135deg,var(--navy-light) 0%,#F4F7FB 100%);
+  border:1px solid var(--navy-light);
+  border-radius:var(--radius-md);
+  padding:18px 20px;
+  margin:0 0 22px;
+}
+.explainer-tag{
+  display:inline-block;
+  font-size:9.5px;font-weight:800;letter-spacing:1.2px;
+  color:var(--orange);text-transform:uppercase;
+  margin-bottom:5px;
+}
+.explainer-body{
+  font-size:14px;color:var(--navy);
+  line-height:1.55;
+}
+.explainer-body strong{color:var(--navy)}
+.explainer-block{
+  background:var(--white);
+  border-radius:8px;
+  padding:11px 14px;
+  margin-top:10px;
+  font-size:13px;color:var(--gray-700);
+  line-height:1.5;
+  border-left:3px solid var(--orange);
+}
+.explainer-block.rec{border-left-color:var(--success)}
+.explainer-block.rec strong{color:var(--success)}
+.explainer-block strong{color:var(--navy)}
+.explainer-bullets{
+  margin:6px 0 0 18px;
+  font-size:13px;color:var(--gray-700);
+  line-height:1.6;
+}
+
+/* "Recomendado" badge on options */
+.opt{position:relative}
+.opt-rec-badge{
+  position:absolute;top:-10px;right:14px;
+  background:var(--success);color:var(--white);
+  font-size:9px;font-weight:800;letter-spacing:.8px;
+  padding:4px 10px;border-radius:99px;
+  text-transform:uppercase;
+  box-shadow:0 4px 10px rgba(39,174,96,.3);
+}
+.opt-hint{
+  font-size:12px;color:var(--gray-400);
+  text-align:center;
+  margin-top:-8px;margin-bottom:18px;
+  font-style:italic;
+}
+
+/* educational visualization */
+.viz{
+  background:linear-gradient(135deg,var(--navy-light),var(--white));
+  border:1px solid var(--navy-light);
+  border-radius:var(--radius-md);
+  padding:18px;
+  margin:18px 0;
+}
+.viz-title{
+  font-size:11px;font-weight:700;
+  color:var(--navy);letter-spacing:1px;text-transform:uppercase;
+  margin-bottom:10px;
+}
+.viz-row{
+  display:flex;align-items:center;gap:12px;
+  font-size:14px;font-weight:600;color:var(--navy);
+  margin-bottom:6px;
+}
+.viz-bar{
+  flex:1;height:24px;
+  background:var(--gray-100);border-radius:6px;
+  overflow:hidden;display:flex;
+}
+.viz-bar-you{background:var(--orange);height:100%;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;color:white;font-size:11px;font-weight:700;transition:width .4s var(--transition)}
+.viz-bar-ins{background:var(--navy);height:100%;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;color:white;font-size:11px;font-weight:700;transition:width .4s var(--transition)}
+.viz-legend{display:flex;gap:18px;font-size:11px;font-weight:600;margin-top:8px;color:var(--gray-700)}
+.viz-dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:middle}
+.viz-dot.you{background:var(--orange)}
+.viz-dot.ins{background:var(--navy)}
+
+/* info button */
+.info-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;
+  background:var(--navy-light);color:var(--navy);
+  border-radius:50%;font-weight:700;font-size:12px;
+  vertical-align:middle;
+  transition:all .2s;
+  cursor:pointer;
+}
+.info-btn:hover{background:var(--navy);color:var(--white);transform:scale(1.1)}
+
+/* ============ LIVE QUOTE PANEL ============ */
+.quote-panel{
+  background:var(--navy);
+  color:var(--white);
+  border-radius:var(--radius-lg);
+  padding:28px 24px;
+  position:sticky;top:96px;
+  box-shadow:var(--shadow-lg);
+}
+.quote-panel-tag{
+  font-size:10px;font-weight:700;letter-spacing:1.4px;
+  color:var(--orange);text-transform:uppercase;
+  margin-bottom:8px;
+}
+.quote-panel-title{
+  font-size:14px;font-weight:600;color:rgba(255,255,255,.7);
+  margin-bottom:20px;
+}
+.quote-amount{
+  font-size:46px;font-weight:900;line-height:1;
+  margin-bottom:4px;
+  font-variant-numeric:tabular-nums;
+}
+.quote-amount .currency{font-size:22px;font-weight:700;vertical-align:top;color:var(--orange);margin-right:4px}
+.quote-period{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:20px}
+.quote-summary{
+  font-size:13px;
+  border-top:1px solid rgba(255,255,255,.12);
+  padding-top:16px;
+  display:flex;flex-direction:column;gap:8px;
+  max-height:240px;overflow-y:auto;
+}
+.quote-line{display:flex;justify-content:space-between;gap:10px;color:rgba(255,255,255,.85)}
+.quote-line .lbl{color:rgba(255,255,255,.55);font-size:11px;letter-spacing:.4px;text-transform:uppercase;font-weight:600}
+.quote-line .val{font-weight:700;text-align:right}
+.quote-disclaimer{
+  font-size:10px;color:rgba(255,255,255,.45);
+  margin-top:18px;padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.12);
+  line-height:1.5;
+}
+
+/* ============ MODAL ============ */
+.modal-backdrop{
+  position:fixed;inset:0;
+  background:rgba(20,40,65,.55);
+  backdrop-filter:blur(6px);
+  display:none;
+  align-items:center;justify-content:center;
+  z-index:100;
+  padding:20px;
+  animation:fadeIn .25s ease;
+}
+.modal-backdrop.open{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{
+  background:var(--white);
+  border-radius:var(--radius-lg);
+  max-width:520px;width:100%;
+  padding:32px;
+  position:relative;
+  box-shadow:var(--shadow-lg);
+  max-height:90vh;overflow-y:auto;
+  animation:popIn .35s var(--transition);
+}
+@keyframes popIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+.modal-icon{display:none}
+.modal-eyebrow{
+  display:inline-block;
+  font-size:10px;font-weight:700;letter-spacing:1.4px;
+  color:var(--orange);text-transform:uppercase;
+  margin-bottom:6px;
+}
+.modal-title{font-size:22px;font-weight:800;color:var(--navy);margin-bottom:10px}
+.modal-body{font-size:14px;color:var(--gray-700);line-height:1.6;margin-bottom:18px}
+.modal-body strong{color:var(--navy)}
+.modal-body ul{margin:10px 0 10px 18px}
+.modal-body li{margin-bottom:6px}
+.modal-example{
+  background:var(--gray-50);
+  border-left:4px solid var(--orange);
+  padding:14px 16px;
+  border-radius:8px;
+  font-size:13px;color:var(--navy);
+  margin:14px 0;
+}
+.modal-example .lbl{font-weight:800;color:var(--orange);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;display:block;margin-bottom:4px}
+.modal-close{
+  position:absolute;top:16px;right:16px;
+  width:34px;height:34px;border-radius:50%;
+  background:var(--gray-100);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;color:var(--gray-700);
+}
+.modal-close:hover{background:var(--gray-200)}
+
+/* ============ FINAL ============ */
+.final{
+  text-align:center;
+  padding:24px 0;
+  position:relative;
+}
+.final-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--orange-light);color:var(--orange-dark);
+  padding:10px 20px;border-radius:99px;
+  font-size:12px;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;
+  margin-bottom:18px;
+}
+.final-card{
+  background:var(--white);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-md);
+  padding:36px 32px;
+  max-width:680px;margin:0 auto;
+  text-align:left;
+}
+.final-amount{
+  font-size:60px;font-weight:900;color:var(--orange);
+  line-height:1;text-align:center;margin:8px 0 4px;
+}
+.final-amount .currency{font-size:30px;color:var(--navy);margin-right:4px}
+.final-period{font-size:14px;color:var(--gray-700);text-align:center;margin-bottom:24px}
+.final-summary{
+  border:1px solid var(--gray-100);
+  border-radius:var(--radius-md);
+  padding:18px;
+  margin:0 0 24px;
+}
+.final-summary h4{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gray-400);margin-bottom:10px}
+.final-summary .quote-line{color:var(--navy)}
+.final-summary .quote-line .lbl{color:var(--gray-400)}
+
+.confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:200}
+
+/* ============ FOOTER ============ */
+.foot{
+  text-align:center;
+  padding:30px 24px;
+  font-size:12px;color:var(--gray-400);
+  border-top:1px solid var(--gray-100);
+  margin-top:auto;
+}
+.foot a{color:var(--orange);text-decoration:none}
+.foot strong{color:var(--navy)}
+
+/* ============ UTIL ============ */
+.spacer-sm{height:8px}
+.spacer-md{height:18px}
+.text-center{text-align:center}
+.hidden{display:none!important}
+
+/* ============ GAMIFY (classy) ============ */
+/* Reveal stagger for type cards */
+.stage.active .type-card{animation:revealUp .55s cubic-bezier(.2,.7,.3,1) backwards}
+.stage.active .type-card:nth-child(1){animation-delay:.04s}
+.stage.active .type-card:nth-child(2){animation-delay:.10s}
+.stage.active .type-card:nth-child(3){animation-delay:.16s}
+.stage.active .type-card:nth-child(4){animation-delay:.22s}
+.stage.active .type-card:nth-child(5){animation-delay:.28s}
+.stage.active .type-card:nth-child(6){animation-delay:.34s}
+@keyframes revealUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* Soft pulse on option select */
+.opt.selected{animation:selectPulse .42s cubic-bezier(.2,.7,.3,1)}
+@keyframes selectPulse{
+  0%{box-shadow:0 0 0 0 rgba(242,106,46,0)}
+  50%{box-shadow:0 0 0 6px rgba(242,106,46,.18)}
+  100%{box-shadow:0 0 0 0 rgba(242,106,46,0)}
+}
+
+/* Live quote — value pulses orange when it changes; lines slide in when new */
+.quote-line{animation:lineEnter .42s cubic-bezier(.2,.7,.3,1) both}
+.quote-line.changed .val{animation:valFlash .55s cubic-bezier(.2,.7,.3,1)}
+@keyframes lineEnter{
+  from{opacity:0;transform:translateX(10px)}
+  to{opacity:1;transform:translateX(0)}
+}
+@keyframes valFlash{
+  0%{color:rgba(255,255,255,.95);text-shadow:0 0 0 rgba(242,106,46,0)}
+  35%{color:#FFB98C;text-shadow:0 0 14px rgba(242,106,46,.55)}
+  100%{color:rgba(255,255,255,.95);text-shadow:0 0 0 rgba(242,106,46,0)}
+}
+
+/* Quote amount: subtle breathing when updating */
+.quote-amount.updating{animation:amountBreathe .5s cubic-bezier(.2,.7,.3,1)}
+@keyframes amountBreathe{
+  0%{transform:scale(1)}
+  45%{transform:scale(1.04);text-shadow:0 0 30px rgba(242,106,46,.35)}
+  100%{transform:scale(1)}
+}
+
+/* Step dots — replace bare counter */
+.step-dots{
+  display:flex;align-items:center;gap:6px;
+  margin-bottom:12px;
+}
+.step-dot{
+  width:24px;height:4px;border-radius:99px;
+  background:var(--gray-100);
+  transition:background .3s ease, width .3s ease;
+}
+.step-dot.done{background:var(--orange-light)}
+.step-dot.current{background:var(--orange);width:36px}
+.step-dots-label{
+  font-size:11px;font-weight:700;letter-spacing:1.2px;
+  color:var(--orange);text-transform:uppercase;
+  margin-left:6px;
+}
+
+/* Wizard step content slide */
+.wizard-main > div:first-child{animation:stepSlide .42s cubic-bezier(.2,.7,.3,1)}
+@keyframes stepSlide{
+  from{opacity:0;transform:translateX(18px)}
+  to{opacity:1;transform:translateX(0)}
+}
+
+/* Final amount dramatic count-up */
+.final-amount.counting{animation:finalReveal .8s cubic-bezier(.2,.7,.3,1)}
+@keyframes finalReveal{
+  from{opacity:0;transform:translateY(20px) scale(.92)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+/* Card hover micro-tilt */
+.type-card{transition:transform .35s cubic-bezier(.2,.7,.3,1),box-shadow .35s,border-color .35s}
+
+/* ============ MOBILE TWEAKS ============ */
+/* Tablet (≤900px): wizard collapses to single column — quote panel must appear ABOVE wizard-main */
+@media(max-width:900px){
+  .wizard{grid-template-columns:1fr;gap:18px}
+  .quote-panel{
+    position:static;
+    order:-1;            /* force quote ABOVE form on mobile */
+    padding:20px 20px;
+  }
+  .quote-amount{font-size:38px}
+  .quote-summary{max-height:none;overflow-y:visible}
+}
+
+/* Small tablet / large phone (≤768px) */
+@media(max-width:768px){
+  .stages{padding:28px 18px 50px}
+  .wizard-main{padding:28px 22px;min-height:0}
+  .section-head{margin-bottom:28px}
+  .type-grid{gap:16px}
+  .type-card{min-height:240px}
+  .type-photo{height:120px}
+  .opts-2,.opts-3{grid-template-columns:1fr}
+  .hero-trust{gap:18px;margin-top:24px;padding-top:20px}
+  .trust-item{min-width:80px}
+}
+
+/* Phone (≤640px) */
+@media(max-width:640px){
+  .topbar{
+    flex-wrap:wrap;gap:8px;padding:10px 14px;
+  }
+  .brand{font-size:16px;letter-spacing:1px;gap:8px}
+  .brand-mark{height:44px}
+  .brand-tag{font-size:8px;letter-spacing:1px}
+  .progress-wrap{flex-basis:100%;order:3;max-width:none}
+  .progress-bar{height:6px}
+  .progress-label{font-size:10px;margin-top:3px}
+  .topbar-cta{font-size:12px;margin-left:auto}
+  .stages{padding:20px 14px 40px}
+  .intro{gap:14px;margin-bottom:22px}
+  .intro-portrait{width:64px;height:64px;border-width:2px}
+  .intro-sub{font-size:14px}
+  .intro-sub .hero-script{font-size:20px}
+  .wizard-main{padding:22px 18px}
+  .quote-panel{padding:18px 16px;border-radius:var(--radius-md)}
+  .quote-amount{font-size:34px}
+  .quote-amount .currency{font-size:18px}
+  .step-title{font-size:20px}
+  .step-help{font-size:13px;margin-bottom:18px}
+  .opt{padding:14px 14px;gap:12px;min-height:64px}
+  .opt-thumb{width:38px;height:38px}
+  .opt-label{font-size:14px}
+  .opt-meta{font-size:11px}
+  .explainer{padding:14px 16px;margin-bottom:18px}
+  .explainer-body{font-size:13px}
+  .explainer-block{padding:10px 12px;font-size:12px}
+  .viz{padding:14px}
+  .slider-value{font-size:28px}
+  .btn{padding:14px 22px;font-size:14px;gap:8px}
+  .btn-link{font-size:13px}
+  .wizard-nav{gap:10px;padding-top:18px}
+  .wizard-nav .btn{padding:14px 18px;flex:1;justify-content:center;min-height:48px}
+  /* Step dots: shrink so 8 dots fit in 320px */
+  .step-dots{gap:4px;flex-wrap:wrap}
+  .step-dot{width:18px;height:4px}
+  .step-dot.current{width:26px}
+  .step-dots-label{display:none}            /* hide label inline; current step is shown in step-title */
+  /* Modal */
+  .modal-backdrop{padding:12px}
+  .modal{padding:22px 18px;border-radius:var(--radius-md)}
+  .modal-title{font-size:19px}
+  .modal-body{font-size:13px}
+  .modal-close{width:30px;height:30px;top:10px;right:10px;font-size:16px}
+  /* Final */
+  .final-card{padding:24px 20px}
+  .final-amount{font-size:46px}
+  .final-amount .currency{font-size:24px}
+  .final-summary{padding:14px}
+  /* Footer */
+  .foot{padding:24px 16px;font-size:11px;line-height:1.6}
+  .hero-trust{gap:14px}
+  .trust-num{font-size:16px}
+}
+
+/* iPhone SE / very narrow (≤380px) */
+@media(max-width:380px){
+  .topbar{padding:8px 12px;gap:6px}
+  .brand{font-size:15px}
+  .brand-tag{display:none}
+  .topbar-cta{font-size:11px}
+  .stages{padding:16px 12px 32px}
+  .wizard-main{padding:18px 14px}
+  .quote-panel{padding:16px 14px}
+  .quote-amount{font-size:30px}
+  .step-title{font-size:18px}
+  .opt{padding:12px;gap:10px}
+  .btn{padding:12px 16px;font-size:13px}
+  .wizard-nav .btn{padding:12px 12px}
+  .modal{padding:18px 14px}
+  .modal-title{font-size:17px}
+  .step-dot{width:14px}
+  .step-dot.current{width:22px}
+  .final-amount{font-size:38px}
+  .final-amount .currency{font-size:20px}
+  .intro-portrait{width:56px;height:56px}
+  .type-card{min-height:220px}
+  .type-photo{height:110px}
+}
+
+/* Ensure all clickable elements meet 44px touch target on touch devices */
+@media(hover:none) and (pointer:coarse){
+  .btn,.opt,.type-card,.info-btn,.modal-close,.topbar-cta{min-height:44px}
+  .info-btn{width:28px;height:28px;font-size:13px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">
+        <img src="assets/logo-dark.png" alt="ANCHECO Seguros" style="height:100%;width:auto;object-fit:contain;display:block;">
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label" id="progressLabel">Empieza tu cotización</div>
+    </div>
+    <a class="topbar-cta" href="https://wa.me/529981633443" target="_blank" data-cms="ctas.topbar">
+      WhatsApp directo
+    </a>
+  </header>
+
+  <!-- STAGES -->
+  <main class="stages">
+
+    <!-- =========== STAGE: HERO (mini portrait + grid) =========== -->
+    <section class="stage active" id="stage-hero">
+      <div class="intro">
+        <div class="intro-portrait" style="background-image:url('assets/andy.webp')" aria-hidden="true"></div>
+        <div class="intro-text">
+          <span class="hero-eyebrow" data-cms="hero.eyebrow">Andy Cherro Corallo · Agente de Seguros · México · cédula profesional V338401</span>
+          <h1 class="intro-title"><span data-cms="hero.title_pre">¿Qué quieres </span><span class="accent" data-cms="hero.title_accent">proteger</span><span data-cms="hero.title_post">?</span></h1>
+          <p class="intro-sub">
+            <span data-cms="hero.sub">Cada decisión tomada hoy — salud, protección, retiro digno — tiene una consecuencia concreta. Te damos las herramientas para tomar la mejor decisión.</span> <span class="hero-script" data-cms="hero.script">Elección consciente.</span>
+          </p>
+        </div>
+      </div>
+      <div class="type-grid">
+        <button class="type-card" data-type="gmm">
+          <span class="type-badge popular">Más solicitado</span>
+          <div class="type-photo" data-bg='https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=520&q=72&fm=webp'></div>
+          <div class="type-body">
+            <div class="type-name" data-cms="cards.gmm.name">Gastos Médicos Mayores</div>
+            <div class="type-desc" data-cms="cards.gmm.desc">Los accidentes y enfermedades ocurren de un día para otro, preferible tener un seguro y no necesitarlo, que necesitarlo y no tenerlo; ¡PROTÉGETE!</div>
+          </div>
+        </button>
+        <button class="type-card" data-type="auto">
+          <div class="type-photo" data-bg='https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=520&q=72&fm=webp'></div>
+          <div class="type-body">
+            <div class="type-name" data-cms="cards.auto.name">Auto</div>
+            <div class="type-desc" data-cms="cards.auto.desc">Responsabilidad civil, robo total, daños materiales. Obligatorio en muchos estados.</div>
+          </div>
+        </button>
+        <button class="type-card" data-type="mascota">
+          <div class="type-photo" data-bg='https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=520&q=72&fm=webp'></div>
+          <div class="type-body">
+            <div class="type-name" data-cms="cards.mascota.name">Mascota</div>
+            <div class="type-desc" data-cms="cards.mascota.desc">GNP Mi Mascota. Perros y gatos de 3 meses a 9 años. Suma y deducible modulares.</div>
+          </div>
+        </button>
+        <button class="type-card" data-type="ahorro">
+          <div class="type-photo" data-bg='https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=520&q=72&fm=webp'></div>
+          <div class="type-body">
+            <div class="type-name" data-cms="cards.ahorro.name">Ahorro · Inversión · Retiro</div>
+            <div class="type-desc" data-cms="cards.ahorro.desc">Plan Personal de Retiro con beneficios fiscales. Aportación deducible de ISR.</div>
+          </div>
+        </button>
+        <button class="type-card" data-type="patrimonial">
+          <div class="type-photo" data-bg='https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=520&q=72&fm=webp'></div>
+          <div class="type-body">
+            <div class="type-name" data-cms="cards.patrimonial.name">Casa / Patrimonial</div>
+            <div class="type-desc" data-cms="cards.patrimonial.desc">Seas propietario o inquilino, protege tu casa y tus bienes dentro y fuera de ella. ¡TU PATRIMONIO TU TRANQUILIDAD!</div>
+          </div>
+        </button>
+        <button class="type-card" data-type="educativo">
+          <div class="type-photo" data-bg='https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=520&q=72&fm=webp'></div>
+          <div class="type-body">
+            <div class="type-name" data-cms="cards.educativo.name">Educativo · Profesional</div>
+            <div class="type-desc" data-cms="cards.educativo.desc">Asegura el futuro académico de tus hijos. Plan de ahorro con protección desde hoy.</div>
+          </div>
+        </button>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item"><span class="trust-num" data-cms="trust.0.num">GNP</span><span class="trust-lbl" data-cms="trust.0.lbl">+120 años en el mercado</span></div>
+        <div class="trust-item"><span class="trust-num" data-cms="trust.1.num">5 min</span><span class="trust-lbl" data-cms="trust.1.lbl">Cotización completa</span></div>
+        <div class="trust-item"><span class="trust-num" data-cms="trust.2.num">México</span><span class="trust-lbl" data-cms="trust.2.lbl">Presencial o remoto</span></div>
+        <div class="trust-item"><span class="trust-num" data-cms="trust.3.num">Personal</span><span class="trust-lbl" data-cms="trust.3.lbl">Andy te contacta directo</span></div>
+      </div>
+
+      <!-- =========== ¿QUIÉNES SOMOS? =========== -->
+      <section class="about" id="about" style="margin-top:48px;padding:36px 0 8px;border-top:1px solid var(--gray-100)">
+        <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:center;justify-content:center;max-width:1040px;margin:0 auto">
+          <div style="flex:1 1 360px;max-width:480px">
+            <img src="assets/andy-xime.webp" alt="Andy Cherro Corallo y Xime Palacio Cherro" loading="lazy"
+                 style="width:100%;height:auto;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);display:block;border:4px solid var(--white);outline:1px solid var(--gray-100)">
+          </div>
+          <div style="flex:1 1 360px;max-width:480px">
+            <span class="hero-eyebrow" data-cms="about.eyebrow">¿Quiénes somos?</span>
+            <h2 class="intro-title" style="font-size:clamp(24px,4vw,34px);margin:10px 0 10px"><span data-cms="about.title_pre">Andy Cherro </span><span class="accent" data-cms="about.title_accent">Corallo</span></h2>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+              <span style="display:inline-block;background:var(--navy);color:var(--white);font-size:12px;font-weight:700;letter-spacing:.3px;padding:5px 12px;border-radius:99px" data-cms="about.badge_mdrt">Miembro MDRT</span>
+              <span style="display:inline-block;background:var(--orange-light);color:var(--orange-dark);font-size:12px;font-weight:700;padding:5px 12px;border-radius:99px" data-cms="about.badge_cedula">Cédula profesional V338401</span>
+            </div>
+            <p style="color:var(--gray-700);line-height:1.6;margin:0 0 14px" data-cms-html="about.p1">
+              Asesora profesional integral de <strong>Seguros, Ahorro e Inversión</strong>, certificada por la Comisión Nacional de Seguros y Fianzas, con más de <strong>250 asegurados</strong>. Miembro del <strong>MDRT</strong> (Million Dollar Round Table), la asociación que reconoce a los asesores financieros de más alto desempeño a nivel mundial.
+            </p>
+            <p style="color:var(--gray-700);line-height:1.6;margin:0 0 14px" data-cms-html="about.p2">
+              Formo parte de <strong>Grupo APSAR</strong> desde hace 8 años y de <strong>Grupo AARCO</strong> hace 4, despachos con más de 30 años de experiencia en el ramo asegurador. Trabajo junto a mi hija <strong>Xime Palacio Cherro</strong> para dar mayor atención y acompañamiento a nuestros asegurados.
+            </p>
+            <p style="color:var(--gray-700);line-height:1.6;margin:0 0 14px" data-cms-html="about.p3">
+              Trabajamos con <strong>todas las aseguradoras del mercado</strong> para encontrar la opción que mejor se ajuste a lo que necesitas.
+            </p>
+            <p style="color:var(--gray-700);line-height:1.6;margin:0">
+              <span data-cms-html="about.p4_pre">Nuestro compromiso es estar a tu lado en los momentos en que nos necesites, apoyarte y abogar por ti en todo momento. </span><span class="hero-script" style="font-family:inherit;font-weight:900;color:var(--navy);font-size:clamp(20px,3vw,28px);font-style:normal" data-cms="about.script">Estamos a tus órdenes.</span>
+            </p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- =========== STAGE: GMM WIZARD =========== -->
+    <section class="stage" id="stage-gmm">
+      <div class="wizard">
+        <div class="wizard-main">
+          <div id="gmmContent"></div>
+          <div class="wizard-nav">
+            <button class="btn btn-ghost" id="gmmBack">← Atrás</button>
+            <button class="btn btn-primary" id="gmmNext">Siguiente →</button>
+          </div>
+        </div>
+        <aside class="quote-panel" id="gmmQuote">
+          <div class="quote-panel-tag">Tu cotización en vivo</div>
+          <div class="quote-panel-title">Plan Personaliza Variable</div>
+          <div class="quote-amount"><span class="currency">$</span><span id="gmmAmount">—</span></div>
+          <div class="quote-period">aprox. anual · simulación · GNP financia 3 y 6 MSI el 1er año</div>
+          <div class="quote-summary" id="gmmSummary"></div>
+          <div class="quote-disclaimer">
+            Pre-cotización informativa. La anualidad exacta depende de cuestionario médico y revisión personalizada.
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- =========== STAGE: AUTO WIZARD =========== -->
+    <section class="stage" id="stage-auto">
+      <div class="wizard">
+        <div class="wizard-main">
+          <div id="autoContent"></div>
+          <div class="wizard-nav">
+            <button class="btn btn-ghost" id="autoBack">← Atrás</button>
+            <button class="btn btn-primary" id="autoNext">Siguiente →</button>
+          </div>
+        </div>
+        <aside class="quote-panel">
+          <div class="quote-panel-tag">Tu cotización en vivo</div>
+          <div class="quote-panel-title">Plan Auto</div>
+          <div class="quote-amount"><span class="currency">$</span><span id="autoAmount">—</span></div>
+          <div class="quote-period">aprox. anual · simulación</div>
+          <div class="quote-summary" id="autoSummary"></div>
+          <div class="quote-disclaimer">
+            Pre-cotización informativa. La anualidad exacta depende de la marca/modelo/año y revisión personalizada.
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- =========== STAGE: GENERIC WIZARD (vida/mascota/ahorro/patrimonial) =========== -->
+    <section class="stage" id="stage-generic">
+      <div class="wizard">
+        <div class="wizard-main">
+          <div id="genContent"></div>
+          <div class="wizard-nav">
+            <button class="btn btn-ghost" id="genBack">← Atrás</button>
+            <button class="btn btn-primary" id="genNext">Siguiente →</button>
+          </div>
+        </div>
+        <aside class="quote-panel">
+          <div class="quote-panel-tag">Tu cotización en vivo</div>
+          <div class="quote-panel-title" id="genQuoteTitle">Plan</div>
+          <div class="quote-amount"><span class="currency">$</span><span id="genAmount">—</span></div>
+          <div class="quote-period">aprox. anual · simulación</div>
+          <div class="quote-summary" id="genSummary"></div>
+          <div class="quote-disclaimer">
+            Pre-cotización informativa. La anualidad final se emite tras suscripción con la aseguradora.
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- =========== STAGE: CONTACT =========== -->
+    <section class="stage" id="stage-contact">
+      <div class="section-head">
+        <h2 class="section-title">Último paso · <span class="accent">tus datos</span></h2>
+        <p class="section-sub" data-cms="ctas.ribbon_step1">Andy Cherro Corallo te contacta personalmente con la cotización real, comparativos y siguiente paso. Sin spam, sin llamadas robot.</p>
+      </div>
+      <div class="wizard-main" style="max-width:640px;margin:0 auto">
+        <div class="field-grid">
+          <div class="field">
+            <label class="field-label">Nombre completo</label>
+            <input class="field-input" id="cName" type="text" placeholder="Ej. María González">
+          </div>
+          <div class="field">
+            <label class="field-label">WhatsApp</label>
+            <input class="field-input" id="cPhone" type="tel" placeholder="998 000 0000">
+          </div>
+        </div>
+        <div class="field-grid">
+          <div class="field">
+            <label class="field-label">Email</label>
+            <input class="field-input" id="cEmail" type="email" placeholder="tu@email.com">
+          </div>
+          <div class="field">
+            <label class="field-label">Ciudad</label>
+            <input class="field-input" id="cCity" type="text" placeholder="Cancún, QR">
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">¿Cuándo te gustaría empezar?</label>
+          <select class="field-input" id="cTiming">
+            <option value="ya">Lo antes posible</option>
+            <option value="mes">En 1 mes</option>
+            <option value="3meses">En 3 meses</option>
+            <option value="explorando">Solo estoy explorando</option>
+          </select>
+        </div>
+        <div class="wizard-nav">
+          <button class="btn btn-ghost" id="cBack">← Atrás</button>
+          <button class="btn btn-primary" id="cSubmit">Ver mi pre-cotización →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========== STAGE: FINAL =========== -->
+    <section class="stage" id="stage-final">
+      <div class="final">
+        <span class="final-badge">Pre-cotización lista</span>
+        <h2 class="section-title">Listo, <span id="fName" class="accent">amig@</span></h2>
+        <p class="section-sub" style="margin-bottom:28px" data-cms="ctas.ribbon_step2">Andy Cherro Corallo revisa tu configuración y te devuelve una cotización real con tarifas vigentes de GNP en menos de 24 horas.</p>
+
+        <div class="final-card">
+          <div class="quote-panel-tag" style="color:var(--orange)">Pre-cotización · simulación</div>
+          <div class="quote-panel-title" style="color:var(--gray-700)" id="fProductName">Plan Gastos Médicos Mayores</div>
+          <div class="final-amount"><span class="currency">$</span><span id="fAmount">—</span></div>
+          <div class="final-period">aprox. anual MXN · GNP financia 3 y 6 MSI el 1er año · simulación basada en tus elecciones</div>
+
+          <div class="final-summary">
+            <h4>Tu configuración</h4>
+            <div id="fSummary"></div>
+          </div>
+
+          <div class="text-center">
+            <button class="btn btn-primary" id="fWhats">Mandar mi resumen por WhatsApp</button>
+            <div class="spacer-sm"></div>
+            <button class="btn btn-link" data-go="stage-hero">← Empezar otra cotización</button>
+          </div>
+        </div>
+
+        <div class="spacer-md"></div>
+        <p style="font-size:12px;color:var(--gray-400);max-width:540px;margin:18px auto 0;line-height:1.6">
+          Esta es una <strong>pre-cotización informativa</strong>. La anualidad exacta depende de cuestionario médico/revisión técnica
+          y la calcula la aseguradora. Andy te explica todo personalmente, sin compromiso.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="foot">
+    <span data-cms-html="footer.main"><strong>ANCHECO</strong> · Andy Cherro Corallo · Agente profesional de seguros · Aliada GNP · cédula profesional V338401</span><br>
+    Tel <a href="https://wa.me/529981633443">998 163 3443</a> · Email <a href="mailto:ancheco.gnp@gmail.com">ancheco.gnp@gmail.com</a> · México<br>
+    <span style="opacity:.6">Pre-cotización informativa basada en parámetros de mercado 2026. La anualidad exacta la emite la aseguradora tras suscripción y cuestionario médico.</span>
+  </footer>
+</div>
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="modal">
+  <div class="modal" id="modalBox">
+    <button class="modal-close" id="modalClose">×</button>
+    <span class="modal-eyebrow">Detalle técnico</span>
+    <h3 class="modal-title" id="modalTitle"></h3>
+    <div class="modal-body" id="modalBody"></div>
+    <button class="btn btn-primary" id="modalOk">Entendido →</button>
+  </div>
+</div>
+
+<script>
+/* ============ APP STATE ============ */
+const state = {
+  type:null,
+  gmm:{step:0,who:'individual',age:35,sex:'F',smoker:false,partnerAge:35,kidsCount:1,kidsAvgAge:8,hospitalTier:'A',deductible:21000,sumInsured:40.8,addons:[]},
+  auto:{step:0,brand:'',model:'',year:2020,vehicleValue:300000,use:'particular',coverage:'amplia',deductibleTheft:10,deductibleDamage:5,addons:[]},
+  mascota:{step:0,species:'perro',petAge:3,petSize:'mediano',sumInsured:30000,deductible:1500,addons:[]},
+  ahorro:{step:0,product:'TRASCIENDE',age:35,annualContribution:36000,years:10},
+  patrimonial:{step:0,homeValue:2000000,contentsValue:300000,package:'VITAL',addons:['hidromet']},
+  educativo:{step:0,proteccion:1000000,plazo:11},
+  contact:{name:'',phone:'',email:'',city:'',timing:'ya'},
+  finalAmount:0,
+  finalSummaryLines:[]
+};
+
+/* ============ DATOS REALES GNP PERSONALIZA VARIABLE ============ */
+const NIVEL_DATA = {
+  A: {coaseguro:20, topeCoaseguro:94000, deducibles:[21000,32000,45000,56000,68000,87000,111000,128000,175000,233000], label:'A · Top tier', desc:'Hospitales premium · ABC, Ángeles del Pedregal, Amerimed, Cozumel International', hospitales:['ABC Observatorio (CDMX)','ABC Santa Fe (CDMX)','Ángeles del Pedregal (CDMX)','Ángeles Universidad (CDMX)','Amerimed (Cancún)','Cozumel International Clinic','Faro del Mayab (Mérida)']},
+  B: {coaseguro:15, topeCoaseguro:70000, deducibles:[17000,21000,32000,45000,56000,68000,87000,111000,128000,175000], label:'B · Alta gama', desc:'Hospitales sólidos · Galenia, Médica Sur, Star Médica, Costamed', hospitales:['Galenia (Cancún)','Costamed (Q.Roo)','Playamed (Playa del Carmen)','Médica Sur (CDMX)','Star Médica (CDMX/Mérida)','Hospital Español (CDMX)','Mérida CEM','Clínica de Mérida','Medimac Mérida']},
+  C: {coaseguro:10, topeCoaseguro:53000, deducibles:[11000,17000,21000,32000,45000,56000,68000,87000,111000,128000], label:'C · Media', desc:'Hospitales privados regionales — Hospiten, Quirúrgica del Sur, Hospital de Tulum', hospitales:['Hospiten (Cancún)','Quirúrgica del Sur (Q.Roo)','Clínica Carranza','Clínica Nazareth','Hospital de Tulum','Médica San Miguel (Cozumel)','Centro Médico de las Américas (Mérida)','Star Médica Centro (CDMX)','Hospital Bite Médica (CDMX)']},
+  D: {coaseguro:5, topeCoaseguro:35000, deducibles:[8000,11000,17000,21000,32000,45000,56000,68000,87000,111000], label:'D · Esencial', desc:'Hospitales privados básicos — Mayan Medical, Group Onco Center, UMIS', hospitales:['Mayan Medical (Cancún)','Group Onco Center Cancún','UMIS (Q.Roo)','Clínica Quirúrgica Berlín (CDMX)','FUCAM','Centro Oncológico de Alta Especialidad']}
+};
+
+const PRODUCTOS_AHORRO = {
+  TRASCIENDE:{
+    name:'TRASCIENDE',
+    tag:'Ahorro tradicional flexible',
+    rendimientoBase:0.071,
+    description:'Aportas <strong>solo 5, 10 o 15 años</strong>. Desde el año 11 hasta tus 60 puedes hacer 3 retiros (hasta 50% de tu saldo). Después de 60 años, un retiro anual hasta el 50% del saldo. Protección por fallecimiento <strong>vitalicia</strong>.',
+    bestFor:'Quien quiere flexibilidad y dejar herencia garantizada.',
+    realCase:'Sofía, 18 años: $43,374/año × 10 años. Seguro de vida $1.1M desde día uno. A los 65 años: $9.4M (1,731% sobre lo aportado).'
+  },
+  CAPITALIZA:{
+    name:'CAPITALIZA',
+    tag:'Inversión flexible multipropósito',
+    rendimientoBase:0.085,
+    description:'Inversión flexible con <strong>14 portafolios</strong> para elegir tu estrategia. Aportas 10 o 15 años. <strong>Aportaciones adicionales desde $1,000</strong> en cualquier momento. Portal personal, retiros libres desde año 11.',
+    bestFor:'Perfil con experiencia financiera o quien quiere control activo.',
+    realCase:'Elia, 43 años: $36,000/año × 10 años. A los 65: $1.56M (362%). A los 70: $2.43M (562%).'
+  },
+  CONSOLIDA:{
+    name:'CONSOLIDA',
+    tag:'Ahorro tradicional + beneficio fiscal',
+    rendimientoBase:0.070,
+    description:'Genera ahorro garantizado para tu retiro <strong>y reduces ISR</strong>: deducible hasta 10% de tu ingreso anual (tope 5 UMA — ~$213,973 en 2026). 2 fondos disponibles. Retiros desde año 3 si los necesitas.',
+    bestFor:'Profesionales y asalariados con ingresos medios-altos buscando reducir su carga fiscal.',
+    realCase:'$36,000/año deducibles a tasa marginal 30% = $10,800 menos de ISR cada año. En 10 años recuperas $108,000 solo en impuestos.'
+  },
+  PROYECTA:{
+    name:'PROYECTA',
+    tag:'Ahorro rígido para retiro',
+    rendimientoBase:0.075,
+    description:'Plan rígido especialmente para retiro. Aportas <strong>solo 10 años</strong>. Tu dinero crece por interés compuesto y a los 65 o 70 años lo recibes <strong>todo junto o en rentas</strong> mensuales. Ahí termina tu plan y protección.',
+    bestFor:'Quien quiere disciplina forzada y meta clara para retiro.',
+    realCase:'$30,000/año × 10 años desde los 30: a los 65, ~$3.0M en una sola exhibición o renta vitalicia.'
+  }
+};
+
+const PRODUCTOS_PATRIMONIAL = {
+  // Tarifas derivadas del desglose línea por línea de los PDFs GNP reales:
+  // - homeRate = (Incendio Edificio + RC + Gastos extra + Remoción + Asistencias) / valor casa
+  // - contentsRate = (Incendio Contenidos + Electrónico + Cristales + extras de contenido) / valor contenidos
+  // - fixedBase para AMEDIDA refleja el paquete premium que no escala con sumas (teletrabajo, menaje, tránsito, funmascotas)
+  // Anclas reales: Vital casa $2.196M + cont $878k = $4,018 · Plus = $5,365 · A tu medida casa $2.196M + cont $300k = $8,794
+  VITAL:{name:'VITAL',tag:'Lo esencial cubierto',homeRate:0.00095,contentsRate:0.00220,fixedBase:0,coberturas:[['Edificio (incendio + fenómenos naturales)','100% del valor asegurado'],['Contenidos generales','100% del valor declarado'],['Robo con violencia','100% de contenidos'],['Responsabilidad civil familiar','$500,000'],['Gastos extra por inhabitabilidad','$50,000'],['Remoción de escombros','10% suma asegurada']],bestFor:'Casa familiar estándar sin objetos de alto valor declarados.',deducibleNote:'Equipo electrónico 20% · Cristales $700 · Hidromet 5% + coaseguro 10%'},
+  PLUS:{name:'PLUS',tag:'Cobertura amplia con sumas mayores',homeRate:0.00093,contentsRate:0.00380,fixedBase:0,coberturas:[['Edificio (incendio + fenómenos naturales)','120% del valor asegurado'],['Contenidos generales','120% del valor declarado'],['Robo con violencia','100% de contenidos'],['Artículos en tránsito','$35,000 incluido'],['Menaje de casa','$88,000 incluido'],['Responsabilidad civil familiar','$1,000,000'],['Cristales y rotura','$50,000 incluido'],['Gastos extra por inhabitabilidad','$120,000']],bestFor:'Casa con electrónica/electrodomésticos premium o zona de mayor exposición.',deducibleNote:'Equipo electrónico 20% · Artículos/Menaje $1,700 · Cristales $700'},
+  AMEDIDA:{name:'A TU MEDIDA',tag:'Cobertura premium con extras incluidos',homeRate:0.00098,contentsRate:0.00220,fixedBase:5978,coberturas:[['Edificio (incendio + fenómenos naturales)','125% del valor asegurado'],['Contenidos generales','125% del valor declarado'],['Robo con/sin violencia','100% / 50% de contenidos'],['Responsabilidad civil familiar','$3,000,000'],['Cristales y rotura','$50,000 incluido'],['Equipo de teletrabajo','$25,000 incluido (vale $541/año aparte)'],['Servicios funerarios para mascotas','Amparada (vale $365/año aparte)'],['Menaje de casa premium','$150,000 incluido (vale $1,721/año aparte)'],['Artículos en tránsito','$50,000 incluido (vale $1,102/año aparte)'],['Asistencia hogar 24/7','Plomería, cerrajería, electricidad']],bestFor:'Casa con home office, mascotas, contenido de alto valor o quien quiere paz total.',deducibleNote:'Equipo electrónico 20% · Teletrabajo 35% · Artículos/Menaje $1,700 · Cristales $700'}
+};
+
+/* Suma asegurada de vida real GNP — depende de edad y producto.
+   Anclado a casos PPT: Carola 5y TRASCIENDE = 81x · Sofía 18y TRASCIENDE = 25x · Elia 43y CAPITALIZA = 5.6x */
+function sumaVidaAhorro(productName, age, contrib){
+  let mult;
+  if(productName === 'TRASCIENDE'){
+    if(age <= 10) mult = 80;
+    else if(age <= 20) mult = 25;
+    else if(age <= 35) mult = 12;
+    else mult = 6;
+  } else if(productName === 'CAPITALIZA'){
+    if(age <= 10) mult = 30;
+    else if(age <= 25) mult = 12;
+    else if(age <= 40) mult = 7;
+    else mult = 5.5;
+  } else { // CONSOLIDA, PROYECTA
+    if(age <= 10) mult = 25;
+    else if(age <= 25) mult = 10;
+    else if(age <= 40) mult = 6;
+    else mult = 4.5;
+  }
+  return Math.round(contrib * mult);
+}
+
+/* Valor proyectado por cada $1 de aportación anual (plan GNP indexado 5%, 10 años de aporte),
+   según edad de inicio. Anclado a los 3 casos reales del PPT Ahorro Inteligente 2026:
+   Carola 5 → 453.13x@65 / 647.22x@70 · Sofía 18 → 217.71 / 313.55 · Elia 43 → 43.45 / 67.47
+   (multiplicador = valor proyectado ÷ aportación anual; reproduce los casos exacto a 10 años) */
+const AHORRO_MULT = [
+  {age:5,  m65:453.13, m70:647.22, rec65:36.03, rec70:51.46},
+  {age:18, m65:217.71, m70:313.55, rec65:17.31, rec70:24.93},
+  {age:43, m65:43.45,  m70:67.47,  rec65:3.62,  rec70:5.62}
+];
+function ahorroMult(age, key){
+  const P = AHORRO_MULT.map(a=>({x:a.age, y:Math.log(a[key])}));
+  const lerp=(x0,y0,x1,y1,x)=>y0+(y1-y0)*(x-x0)/(x1-x0);
+  const y = age<=P[1].x ? lerp(P[0].x,P[0].y,P[1].x,P[1].y,age)
+                        : lerp(P[1].x,P[1].y,P[2].x,P[2].y,age);
+  return Math.exp(y);
+}
+// Tasa efectiva que reproduce el multiplicador real a 10 años (para plazos distintos de 10)
+function ahorroRateFromMult(age){
+  const target = ahorroMult(age,'m65');
+  const H = Math.max(1, 65-age);
+  const f = r => { let s=0; for(let k=0;k<10;k++){ s += Math.pow(1.05,k)*Math.pow(1+r,H-k); } return s; };
+  let lo=0.0, hi=0.15;
+  for(let i=0;i<50;i++){ const mid=(lo+hi)/2; if(f(mid)<target) lo=mid; else hi=mid; }
+  return (lo+hi)/2;
+}
+
+/* ============ STAGE ROUTER ============ */
+function go(stageId){
+  document.querySelectorAll('.stage').forEach(s=>s.classList.remove('active'));
+  const target = document.getElementById(stageId);
+  if(target){target.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+  updateProgress(stageId);
+}
+function updateProgress(stageId){
+  const map={
+    'stage-hero':{p:5,l:'Elige qué quieres proteger'},
+    'stage-gmm':{p:50,l:'Configurando tu plan'},
+    'stage-auto':{p:50,l:'Configurando tu plan'},
+    'stage-generic':{p:50,l:'Configurando tu plan'},
+    'stage-contact':{p:80,l:'Tus datos'},
+    'stage-final':{p:100,l:'Listo · Pre-cotización generada'}
+  };
+  const m = map[stageId]||{p:0,l:''};
+  document.getElementById('progressFill').style.width = m.p+'%';
+  document.getElementById('progressLabel').textContent = m.l;
+}
+
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+
+/* ============ TYPE PICKER ============ */
+document.querySelectorAll('.type-card').forEach(c=>{
+  c.addEventListener('click',()=>{
+    const t = c.dataset.type;
+    state.type = t;
+    if(t==='gmm'){state.gmm.step=0;renderGmm();go('stage-gmm');renderGmmQuote()}
+    else if(t==='auto'){state.auto.step=0;renderAuto();go('stage-auto');renderAutoQuote()}
+    else {state[t].step=0;renderGeneric();go('stage-generic');renderGenericQuote()}
+  });
+});
+
+/* ============ MODAL ============ */
+const modal = document.getElementById('modal');
+const modalBox = document.getElementById('modalBox');
+const modalIcon = document.getElementById('modalIcon');
+const modalTitle = document.getElementById('modalTitle');
+const modalBody = document.getElementById('modalBody');
+function showInfo(icon,title,body){
+  modalIcon.textContent = icon;
+  modalTitle.textContent = title;
+  modalBody.innerHTML = body;
+  modal.classList.add('open');
+}
+document.getElementById('modalClose').addEventListener('click',()=>modal.classList.remove('open'));
+document.getElementById('modalOk').addEventListener('click',()=>modal.classList.remove('open'));
+modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open')});
+
+const INFO = {
+  deductible:{
+    icon:'',
+    title:'El deducible',
+    body:`<p>Es lo que tú pagas antes de que la aseguradora empiece a cubrir.</p>
+    <div class="modal-example"><span class="lbl">Hospitalización de $80,000 con cada nivel</span>
+    Deducible $5,000 → tú pones $5k, aseguradora $75k. Prima: alta.<br>
+    Deducible $25,000 → tú pones $25k, aseguradora $55k. Prima: media.<br>
+    Deducible $50,000 → tú pones $50k, aseguradora $30k. Prima: baja.
+    </div>
+    <p>Es el factor que más mueve la anualidad después de la edad. Si no esperas internarte con frecuencia, deducibles altos son más eficientes a largo plazo. Si tienes condiciones que requieren hospitalización recurrente, deducibles bajos pagan solos en pocos eventos.</p>`
+  },
+  coinsurance:{
+    icon:'',
+    title:'El coaseguro',
+    body:`<p>Después del deducible, es el porcentaje que tú absorbes del resto. Aplica sobre lo que sobra después de pagar el deducible.</p>
+    <div class="modal-example"><span class="lbl">Hospitalización $200,000 · Deducible $25,000 · Coaseguro 10%</span>
+    Pagas el deducible: $25,000<br>
+    Quedan $175,000. Tu 10% = $17,500<br>
+    Aseguradora paga: $157,500<br>
+    <strong>Total que sale de tu bolsillo: $42,500</strong>
+    </div>
+    <p>El estándar de mercado es 10% con tope anual (típicamente $50,000-$80,000 según póliza). 0% existe pero la anualidad sube significativamente.</p>`
+  },
+  hospitalTier:{
+    icon:'',
+    title:'Niveles hospitalarios — GNP Personaliza Variable',
+    body:`<p>Personaliza Variable maneja <strong>4 niveles</strong> de red hospitalaria. Cada nivel determina los hospitales disponibles, el coaseguro fijo y las opciones de deducible.</p>
+    <ul>
+      <li><strong>Nivel A</strong> · Top tier (ABC, Ángeles del Pedregal, Amerimed, Cozumel International, Faro del Mayab). Coaseguro 20%, tope $94,000.</li>
+      <li><strong>Nivel B</strong> · Alta gama (Galenia, Médica Sur, Star Médica, Costamed, Playamed, Hospital Español). Coaseguro 15%, tope $70,000.</li>
+      <li><strong>Nivel C</strong> · Media (Hospiten, Quirúrgica del Sur, Hospital de Tulum, CMA Mérida). Coaseguro 10%, tope $53,000.</li>
+      <li><strong>Nivel D</strong> · Esencial (Mayan Medical, Group Onco Center Cancún, UMIS, FUCAM). Coaseguro 5%, tope $35,000.</li>
+    </ul>
+    <p>El nivel se elige en la contratación y define la red. Cambiarlo después implica nueva suscripción.</p>`
+  },
+  sumInsured:{
+    icon:'',
+    title:'La suma asegurada',
+    body:`<p>El máximo anual que la aseguradora pagará en gastos médicos.</p>
+    <div class="modal-example"><span class="lbl">Referencias reales 2026</span>
+    Una semana en terapia intensiva por COVID grave: $2-3M.<br>
+    Tratamiento de cáncer (1er año): $1.5-4M.<br>
+    Trasplante: $2-5M.
+    </div>
+    <ul>
+      <li><strong>$5M</strong> · cubre hospitalizaciones rutinarias. Margen corto en eventos catastróficos.</li>
+      <li><strong>$10M</strong> · estándar de mercado para perfiles con dependientes.</li>
+      <li><strong>$25-50M</strong> · pensado para enfermedades de tratamiento prolongado.</li>
+    </ul>
+    <p>Las anualidades de Estrella escalan con la suma. Aumentar de $10M a $25M no duplica la anualidad.</p>`
+  },
+  preexisting:{
+    icon:'',
+    title:'Condiciones preexistentes',
+    body:`<p>Cualquier diagnóstico, tratamiento o síntoma previo a la contratación. La aseguradora puede excluirlo de la cobertura, aplicar periodo de espera, o negar la póliza según el caso.</p>
+    <p>No declararlo es causa de rescisión. Si se descubre durante un siniestro, la aseguradora puede negar el pago y cancelar la póliza completa.</p>
+    <p>GNP Personaliza Variable cubre preexistencias bajo dos rutas: (a) previa selección de riesgos, después de 6 meses a 2 años de vigencia según el padecimiento, siempre que no hayas tenido gastos ni tratamiento; (b) después de 5 años de vigencia sin tratamiento, hasta $500K (5-9 años) o $1M (10+ años). Andy revisa el caso antes de elegir aseguradora.</p>`
+  },
+  smoker:{
+    icon:'',
+    title:'Tabaquismo en la anualidad',
+    body:`<p>En vida, los fumadores pagan entre 30% y 60% más que no fumadores con el mismo perfil. En gastos médicos mayores el impacto es menor pero también aplica.</p>
+    <p>Para recuperar tarifa de no fumador, la mayoría de aseguradoras requiere acreditar 12 meses sin fumar.</p>
+    <p>Declarar falsamente y que se compruebe en un siniestro (autopsia, expediente médico) anula la póliza. Mejor declararlo correcto.</p>`
+  },
+  coverageType:{
+    icon:'',
+    title:'Tipos de cobertura auto',
+    body:`<ul>
+      <li><strong>Responsabilidad Civil (RC)</strong> · cubre daños a terceros — personas y vehículos ajenos. Tu auto no está cubierto en ningún escenario. Es el mínimo legal en muchos estados.</li>
+      <li><strong>Limitada</strong> · RC + robo total + asistencia vial. Si chocas tu propio auto, no entra.</li>
+      <li><strong>Amplia</strong> · todo lo anterior + daños materiales (choques, vandalismo, fenómenos naturales). Es la cobertura recomendada para autos con valor superior a $150,000.</li>
+    </ul>
+    <p>La diferencia de anualidad entre Amplia y RC puede ser 60%. Cuando hay siniestro, la diferencia entre tener Amplia o no es el costo total del auto.</p>`
+  },
+  deductibleAuto:{
+    icon:'',
+    title:'Deducible en auto',
+    body:`<p>A diferencia de gastos médicos, en auto el deducible se expresa como porcentaje del valor del vehículo, no como monto fijo.</p>
+    <div class="modal-example"><span class="lbl">Auto valor $300,000 · Deducible robo 10%</span>
+    En caso de robo total: tú pones $30,000, aseguradora paga $270,000.
+    </div>
+    <p>Rangos de mercado: daños materiales 3-15%, robo total 5-15%. El estándar es 5% materiales y 10% robo. Bajarlos sube la anualidad; subirlos la baja.</p>`
+  },
+  petPlan:{
+    icon:'',
+    title:'GNP Mi Mascota — cómo se arma',
+    body:`<p>GNP Mi Mascota es modular. La anualidad sale de combinar suma asegurada + deducible + coberturas opcionales. No hay paquetes fijos.</p>
+    <p><strong>Coberturas base incluidas:</strong></p>
+    <ul>
+      <li>Gastos médicos veterinarios por accidente o enfermedad</li>
+      <li>Hospitalización, cirugía, análisis de laboratorio</li>
+      <li>Responsabilidad civil de la mascota a terceros</li>
+      <li>Orientación veterinaria telefónica 24/7</li>
+      <li>Cremación en caso de fallecimiento</li>
+    </ul>
+    <p><strong>Periodos de espera:</strong> 180 días para enfermedades, 10 días para accidentes. Es decir: si contratas hoy, los accidentes están cubiertos en 10 días, pero las enfermedades hasta dentro de 6 meses.</p>
+    <p><strong>Elegibilidad:</strong> perros y gatos entre 3 meses y 9 años de edad. Razas consideradas peligrosas (Pitbull, Rottweiler, etc.) tienen condiciones específicas.</p>`
+  }
+};
+
+function info(key){const i = INFO[key];if(i)showInfo(i.icon,i.title,i.body)}
+
+/* ============ FORMAT ============ */
+function fmt(n){return n.toLocaleString('es-MX',{maximumFractionDigits:0})}
+function fmtMx(n){return '$'+fmt(n)}
+
+/* ============ GAMIFY HELPERS ============ */
+const _amountState = new WeakMap();
+function setAmount(el, target, duration=520){
+  if(!el) return;
+  const from = _amountState.get(el) ?? 0;
+  if(target === from && el.textContent !== '—'){return}
+  _amountState.set(el, target);
+  const wrap = el.closest('.quote-amount,.final-amount');
+  if(wrap){wrap.classList.remove('updating');void wrap.offsetWidth;wrap.classList.add('updating')}
+  const start = performance.now();
+  function tick(now){
+    const t = Math.min(1, (now-start)/duration);
+    const eased = 1 - Math.pow(1-t, 3);
+    const v = Math.round(from + (target-from)*eased);
+    el.textContent = fmt(v);
+    if(t<1) requestAnimationFrame(tick);
+    else el.textContent = fmt(target);
+  }
+  requestAnimationFrame(tick);
+}
+
+const _summaryState = new Map();
+function renderSummary(containerId, lines){
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  const prev = _summaryState.get(containerId) || [];
+  const html = lines.map((line, i)=>{
+    const [l, v] = line;
+    const prevLine = prev[i];
+    const isNew = !prevLine || prevLine[0] !== l;
+    const valChanged = prevLine && prevLine[0] === l && prevLine[1] !== v;
+    const cls = isNew ? '' : (valChanged ? 'changed' : 'static');
+    const style = isNew ? '' : 'animation:none;opacity:1;transform:none;';
+    return `<div class="quote-line ${cls}" style="${style}"><span class="lbl">${l}</span><span class="val">${v}</span></div>`;
+  }).join('');
+  el.innerHTML = html;
+  _summaryState.set(containerId, lines.map(l=>l.slice()));
+}
+
+function stepDotsHTML(currentStep, totalSteps, label){
+  const dots = Array.from({length:totalSteps}, (_,i)=>{
+    const cls = i < currentStep ? 'done' : (i === currentStep ? 'current' : '');
+    return `<span class="step-dot ${cls}"></span>`;
+  }).join('');
+  return `<div class="step-dots">${dots}<span class="step-dots-label">${label||''}</span></div>`;
+}
+
+function explainerHTML({intro, body, example, rec, bullets}){
+  return `<div class="explainer">
+    ${intro?`<span class="explainer-tag">${intro}</span>`:''}
+    <div class="explainer-body">${body}</div>
+    ${bullets?`<ul class="explainer-bullets">${bullets.map(b=>`<li>${b}</li>`).join('')}</ul>`:''}
+    ${example?`<div class="explainer-block"><strong>Ejemplo real:</strong> ${example}</div>`:''}
+    ${rec?`<div class="explainer-block rec"><strong>Lo que te recomiendo:</strong> ${rec}</div>`:''}
+  </div>`;
+}
+const REC_BADGE = '<span class="opt-rec-badge">Recomendado</span>';
+const POPULAR_BADGE = '<span class="opt-rec-badge" style="background:var(--navy);color:var(--white)">Más solicitado</span>';
+const PREMIUM_BADGE = '<span class="opt-rec-badge" style="background:var(--orange);color:var(--white)">Premium</span>';
+const OPT_HINT = '<div class="opt-hint">Si dudas, deja la recomendación de Andy.</div>';
+
+/* ============================================== */
+/* ============ GMM WIZARD ====================== */
+/* ============================================== */
+const gmmSteps = [
+  {render:gmmStepWho,validate:()=>true},
+  {render:gmmStepAge,validate:()=>true},
+  {render:gmmStepHealth,validate:()=>true},
+  {render:gmmStepHospital,validate:()=>true},
+  {render:gmmStepDeductible,validate:()=>true},
+  {render:gmmStepSum,validate:()=>true},
+  {render:gmmStepAddons,validate:()=>true},
+];
+
+function renderGmm(){
+  const step = gmmSteps[state.gmm.step];
+  document.getElementById('gmmContent').innerHTML = step.render();
+  bindGmm();
+  document.getElementById('gmmBack').textContent = state.gmm.step===0 ? '← Cambiar tipo' : '← Atrás';
+  document.getElementById('gmmNext').textContent = state.gmm.step===gmmSteps.length-1 ? 'Continuar →' : 'Siguiente →';
+}
+function gmmStepWho(){
+  return `${stepDotsHTML(0, gmmSteps.length)}
+  <h3 class="step-title">Empezamos: ¿quién va a estar cubierto?</h3>
+  ${explainerHTML({
+    intro:'Antes de empezar',
+    body:`Los accidentes y enfermedades ocurren de un día para otro: preferible tener un seguro y no necesitarlo, que necesitarlo y no tenerlo. <strong>¡Protégete!</strong><br><br><strong>Terminología que vas a escuchar:</strong><br><br><strong>Suma asegurada</strong> — Monto total por el que estás protegido. Se elige al contratar y puede ser única o reinstalable anual, dependiendo de si el deducible es único o anual.<br><br><strong>Deducible</strong> — Cantidad fija que pagas cada vez que usas el seguro. Puede ser único (se paga una vez al inicio de cada enfermedad y al agotarse la suma, termina el seguro para ese padecimiento) o anual por enfermedad (se paga cada vez que se utiliza pero la suma asegurada se reinstala, volviéndose ilimitada). <em>Deducibles anuales por padecimiento, tope de 2 deducibles por año por póliza.</em><br><br><strong>Coaseguro</strong> — Porcentaje sobre la factura hospitalaria que tú pagas en cada siniestro, con tope. Su objetivo es que revises los gastos en factura y los prestadores no se excedan.<br><br><strong>Tabulador médico</strong> — Monto máximo que GNP acepta pagar al médico por consultas, cirugías, procedimientos, terapias, etc.; cuanto mejor sea el tabulador más alta será tu anualidad.<br><br><strong>Prima / costo del seguro</strong>.<br><br>El seguro de <strong>gastos médicos mayores</strong> cubre padecimientos <strong>grandes, cuando el gasto ocasionado es mayor a tu deducible</strong> — hospitalizaciones, cirugías, enfermedades graves. <strong>No</strong> cubre consultas preventivas con tu médico ni medicina del día a día.<br><br>Te voy a hacer algunas preguntas, y en cada una te explico qué significa, qué te recomiendo y cómo cambia la prima anual.`,
+    example:`Una familia de 4 (2 adultos + 2 hijos) con tabulador B y suma asegurada de $40 millones paga ~$66,500/año en una sola póliza.`,
+    rec:`El descuento familiar aplica a partir de 4 integrantes. Con menos personas cada quien paga según su propia edad, sin descuento.`
+  })}
+  <div class="opts opts-3">
+    ${[['individual','Individual',false],['pareja','Pareja',false],['familia','Familiar',true]].map(([k,l,r])=>`
+    <button class="opt ${state.gmm.who===k?'selected':''}" data-who="${k}">
+      ${r?REC_BADGE:''}
+      <div class="opt-body"><div class="opt-label">${l}</div></div>
+    </button>`).join('')}
+  </div>`;
+}
+function gmmStepAge(){
+  const showPartner = state.gmm.who !== 'individual';
+  const showKids = state.gmm.who === 'familia';
+  return `${stepDotsHTML(1, gmmSteps.length)}
+  <h3 class="step-title">Edad${showKids||showPartner?'es':''} y sexo</h3>
+  ${explainerHTML({
+    intro:'¿Por qué te lo pregunto?',
+    body:`La edad es el factor que <strong>más mueve la anualidad</strong>. Es así para todas las aseguradoras — son estadísticas de salud, no es personal.${showPartner?' En planes de pareja/familia, cada miembro suma según su propia edad.':''}`,
+    example:`Persona sana, no fumadora, Tabulador B, suma 40M: 25 años ~$18,100/año. 35 años ~$25,812/año. 50 años ~$38,056/año. 65 años ~$101,664/año.${showKids?' Los hijos menores de 10 años son más baratos de asegurar.':''}`,
+    rec:`Pon edades reales. Contratar joven sale mucho más barato a largo plazo — la anualidad se calcula con la edad de ingreso, y GNP financia con 3 y 6 MSI con tarjetas participantes el 1er año.`
+  })}
+  <div class="step-help" style="margin-top:6px"><strong>${showPartner?'Tu edad':'Edad'}</strong></div>
+  <div class="slider-wrap">
+    <div class="slider-row">
+      <div><span class="slider-value" id="ageVal">${state.gmm.age}</span><span class="slider-suffix">años</span></div>
+    </div>
+    <input type="range" min="18" max="75" value="${state.gmm.age}" class="slider" id="ageSlider">
+    <div class="slider-marks"><span>18</span><span>30</span><span>45</span><span>60</span><span>75</span></div>
+  </div>
+  <div class="step-help" style="margin-top:18px"><strong>Sexo</strong></div>
+  <div class="opts opts-2">
+    <button class="opt ${state.gmm.sex==='F'?'selected':''}" data-sex="F">
+      <div class="opt-body"><div class="opt-label">Femenino</div></div>
+    </button>
+    <button class="opt ${state.gmm.sex==='M'?'selected':''}" data-sex="M">
+      <div class="opt-body"><div class="opt-label">Masculino</div></div>
+    </button>
+  </div>
+  ${showPartner?`
+  <div class="step-help" style="margin-top:24px;padding-top:18px;border-top:1px solid var(--gray-100)"><strong>Edad de tu pareja</strong></div>
+  <div class="slider-wrap">
+    <div class="slider-row"><div><span class="slider-value" id="partnerAgeVal">${state.gmm.partnerAge}</span><span class="slider-suffix">años</span></div></div>
+    <input type="range" min="18" max="75" value="${state.gmm.partnerAge}" class="slider" id="partnerAgeSlider">
+  </div>`:''}
+  ${showKids?`
+  <div class="step-help" style="margin-top:24px;padding-top:18px;border-top:1px solid var(--gray-100)"><strong>¿Cuántos hijos van a estar cubiertos?</strong></div>
+  <div class="opts opts-3">
+    ${[1,2,3,4].map(n=>`<button class="opt ${state.gmm.kidsCount===n?'selected':''}" data-kidscount="${n}"><div class="opt-body"><div class="opt-label">${n}${n===4?'+':''}</div></div></button>`).join('')}
+  </div>
+  <div class="step-help" style="margin-top:14px"><strong>Edad promedio de tus hijos</strong></div>
+  <div class="slider-wrap">
+    <div class="slider-row"><div><span class="slider-value" id="kidsAgeVal">${state.gmm.kidsAvgAge}</span><span class="slider-suffix">años</span></div></div>
+    <input type="range" min="0" max="25" value="${state.gmm.kidsAvgAge}" class="slider" id="kidsAgeSlider">
+    <div class="slider-marks"><span>0</span><span>10</span><span>18</span><span>25</span></div>
+  </div>`:''}`;
+}
+function gmmStepHealth(){
+  return `${stepDotsHTML(2, gmmSteps.length)}
+  <h3 class="step-title">Hábitos: ¿fumas?</h3>
+  ${explainerHTML({
+    intro:'Por qué importa',
+    body:`Los fumadores pagan más anualidad — son estadísticas de salud. Si fumas y <strong>no lo declaras</strong>, cuando haya un siniestro y se compruebe (autopsia, expediente médico), <strong>la aseguradora anula tu póliza y no paga</strong>.`,
+    example:`El factor exacto varía por aseguradora pero típicamente <strong>15-20%</strong> en GMM. Misma persona, 35 años, mismo plan: no fumadora ~$30,000/año vs fumadora ~$36,000/año. Diferencia anual: $6,000.`,
+    rec:`Sé ${state.gmm.sex==='F'?'honesta':'honesto'}. Vale más pagar la anualidad correcta que dejar a tu familia sin cobertura cuando más se necesita. Si dejas de fumar 12 meses seguidos, casi todas las aseguradoras te bajan a tarifa de no fumador.`
+  })}
+  <div class="opts opts-2">
+    <button class="opt ${!state.gmm.smoker?'selected':''}" data-smoker="false">
+      ${REC_BADGE}
+      <div class="opt-body"><div class="opt-label">No fumo</div><div class="opt-meta">Prima base</div></div>
+    </button>
+    <button class="opt ${state.gmm.smoker?'selected':''}" data-smoker="true">
+      <div class="opt-body"><div class="opt-label">Sí fumo</div><div class="opt-meta">+15-25% en anualidad · declaración obligatoria</div></div>
+    </button>
+  </div>
+  <p class="step-help" style="margin-top:18px;font-size:12px;color:var(--gray-400)"><strong>Sobre condiciones preexistentes</strong> (diabetes, hipertensión, etc.): si las tienes, hay que declararlas. GNP cubre preexistencias después de 6 meses a 2 años de vigencia (con previa selección de riesgos), o después de 5 años sin tratamiento (cobertura $500K-$1M). Andy revisa cada caso.</p>`;
+}
+function gmmStepHospital(){
+  const hospitalsByRegion = {
+    qroo:{
+      A:'Amerimed, Cozumel International Clinic',
+      B:'Galenia, Costamed, Playamed',
+      C:'Hospiten, Quirúrgica del Sur, Clínica Carranza, Clínica Nazareth, Hospital de Tulum, Médica San Miguel Cozumel',
+      D:'Mayan Medical, Group Onco Center Cancún, UMIS (Unidad Médica Integral del Sur)'
+    },
+    yucatan:{
+      A:'Faro del Mayab',
+      B:'Star Médica, Mérida CEM, Clínica de Mérida, Medimac Mérida',
+      C:'Centro Médico de las Américas, Grupo Médico de Mérida, Centro Médico Americano',
+      D:'—'
+    },
+    cdmx:{
+      A:'ABC Observatorio, Hospital Ángeles Universidad, ABC Santa Fe, Hospital Ángeles del Pedregal',
+      B:'Médica Sur, Hospital Ángeles (Santa Mónica, Mocel, Roma, Clínica Londres, Metropolitano, Acoxpa, Lindavista, México), San Ángel Inn (Universidad, Sur, Chapultepec, Patriotismo), Hospital Español, HMG Coyoacán, Diomed, Centro Médico Dalinde, Hospital Infantil Privado',
+      C:'Star Médica Centro, Hospital Bite Médica, Centro Quirúrgico Río Consulado, Hospital MIG, Hospital Escandón, Hospital Mac La Viga, Medimac Cuemanco',
+      D:'Conde de Valenciana IAP, Unidad Oftalmológica del Valle, Centro Oftalmológico del Sur, Onco Quality Care, Superare, Medici, Laser Ocular Lomas, Clínica Quirúrgica Berlín, Centro Oncológico de Alta Especialidad, FUCAM, Clínica Atrys, San Ángel Inn del Valle, Elite Klinik'
+    }
+  };
+  if(!state.gmm.region) state.gmm.region = 'qroo';
+  const hb = hospitalsByRegion[state.gmm.region];
+  const tiers = [
+    {k:'A', label:'Nivel A · Top tier', desc:'Hospitales premium del país', extra:`Coaseguro 20% · Tope ${fmtMx(94000)}`, rec:false, hospitales:hb.A},
+    {k:'B', label:'Nivel B · Alta gama', desc:'Hospitales sólidos', extra:`Coaseguro 15% · Tope ${fmtMx(70000)}`, rec:true, hospitales:hb.B},
+    {k:'C', label:'Nivel C · Gama media', desc:'Privados regionales', extra:`Coaseguro 10% · Tope ${fmtMx(53000)}`, rec:false, hospitales:hb.C},
+    {k:'D', label:'Nivel D · Clínicas de corta estancia', desc:'Privados básicos', extra:`Coaseguro 5% · Tope ${fmtMx(35000)}`, rec:false, hospitales:hb.D}
+  ];
+  const regionPicker = `<div class="opts opts-3" style="margin-bottom:14px">
+    ${[['qroo','Quintana Roo'],['yucatan','Yucatán'],['cdmx','CDMX']].map(([k,l])=>`
+      <button class="opt ${state.gmm.region===k?'selected':''}" data-region="${k}">
+        <div class="opt-body"><div class="opt-label">${l}</div></div>
+      </button>`).join('')}
+  </div>`;
+  return `${stepDotsHTML(3, gmmSteps.length)}
+  <h3 class="step-title">Nivel hospitalario - Todo México</h3>
+  ${explainerHTML({
+    intro:'4 niveles de red hospitalaria',
+    body:`GNP <strong>Personaliza Variable</strong> tiene <strong>4 niveles</strong> de red hospitalaria. Cada nivel determina <strong>a qué hospitales puedes ir</strong> y <strong>cuánto absorbes tú</strong> en cada hospitalización (coaseguro y deducible mínimo).`,
+    bullets:[
+      `<strong>Nivel A:</strong> hospitales más caros del país. Coaseguro 20% (tope $94,000).`,
+      `<strong>Nivel B:</strong> alta gama. Coaseguro 15% (tope $70,000).`,
+      `<strong>Nivel C:</strong> gama media. Coaseguro 10% (tope $53,000).`,
+      `<strong>Nivel D:</strong> clínicas de corta estancia. Coaseguro 5% (tope $35,000).`
+    ],
+    example:`<strong>Nivel A</strong>: vas al ABC en CDMX o Amerimed en Cancún, pero <strong>tú pagas 20%</strong> de la cuenta (máximo $94,000). <strong>Nivel D</strong> (Mayan, UMIS en Cancún): <strong>tú pagas solo 5%</strong> (máximo $35,000).`,
+    rec:`<strong>Nivel B</strong> es el sweet spot para la mayoría — Galenia, Médica Sur, Costamed cubren bien sin el costo de Nivel A. Si vives en CDMX y quieres ABC sí o sí, ve a Nivel A.`
+  })}
+  <div class="step-help" style="margin-top:14px;margin-bottom:8px"><strong>Tu región</strong> · los hospitales disponibles por nivel cambian por estado</div>
+  ${regionPicker}
+  <div class="opts">
+    ${tiers.map(t=>`
+      <button class="opt ${state.gmm.hospitalTier===t.k?'selected':''}" data-tier="${t.k}">
+        ${t.rec?REC_BADGE:''}
+        <div class="opt-body">
+          <div class="opt-label">${t.label}</div>
+          <div class="opt-meta">${t.desc} · ${t.extra}</div>
+          <div class="opt-meta" style="font-size:11px;color:var(--gray-400);margin-top:4px">Hospitales en ${state.gmm.region==='qroo'?'Q.Roo':state.gmm.region==='yucatan'?'Yucatán':'CDMX'}: ${t.hospitales}</div>
+        </div>
+      </button>`).join('')}
+  </div>
+  <p class="step-help" style="margin-top:10px;font-size:11px;color:var(--gray-400)">Deducibles anuales por padecimiento, tope de 2 deducibles por año por póliza.</p>
+  ${comparativeTiersHTML(200000)}
+  <p class="step-help" style="margin-top:16px;font-weight:800;color:var(--navy);background:var(--orange-light);padding:12px 14px;border-radius:10px">El nivel hospitalario lo eliges en el momento de usar tu seguro, no al contratarlo. Atenderte en un hospital de menor nivel reduce tu deducible y coaseguro.</p>`;
+}
+function comparativeTiersHTML(ex){
+  const rows = [
+    {k:'A',co:20,tope:94000,ded:21000},
+    {k:'B',co:15,tope:70000,ded:17000},
+    {k:'C',co:10,tope:53000,ded:11000},
+    {k:'D',co:5,tope:35000,ded:8000}
+  ].map(t=>{
+    const remaining = Math.max(0, ex - t.ded);
+    const youCo = Math.min(remaining * (t.co/100), t.tope);
+    const you = t.ded + youCo;
+    const gnp = ex - you;
+    return {...t, you, gnp};
+  });
+  return `<div class="viz" style="margin-top:18px">
+    <div class="viz-title">Mismo ejemplo en los 4 niveles · hospitalización ${fmtMx(ex)}</div>
+    ${rows.map(r=>`
+      <div style="margin:10px 0">
+        <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:4px">
+          <span>Nivel ${r.k} · deducible ${fmtMx(r.ded)} · coaseguro ${r.co}%</span>
+          <span>Tú ${fmtMx(Math.round(r.you))} · GNP ${fmtMx(Math.round(r.gnp))}</span>
+        </div>
+        <div class="viz-bar" style="height:18px">
+          <div class="viz-bar-you" style="width:${(r.you/ex)*100}%;font-size:10px">${Math.round((r.you/ex)*100)}%</div>
+        </div>
+      </div>`).join('')}
+    <div class="viz-legend" style="margin-top:8px">
+      <span><span class="viz-dot you"></span>Lo que tú pagas (deducible + coaseguro hasta tope)</span>
+    </div>
+  </div>`;
+}
+function gmmStepDeductible(){
+  const tier = state.gmm.hospitalTier;
+  const data = NIVEL_DATA[tier];
+  const opts = data.deducibles;
+  if(!opts.includes(state.gmm.deductible)) state.gmm.deductible = opts[0];
+  const val = state.gmm.deductible;
+  const co = data.coaseguro;
+  const ex = 200000;
+  const youDed = Math.min(val,ex);
+  const remaining = Math.max(0, ex - youDed);
+  const youCo = Math.min(remaining * (co/100), data.topeCoaseguro);
+  const youTotal = youDed + youCo;
+  const insTotal = ex - youTotal;
+  return `${stepDotsHTML(4, gmmSteps.length)}
+  <h3 class="step-title">Deducible</h3>
+  ${explainerHTML({
+    intro:'10 opciones del Nivel '+tier,
+    body:`GNP te da <strong>10 opciones de deducible</strong>. Empezando desde <strong>$21,000</strong> pesos mexicanos hasta <strong>$233,000</strong>.`,
+    example:`Eliges un hospital de Nivel ${tier} y la cuenta fue de ${fmtMx(ex)}. Deducible ${fmtMx(val)}. Coaseguro ${co}% — tú pones <strong>${fmtMx(Math.round(youTotal))}</strong>, GNP cubre <strong>${fmtMx(Math.round(insTotal))}</strong>. Mira la barra cómo cambia conforme eliges.`,
+    rec:`Para arrancar, las <strong>2 opciones más bajas</strong> (${fmtMx(opts[0])}-${fmtMx(opts[1])}) dan el balance anualidad/protección que Andy recomienda. Si tienes ahorro de emergencia +$100K, salta a opción 4-5 y baja anualidad ~10%.`
+  })}
+  <div class="opts opts-3">
+    ${opts.slice(0,6).map((d,i)=>`
+      <button class="opt ${state.gmm.deductible===d?'selected':''}" data-deductible="${d}">
+        ${i===1?REC_BADGE:''}
+        <div class="opt-body"><div class="opt-label">${fmtMx(d)}</div><div class="opt-meta">opción ${i+1}${i===0?' · anualidad alta':i>=4?' · anualidad baja':''}</div></div>
+      </button>`).join('')}
+  </div>
+  <details style="margin-top:14px"><summary style="cursor:pointer;font-size:13px;color:var(--gray-400)">Ver 4 opciones más altas (deducibles ${fmtMx(opts[6])}-${fmtMx(opts[9])})</summary>
+  <div class="opts opts-3" style="margin-top:10px">
+    ${opts.slice(6).map((d,i)=>`
+      <button class="opt ${state.gmm.deductible===d?'selected':''}" data-deductible="${d}">
+        <div class="opt-body"><div class="opt-label">${fmtMx(d)}</div><div class="opt-meta">opción ${i+7} · anualidad muy baja</div></div>
+      </button>`).join('')}
+  </div></details>
+  <div class="viz">
+    <div class="viz-title">Si tu hospitalización cuesta ${fmtMx(ex)}</div>
+    <div class="viz-row">
+      <span style="width:60px"><span class="viz-dot you"></span>Tú</span>
+      <div class="viz-bar"><div class="viz-bar-you" style="width:${(youTotal/ex)*100}%">${fmtMx(Math.round(youTotal))}</div></div>
+    </div>
+    <div class="viz-row">
+      <span style="width:60px"><span class="viz-dot ins"></span>GNP</span>
+      <div class="viz-bar"><div class="viz-bar-ins" style="width:${(insTotal/ex)*100}%">${fmtMx(Math.round(insTotal))}</div></div>
+    </div>
+    <div class="viz-legend">
+      <span><span class="viz-dot you"></span>Deducible + ${co}% coaseguro (tope ${fmtMx(data.topeCoaseguro)})</span>
+      <span><span class="viz-dot ins"></span>Lo que paga GNP</span>
+    </div>
+  </div>
+  ${otherTiersDeductibleHTML(tier, opts.indexOf(val), ex)}`;
+}
+function otherTiersDeductibleHTML(currentTier, idx, ex){
+  const others = ['A','B','C','D'].filter(k=>k!==currentTier);
+  const rows = others.map(k=>{
+    const d = NIVEL_DATA[k];
+    const ded = d.deducibles[Math.min(idx, d.deducibles.length-1)];
+    const remaining = Math.max(0, ex - ded);
+    const youCo = Math.min(remaining * (d.coaseguro/100), d.topeCoaseguro);
+    const you = ded + youCo;
+    const gnp = ex - you;
+    return {k, ded, co:d.coaseguro, you, gnp};
+  });
+  return `<div class="viz" style="margin-top:14px">
+    <div class="viz-title">Mismo deducible (opción ${idx+1}) en los otros niveles</div>
+    ${rows.map(r=>`
+      <div style="margin:10px 0">
+        <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:4px">
+          <span>Nivel ${r.k} · ded ${fmtMx(r.ded)} · coaseguro ${r.co}%</span>
+          <span>Tú ${fmtMx(Math.round(r.you))} · GNP ${fmtMx(Math.round(r.gnp))}</span>
+        </div>
+        <div class="viz-bar" style="height:16px">
+          <div class="viz-bar-you" style="width:${(r.you/ex)*100}%;font-size:10px">${Math.round((r.you/ex)*100)}%</div>
+        </div>
+      </div>`).join('')}
+  </div>`;
+}
+function gmmStepSum(){
+  return `${stepDotsHTML(5, gmmSteps.length)}
+  <h3 class="step-title">Suma asegurada anual reinstalable</h3>
+  ${explainerHTML({
+    intro:'Tu tope anual reinstalable',
+    body:`Es el <strong>máximo que GNP pagará</strong> en gastos médicos al año. En Personaliza Variable la suma se <strong>reinstala cada año</strong> automáticamente, así que vuelve a estar disponible aunque la hayas usado el año anterior.`,
+    rec:`Recomendado: <strong>$40,800,000</strong> para cubrir cualquier posible evento o enfermedad catastrófica. Bajar la suma casi no abarata la anualidad (a veces ~$200 al año) pero te deja expuesto a un gasto grande, por eso conviene mantenerla alta.`
+  })}
+  <div class="opts opts-3">
+    ${[[2.2,'$2.2M','Básica'],[17.5,'$17.5M','Intermedia'],[40.8,'$40.8M','Personaliza estándar',true],[58.3,'$58.3M','Mayor cobertura']].map(([v,l,m,r])=>`
+      <button class="opt ${state.gmm.sumInsured===v?'selected':''}" data-sum="${v}">
+        ${r?REC_BADGE:''}
+        <div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div>
+      </button>`).join('')}
+  </div>`;
+}
+function gmmStepAddons(){
+  const ad = state.gmm.addons;
+  // Costos anuales estimados de coberturas adicionales reales GNP Personaliza Variable
+  const items = [
+    ['cda','Cero Deducible por Accidente (CDA)','Si te accidentas (caída, choque, etc.), no pagas deducible — GNP cubre desde el primer peso.',1800],
+    ['mp','Maternidad Plus Personaliza (MP)','3 opciones de cobertura: $47,000, $64,500 y $81,500. 10 meses de espera.',5200],
+    ['ahr','Ampliación Hospitalaria Nacional (AHR)','Acceso a hospitales de niveles superiores en otras regiones del país, no solo tu nivel base.',2800],
+    ['psico','Asistencia Psicológica','Ya viene incluida — 2 sesiones/mes por videollamada (50 min). Ansiedad, estrés, depresión, insomnio, problemas de pareja. Aplica para terapia de pareja y para menores con consentimiento del tutor.',0]
+  ];
+  return `${stepDotsHTML(6, gmmSteps.length)}
+  <h3 class="step-title">Coberturas adicionales — Personaliza Variable</h3>
+  ${explainerHTML({
+    intro:'Lo que puedes agregar',
+    body:`El plan base ya incluye <strong>Asistencia en Viajes</strong>, <strong>Membresía Médica Móvil</strong> (orientación médica telefónica, orientación por videollamada, consulta médica a domicilio, ambulancia por emergencia, traslados programados a costo preferencial, concierge para referencias médicas y hospitalarias) y <strong>Ayuda para Maternidad básica</strong>. Estas son las coberturas <strong>opcionales</strong> que puedes agregar.`,
+    example:`<strong>CDA</strong> es el más popular: $1,800/año aprox que te ahorra el deducible cada vez que tengas un accidente. <strong>Maternidad Plus</strong>: si planeas embarazo en los próximos 2-3 años, vale la pena.`,
+    rec:`<strong>CDA siempre vale la pena</strong>. <strong>MP</strong> solo si hay plan de embarazo cercano (10 meses de espera). <strong>AHR</strong> si viajas frecuentemente a otras regiones.`
+  })}
+  <div class="opts">
+    ${items.map(([k,l,m,p])=>`
+      <button class="opt ${ad.includes(k)?'selected':''}" data-addon="${k}">
+        ${k==='cda'?REC_BADGE:''}
+        ${k==='psico'?'<span class="opt-pill" style="background:var(--success)">incluido</span>':''}
+        <div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div>
+        ${p>0?`<span class="opt-pill">+${fmtMx(p)}/año</span>`:''}
+      </button>`).join('')}
+  </div>
+  <div style="margin-top:24px;padding:18px;background:var(--gray-50);border-radius:14px">
+    <div style="font-weight:900;font-size:14px;color:var(--navy);letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px">Beneficios incluidos sin costo extra</div>
+    <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0">GNP Cuida tu Salud</summary>
+      <ul style="margin:6px 0 10px 18px;color:var(--gray-700);font-size:13px;line-height:1.6">
+        <li><strong>Prevención y Diagnóstico:</strong> Check-up básico (incluye química de 3 elementos), cuidado dental (higiene dental incluida), vacunas con 20% de descuento.</li>
+        <li><strong>Consultas (App GNP):</strong> Videoconsultas con receta digital, médico a domicilio.</li>
+        <li><strong>Red Médica de Especialidad:</strong> Consultas de especialidad costo fijo $650, sub-especialidades $850.</li>
+        <li><strong>Apoyo en Medicamentos:</strong> Medicamentos sin costo, descuentos exclusivos en laboratorios.</li>
+      </ul>
+    </details>
+    <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0">Emergencias de gastos médicos NO cubiertos · hasta $1,000,000</summary>
+      <p style="margin:6px 0 10px 0;color:var(--gray-700);font-size:13px;line-height:1.6">Para emergencias que pongan en peligro la vida o la viabilidad de algún órgano, por tratamientos no indispensables y no cubiertos normalmente: estéticos, calvicie, dietéticos, obesidad, anorexia, bulimia, infertilidad, esterilidad, control natal, impotencia sexual, disfunción eréctil, dentales, alveolares, gingivales, estudios de prevención y check-ups. Suma asegurada: <strong>máximo $1,000,000</strong>.</p>
+    </details>
+    <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0">Membresía Asegurado VIP · Grupo APSAR</summary>
+      <ul style="margin:6px 0 10px 18px;color:var(--gray-700);font-size:13px;line-height:1.6">
+        <li><strong>Hospital Galenia:</strong> descuento $8,000 en deducible, consulta médico general $350, 15% farmacia, 30% laboratorios cuadro básico, 30% imagenología, 20% check-up ejecutivo.</li>
+        <li><strong>Clínica Mayan:</strong> descuento $4,000 en deducible.</li>
+        <li><strong>Odontoheart Cancún · Bukkadent Odontología Avanzada:</strong> beneficios para asegurados.</li>
+      </ul>
+    </details>
+    <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0">Asistencia Médica Móvil · 6 servicios</summary>
+      <ol style="margin:6px 0 10px 18px;color:var(--gray-700);font-size:13px;line-height:1.6">
+        <li>Orientación médica telefónica</li>
+        <li>Orientación médica por videollamada</li>
+        <li>Consulta médica a domicilio</li>
+        <li>Ambulancia por emergencia</li>
+        <li>Traslados programados a costo preferencial</li>
+        <li>Concierge para referencias médicas y hospitalarias</li>
+      </ol>
+    </details>
+    <details><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0">Terminología que vas a escuchar</summary>
+      <dl style="margin:6px 0 0 0;color:var(--gray-700);font-size:13px;line-height:1.6">
+        <dt style="font-weight:800;color:var(--navy);margin-top:8px">Deducible</dt>
+        <dd style="margin:2px 0 0 0">Cantidad fija que pagas cada vez que usas el seguro. Puede ser único (se paga una vez al inicio de cada enfermedad y al agotarse la suma, termina el seguro para ese padecimiento) o anual por enfermedad (se paga cada vez que se utiliza pero la suma asegurada se reinstala, volviéndose ilimitada).</dd>
+        <dt style="font-weight:800;color:var(--navy);margin-top:8px">Coaseguro</dt>
+        <dd style="margin:2px 0 0 0">Porcentaje sobre la factura hospitalaria que tú pagas en cada siniestro, con tope. Su objetivo es que revises los gastos en factura y los prestadores no se excedan.</dd>
+        <dt style="font-weight:800;color:var(--navy);margin-top:8px">Suma asegurada</dt>
+        <dd style="margin:2px 0 0 0">Monto total por el que estás protegido. Se elige al contratar y puede ser única o reinstalable anual, dependiendo de si el deducible es único o anual.</dd>
+        <dt style="font-weight:800;color:var(--navy);margin-top:8px">Tabulador médico</dt>
+        <dd style="margin:2px 0 0 0">Monto máximo que GNP acepta pagar al médico por consultas, cirugías y procedimientos. Varía según nivel hospitalario.</dd>
+      </dl>
+    </details>
+  </div>`;
+}
+function bindGmm(){
+  document.querySelectorAll('[data-who]').forEach(b=>b.addEventListener('click',()=>{state.gmm.who=b.dataset.who;renderGmm();renderGmmQuote()}));
+  document.querySelectorAll('[data-sex]').forEach(b=>b.addEventListener('click',()=>{state.gmm.sex=b.dataset.sex;renderGmm();renderGmmQuote()}));
+  document.querySelectorAll('[data-smoker]').forEach(b=>b.addEventListener('click',()=>{state.gmm.smoker=b.dataset.smoker==='true';renderGmm();renderGmmQuote()}));
+  document.querySelectorAll('[data-deductible]').forEach(b=>b.addEventListener('click',()=>{state.gmm.deductible=parseInt(b.dataset.deductible);renderGmm();renderGmmQuote()}));
+  document.querySelectorAll('[data-tier]').forEach(b=>b.addEventListener('click',()=>{
+    state.gmm.hospitalTier=b.dataset.tier;
+    // Reset deducible al primero del nivel
+    state.gmm.deductible = NIVEL_DATA[state.gmm.hospitalTier].deducibles[0];
+    renderGmm();renderGmmQuote();
+  }));
+  document.querySelectorAll('[data-region]').forEach(b=>b.addEventListener('click',()=>{
+    state.gmm.region=b.dataset.region;renderGmm();
+  }));
+  document.querySelectorAll('[data-sum]').forEach(b=>b.addEventListener('click',()=>{state.gmm.sumInsured=parseFloat(b.dataset.sum);renderGmm();renderGmmQuote()}));
+  document.querySelectorAll('[data-kidscount]').forEach(b=>b.addEventListener('click',()=>{state.gmm.kidsCount=parseInt(b.dataset.kidscount);renderGmm();renderGmmQuote()}));
+  document.querySelectorAll('[data-addon]').forEach(b=>b.addEventListener('click',()=>{
+    const k=b.dataset.addon;
+    if(k==='psico') return; // incluido, no se puede toggle
+    const i=state.gmm.addons.indexOf(k);
+    if(i>=0)state.gmm.addons.splice(i,1);else state.gmm.addons.push(k);
+    renderGmm();renderGmmQuote();
+  }));
+  const slider = document.getElementById('ageSlider');
+  if(slider){slider.addEventListener('input',()=>{state.gmm.age=parseInt(slider.value);document.getElementById('ageVal').textContent=slider.value;renderGmmQuote()})}
+  const pSlider = document.getElementById('partnerAgeSlider');
+  if(pSlider){pSlider.addEventListener('input',()=>{state.gmm.partnerAge=parseInt(pSlider.value);document.getElementById('partnerAgeVal').textContent=pSlider.value;renderGmmQuote()})}
+  const kSlider = document.getElementById('kidsAgeSlider');
+  if(kSlider){kSlider.addEventListener('input',()=>{state.gmm.kidsAvgAge=parseInt(kSlider.value);document.getElementById('kidsAgeVal').textContent=kSlider.value;renderGmmQuote()})}
+}
+/* Anclas reales (póliza familiar GNP 697309037, material AnCheco 19-may):
+   ref = Nivel B, suma ~$40M, deducible medio. Primas NETAS por asegurado:
+   Tomás 41 M = 16,558 · Nelissa 41 F = 19,732 · Mateo 6 = 8,605 · Federico 9 = 8,557
+   Total póliza = (neta + derecho $970/persona) × IVA 1.16 = $66,506.
+   Vanesa 25 F = ~$20,814 total. Personaliza Variable es ANUAL. */
+function gmmCalcPrice(){
+  function personBase(age, sex, isSelf){
+    // Prima NETA en config de referencia (Nivel B, suma 40.8M, deducible medio)
+    const maleRef25 = 14260;
+    const ageMult = age <= 45 ? (1 + 0.0093*(age-25)) : (1 + 0.0093*20 + 0.05*(age-45));
+    let p = maleRef25 * ageMult;
+    if(sex==='F' && age < 55) p *= 1.19;
+    if(isSelf && state.gmm.smoker) p *= 1.20;
+    return p;
+  }
+  let aggregate = personBase(state.gmm.age, state.gmm.sex, true);
+  let memberCount = 1;
+  if(state.gmm.who !== 'individual'){
+    const partnerSex = state.gmm.sex==='F'?'M':'F';
+    aggregate += personBase(state.gmm.partnerAge, partnerSex, false);
+    memberCount += 1;
+  }
+  if(state.gmm.who === 'familia'){
+    const kc = state.gmm.kidsCount || 1;
+    const ka = state.gmm.kidsAvgAge || 8;
+    const kidBase = 11400 * (ka < 10 ? 0.75 : ka < 18 ? 0.92 : 1.05);
+    const bulkFactor = kc === 1 ? 1.0 : kc === 2 ? 2.0 : kc === 3 ? 2.9 : 3.7;
+    aggregate += kidBase * bulkFactor;
+    memberCount += kc;
+  }
+  // Sin descuento agregado: la póliza real suma las primas por persona (Andy: GNP solo arma póliza familiar compartida desde 4 integrantes, no es descuento de línea).
+  // Hospital tier relativo a Nivel B (ref). D = mejor cobertura (5% coas) = más caro
+  const tierMult = {A:0.85, B:1.0, C:1.13, D:1.28}[state.gmm.hospitalTier] || 1.0;
+  aggregate *= tierMult;
+  // Deducible: 10 opciones por nivel. Referencia = opción media (índice 2). Cada paso arriba reduce ~4.5%
+  const data = NIVEL_DATA[state.gmm.hospitalTier] || NIVEL_DATA.A;
+  const dedIdx = data.deducibles.indexOf(state.gmm.deductible);
+  const dedMult = Math.pow(0.955, dedIdx - 2);
+  aggregate *= dedMult;
+  // Suma asegurada (ref 40.8M = 1.0)
+  const sumMult = {2.2:0.42, 17.5:0.82, 40.8:1.0, 58.3:1.12}[state.gmm.sumInsured] || 1.0;
+  aggregate *= sumMult;
+  // Coberturas adicionales (anuales, netas)
+  const addonsCost = state.gmm.addons.reduce((s,k)=>s+({cda:1800, mp:5200, ahr:2800}[k]||0), 0);
+  aggregate += addonsCost;
+  // Prima neta → total que paga el cliente: derecho de póliza (~$970/asegurado) + IVA 16%
+  const total = (aggregate + 970*memberCount) * 1.16;
+  return Math.round(total);
+}
+function gmmSummaryLines(){
+  const tier = state.gmm.hospitalTier;
+  const data = NIVEL_DATA[tier];
+  const whoLbl = {individual:'Individual',pareja:'Pareja',familia:'Familia'}[state.gmm.who];
+  const lines = [
+    ['Plan','Personaliza Variable GNP'],
+    ['Cobertura',whoLbl],
+    ['Tu edad',state.gmm.age+' años · '+(state.gmm.sex==='F'?'F':'M')],
+  ];
+  if(state.gmm.who !== 'individual'){
+    lines.push(['Pareja',state.gmm.partnerAge+' años']);
+  }
+  if(state.gmm.who === 'familia'){
+    lines.push(['Hijos',state.gmm.kidsCount+(state.gmm.kidsCount===4?'+':'')+' · prom '+state.gmm.kidsAvgAge+' años']);
+  }
+  lines.push(['Fumador',state.gmm.smoker?'Sí':'No']);
+  lines.push(['Nivel hospital','Nivel '+tier]);
+  lines.push(['Deducible',fmtMx(state.gmm.deductible)]);
+  lines.push(['Coaseguro',data.coaseguro+'% (tope '+fmtMx(data.topeCoaseguro)+')']);
+  lines.push(['Suma asegurada','$'+state.gmm.sumInsured+'M reinstalable']);
+  if(state.gmm.addons.length){
+    const addonLabels = {cda:'Cero Deducible Accidente', mp:'Maternidad Plus', ahr:'Ampliación Hospitalaria'};
+    lines.push(['Coberturas extra', state.gmm.addons.map(a=>addonLabels[a]||a).filter(Boolean).join(', ')]);
+  }
+  return lines;
+}
+function renderGmmQuote(){
+  const p = gmmCalcPrice();
+  setAmount(document.getElementById('gmmAmount'), p);
+  renderSummary('gmmSummary', gmmSummaryLines());
+}
+document.getElementById('gmmBack').addEventListener('click',()=>{
+  if(state.gmm.step===0)go('stage-hero');else{state.gmm.step--;renderGmm()}
+});
+document.getElementById('gmmNext').addEventListener('click',()=>{
+  if(state.gmm.step<gmmSteps.length-1){state.gmm.step++;renderGmm()}
+  else {state.finalAmount=gmmCalcPrice();state.finalSummaryLines=gmmSummaryLines();go('stage-contact')}
+});
+
+/* ============================================== */
+/* ============ AUTO WIZARD ===================== */
+/* ============================================== */
+const autoSteps = [
+  {render:autoStepBasic},
+  {render:autoStepUse},
+  {render:autoStepCoverage},
+  {render:autoStepDeductible},
+  {render:autoStepAddons}
+];
+function renderAuto(){
+  document.getElementById('autoContent').innerHTML = autoSteps[state.auto.step].render();
+  bindAuto();
+  document.getElementById('autoBack').textContent = state.auto.step===0 ? '← Cambiar tipo' : '← Atrás';
+  document.getElementById('autoNext').textContent = state.auto.step===autoSteps.length-1 ? 'Continuar →' : 'Siguiente →';
+}
+function autoStepBasic(){
+  return `${stepDotsHTML(0, autoSteps.length)}
+  <h3 class="step-title">Empezamos: ¿qué auto vas a asegurar?</h3>
+  ${explainerHTML({
+    intro:'Antes de empezar',
+    body:`Protege tu auto, tu patrimonio y a quienes más quieres. Conduce con confianza que nosotros te respaldamos en cada kilómetro; la protección que mereces al mejor costo.<br><br>Te voy a hacer 5 preguntas. Las respuestas determinan tu anualidad. <strong>Pon datos reales</strong> — la aseguradora los verifica con la factura del auto cuando emites la póliza.`,
+    example:`Mientras más nuevo y más caro tu auto, más cara la anualidad. Un Versa 2018 cuesta mucho menos asegurar que un Honda HRV 2024.`,
+    rec:`Si no recuerdas el modelo exacto, está bien. Andy te ayuda a confirmar después.`
+  })}
+  <div class="field-grid">
+    <div class="field"><label class="field-label">Marca</label><input class="field-input" id="autoBrand" placeholder="Nissan, Toyota, etc." value="${state.auto.brand}"></div>
+    <div class="field"><label class="field-label">Modelo</label><input class="field-input" id="autoModel" placeholder="Sentra, Corolla..." value="${state.auto.model}"></div>
+  </div>
+  <div class="step-help" style="margin-top:18px"><strong>Año del modelo</strong></div>
+  <div class="slider-wrap">
+    <div class="slider-row">
+      <div><span class="slider-value" id="yearVal">${state.auto.year}</span><span class="slider-suffix">año</span></div>
+    </div>
+    <input type="range" min="2005" max="2026" value="${state.auto.year}" class="slider" id="yearSlider">
+    <div class="slider-marks"><span>2005</span><span>2015</span><span>2020</span><span>2026</span></div>
+  </div>
+  <div class="step-help" style="margin-top:14px"><strong>Valor aproximado del auto</strong> · es el factor #1 que define tu anualidad de auto. Valor de mercado actual, no lo que pagaste cuando lo compraste nuevo.</div>
+  <div class="slider-wrap">
+    <div class="slider-row"><div><span class="slider-value" id="vvalVal">$${fmt(state.auto.vehicleValue)}</span></div></div>
+    <input type="range" min="80000" max="1500000" step="10000" value="${state.auto.vehicleValue}" class="slider" id="vvalSlider">
+    <div class="slider-marks"><span>$80k</span><span>$300k</span><span>$700k</span><span>$1.5M</span></div>
+  </div>`;
+}
+function autoStepUse(){
+  return `${stepDotsHTML(1, autoSteps.length)}
+  <h3 class="step-title">¿Para qué usas tu auto?</h3>
+  ${explainerHTML({
+    intro:'Por qué importa',
+    body:`Si usas tu auto para <strong>generar ingreso</strong> (Uber, DiDi, repartos, taxi), la aseguradora lo considera comercial. La anualidad sube ~30%. Las aseguradoras lo verifican — y si reportas "particular" pero lo usas comercialmente, en un siniestro <strong>te pueden negar el pago</strong>.`,
+    rec:`Conviene declararlo tal cual. Si usas tu auto comercialmente más del 20% del tiempo, declara comercial. La anualidad sube pero tienes cobertura real cuando algo pase.`
+  })}
+  <div class="opts opts-2">
+    <button class="opt ${state.auto.use==='particular'?'selected':''}" data-use="particular">
+      ${REC_BADGE}
+      <div class="opt-body"><div class="opt-label">Particular</div><div class="opt-meta">Uso personal/familiar</div></div>
+    </button>
+    <button class="opt ${state.auto.use==='comercial'?'selected':''}" data-use="comercial">
+      <div class="opt-body"><div class="opt-label">Comercial</div><div class="opt-meta">Uber/DiDi, reparto, taxi, transporte</div></div>
+    </button>
+  </div>`;
+}
+function autoStepCoverage(){
+  return `${stepDotsHTML(2, autoSteps.length)}
+  <h3 class="step-title">Tipo de cobertura</h3>
+  ${explainerHTML({
+    intro:'La decisión más importante del seguro de auto',
+    body:`Hay <strong>3 niveles</strong> de cobertura. La diferencia entre ellos es enorme — define qué cubre y qué no cuando hay un siniestro.`,
+    bullets:[
+      `<strong>RC (Responsabilidad Civil):</strong> solo daños a TERCEROS — otra persona, otro auto. Tu auto no está cubierto en ningún caso. Es el mínimo legal.`,
+      `<strong>Limitada:</strong> RC + robo total + asistencia vial. Si chocas tu propio auto, no entra.`,
+      `<strong>Amplia:</strong> todo lo anterior + daños materiales (choques, vandalismo, fenómenos naturales). Cubre TU auto pase lo que pase.`
+    ],
+    example:`Chocas tu auto contra un poste. Daños $80,000. <strong>Con RC:</strong> tú pagas todo. <strong>Con Amplia:</strong> pagas el deducible (5% del valor del auto, ~$15k) y la aseguradora paga el resto.`,
+    rec:`<strong>Si tu auto vale más de $150,000, contrata Amplia.</strong> La diferencia de anualidad la recuperas en un solo siniestro. RC solo tiene sentido para autos viejos que ya no valen mucho.`
+  })}
+  <div class="opts">
+    <button class="opt ${state.auto.coverage==='rc'?'selected':''}" data-coverage="rc">
+      <div class="opt-body"><div class="opt-label">Solo RC (Responsabilidad Civil)</div><div class="opt-meta"><strong>Tu auto NO está cubierto.</strong> Solo pagas por daños a otros.</div></div>
+      <span class="opt-pill" style="background:var(--success)">−60%</span>
+    </button>
+    <button class="opt ${state.auto.coverage==='limitada'?'selected':''}" data-coverage="limitada">
+      ${state.auto.vehicleValue<=150000?REC_BADGE:''}
+      <div class="opt-body"><div class="opt-label">Limitada</div><div class="opt-meta">RC + robo total + asistencia. Choques NO cubiertos.</div></div>
+      <span class="opt-pill" style="background:var(--gray-400)">−30%</span>
+    </button>
+    <button class="opt ${state.auto.coverage==='amplia'?'selected':''}" data-coverage="amplia">
+      ${state.auto.vehicleValue>150000?REC_BADGE:''}
+      <div class="opt-body"><div class="opt-label">Amplia</div><div class="opt-meta">Todo: RC + robo + daños + fenómenos naturales. La que tiene sentido si tu auto vale +$150k.</div></div>
+      <span class="opt-pill" style="background:var(--orange)">base</span>
+    </button>
+  </div>`;
+}
+function autoStepDeductible(){
+  if(state.auto.coverage==='rc'){
+    return `${stepDotsHTML(3, autoSteps.length)}
+    <h3 class="step-title">RC no tiene deducible</h3>
+    ${explainerHTML({
+      body:`Como Responsabilidad Civil solo cubre a terceros, no hay deducible. Saltamos al siguiente paso.`
+    })}`;
+  }
+  return `${stepDotsHTML(3, autoSteps.length)}
+  <h3 class="step-title">El deducible</h3>
+  ${explainerHTML({
+    intro:'¿Cuánto pones tú si pasa algo?',
+    body:`En auto, el deducible <strong>NO es un monto fijo</strong> — es un <strong>porcentaje del valor de tu auto</strong>. Cuando hay siniestro, tú pones ese porcentaje y la aseguradora paga el resto.`,
+    example:`Auto valor $300,000 con deducible robo 10%: si te lo roban, tú pones $30,000 y la aseguradora $270,000. Con deducible robo 5%: pones solo $15,000 pero pagaste anualidad más alta todo el año.`,
+    rec:`<strong>Daños materiales 5%, robo total 10%</strong> son los estándares de mercado y dan buen balance. Bajarlos sube tu anualidad; subirlos la baja.`
+  })}
+  <div class="step-help" style="margin-top:14px"><strong>Robo total</strong> · si te roban el auto completo</div>
+  <div class="opts opts-3">
+    ${[5,10,15].map(v=>`
+      <button class="opt ${state.auto.deductibleTheft===v?'selected':''}" data-dt="${v}">
+        ${v===10?REC_BADGE:''}
+        <div class="opt-body"><div class="opt-label">${v}%</div><div class="opt-meta">${v===5?'anualidad alta':v===10?'estándar':'anualidad baja'}</div></div>
+      </button>`).join('')}
+  </div>
+  <div class="step-help" style="margin-top:14px"><strong>Daños materiales</strong> · si chocas o te chocan</div>
+  <div class="opts opts-3">
+    ${[3,5,10].map(v=>`
+      <button class="opt ${state.auto.deductibleDamage===v?'selected':''}" data-dd="${v}">
+        ${v===5?REC_BADGE:''}
+        <div class="opt-body"><div class="opt-label">${v}%</div><div class="opt-meta">${v===3?'anualidad alta':v===5?'estándar':'anualidad baja'}</div></div>
+      </button>`).join('')}
+  </div>`;
+}
+function autoStepAddons(){
+  const ad = state.auto.addons;
+  return `${stepDotsHTML(4, autoSteps.length)}
+  <h3 class="step-title">Último paso: extras</h3>
+  ${explainerHTML({
+    intro:'Servicios opcionales',
+    body:`Ninguno es obligatorio. Cada uno suma a tu anualidad.`,
+    rec:`<strong>Auto sustituto</strong> solo si dependes diario del coche y no tienes otro. Llantas y rines vale la pena en zonas con baches. Los demás según tu uso.`
+  })}
+  <div class="opts">
+    ${[['sustituto','Auto sustituto','Auto rentado mientras reparan el tuyo (10-30 días).',960],['llantas','Ayuda para llantas y rines','Cubre hasta $25,000 con deducible del 25%.',1511],['llave','Llave de repuesto','Cubre hasta $5,000 con deducible del 20%.',621],['cero','Deducible cero','Si chocas tu auto, no pagas el deducible — la aseguradora cubre todo.',null],['agencia','Siempre en agencia','Reparan tu coche siempre en la agencia.',null]].map(([k,l,m,p])=>`
+      <button class="opt ${ad.includes(k)?'selected':''}" data-aaddon="${k}">
+        <div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div>
+        <span class="opt-pill">${p?('+'+fmtMx(p)+'/año'):'según vehículo'}</span>
+      </button>`).join('')}
+  </div>`;
+}
+function bindAuto(){
+  const b = document.getElementById('autoBrand');if(b)b.addEventListener('input',()=>{state.auto.brand=b.value;renderAutoQuote()});
+  const m = document.getElementById('autoModel');if(m)m.addEventListener('input',()=>{state.auto.model=m.value;renderAutoQuote()});
+  const y = document.getElementById('yearSlider');if(y)y.addEventListener('input',()=>{state.auto.year=parseInt(y.value);document.getElementById('yearVal').textContent=y.value;renderAutoQuote()});
+  const vv = document.getElementById('vvalSlider');if(vv)vv.addEventListener('input',()=>{state.auto.vehicleValue=parseInt(vv.value);document.getElementById('vvalVal').textContent='$'+fmt(parseInt(vv.value));renderAutoQuote()});
+  document.querySelectorAll('[data-use]').forEach(b=>b.addEventListener('click',()=>{state.auto.use=b.dataset.use;renderAuto();renderAutoQuote()}));
+  document.querySelectorAll('[data-coverage]').forEach(b=>b.addEventListener('click',()=>{state.auto.coverage=b.dataset.coverage;renderAuto();renderAutoQuote()}));
+  document.querySelectorAll('[data-dt]').forEach(b=>b.addEventListener('click',()=>{state.auto.deductibleTheft=parseInt(b.dataset.dt);renderAuto();renderAutoQuote()}));
+  document.querySelectorAll('[data-dd]').forEach(b=>b.addEventListener('click',()=>{state.auto.deductibleDamage=parseInt(b.dataset.dd);renderAuto();renderAutoQuote()}));
+  document.querySelectorAll('[data-aaddon]').forEach(b=>b.addEventListener('click',()=>{
+    const k=b.dataset.aaddon;const i=state.auto.addons.indexOf(k);
+    if(i>=0)state.auto.addons.splice(i,1);else state.auto.addons.push(k);
+    renderAuto();renderAutoQuote();
+  }));
+}
+function autoCalcPrice(){
+  // Anualidad auto ≈ 3.5%-5% del valor del auto. Personaliza Variable es ANUAL.
+  const v = state.auto.vehicleValue || 300000;
+  let base = v * 0.04; // anualidad base cobertura amplia
+  const age = Math.max(0, 2026 - state.auto.year);
+  if(age >= 8) base *= 1.18;
+  else if(age >= 5) base *= 1.08;
+  if(state.auto.use==='comercial') base *= 1.3;
+  const covMult = {rc:0.35,limitada:0.65,amplia:1.0}[state.auto.coverage];
+  base *= covMult;
+  if(state.auto.coverage!=='rc'){
+    const dtMult = {5:1.15,10:1.0,15:0.9}[state.auto.deductibleTheft];
+    base *= dtMult;
+    const ddMult = {3:1.15,5:1.0,10:0.88}[state.auto.deductibleDamage];
+    base *= ddMult;
+  }
+  // Costos anuales de coberturas adicionales (aprox)
+  // cero y agencia: precio pendiente de AnCheco (no suma al cotizador hasta confirmar)
+  const addonsCost = state.auto.addons.reduce((s,k)=>s+({sustituto:960,llantas:1511,llave:621}[k]||0),0);
+  return Math.round(base + addonsCost);
+}
+function autoSummaryLines(){
+  const covLbl = {rc:'Solo RC',limitada:'Limitada',amplia:'Amplia'}[state.auto.coverage];
+  const lines = [
+    ['Vehículo',((state.auto.brand||'-')+' '+(state.auto.model||'')).trim()+' '+state.auto.year],
+    ['Valor','$'+fmt(state.auto.vehicleValue)],
+    ['Uso',state.auto.use==='particular'?'Particular':'Comercial'],
+    ['Cobertura',covLbl]
+  ];
+  if(state.auto.coverage!=='rc'){
+    lines.push(['Deducible robo',state.auto.deductibleTheft+'%']);
+    lines.push(['Deducible daños',state.auto.deductibleDamage+'%']);
+  }
+  if(state.auto.addons.length){
+    lines.push(['Extras',state.auto.addons.map(a=>({sustituto:'Auto sustituto',llantas:'Llantas y rines',llave:'Llave de repuesto',cero:'Deducible 0',agencia:'Siempre en agencia'}[a])).filter(Boolean).join(', ')]);
+  }
+  return lines;
+}
+function renderAutoQuote(){
+  setAmount(document.getElementById('autoAmount'), autoCalcPrice());
+  renderSummary('autoSummary', autoSummaryLines());
+}
+document.getElementById('autoBack').addEventListener('click',()=>{if(state.auto.step===0)go('stage-hero');else{state.auto.step--;renderAuto()}});
+document.getElementById('autoNext').addEventListener('click',()=>{
+  if(state.auto.step<autoSteps.length-1){state.auto.step++;renderAuto()}
+  else {state.finalAmount=autoCalcPrice();state.finalSummaryLines=autoSummaryLines();go('stage-contact')}
+});
+
+/* ============================================== */
+/* ============ GENERIC WIZARD (vida/mascota/ahorro/patrimonial) === */
+/* ============================================== */
+const GENERIC_FLOWS = {
+  mascota:{
+    title:'GNP Mi Mascota',
+    steps:['species','sumInsured','deductible','addons'],
+    render:{
+      species:()=>`${stepDotsHTML(0, 4)}
+        <h3 class="step-title">Empezamos: tu mascota</h3>
+        ${explainerHTML({
+          intro:'Sobre GNP Mi Mascota',
+          body:`Cubre <strong>gastos médicos veterinarios</strong> por accidente o enfermedad — cirugías, hospitalización, análisis. También incluye RC (si tu perro muerde a alguien), orientación vet 24/7 y cremación.<br><br><strong>Mascotas elegibles:</strong> perros y gatos entre 3 meses y 9 años. Razas peligrosas (Pitbull, Rottweiler, etc.) tienen condiciones especiales.`,
+          example:`<strong>Periodos de espera:</strong> 10 días para accidentes, 180 días para enfermedades. Si contratas hoy, los accidentes están cubiertos en 10 días, pero las enfermedades hasta dentro de 6 meses.`,
+          rec:`Mientras más joven contratas, más barata la anualidad — y la mascota está protegida cuando empiezan las enfermedades de mayor edad.`
+        })}
+        <div class="opts opts-2">
+          <button class="opt ${state.mascota.species==='perro'?'selected':''}" data-pspecies="perro"><div class="opt-body"><div class="opt-label">Perro</div></div></button>
+          <button class="opt ${state.mascota.species==='gato'?'selected':''}" data-pspecies="gato"><div class="opt-body"><div class="opt-label">Gato</div></div></button>
+        </div>
+        <div class="step-help" style="margin-top:18px"><strong>Edad de tu mascota</strong></div>
+        <div class="slider-wrap">
+          <div class="slider-row"><div><span class="slider-value" id="petAgeVal">${state.mascota.petAge}</span><span class="slider-suffix">años</span></div></div>
+          <input type="range" min="0" max="9" value="${state.mascota.petAge}" class="slider" id="petAgeSlider">
+          <div class="slider-marks"><span>3 meses</span><span>5</span><span>9 años</span></div>
+        </div>
+        ${state.mascota.species==='perro'?`
+        <div class="step-help" style="margin-top:18px"><strong>Tamaño/raza</strong> · razas grandes y consideradas peligrosas suben anualidad por mayor riesgo de cirugías mayores y RC.</div>
+        <div class="opts opts-2">
+          <button class="opt ${state.mascota.petSize==='pequeno'?'selected':''}" data-psize="pequeno"><div class="opt-body"><div class="opt-label">Pequeño</div><div class="opt-meta">menos de 10 kg (Chihuahua, Pug, Yorkie)</div></div></button>
+          <button class="opt ${state.mascota.petSize==='mediano'?'selected':''}" data-psize="mediano">${REC_BADGE}<div class="opt-body"><div class="opt-label">Mediano</div><div class="opt-meta">10-25 kg (Beagle, Bulldog Francés, Cocker)</div></div></button>
+          <button class="opt ${state.mascota.petSize==='grande'?'selected':''}" data-psize="grande"><div class="opt-body"><div class="opt-label">Grande</div><div class="opt-meta">25-40 kg (Labrador, Golden, Pastor)</div></div></button>
+          <button class="opt ${state.mascota.petSize==='peligrosa'?'selected':''}" data-psize="peligrosa"><div class="opt-body"><div class="opt-label">Raza considerada peligrosa</div><div class="opt-meta">Pitbull, Rottweiler, Doberman, Akita</div></div></button>
+        </div>`:''}`,
+      sumInsured:()=>`${stepDotsHTML(1, 4)}
+        <h3 class="step-title">Suma asegurada anual</h3>
+        ${explainerHTML({
+          intro:'El tope anual',
+          body:`Es el máximo que GNP cubrirá en gastos veterinarios al año. Pasada esa cifra, tú asumes el resto.`,
+          example:`Costos típicos en hospital veterinario privado: obstrucción intestinal con hospitalización <strong>$8-25k</strong>. Tratamiento oncológico con seguimiento <strong>$10-30k</strong>. Hospitalización por accidente <strong>$5-15k</strong>.`,
+          rec:`<strong>$30,000</strong> es el balance común — cubre la mayoría de eventos médicos sin pagar anualidad de lujo. Si tu mascota es de raza grande o ya tiene años, sube a $50k.`
+        })}
+        <div class="slider-wrap">
+          <div class="slider-row"><div><span class="slider-value" id="petSumVal">$${fmt(state.mascota.sumInsured)}</span></div></div>
+          <input type="range" min="15000" max="80000" step="5000" value="${state.mascota.sumInsured}" class="slider" id="petSumSlider">
+          <div class="slider-marks"><span>$15k</span><span>$30k</span><span>$50k</span><span>$80k</span></div>
+        </div>`,
+      deductible:()=>`${stepDotsHTML(2, 4)}
+        <h3 class="step-title">Deducible por evento</h3>
+        ${explainerHTML({
+          intro:'Estructura real GNP Mi Mascota',
+          body:`En GNP Mi Mascota, el deducible aplica como <strong>50% del gasto veterinario por evento</strong> (estructural, no opcional). Los montos abajo son <em>simulación</em> aplicada a una cuenta veterinaria típica para que veas cómo se siente. La cifra exacta depende del costo real del evento.`,
+          example:`Tu perro se intoxica. Cuenta vet: $8,000. GNP cubre el 50% = $4,000. Tú pones los otros $4,000.`,
+          rec:`Lo que sí varía por póliza es la suma asegurada anual y los addons. Andy te ayuda a ajustar el plan a tu presupuesto.`
+        })}
+        <div class="opts opts-3">
+          ${[500,1500,3000].map(v=>`<button class="opt ${state.mascota.deductible===v?'selected':''}" data-pded="${v}">${v===1500?REC_BADGE:''}<div class="opt-body"><div class="opt-label">$${fmt(v)}</div><div class="opt-meta">${v===500?'anualidad alta':v===1500?'estándar':'anualidad baja'}</div></div></button>`).join('')}
+        </div>`,
+      addons:()=>{
+        const ad = state.mascota.addons;
+        const items = [['fallece','Fallecimiento','Indemnización por fallecimiento por enfermedad o accidente. Espera 360 días desde la firma.',720],['robo','Robo con violencia','Indemnización tras presentar acta ante el MP.',480],['rc','RC mascota ampliada','Cobertura ampliada de daños a terceros — la mordida importa.',540]];
+        return `${stepDotsHTML(3, 4)}
+        <h3 class="step-title">Último paso: extras</h3>
+        ${explainerHTML({
+          intro:'Coberturas opcionales',
+          body:`El plan base ya cubre lo principal. Estas son agregables.`,
+          rec:`Si tu mascota es <strong>perro de raza grande o protección</strong>, agrega RC ampliada — una mordida puede costar caro en demanda. Los demás son opcionales según tu caso.`
+        })}
+        <div class="opts">
+          ${items.map(([k,l,m,p])=>`<button class="opt ${ad.includes(k)?'selected':''}" data-padon="${k}"><div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div><span class="opt-pill">+${fmtMx(p)}/año</span></button>`).join('')}
+        </div>`;
+      }
+    },
+    bind:()=>{
+      document.querySelectorAll('[data-pspecies]').forEach(b=>b.addEventListener('click',()=>{state.mascota.species=b.dataset.pspecies;renderGeneric();renderGenericQuote()}));
+      document.querySelectorAll('[data-psize]').forEach(b=>b.addEventListener('click',()=>{state.mascota.petSize=b.dataset.psize;renderGeneric();renderGenericQuote()}));
+      const a=document.getElementById('petAgeSlider');if(a)a.addEventListener('input',()=>{state.mascota.petAge=parseInt(a.value);document.getElementById('petAgeVal').textContent=a.value;renderGenericQuote()});
+      const s=document.getElementById('petSumSlider');if(s)s.addEventListener('input',()=>{state.mascota.sumInsured=parseInt(s.value);document.getElementById('petSumVal').textContent='$'+fmt(parseInt(s.value));renderGenericQuote()});
+      document.querySelectorAll('[data-pded]').forEach(b=>b.addEventListener('click',()=>{state.mascota.deductible=parseInt(b.dataset.pded);renderGeneric();renderGenericQuote()}));
+      document.querySelectorAll('[data-padon]').forEach(b=>b.addEventListener('click',()=>{
+        const k=b.dataset.padon;const i=state.mascota.addons.indexOf(k);
+        if(i>=0)state.mascota.addons.splice(i,1);else state.mascota.addons.push(k);
+        renderGeneric();renderGenericQuote();
+      }));
+    },
+    price:()=>{
+      // Anualidad GNP Mi Mascota - base ~$2,160/año
+      let base = 2160;
+      base *= state.mascota.sumInsured/30000;
+      base *= 1 + Math.max(0,state.mascota.petAge-3)*0.06;
+      const dedMult = {500:1.3,1500:1.0,3000:0.85}[state.mascota.deductible];
+      base *= dedMult;
+      if(state.mascota.species==='perro'){
+        const sizeMult = {pequeno:0.9,mediano:1.0,grande:1.2,peligrosa:1.55}[state.mascota.petSize] || 1.0;
+        base *= 1.1 * sizeMult;
+      }
+      const ad = state.mascota.addons.reduce((s,k)=>s+({fallece:720,robo:480,rc:540}[k]||0),0);
+      return Math.round(base + ad);
+    },
+    summary:()=>{
+      const sizeLbl = {pequeno:'pequeño',mediano:'mediano',grande:'grande',peligrosa:'raza peligrosa'}[state.mascota.petSize];
+      const speciesLbl = state.mascota.species==='perro' ? `Perro ${sizeLbl}` : 'Gato';
+      const lines = [
+        ['Mascota',speciesLbl+' · '+state.mascota.petAge+' años'],
+        ['Suma asegurada','$'+fmt(state.mascota.sumInsured)+'/año'],
+        ['Deducible','50% del gasto']
+      ];
+      if(state.mascota.addons.length){
+        lines.push(['Extras',state.mascota.addons.map(k=>({fallece:'Fallecimiento',robo:'Robo violento',rc:'RC ampliada'}[k])).join(', ')]);
+      }
+      return lines;
+    }
+  },
+  ahorro:{
+    title:'Plan Ahorro / Retiro',
+    steps:['product','age','contribution','years'],
+    render:{
+      product:()=>{
+        const productos = Object.values(PRODUCTOS_AHORRO);
+        return `${stepDotsHTML(0, 4)}
+        <h3 class="step-title">Elige tu producto GNP</h3>
+        ${explainerHTML({
+          intro:'Los 4 productos reales de Andy',
+          body:`GNP tiene <strong>4 productos de ahorro/inversión</strong>. Cada uno está diseñado para un objetivo distinto: flexibilidad, control activo, beneficio fiscal, o disciplina forzada. Todos incluyen <strong>seguro de vida</strong> desde el primer día.`,
+          example:`<strong>Sofía, 18 años en TRASCIENDE:</strong> aportó $43,374/año durante 10 años ($545,554 total). A los 65 años, su saldo proyectado es $9,443,117 — <strong>17 veces lo aportado</strong>, libre de impuestos. Y tuvo $1.1M de seguro de vida desde el día 1.`,
+          rec:`<strong>TRASCIENDE</strong> para flexibilidad y herencia. <strong>CAPITALIZA</strong> si quieres control activo de inversión. <strong>CONSOLIDA</strong> si tu prioridad es deducir ISR. <strong>PROYECTA</strong> si quieres meta rígida de retiro.`
+        })}
+        <div class="opts">
+          ${productos.map(p=>`
+            <button class="opt ${state.ahorro.product===p.name?'selected':''}" data-aproduct="${p.name}">
+              ${p.name==='TRASCIENDE'?REC_BADGE:''}
+              <div class="opt-body">
+                <div class="opt-label">${p.name}</div>
+                <div class="opt-meta" style="font-size:13px;color:var(--gray-700);margin-bottom:6px"><em>${p.tag}</em></div>
+                <div class="opt-meta">${p.description}</div>
+                <div class="opt-meta" style="margin-top:6px;font-size:11px;color:var(--orange-dark)"><strong>Ideal para:</strong> ${p.bestFor}</div>
+              </div>
+            </button>`).join('')}
+        </div>`;
+      },
+      age:()=>{
+        const p = PRODUCTOS_AHORRO[state.ahorro.product];
+        return `${stepDotsHTML(1, 4)}
+        <h3 class="step-title">Tu edad</h3>
+        ${explainerHTML({
+          intro:'El interés compuesto es matemática, no magia',
+          body:`Empezar joven multiplica tu retiro <strong>exponencialmente</strong>. Mientras más años haya entre hoy y los 65, más crece tu dinero. Aportar el mismo monto a los 25 que a los 45 puede ser la diferencia entre <strong>$10M y $1.5M</strong> a los 65.`,
+          example:`<strong>${p.realCase}</strong>`,
+          rec:`% recomendado a aportar de tu salario según edad: 25→10%, 35→15%, 45→25%, 55→55%. Mientras más tarde inicies, más esfuerzo necesitas.`
+        })}
+        <div class="slider-wrap">
+          <div class="slider-row"><div><span class="slider-value" id="ahAgeVal">${state.ahorro.age}</span><span class="slider-suffix">años</span></div></div>
+          <input type="range" min="0" max="60" value="${state.ahorro.age}" class="slider" id="ahAgeSlider">
+          <div class="slider-marks"><span>0</span><span>20</span><span>40</span><span>60</span></div>
+        </div>`;
+      },
+      contribution:()=>{
+        const p = PRODUCTOS_AHORRO[state.ahorro.product];
+        return `${stepDotsHTML(2, 4)}
+        <h3 class="step-title">¿Cuánto puedes aportar al año?</h3>
+        ${explainerHTML({
+          intro:'Casos reales del PDF de Andy',
+          body:`En ${p.name} aportas durante un plazo definido y luego dejas el dinero crecer. <strong>Aportas anual</strong> (puedes pagar mensual, trimestral o semestral si prefieres). <strong>Cualquier monto cuenta</strong> — lo crítico es la consistencia.${state.ahorro.product==='CONSOLIDA'?' <strong>Tope fiscal 2026:</strong> hasta 10% de tu ingreso anual o ~$213,973 (5 UMA), lo que sea menor.':''}`,
+          example:`Casos reales: <strong>Carola (5 años) $23,426/año</strong>, <strong>Sofía (18 años) $43,374/año</strong>, <strong>Elia (43 años) $36,000/año</strong>.`,
+          rec:`Si recién empiezas y tienes 30+ años para retiro, $24,000-$36,000/año ($2k-$3k/mes) es un arranque sólido.`
+        })}
+        <div class="slider-wrap">
+          <div class="slider-row"><div><span class="slider-value" id="ahCVal">$${fmt(state.ahorro.annualContribution)}</span><span class="slider-suffix">/año</span></div></div>
+          <input type="range" min="12000" max="240000" step="6000" value="${state.ahorro.annualContribution}" class="slider" id="ahCSlider">
+          <div class="slider-marks"><span>$12k</span><span>$50k</span><span>$120k</span><span>$240k</span></div>
+        </div>
+        <p class="step-help" style="margin-top:8px;font-size:12px;color:var(--gray-400)">Equivale a ~$${fmt(Math.round(state.ahorro.annualContribution/12))}/mes si prefieres pago mensual.</p>`;
+      },
+      years:()=>{
+        const p = PRODUCTOS_AHORRO[state.ahorro.product];
+        const validYears = state.ahorro.product==='PROYECTA' ? [10] : (state.ahorro.product==='TRASCIENDE' ? [5,10,15] : [10,15]);
+        if(!validYears.includes(state.ahorro.years)) state.ahorro.years = validYears[Math.min(1, validYears.length-1)];
+        return `${stepDotsHTML(3, 4)}
+        <h3 class="step-title">¿Por cuántos años aportas?</h3>
+        ${explainerHTML({
+          intro:`Plazos disponibles en ${p.name}`,
+          body:`En ${p.name} eliges <strong>cuántos años aportas</strong>. Después dejas el dinero crecer hasta cuando quieras retirarlo. ${state.ahorro.product==='TRASCIENDE'?'Desde el año 11 puedes hacer 3 retiros (hasta 50% del saldo). Después de 60 años, un retiro anual hasta el 50% del saldo.':state.ahorro.product==='CAPITALIZA'?'Retiros libres desde el año 11. Aportaciones adicionales cuando quieras desde $1,000.':state.ahorro.product==='CONSOLIDA'?'Retiros desde el año 3 si los necesitas. La deducción fiscal aplica cada año que aportas.':'Plazo único de 10 años. A los 65 o 70 recibes todo en una sola exhibición o como renta vitalicia.'}`,
+          rec:`<strong>${validYears.length>1?'10 años':'10 años (único plazo)'}</strong> es el balance más común — total aportado manejable y suficiente tiempo para que el interés compuesto haga lo suyo.`
+        })}
+        <div class="opts opts-3">
+          ${validYears.map(v=>`<button class="opt ${state.ahorro.years===v?'selected':''}" data-ayears="${v}">${v===10?REC_BADGE:''}<div class="opt-body"><div class="opt-label">${v} años</div><div class="opt-meta">Total aportado: $${fmt(state.ahorro.annualContribution * v)}</div></div></button>`).join('')}
+        </div>`;
+      }
+    },
+    bind:()=>{
+      document.querySelectorAll('[data-aproduct]').forEach(b=>b.addEventListener('click',()=>{state.ahorro.product=b.dataset.aproduct;renderGeneric();renderGenericQuote()}));
+      const a=document.getElementById('ahAgeSlider');if(a)a.addEventListener('input',()=>{state.ahorro.age=parseInt(a.value);document.getElementById('ahAgeVal').textContent=a.value;renderGenericQuote()});
+      const c=document.getElementById('ahCSlider');if(c)c.addEventListener('input',()=>{state.ahorro.annualContribution=parseInt(c.value);document.getElementById('ahCVal').textContent='$'+fmt(parseInt(c.value));renderGenericQuote()});
+      document.querySelectorAll('[data-ayears]').forEach(b=>b.addEventListener('click',()=>{state.ahorro.years=parseInt(b.dataset.ayears);renderGeneric();renderGenericQuote()}));
+    },
+    price:()=>state.ahorro.annualContribution,
+    summary:()=>{
+      const p = PRODUCTOS_AHORRO[state.ahorro.product];
+      const C = state.ahorro.annualContribution, Y = state.ahorro.years, age = state.ahorro.age;
+      let fv65, fv70, totalAportado;
+      if(Y === 10){
+        // Caso real exacto: multiplicador y recuperación por edad anclados a Carola/Sofía/Elia (plan estándar 10 años)
+        fv65 = C * ahorroMult(age, 'm65');
+        fv70 = C * ahorroMult(age, 'm70');
+        // Total aportado se deriva de la recuperación real (las aportaciones se indexan a inflación)
+        totalAportado = Math.round(fv65 / ahorroMult(age, 'rec65'));
+      } else {
+        // Plazo distinto de 10: tasa efectiva calibrada al caso real de esa edad, aporte indexado 5%
+        const r = ahorroRateFromMult(age), H = Math.max(1, 65 - age);
+        const fvAt = h => { let s=0; for(let k=0;k<Y;k++){ s += C*Math.pow(1.05,k)*Math.pow(1+r,h-k); } return s; };
+        fv65 = fvAt(H); fv70 = fvAt(H+5);
+        totalAportado = Math.round(C * ((Math.pow(1.05, Y) - 1) / 0.05));
+      }
+      const recupPct = Math.round(fv65 / totalAportado * 100);
+      const sumaVida = sumaVidaAhorro(state.ahorro.product, state.ahorro.age, state.ahorro.annualContribution);
+      return [
+        ['Producto', p.name+' · '+p.tag],
+        ['Tu edad', state.ahorro.age+' años'],
+        ['Aportación', '$'+fmt(state.ahorro.annualContribution)+'/año durante '+state.ahorro.years+' años'],
+        ['Total que aportas (indexado 5%)', '$'+fmt(totalAportado)],
+        ['Seguro de vida desde día 1', '$'+fmt(Math.round(sumaVida))],
+        ['Saldo proyectado a los 65', '$'+fmt(Math.round(fv65))+' (libre de impuestos)'],
+        ['Recuperación a los 65', recupPct+'% de lo aportado'],
+        ['Saldo proyectado a los 70', '$'+fmt(Math.round(fv70))]
+      ];
+    }
+  },
+  educativo:{
+    title:'Plan Educativo · Profesional',
+    steps:['proteccion','plazo'],
+    // Casos reales GNP Profesional (material AnCheco 19-may, proyección al 5% de inflación)
+    cases:{
+      500000:{
+        7:{prima:39235,total:319452,entrega:18,valor:335024,rec:105},
+        10:{prima:28730,total:361363,entrega:21,valor:387832,rec:107},
+        11:{prima:27975,total:351867,entrega:18,valor:407224,rec:116},
+        14:{prima:27395,total:344571,entrega:21,valor:471412,rec:137}
+      },
+      1000000:{
+        7:{prima:75670,total:616106,entrega:18,valor:670048,rec:109},
+        11:{prima:53150,total:668515,entrega:18,valor:814447,rec:122}
+      }
+    },
+    render:{
+      proteccion:()=>`${stepDotsHTML(0, 2)}
+        <h3 class="step-title">¿Cuánto quieres asegurar para tu hijo/a?</h3>
+        ${explainerHTML({
+          intro:'Sobre el plan Educativo · Profesional',
+          body:`Plan de ahorro <strong>garantizado</strong> para blindar el futuro académico de tus hijos. Aportas una prima fija durante el plazo que elijas y, al cumplir la meta, tu hijo/a recibe la <strong>suma asegurada garantizada</strong>. Se puede <strong>entregar hasta los 33 años</strong> — universidad, posgrado o un fondo para su proyecto.<br><br>Si algo te pasa en el camino, el plan te respalda: <strong>$2,000,000</strong> por incapacidad total y permanente, <strong>$600,000</strong> por enfermedad terminal, gastos funerarios, y <strong>exención del pago de prima</strong> — GNP completa tus aportes para que tu hijo/a igual reciba lo planeado.`,
+          example:`Caso real: protección $1,000,000, pago 7 años a $75,670/año → tu hijo recibe ~$670,048 a los 18 (109% de lo aportado).`,
+          rec:`$1,000,000 es la protección más contratada para una meta universitaria completa.`
+        })}
+        <div class="opts opts-2">
+          ${[[500000,'$500,000','Meta universitaria base'],[1000000,'$1,000,000','Universidad completa o posgrado']].map(([v,l,m])=>`
+            <button class="opt ${state.educativo.proteccion===v?'selected':''}" data-edprot="${v}">
+              ${v===1000000?REC_BADGE:''}
+              <div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div>
+            </button>`).join('')}
+        </div>`,
+      plazo:()=>{
+        const cases = GENERIC_FLOWS.educativo.cases[state.educativo.proteccion];
+        const plazos = Object.keys(cases).map(Number).sort((a,b)=>a-b);
+        return `${stepDotsHTML(1, 2)}
+        <h3 class="step-title">¿Durante cuántos años quieres pagar?</h3>
+        ${explainerHTML({
+          intro:'El plazo define tu prima',
+          body:`Mientras <strong>más corto el plazo</strong>, mayor la prima anual pero terminas de pagar antes. Plazos más largos bajan la prima. Todos los montos son <strong>casos reales GNP</strong>, proyectados al 5% de inflación.`,
+          rec:`Si tu hijo es pequeño, un plazo largo (11-14 años) baja la prima y deja crecer más el ahorro.`
+        })}
+        <div class="opts">
+          ${plazos.map(pl=>{const c=cases[pl];return `
+            <button class="opt ${state.educativo.plazo===pl?'selected':''}" data-edplazo="${pl}">
+              <div class="opt-body"><div class="opt-label">${pl} años de pago · $${fmt(c.prima)}/año</div><div class="opt-meta">Entrega a los ${c.entrega} años → tu hijo/a recibe ~$${fmt(c.valor)} (${c.rec}% de lo aportado)</div></div>
+            </button>`}).join('')}
+        </div>`;
+      }
+    },
+    bind:()=>{
+      document.querySelectorAll('[data-edprot]').forEach(b=>b.addEventListener('click',()=>{
+        const v=parseInt(b.dataset.edprot);
+        state.educativo.proteccion=v;
+        const cases=GENERIC_FLOWS.educativo.cases[v];
+        if(!cases[state.educativo.plazo]) state.educativo.plazo=parseInt(Object.keys(cases)[0]);
+        renderGeneric();renderGenericQuote();
+      }));
+      document.querySelectorAll('[data-edplazo]').forEach(b=>b.addEventListener('click',()=>{
+        state.educativo.plazo=parseInt(b.dataset.edplazo);
+        renderGeneric();renderGenericQuote();
+      }));
+    },
+    price:()=>GENERIC_FLOWS.educativo.cases[state.educativo.proteccion][state.educativo.plazo].prima,
+    summary:()=>{
+      const c=GENERIC_FLOWS.educativo.cases[state.educativo.proteccion][state.educativo.plazo];
+      return [
+        ['Plan','Educativo · Profesional GNP'],
+        ['Protección garantizada','$'+fmt(state.educativo.proteccion)],
+        ['Plazo de pago',state.educativo.plazo+' años'],
+        ['Prima anual','$'+fmt(c.prima)],
+        ['Total que aportas','$'+fmt(c.total)],
+        ['Tu hijo/a recibe (~'+c.entrega+' años)','$'+fmt(c.valor)],
+        ['Recuperación',c.rec+'% de lo aportado'],
+        ['Exención de prima','Si faltas, GNP completa los aportes'],
+        ['Incapacidad total','Anticipo de $2,000,000'],
+        ['Enfermedad terminal','Anticipo de $600,000 + gastos funerarios']
+      ];
+    }
+  },
+  patrimonial:{
+    title:'Plan Casa / Patrimonial',
+    steps:['homeValue','contentsValue','package','addons'],
+    render:{
+      homeValue:()=>`${stepDotsHTML(0, 4)}
+        <h3 class="step-title">¿Cuánto vale tu casa (sin contar el terreno)?</h3>
+        ${explainerHTML({
+          intro:'Sobre el seguro de hogar',
+          body:`Protege tu casa contra <strong>incendio, robo, fenómenos naturales</strong> (huracanes, sismos, inundaciones, etc), <strong>explosiones y daños eléctricos</strong>. Se toma en cuenta el <strong>valor de reconstrucción</strong> (no el valor comercial).`,
+          example:`Si tu casa vale $4M a la venta pero reconstruirla costaría $2.5M (terreno aparte), se aseguran los $2.5M; pagar más es desperdicio y pagar menos te deja descubierta.`,
+          rec:`Si no sabes el valor exacto de tu casa, te comparto una regla aproximada: <strong>$15,000-$25,000 por m²</strong> en zonas costeras (Cancún) y <strong>$10,000-$15,000</strong> en el interior (CDMX). Andy te ayuda a calcular preciso.`
+        })}
+        <div class="slider-wrap">
+          <div class="slider-row"><div><span class="slider-value" id="hvVal">$${fmt(state.patrimonial.homeValue)}</span></div></div>
+          <input type="range" min="500000" max="10000000" step="100000" value="${state.patrimonial.homeValue}" class="slider" id="hvSlider">
+          <div class="slider-marks"><span>$500k</span><span>$2M</span><span>$5M</span><span>$10M</span></div>
+        </div>`,
+      contentsValue:()=>`${stepDotsHTML(1, 4)}
+        <h3 class="step-title">¿Y los contenidos?</h3>
+        ${explainerHTML({
+          intro:'Lo que hay dentro',
+          body:`Aquí proteges tres tipos de bienes que el plan unifica en un solo monto:<br><br><strong>CONTENIDOS:</strong> muebles, decoración, artículos personales y electrodomésticos. Joyas y arte de alto valor se aseguran aparte con cobertura específica.<br><br><strong>ELECTRÓNICOS:</strong> televisores, cómputo, celulares, audio, entretenimiento, etc (aplica deducible).<br><br><strong>BIENES EN TRÁNSITO:</strong> te cubre el robo de tus artículos portátiles de uso personal que se encuentren temporalmente fuera del inmueble — celulares, tabletas, ropa y accesorios, bolsas, carteras, relojes, binoculares, anteojos, plumas estilográficas, lapiceros, joyas, bicicletas, patines y patinetas, aparatos fotográficos o de video, artículos y aparatos deportivos. Se te reponen descontando el deducible correspondiente. <strong>Si se queman o roban, la aseguradora te lo repone.</strong>`,
+          example:`Casa promedio amueblada: muebles $200,000 + electrodomésticos $50,000 + ropa $50,000 + electrónicos $100,000 = ~<strong>$400,000</strong>.`,
+          rec:`Suma todo lo que tengas de ambos rubros; sé realista y conserva facturas, recibos o fotos para que en caso de robo o ruptura compruebes que existían.`
+        })}
+        <div class="slider-wrap">
+          <div class="slider-row"><div><span class="slider-value" id="cvVal">$${fmt(state.patrimonial.contentsValue)}</span></div></div>
+          <input type="range" min="50000" max="2000000" step="50000" value="${state.patrimonial.contentsValue}" class="slider" id="cvSlider">
+          <div class="slider-marks"><span>$50k</span><span>$500k</span><span>$1M</span><span>$2M</span></div>
+        </div>`,
+      package:()=>{
+        const productos = Object.values(PRODUCTOS_PATRIMONIAL);
+        const hv = state.patrimonial.homeValue, cv = state.patrimonial.contentsValue;
+        const calcPrima = (p)=>Math.round(hv*p.homeRate + cv*p.contentsRate + p.fixedBase);
+        return `${stepDotsHTML(2, 4)}
+        <h3 class="step-title">Elige tu paquete GNP Hogar</h3>
+        ${explainerHTML({
+          intro:'3 niveles de protección, mismas bases de cobertura',
+          body:`GNP Hogar maneja <strong>3 paquetes</strong> que escalan en sumas aseguradas, deducibles y extras incluidos. La base (incendio, robo con violencia, fenómenos naturales) viene en los 3. Lo que cambia: <strong>topes de cobertura, deducibles y coberturas adicionales incluidas</strong>.`,
+          example:`Casa $2M + $300k contenidos: <strong>Vital ~$2,560/año</strong> · <strong>Plus ~$3,000/año</strong> · <strong>A tu medida ~$8,600/año</strong>. Para casa $2.2M con contenidos $878k (cotización real GNP): <strong>Vital $4,018 · Plus $5,365 · A tu medida $8,794</strong>.`,
+          rec:`<strong>Vital</strong> para casa familiar estándar. <strong>Plus</strong> si tienes home office o vives en zona costera. <strong>A tu medida</strong> si tienes mascotas, joyas, arte o quieres cero preocupaciones.`
+        })}
+        <div class="opts">
+          ${productos.map(p=>`
+            <button class="opt ${state.patrimonial.package===p.name?'selected':''}" data-ppackage="${p.name}">
+              ${p.name==='VITAL'?REC_BADGE:(p.name==='PLUS'?POPULAR_BADGE:PREMIUM_BADGE)}
+              <div class="opt-body">
+                <div class="opt-label">${p.name} <span style="font-weight:400;color:var(--orange-dark);font-size:13px">— $${fmt(calcPrima(p))}/año</span></div>
+                <div class="opt-meta" style="font-size:13px;color:var(--gray-700);margin-bottom:6px"><em>${p.tag}</em></div>
+                <div class="opt-meta" style="font-size:12px;margin-top:6px">${p.coberturas.slice(0,4).map(c=>`<div style=\"display:flex;justify-content:space-between;gap:8px;padding:2px 0\"><span>${c[0]}</span><strong>${c[1]}</strong></div>`).join('')}${p.coberturas.length>4?`<div style=\"color:var(--gray-400);font-size:11px;margin-top:4px\">+${p.coberturas.length-4} coberturas más</div>`:''}</div>
+                <div class="opt-meta" style="margin-top:8px;font-size:11px;color:var(--orange-dark)"><strong>Ideal para:</strong> ${p.bestFor}</div>
+              </div>
+            </button>`).join('')}
+        </div>`;
+      },
+      addons:()=>{
+        const ad = state.patrimonial.addons;
+        const hv = state.patrimonial.homeValue;
+        const hidrometCost = Math.round(hv * 0.003);
+        const items = [
+          ['hidromet','Hidrometeorológicos','Cubre las pérdidas y/o daños físicos al inmueble, así como a sus cimentaciones e instalaciones fijas subterráneas, originados por avalanchas de lodo, granizo, helada, huracán, inundación, inundación por lluvia, golpe de mar, tsunami, marejada, nevada y vientos tempestuosos.',hidrometCost],
+          ['terremoto','Terremoto y/o erupción volcánica','Se cubren las pérdidas por daños materiales al inmueble asegurado, así como a sus cimientos e instalaciones fijas subterráneas, causados por terremoto y/o erupción volcánica.',0],
+          ['funmascotas','Servicio funerario para mascotas','En caso de fallecimiento de tu mascota, esta asistencia brinda los siguientes servicios: recolección del cuerpo, cremación individual de la mascota, urna básica y entrega a domicilio de las cenizas.',1200]
+        ];
+        return `${stepDotsHTML(3, 4)}
+        <h3 class="step-title">Último paso: extras opcionales</h3>
+        ${explainerHTML({
+          intro:'Coberturas adicionales',
+          body:`Tu paquete ya incluye lo principal (incendio, robo con violencia, daños materiales). Estas son protecciones adicionales que se contratan según la zona donde vives y lo que quieras proteger.`,
+          example:`<strong>Hidrometeorológicos:</strong> casa $2.2M en Cancún ≈ $6,600/año (cubre $300k edificio + $300k contenidos contra huracán). En zona costera es prácticamente obligatorio; en interior rara vez se justifica.`,
+          rec:`Si vives en <strong>zona costera</strong> (Cancún, Riviera Maya, Golfo, Pacífico), <strong>Hidrometeorológicos no es opcional</strong>: un huracán fuerte puede causar pérdidas por millones. En <strong>zonas sísmicas</strong> (CDMX, Puebla, Oaxaca, Guerrero) Terremoto cierra el hueco más grande del plan base. El Servicio Funerario para Mascotas es un extra de tranquilidad para quienes consideran a su perro o gato parte de la familia.`
+        })}
+        <div class="opts">
+          ${items.map(([k,l,m,p])=>`<button class="opt ${ad.includes(k)?'selected':''}" data-padon="${k}" data-pcost="${p}">${k==='hidromet'?REC_BADGE:''}<div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div><span class="opt-pill">${p===0?'Consultar':'+'+fmtMx(p)+'/año'}</span></button>`).join('')}
+        </div>`;
+      }
+    },
+    bind:()=>{
+      const h=document.getElementById('hvSlider');if(h)h.addEventListener('input',()=>{state.patrimonial.homeValue=parseInt(h.value);document.getElementById('hvVal').textContent='$'+fmt(parseInt(h.value));renderGenericQuote()});
+      const c=document.getElementById('cvSlider');if(c)c.addEventListener('input',()=>{state.patrimonial.contentsValue=parseInt(c.value);document.getElementById('cvVal').textContent='$'+fmt(parseInt(c.value));renderGenericQuote()});
+      document.querySelectorAll('[data-ppackage]').forEach(b=>b.addEventListener('click',()=>{
+        state.patrimonial.package=b.dataset.ppackage;
+        renderGeneric();renderGenericQuote();
+      }));
+      document.querySelectorAll('[data-padon]').forEach(b=>b.addEventListener('click',()=>{
+        const k=b.dataset.padon;const i=state.patrimonial.addons.indexOf(k);
+        if(i>=0)state.patrimonial.addons.splice(i,1);else state.patrimonial.addons.push(k);
+        renderGeneric();renderGenericQuote();
+      }));
+    },
+    price:()=>{
+      // Tarifas calibradas al desglose línea por línea de los PDFs GNP reales.
+      // Anclas: Vital casa $2.196M + cont $878k = $4,018 · Plus = $5,365 · A tu medida casa $2.196M + cont $300k = $8,794.
+      const p = PRODUCTOS_PATRIMONIAL[state.patrimonial.package] || PRODUCTOS_PATRIMONIAL.VITAL;
+      const base = state.patrimonial.homeValue * p.homeRate + state.patrimonial.contentsValue * p.contentsRate + p.fixedBase;
+      const hv = state.patrimonial.homeValue;
+      // Hidromet: delta PDF Huracán = $6,585 / casa $2.196M ≈ 0.3% del valor de casa.
+      const hidrometCost = Math.round(hv * 0.003);
+      const costs = {hidromet:hidrometCost, terremoto:0, funmascotas:1200};
+      const ad = state.patrimonial.addons.reduce((s,k)=>s+(costs[k]||0),0);
+      return Math.round(base + ad);
+    },
+    summary:()=>{
+      const p = PRODUCTOS_PATRIMONIAL[state.patrimonial.package] || PRODUCTOS_PATRIMONIAL.VITAL;
+      const hv = state.patrimonial.homeValue;
+      const cv = state.patrimonial.contentsValue;
+      const primaBase = Math.round(hv*p.homeRate + cv*p.contentsRate + p.fixedBase);
+      const lines = [
+        ['Paquete','GNP Hogar '+p.name],
+        ['Valor casa (reconstrucción)','$'+fmt(hv)],
+        ['Contenidos','$'+fmt(cv)],
+        ['Prima base del paquete','$'+fmt(primaBase)+'/año']
+      ];
+      p.coberturas.slice(0,4).forEach(c=>lines.push(['· '+c[0], c[1]]));
+      lines.push(['Deducibles', p.deducibleNote]);
+      if(state.patrimonial.addons.length){
+        const addonLabels = {hidromet:'Hidrometeorológicos', terremoto:'Terremoto/Erupción volcánica', funmascotas:'Servicio funerario mascotas'};
+        const hidrometCost = Math.round(hv * 0.003);
+        const addonCosts = {hidromet:hidrometCost, terremoto:0, funmascotas:1200};
+        state.patrimonial.addons.forEach(k=>{
+          const costoStr = addonCosts[k]===0 ? 'Cotiza Andy aparte' : '$'+fmt(addonCosts[k])+'/año';
+          lines.push(['+ '+addonLabels[k], costoStr]);
+        });
+      }
+      return lines;
+    }
+  }
+};
+function renderGeneric(){
+  const flow = GENERIC_FLOWS[state.type] || GENERIC_FLOWS['ahorro'];
+  const cur = state[state.type] || state['ahorro'];
+  const productNames = {gmm:'Plan Personaliza Variable',auto:'Plan Auto',mascota:'Plan Mascota',ahorro:'Plan Ahorro / Retiro',patrimonial:'Plan Casa / Patrimonial',educativo:'Plan Educativo · Profesional'};
+  const stepKey = flow.steps[cur.step];
+  document.getElementById('genContent').innerHTML = flow.render[stepKey]();
+  document.getElementById('genQuoteTitle').textContent = productNames[state.type] || flow.title;
+  flow.bind();
+  document.getElementById('genBack').textContent = cur.step===0 ? '← Cambiar tipo' : '← Atrás';
+  document.getElementById('genNext').textContent = cur.step===flow.steps.length-1 ? 'Continuar →' : 'Siguiente →';
+}
+function renderGenericQuote(){
+  const flow = GENERIC_FLOWS[state.type] || GENERIC_FLOWS['ahorro'];
+  setAmount(document.getElementById('genAmount'), flow.price());
+  renderSummary('genSummary', flow.summary());
+}
+document.getElementById('genBack').addEventListener('click',()=>{
+  const cur = state[state.type] || state['ahorro'];
+  if(cur.step===0)go('stage-hero');else{cur.step--;renderGeneric()}
+});
+document.getElementById('genNext').addEventListener('click',()=>{
+  const flow = GENERIC_FLOWS[state.type] || GENERIC_FLOWS['ahorro'];
+  const cur = state[state.type] || state['ahorro'];
+  if(cur.step<flow.steps.length-1){cur.step++;renderGeneric()}
+  else {state.finalAmount=flow.price();state.finalSummaryLines=flow.summary();go('stage-contact')}
+});
+
+/* ============ CONTACT ============ */
+document.getElementById('cBack').addEventListener('click',()=>{
+  if(state.type==='gmm') go('stage-gmm');
+  else if(state.type==='auto') go('stage-auto');
+  else go('stage-generic');
+});
+const ANCHECO_WEBHOOK = 'https://n8n-ntcue-u59578.vm.elestio.app/webhook/4bdf33e2-a2c6-4ce7-ba62-6cda1976408e';
+document.getElementById('cSubmit').addEventListener('click',()=>{
+  state.contact.name = document.getElementById('cName').value.trim();
+  state.contact.phone = document.getElementById('cPhone').value.trim();
+  state.contact.email = document.getElementById('cEmail').value.trim();
+  state.contact.city = document.getElementById('cCity').value.trim();
+  state.contact.timing = document.getElementById('cTiming').value;
+  if(!state.contact.name || !state.contact.phone){
+    showInfo('','Faltan datos','Por favor ingresa al menos tu nombre y WhatsApp para que Andy pueda contactarte.');
+    return;
+  }
+  // Fire-and-forget al webhook n8n → GHL CRM (state completo)
+  try {
+    const fd = new URLSearchParams({ data: JSON.stringify(state) });
+    fetch(ANCHECO_WEBHOOK, { method:'POST', mode:'no-cors', body: fd }).catch(()=>{});
+  } catch(e){}
+  renderFinal();
+  go('stage-final');
+});
+
+/* ============ FINAL ============ */
+function renderFinal(){
+  const productNames = {gmm:'Plan Personaliza Variable',auto:'Plan Auto',mascota:'Plan Mascota',ahorro:'Plan Ahorro / Retiro',patrimonial:'Plan Casa / Patrimonial',educativo:'Plan Educativo · Profesional'};
+  document.getElementById('fName').textContent = state.contact.name.split(' ')[0] || 'amig@';
+  document.getElementById('fProductName').textContent = productNames[state.type];
+  const fAmt = document.getElementById('fAmount');
+  const fAmtWrap = fAmt.closest('.final-amount');
+  fAmtWrap.classList.remove('counting');void fAmtWrap.offsetWidth;fAmtWrap.classList.add('counting');
+  fAmt.textContent = '0';
+  _amountState.set(fAmt, 0);
+  setTimeout(()=>setAmount(fAmt, state.finalAmount, 1100), 250);
+  // Render summary with subtle stagger via animation delay
+  const lines = state.finalSummaryLines;
+  document.getElementById('fSummary').innerHTML = lines.map(([l,v],i)=>`<div class="quote-line" style="animation-delay:${.4+i*.07}s"><span class="lbl">${l}</span><span class="val">${v}</span></div>`).join('');
+}
+document.getElementById('fWhats').addEventListener('click',()=>{
+  const product = {gmm:'Gastos Médicos Mayores (Personaliza Variable)',auto:'Auto',mascota:'Mascota',ahorro:'Ahorro/Retiro',patrimonial:'Casa/Patrimonial',educativo:'Educativo · Profesional'}[state.type];
+  let msg = `Hola Andy! Soy ${state.contact.name}.\n\nCompleté la pre-cotización en tu landing:\n\n`;
+  msg += `*Producto:* ${product}\n`;
+  const labelMonto = (state.type==='ahorro' || state.type==='educativo') ? 'aportación anual' : 'anualidad simulada';
+  msg += `*Pre-cotización:* $${fmt(state.finalAmount)} (${labelMonto})\n\n`;
+  msg += `*Mi configuración:*\n`;
+  state.finalSummaryLines.forEach(([l,v])=>msg+=`• ${l}: ${v}\n`);
+  msg += `\n*Mis datos:*\n`;
+  msg += `Tel: ${state.contact.phone}\n`;
+  if(state.contact.email) msg += `Email: ${state.contact.email}\n`;
+  if(state.contact.city) msg += `Ciudad: ${state.contact.city}\n`;
+  msg += `Timing: ${({ya:'lo antes posible',mes:'en 1 mes','3meses':'en 3 meses',explorando:'explorando'}[state.contact.timing])}\n\n`;
+  msg += `¿Cuándo nos podemos hablar?`;
+  const url = 'https://wa.me/529981633443?text='+encodeURIComponent(msg);
+  window.open(url,'_blank');
+});
+
+/* ============ CONFETTI ============ */
+function fireConfetti(){
+  const colors = ['#F26A2E','#1E3A5F','#FFFFFF','#F2B544'];
+  const c = document.createElement('canvas');
+  c.className='confetti';
+  c.width=window.innerWidth;c.height=window.innerHeight;
+  document.body.appendChild(c);
+  const ctx = c.getContext('2d');
+  const pieces = [];
+  for(let i=0;i<140;i++){
+    pieces.push({x:Math.random()*c.width,y:-20,vx:(Math.random()-.5)*4,vy:Math.random()*4+2,size:Math.random()*8+4,color:colors[Math.floor(Math.random()*colors.length)],rot:Math.random()*Math.PI});
+  }
+  let frames=0;
+  function tick(){
+    ctx.clearRect(0,0,c.width,c.height);
+    pieces.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;p.rot+=.05;p.vy+=.03;
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);
+      ctx.fillStyle=p.color;ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size);
+      ctx.restore();
+    });
+    frames++;
+    if(frames<260)requestAnimationFrame(tick);
+    else c.remove();
+  }
+  tick();
+}
+
+/* ============ LAZY BG IMAGES ============ */
+const bgIO = new IntersectionObserver((entries,obs)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el = e.target;
+      const url = el.dataset.bg;
+      if(url){
+        el.style.backgroundImage = `url(${url})`;
+        el.removeAttribute('data-bg');
+      }
+      obs.unobserve(el);
+    }
+  });
+},{rootMargin:'200px'});
+document.querySelectorAll('[data-bg]').forEach(el=>bgIO.observe(el));
+
+/* ============ INIT ============ */
+updateProgress('stage-hero');
+</script>
+
+<!-- ============ CMS HIDRATACIÓN ============
+     Los textos marcados con data-cms="path.to.field" o data-cms-html="..."
+     se sobrescriben con el contenido de content/content.json al cargar.
+     Si el fetch falla (modo file:// local, sin internet, etc), la página
+     muestra los textos hardcodeados como fallback — nada se rompe.
+-->
+<script>
+(async function hydrateCMS(){
+  try {
+    const res = await fetch('content/content.json', { cache: 'no-store' });
+    if (!res.ok) return;
+    const data = await res.json();
+    const get = (path) => path.split('.').reduce((o, k) => (o == null ? o : o[k]), data);
+    document.querySelectorAll('[data-cms]').forEach(el => {
+      const v = get(el.dataset.cms);
+      if (typeof v === 'string') el.textContent = v;
+    });
+    document.querySelectorAll('[data-cms-html]').forEach(el => {
+      const v = get(el.dataset.cmsHtml);
+      if (typeof v === 'string') el.innerHTML = v;
+    });
+  } catch (e) {
+    // Fallback silencioso a los textos hardcodeados.
+  }
+})();
+</script>
+</body>
+</html>

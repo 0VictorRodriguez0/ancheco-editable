@@ -1,0 +1,62 @@
+{
+  "hero": {
+    "eyebrow": "Andy Cherro Corallo · Agente de Seguros · México · cédula profesional V338401",
+    "title_pre": "¿Qué quieres ",
+    "title_accent": "proteger",
+    "title_post": "?",
+    "sub": "Cada decisión tomada hoy — salud, protección, retiro digno — tiene una consecuencia concreta. Te damos las herramientas para tomar la mejor decisión.",
+    "script": "Elección consciente."
+  },
+  "cards": {
+    "gmm": {
+      "name": "Gastos Médicos Mayores",
+      "desc": "Los accidentes y enfermedades ocurren de un día para otro, preferible tener un seguro y no necesitarlo, que necesitarlo y no tenerlo; ¡PROTÉGETE!"
+    },
+    "auto": {
+      "name": "Auto",
+      "desc": "Responsabilidad civil, robo total, daños materiales. Obligatorio en muchos estados."
+    },
+    "mascota": {
+      "name": "Mascota",
+      "desc": "GNP Mi Mascota. Perros y gatos de 3 meses a 9 años. Suma y deducible modulares."
+    },
+    "ahorro": {
+      "name": "Ahorro · Inversión · Retiro",
+      "desc": "Plan Personal de Retiro con beneficios fiscales. Aportación deducible de ISR."
+    },
+    "patrimonial": {
+      "name": "Casa / Patrimonial",
+      "desc": "Seas propietario o inquilino, protege tu casa y tus bienes dentro y fuera de ella. ¡TU PATRIMONIO TU TRANQUILIDAD!"
+    },
+    "educativo": {
+      "name": "Educativo · Profesional",
+      "desc": "Asegura el futuro académico de tus hijos. Plan de ahorro con protección desde hoy."
+    }
+  },
+  "trust": [
+    { "num": "GNP", "lbl": "+120 años en el mercado" },
+    { "num": "5 min", "lbl": "Cotización completa" },
+    { "num": "México", "lbl": "Presencial o remoto" },
+    { "num": "Personal", "lbl": "Andy te contacta directo" }
+  ],
+  "about": {
+    "eyebrow": "¿Quiénes somos?",
+    "title_pre": "Andy Cherro ",
+    "title_accent": "Corallo",
+    "badge_mdrt": "Miembro MDRT",
+    "badge_cedula": "Cédula profesional V338401",
+    "p1": "Asesora profesional integral de <strong>Seguros, Ahorro e Inversión</strong>, certificada por la Comisión Nacional de Seguros y Fianzas, con más de <strong>250 asegurados</strong>. Miembro del <strong>MDRT</strong> (Million Dollar Round Table), la asociación que reconoce a los asesores financieros de más alto desempeño a nivel mundial.",
+    "p2": "Formo parte de <strong>Grupo APSAR</strong> desde hace 8 años y de <strong>Grupo AARCO</strong> hace 4, despachos con más de 30 años de experiencia en el ramo asegurador. Trabajo junto a mi hija <strong>Xime Palacio Cherro</strong> para dar mayor atención y acompañamiento a nuestros asegurados.",
+    "p3": "Trabajamos con <strong>todas las aseguradoras del mercado</strong> para encontrar la opción que mejor se ajuste a lo que necesitas.",
+    "p4_pre": "Nuestro compromiso es estar a tu lado en los momentos en que nos necesites, apoyarte y abogar por ti en todo momento. ",
+    "script": "Estamos a tus órdenes."
+  },
+  "ctas": {
+    "topbar": "WhatsApp directo",
+    "ribbon_step1": "Andy Cherro Corallo te contacta personalmente con la cotización real, comparativos y siguiente paso. Sin spam, sin llamadas robot.",
+    "ribbon_step2": "Andy Cherro Corallo revisa tu configuración y te devuelve una cotización real con tarifas vigentes de GNP en menos de 24 horas."
+  },
+  "footer": {
+    "main": "<strong>ANCHECO</strong> · Andy Cherro Corallo · Agente profesional de seguros · Aliada GNP · cédula profesional V338401"
+  }
+}

@@ -1,0 +1,128 @@
+# Sveltia CMS config — formato compatible con Decap CMS.
+# Backend GitHub: cada guardado del editor es un commit en main del repo,
+# GitHub Pages re-despliega solo y los cambios quedan en vivo en ~1 minuto.
+
+backend:
+  name: github
+  repo: 0VictorRodriguez0/ancheco-editable
+  branch: main
+  # auth: para activar login con un click en lugar de PAT, registrar
+  # una GitHub App de AnCheco y pegar su client_id aquí (campo: client_id).
+
+# Para probar el admin sin commitear (modo dev: cambios solo en local):
+local_backend: true
+
+# Carpeta de imágenes que el editor puede usar (logos, fotos).
+media_folder: "assets"
+public_folder: "/assets"
+
+# Idioma de la interfaz del editor.
+locale: "es"
+
+collections:
+  - name: "contenido"
+    label: "Contenido del landing"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: "landing"
+        label: "Página principal"
+        file: "content/content.json"
+        format: "json"
+        fields:
+          # ====================== HERO ======================
+          - label: "Hero (encabezado principal)"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Etiqueta superior (eyebrow)", name: "eyebrow", widget: "string", hint: "Aparece arriba del título principal, en color naranja." }
+              - { label: "Título — parte antes del acento", name: "title_pre", widget: "string", hint: "Ej: '¿Qué quieres '" }
+              - { label: "Título — palabra en acento naranja", name: "title_accent", widget: "string", hint: "Ej: 'proteger'" }
+              - { label: "Título — parte después del acento", name: "title_post", widget: "string", hint: "Ej: '?'" }
+              - { label: "Subtítulo (párrafo gris)", name: "sub", widget: "text" }
+              - { label: "Frase final en bold navy", name: "script", widget: "string", hint: "Ej: 'Elección consciente.'" }
+
+          # ====================== 6 TARJETAS DE PRODUCTO ======================
+          - label: "Tarjetas de producto (las 6 opciones)"
+            name: "cards"
+            widget: "object"
+            fields:
+              - label: "Gastos Médicos Mayores"
+                name: "gmm"
+                widget: "object"
+                fields:
+                  - { label: "Nombre", name: "name", widget: "string" }
+                  - { label: "Descripción", name: "desc", widget: "text" }
+              - label: "Auto"
+                name: "auto"
+                widget: "object"
+                fields:
+                  - { label: "Nombre", name: "name", widget: "string" }
+                  - { label: "Descripción", name: "desc", widget: "text" }
+              - label: "Mascota"
+                name: "mascota"
+                widget: "object"
+                fields:
+                  - { label: "Nombre", name: "name", widget: "string" }
+                  - { label: "Descripción", name: "desc", widget: "text" }
+              - label: "Ahorro · Inversión · Retiro"
+                name: "ahorro"
+                widget: "object"
+                fields:
+                  - { label: "Nombre", name: "name", widget: "string" }
+                  - { label: "Descripción", name: "desc", widget: "text" }
+              - label: "Casa / Patrimonial"
+                name: "patrimonial"
+                widget: "object"
+                fields:
+                  - { label: "Nombre", name: "name", widget: "string" }
+                  - { label: "Descripción", name: "desc", widget: "text" }
+              - label: "Educativo · Profesional"
+                name: "educativo"
+                widget: "object"
+                fields:
+                  - { label: "Nombre", name: "name", widget: "string" }
+                  - { label: "Descripción", name: "desc", widget: "text" }
+
+          # ====================== TRUST ITEMS ======================
+          - label: "Trust strip (4 chips abajo del hero)"
+            name: "trust"
+            widget: "list"
+            min: 4
+            max: 4
+            fields:
+              - { label: "Número/texto grande (navy)", name: "num", widget: "string", hint: "Ej: 'GNP', '5 min'" }
+              - { label: "Etiqueta gris debajo", name: "lbl", widget: "string", hint: "Ej: '+120 años en el mercado'" }
+
+          # ====================== ¿QUIÉNES SOMOS? ======================
+          - label: "¿Quiénes somos?"
+            name: "about"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow naranja", name: "eyebrow", widget: "string" }
+              - { label: "Título — parte antes del acento", name: "title_pre", widget: "string" }
+              - { label: "Título — apellido en naranja", name: "title_accent", widget: "string" }
+              - { label: "Badge navy (MDRT)", name: "badge_mdrt", widget: "string" }
+              - { label: "Badge naranja (cédula)", name: "badge_cedula", widget: "string" }
+              - { label: "Párrafo 1 (puede llevar negritas con <strong>)", name: "p1", widget: "text" }
+              - { label: "Párrafo 2", name: "p2", widget: "text" }
+              - { label: "Párrafo 3 (todas las aseguradoras)", name: "p3", widget: "text" }
+              - { label: "Párrafo 4 — texto previo al cierre", name: "p4_pre", widget: "text" }
+              - { label: "Frase de cierre (Estamos a tus órdenes)", name: "script", widget: "string" }
+
+          # ====================== CTAs ======================
+          - label: "Botones y mensajes (CTAs)"
+            name: "ctas"
+            widget: "object"
+            fields:
+              - { label: "Botón WhatsApp del topbar", name: "topbar", widget: "string" }
+              - { label: "Ribbon paso 1 (después del wizard)", name: "ribbon_step1", widget: "text" }
+              - { label: "Ribbon paso 2 (página final)", name: "ribbon_step2", widget: "text" }
+
+          # ====================== FOOTER ======================
+          - label: "Footer"
+            name: "footer"
+            widget: "object"
+            fields:
+              - { label: "Línea principal (con <strong>)", name: "main", widget: "text" }
