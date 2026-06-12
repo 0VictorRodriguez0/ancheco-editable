@@ -173,14 +173,35 @@
   }
 
   // ============= EDIT HANDLERS =============
+  // Bloqueador de propagación: cuando el cliente hace click en un texto editable
+  // dentro de un <button> del wizard, el button captura el click y ejecuta su
+  // handler (cambia state, re-renderiza, destruye la edición). Necesitamos
+  // detener la propagación ANTES de que llegue al padre.
+  const stopAll = (e) => { e.stopPropagation(); e.stopImmediatePropagation(); };
+
   function attachOne(el) {
     if (el.dataset.cmsBound === '1') return;
     el.dataset.cmsBound = '1';
+
+    // Bloqueamos click/mousedown en fase de captura para que NUNCA lleguen
+    // al button padre (que tiene los handlers del wizard).
+    ['mousedown', 'click', 'dblclick', 'pointerdown'].forEach(evt =>
+      el.addEventListener(evt, stopAll, true)
+    );
+    // Tab/Enter dentro del contenteditable tampoco debe activar el button.
+    el.addEventListener('keydown', (e) => {
+      e.stopPropagation();
+      // Enter dentro de plaintext no debe submit ningún form padre.
+      if (e.key === 'Enter' && el.contentEditable === 'plaintext-only') {
+        // permitir nueva línea o blur según preferencia — aquí blur.
+        e.preventDefault();
+        el.blur();
+      }
+    }, true);
+
     if (el.hasAttribute('data-cms')) {
       el.contentEditable = 'plaintext-only';
       el.spellcheck = false;
-      // Si el JSON ya tiene un valor para este path, hidratarlo ahora
-      // (cubre el caso de elementos renderizados después del fetch inicial).
       const v = getByPath(workingContent, el.dataset.cms);
       if (typeof v === 'string') el.textContent = v;
       el.addEventListener('input', () => onEdit(el, el.dataset.cms, el.textContent));
