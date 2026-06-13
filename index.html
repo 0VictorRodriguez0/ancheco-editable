@@ -1030,17 +1030,17 @@ img{max-width:100%;display:block}
         <div class="wizard-main">
           <div id="gmmContent"></div>
           <div class="wizard-nav">
-            <button class="btn btn-ghost" id="gmmBack">← Atrás</button>
-            <button class="btn btn-primary" id="gmmNext">Siguiente →</button>
+            <button class="btn btn-ghost" id="gmmBack"><span data-cms-html="wizards.nav.back">← Atrás</span></button>
+            <button class="btn btn-primary" id="gmmNext"><span data-cms-html="wizards.nav.next">Siguiente →</span></button>
           </div>
         </div>
         <aside class="quote-panel" id="gmmQuote">
           <div class="quote-panel-tag" data-cms="quote_panel.tag">Tu cotización en vivo</div>
-          <div class="quote-panel-title">Plan Personaliza Variable</div>
+          <div class="quote-panel-title" data-cms-html="quote_panel.gmm.title">Plan Personaliza Variable</div>
           <div class="quote-amount"><span class="currency">$</span><span id="gmmAmount">—</span></div>
           <div class="quote-period" data-cms="quote_panel.period_hero">aprox. anual · simulación · GNP financia 3 y 6 MSI el 1er año</div>
           <div class="quote-summary" id="gmmSummary"></div>
-          <div class="quote-disclaimer">
+          <div class="quote-disclaimer" data-cms-html="quote_panel.gmm.disclaimer">
             Pre-cotización informativa. La anualidad exacta depende de cuestionario médico y revisión personalizada.
           </div>
         </aside>
@@ -1053,17 +1053,17 @@ img{max-width:100%;display:block}
         <div class="wizard-main">
           <div id="autoContent"></div>
           <div class="wizard-nav">
-            <button class="btn btn-ghost" id="autoBack">← Atrás</button>
-            <button class="btn btn-primary" id="autoNext">Siguiente →</button>
+            <button class="btn btn-ghost" id="autoBack"><span data-cms-html="wizards.nav.back">← Atrás</span></button>
+            <button class="btn btn-primary" id="autoNext"><span data-cms-html="wizards.nav.next">Siguiente →</span></button>
           </div>
         </div>
         <aside class="quote-panel">
           <div class="quote-panel-tag" data-cms="quote_panel.tag">Tu cotización en vivo</div>
-          <div class="quote-panel-title">Plan Auto</div>
+          <div class="quote-panel-title" data-cms-html="quote_panel.auto.title">Plan Auto</div>
           <div class="quote-amount"><span class="currency">$</span><span id="autoAmount">—</span></div>
-          <div class="quote-period">aprox. anual · simulación</div>
+          <div class="quote-period" data-cms-html="quote_panel.auto.period">aprox. anual · simulación</div>
           <div class="quote-summary" id="autoSummary"></div>
-          <div class="quote-disclaimer">
+          <div class="quote-disclaimer" data-cms-html="quote_panel.auto.disclaimer">
             Pre-cotización informativa. La anualidad exacta depende de la marca/modelo/año y revisión personalizada.
           </div>
         </aside>
@@ -1076,8 +1076,8 @@ img{max-width:100%;display:block}
         <div class="wizard-main">
           <div id="genContent"></div>
           <div class="wizard-nav">
-            <button class="btn btn-ghost" id="genBack">← Atrás</button>
-            <button class="btn btn-primary" id="genNext">Siguiente →</button>
+            <button class="btn btn-ghost" id="genBack"><span data-cms-html="wizards.nav.back">← Atrás</span></button>
+            <button class="btn btn-primary" id="genNext"><span data-cms-html="wizards.nav.next">Siguiente →</span></button>
           </div>
         </div>
         <aside class="quote-panel">
@@ -1183,10 +1183,10 @@ img{max-width:100%;display:block}
 <div class="modal-backdrop" id="modal">
   <div class="modal" id="modalBox">
     <button class="modal-close" id="modalClose">×</button>
-    <span class="modal-eyebrow">Detalle técnico</span>
+    <span class="modal-eyebrow" data-cms-html="modal.eyebrow">Detalle técnico</span>
     <h3 class="modal-title" id="modalTitle"></h3>
     <div class="modal-body" id="modalBody"></div>
-    <button class="btn btn-primary" id="modalOk">Entendido →</button>
+    <button class="btn btn-primary" id="modalOk"><span data-cms-html="modal.okButton">Entendido →</span></button>
   </div>
 </div>
 
@@ -1596,7 +1596,7 @@ function gmmStepAge(){
   <div class="step-help" style="margin-top:6px"><span data-cms-html="auto.step_help.49"><strong>${showPartner?'Tu edad':'Edad'}</strong></span></div>
   <div class="slider-wrap">
     <div class="slider-row">
-      <div><span class="slider-value" id="ageVal">${state.gmm.age}</span><span class="slider-suffix">años</span></div>
+      <div><span class="slider-value" id="ageVal">${state.gmm.age}</span><span class="slider-suffix"><span data-cms-html="gmm.age.suffix">años</span></span></div>
     </div>
     <input type="range" min="18" max="75" value="${state.gmm.age}" class="slider" id="ageSlider">
     <div class="slider-marks"><span data-cms-html="auto.slider_mark.61">18</span><span data-cms-html="auto.slider_mark.62">30</span><span data-cms-html="auto.slider_mark.63">45</span><span data-cms-html="auto.slider_mark.64">60</span><span data-cms-html="auto.slider_mark.65">75</span></div>
@@ -1613,7 +1613,7 @@ function gmmStepAge(){
   ${showPartner?`
   <div class="step-help" style="margin-top:24px;padding-top:18px;border-top:1px solid var(--gray-100)"><span data-cms-html="auto.step_help.51"><strong>Edad de tu pareja</strong></span></div>
   <div class="slider-wrap">
-    <div class="slider-row"><div><span class="slider-value" id="partnerAgeVal">${state.gmm.partnerAge}</span><span class="slider-suffix">años</span></div></div>
+    <div class="slider-row"><div><span class="slider-value" id="partnerAgeVal">${state.gmm.partnerAge}</span><span class="slider-suffix"><span data-cms-html="gmm.partner_age.suffix">años</span></span></div></div>
     <input type="range" min="18" max="75" value="${state.gmm.partnerAge}" class="slider" id="partnerAgeSlider">
   </div>`:''}
   ${showKids?`
@@ -1623,7 +1623,7 @@ function gmmStepAge(){
   </div>
   <div class="step-help" style="margin-top:14px"><span data-cms-html="auto.step_help.53"><strong>Edad promedio de tus hijos</strong></span></div>
   <div class="slider-wrap">
-    <div class="slider-row"><div><span class="slider-value" id="kidsAgeVal">${state.gmm.kidsAvgAge}</span><span class="slider-suffix">años</span></div></div>
+    <div class="slider-row"><div><span class="slider-value" id="kidsAgeVal">${state.gmm.kidsAvgAge}</span><span class="slider-suffix"><span data-cms-html="gmm.kids_age.suffix">años</span></span></div></div>
     <input type="range" min="0" max="25" value="${state.gmm.kidsAvgAge}" class="slider" id="kidsAgeSlider">
     <div class="slider-marks"><span data-cms-html="auto.slider_mark.66">0</span><span data-cms-html="auto.slider_mark.67">10</span><span data-cms-html="auto.slider_mark.68">18</span><span data-cms-html="auto.slider_mark.69">25</span></div>
   </div>`:''}`;
@@ -1645,7 +1645,7 @@ function gmmStepHealth(){
       <div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.4">Sí fumo</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.20">+15-25% en anualidad · declaración obligatoria</span></div></div>
     </button>
   </div>
-  <p class="step-help" style="margin-top:18px;font-size:12px;color:var(--gray-400)"><strong>Sobre condiciones preexistentes</strong> (diabetes, hipertensión, etc.): si las tienes, hay que declararlas. GNP cubre preexistencias después de 6 meses a 2 años de vigencia (con previa selección de riesgos), o después de 5 años sin tratamiento (cobertura $500K-$1M). Andy revisa cada caso.</p>`;
+  <p class="step-help" style="margin-top:18px;font-size:12px;color:var(--gray-400)"><span data-cms-html="gmm.health.preexistencias_note"><strong>Sobre condiciones preexistentes</strong> (diabetes, hipertensión, etc.): si las tienes, hay que declararlas. GNP cubre preexistencias después de 6 meses a 2 años de vigencia (con previa selección de riesgos), o después de 5 años sin tratamiento (cobertura $500K-$1M). Andy revisa cada caso.</span></p>`;
 }
 function gmmStepHospital(){
   const hospitalsByRegion = {
@@ -1766,29 +1766,29 @@ function gmmStepDeductible(){
     ${opts.slice(0,6).map((d,i)=>`
       <button class="opt ${state.gmm.deductible===d?'selected':''}" data-deductible="${d}">
         ${i===1?REC_BADGE:''}
-        <div class="opt-body"><div class="opt-label">${fmtMx(d)}</div><div class="opt-meta">opción ${i+1}${i===0?' · anualidad alta':i>=4?' · anualidad baja':''}</div></div>
+        <div class="opt-body"><div class="opt-label">${fmtMx(d)}</div><div class="opt-meta"><span data-cms-html="gmm.deductible.option_word">opción</span> ${i+1}${i===0?'<span data-cms-html="gmm.deductible.high"> · anualidad alta</span>':i>=4?'<span data-cms-html="gmm.deductible.low"> · anualidad baja</span>':''}</div></div>
       </button>`).join('')}
   </div>
-  <details style="margin-top:14px"><summary style="cursor:pointer;font-size:13px;color:var(--gray-400)">Ver 4 opciones más altas (deducibles ${fmtMx(opts[6])}-${fmtMx(opts[9])})</summary>
+  <details style="margin-top:14px"><summary style="cursor:pointer;font-size:13px;color:var(--gray-400)"><span data-cms-html="gmm.deductible.see_more">Ver 4 opciones más altas (deducibles</span> ${fmtMx(opts[6])}-${fmtMx(opts[9])}<span data-cms-html="gmm.deductible.see_more_end">)</span></summary>
   <div class="opts opts-3" style="margin-top:10px">
     ${opts.slice(6).map((d,i)=>`
       <button class="opt ${state.gmm.deductible===d?'selected':''}" data-deductible="${d}">
-        <div class="opt-body"><div class="opt-label">${fmtMx(d)}</div><div class="opt-meta">opción ${i+7} · anualidad muy baja</div></div>
+        <div class="opt-body"><div class="opt-label">${fmtMx(d)}</div><div class="opt-meta"><span data-cms-html="gmm.deductible.option_word2">opción</span> ${i+7} <span data-cms-html="gmm.deductible.very_low">· anualidad muy baja</span></div>
       </button>`).join('')}
   </div></details>
   <div class="viz">
-    <div class="viz-title">Si tu hospitalización cuesta ${fmtMx(ex)}</div>
+    <div class="viz-title"><span data-cms-html="gmm.deductible.viz_title">Si tu hospitalización cuesta</span> ${fmtMx(ex)}</div>
     <div class="viz-row">
-      <span style="width:60px"><span class="viz-dot you"></span>Tú</span>
+      <span style="width:60px"><span class="viz-dot you"></span><span data-cms-html="gmm.viz.you">Tú</span></span>
       <div class="viz-bar"><div class="viz-bar-you" style="width:${(youTotal/ex)*100}%">${fmtMx(Math.round(youTotal))}</div></div>
     </div>
     <div class="viz-row">
-      <span style="width:60px"><span class="viz-dot ins"></span>GNP</span>
+      <span style="width:60px"><span class="viz-dot ins"></span><span data-cms-html="gmm.viz.ins">GNP</span></span>
       <div class="viz-bar"><div class="viz-bar-ins" style="width:${(insTotal/ex)*100}%">${fmtMx(Math.round(insTotal))}</div></div>
     </div>
     <div class="viz-legend">
-      <span><span class="viz-dot you"></span>Deducible + ${co}% coaseguro (tope ${fmtMx(data.topeCoaseguro)})</span>
-      <span><span class="viz-dot ins"></span>Lo que paga GNP</span>
+      <span><span class="viz-dot you"></span><span data-cms-html="gmm.viz.legend_you_pre">Deducible +</span> ${co}% <span data-cms-html="gmm.viz.legend_you_mid">coaseguro (tope</span> ${fmtMx(data.topeCoaseguro)}<span data-cms-html="gmm.viz.legend_you_end">)</span></span>
+      <span><span class="viz-dot ins"></span><span data-cms-html="gmm.viz.legend_ins">Lo que paga GNP</span></span>
     </div>
   </div>
   ${otherTiersDeductibleHTML(tier, opts.indexOf(val), ex)}`;
@@ -1805,12 +1805,12 @@ function otherTiersDeductibleHTML(currentTier, idx, ex){
     return {k, ded, co:d.coaseguro, you, gnp};
   });
   return `<div class="viz" style="margin-top:14px">
-    <div class="viz-title">Mismo deducible (opción ${idx+1}) en los otros niveles</div>
+    <div class="viz-title"><span data-cms-html="gmm.other_tiers.title_pre">Mismo deducible (opción</span> ${idx+1}<span data-cms-html="gmm.other_tiers.title_post">) en los otros niveles</span></div>
     ${rows.map(r=>`
       <div style="margin:10px 0">
         <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:4px">
-          <span>Nivel ${r.k} · ded ${fmtMx(r.ded)} · coaseguro ${r.co}%</span>
-          <span>Tú ${fmtMx(Math.round(r.you))} · GNP ${fmtMx(Math.round(r.gnp))}</span>
+          <span><span data-cms-html="gmm.other_tiers.level">Nivel</span> ${r.k} · <span data-cms-html="gmm.other_tiers.ded">ded</span> ${fmtMx(r.ded)} · <span data-cms-html="gmm.other_tiers.coaseguro">coaseguro</span> ${r.co}%</span>
+          <span><span data-cms-html="gmm.other_tiers.you">Tú</span> ${fmtMx(Math.round(r.you))} · <span data-cms-html="gmm.other_tiers.gnp">GNP</span> ${fmtMx(Math.round(r.gnp))}</span>
         </div>
         <div class="viz-bar" style="height:16px">
           <div class="viz-bar-you" style="width:${(r.you/ex)*100}%;font-size:10px">${Math.round((r.you/ex)*100)}%</div>
@@ -1826,7 +1826,7 @@ function gmmStepSum(){
     rec:`Recomendado: <strong>$40,800,000</strong> para cubrir cualquier posible evento o enfermedad catastrófica. Bajar la suma casi no abarata la anualidad (a veces ~$200 al año) pero te deja expuesto a un gasto grande, por eso conviene mantenerla alta.`
   })}
   <div class="opts opts-3">
-    ${[[2.2,'$2.2M','<span data-cms-html="auto.arr_meta.26">Básica</span>'],[17.5,'$17.5M','Intermedia'],[40.8,'$40.8M','<span data-cms-html="auto.arr_meta.28">Personaliza estándar</span>',true],[58.3,'$58.3M','<span data-cms-html="auto.arr_meta.29">Mayor cobertura</span>']].map(([v,l,m,r])=>`
+    ${[[2.2,'$2.2M','<span data-cms-html="auto.arr_meta.26">Básica</span>'],[17.5,'$17.5M','<span data-cms-html="gmm.sum.intermedia">Intermedia</span>'],[40.8,'$40.8M','<span data-cms-html="auto.arr_meta.28">Personaliza estándar</span>',true],[58.3,'$58.3M','<span data-cms-html="auto.arr_meta.29">Mayor cobertura</span>']].map(([v,l,m,r])=>`
       <button class="opt ${state.gmm.sumInsured===v?'selected':''}" data-sum="${v}">
         ${r?REC_BADGE:''}
         <div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div>
@@ -1837,10 +1837,10 @@ function gmmStepAddons(){
   const ad = state.gmm.addons;
   // Costos anuales estimados de coberturas adicionales reales GNP Personaliza Variable
   const items = [
-    ['cda','<span data-cms-html="auto.arr_label.87">Cero Deducible por Accidente (CDA)</span>','Si te accidentas (caída, choque, etc.), no pagas deducible — GNP cubre desde el primer peso.',1800],
-    ['mp','<span data-cms-html="auto.arr_label.88">Maternidad Plus Personaliza (MP)</span>','3 opciones de cobertura: $47,000, $64,500 y $81,500. 10 meses de espera.',5200],
-    ['ahr','<span data-cms-html="auto.arr_label.89">Ampliación Hospitalaria Nacional (AHR)</span>','Acceso a hospitales de niveles superiores en otras regiones del país, no solo tu nivel base.',2800],
-    ['psico','<span data-cms-html="auto.arr_label.90">Asistencia Psicológica</span>','Ya viene incluida — 2 sesiones/mes por videollamada (50 min). Ansiedad, estrés, depresión, insomnio, problemas de pareja. Aplica para terapia de pareja y para menores con consentimiento del tutor.',0]
+    ['cda','<span data-cms-html="auto.arr_label.87">Cero Deducible por Accidente (CDA)</span>','<span data-cms-html="gmm.addons.cda.desc">Si te accidentas (caída, choque, etc.), no pagas deducible — GNP cubre desde el primer peso.</span>',1800],
+    ['mp','<span data-cms-html="auto.arr_label.88">Maternidad Plus Personaliza (MP)</span>','<span data-cms-html="gmm.addons.mp.desc">3 opciones de cobertura: $47,000, $64,500 y $81,500. 10 meses de espera.</span>',5200],
+    ['ahr','<span data-cms-html="auto.arr_label.89">Ampliación Hospitalaria Nacional (AHR)</span>','<span data-cms-html="gmm.addons.ahr.desc">Acceso a hospitales de niveles superiores en otras regiones del país, no solo tu nivel base.</span>',2800],
+    ['psico','<span data-cms-html="auto.arr_label.90">Asistencia Psicológica</span>','<span data-cms-html="gmm.addons.psico.desc">Ya viene incluida — 2 sesiones/mes por videollamada (50 min). Ansiedad, estrés, depresión, insomnio, problemas de pareja. Aplica para terapia de pareja y para menores con consentimiento del tutor.</span>',0]
   ];
   return `${stepDotsHTML(6, gmmSteps.length)}
   <h3 class="step-title"><span data-cms-html="auto.step_title.7">Coberturas adicionales — Personaliza Variable</span></h3>
@@ -1855,49 +1855,49 @@ function gmmStepAddons(){
         ${k==='cda'?REC_BADGE:''}
         ${k==='psico'?'<span class="opt-pill" style="background:var(--success)"><span data-cms-html="auto.opt_pill.40">incluido</span></span>':''}
         <div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div>
-        ${p>0?`<span class="opt-pill">+${fmtMx(p)}/año</span>`:''}
+        ${p>0?`<span class="opt-pill">+${fmtMx(p)}<span data-cms-html="gmm.addons.year_suffix">/año</span></span>`:''}
       </button>`).join('')}
   </div>
   <div style="margin-top:24px;padding:18px;background:var(--gray-50);border-radius:14px">
-    <div style="font-weight:900;font-size:14px;color:var(--navy);letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px">Beneficios incluidos sin costo extra</div>
-    <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0">GNP Cuida tu Salud</summary>
+    <div style="font-weight:900;font-size:14px;color:var(--navy);letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px"><span data-cms-html="gmm.benefits.title">Beneficios incluidos sin costo extra</span></div>
+    <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0"><span data-cms-html="gmm.benefits.cuida.title">GNP Cuida tu Salud</span></summary>
       <ul style="margin:6px 0 10px 18px;color:var(--gray-700);font-size:13px;line-height:1.6">
-        <li><strong>Prevención y Diagnóstico:</strong> Check-up básico (incluye química de 3 elementos), cuidado dental (higiene dental incluida), vacunas con 20% de descuento.</li>
-        <li><strong>Consultas (App GNP):</strong> Videoconsultas con receta digital, médico a domicilio.</li>
-        <li><strong>Red Médica de Especialidad:</strong> Consultas de especialidad costo fijo $650, sub-especialidades $850.</li>
-        <li><strong>Apoyo en Medicamentos:</strong> Medicamentos sin costo, descuentos exclusivos en laboratorios.</li>
+        <li><span data-cms-html="gmm.benefits.cuida.prevencion"><strong>Prevención y Diagnóstico:</strong> Check-up básico (incluye química de 3 elementos), cuidado dental (higiene dental incluida), vacunas con 20% de descuento.</span></li>
+        <li><span data-cms-html="gmm.benefits.cuida.consultas"><strong>Consultas (App GNP):</strong> Videoconsultas con receta digital, médico a domicilio.</span></li>
+        <li><span data-cms-html="gmm.benefits.cuida.red_medica"><strong>Red Médica de Especialidad:</strong> Consultas de especialidad costo fijo $650, sub-especialidades $850.</span></li>
+        <li><span data-cms-html="gmm.benefits.cuida.medicamentos"><strong>Apoyo en Medicamentos:</strong> Medicamentos sin costo, descuentos exclusivos en laboratorios.</span></li>
       </ul>
     </details>
-    <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0">Emergencias de gastos médicos NO cubiertos · hasta $1,000,000</summary>
-      <p style="margin:6px 0 10px 0;color:var(--gray-700);font-size:13px;line-height:1.6">Para emergencias que pongan en peligro la vida o la viabilidad de algún órgano, por tratamientos no indispensables y no cubiertos normalmente: estéticos, calvicie, dietéticos, obesidad, anorexia, bulimia, infertilidad, esterilidad, control natal, impotencia sexual, disfunción eréctil, dentales, alveolares, gingivales, estudios de prevención y check-ups. Suma asegurada: <strong>máximo $1,000,000</strong>.</p>
+    <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0"><span data-cms-html="gmm.benefits.emergencias.title">Emergencias de gastos médicos NO cubiertos · hasta $1,000,000</span></summary>
+      <p style="margin:6px 0 10px 0;color:var(--gray-700);font-size:13px;line-height:1.6"><span data-cms-html="gmm.benefits.emergencias.body">Para emergencias que pongan en peligro la vida o la viabilidad de algún órgano, por tratamientos no indispensables y no cubiertos normalmente: estéticos, calvicie, dietéticos, obesidad, anorexia, bulimia, infertilidad, esterilidad, control natal, impotencia sexual, disfunción eréctil, dentales, alveolares, gingivales, estudios de prevención y check-ups. Suma asegurada: <strong>máximo $1,000,000</strong>.</span></p>
     </details>
-    <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0">Membresía Asegurado VIP · Grupo APSAR</summary>
+    <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0"><span data-cms-html="gmm.benefits.vip.title">Membresía Asegurado VIP · Grupo APSAR</span></summary>
       <ul style="margin:6px 0 10px 18px;color:var(--gray-700);font-size:13px;line-height:1.6">
-        <li><strong>Hospital Galenia:</strong> descuento $8,000 en deducible, consulta médico general $350, 15% farmacia, 30% laboratorios cuadro básico, 30% imagenología, 20% check-up ejecutivo.</li>
-        <li><strong>Clínica Mayan:</strong> descuento $4,000 en deducible.</li>
-        <li><strong>Odontoheart Cancún · Bukkadent Odontología Avanzada:</strong> beneficios para asegurados.</li>
+        <li><span data-cms-html="gmm.benefits.vip.galenia"><strong>Hospital Galenia:</strong> descuento $8,000 en deducible, consulta médico general $350, 15% farmacia, 30% laboratorios cuadro básico, 30% imagenología, 20% check-up ejecutivo.</span></li>
+        <li><span data-cms-html="gmm.benefits.vip.mayan"><strong>Clínica Mayan:</strong> descuento $4,000 en deducible.</span></li>
+        <li><span data-cms-html="gmm.benefits.vip.dentales"><strong>Odontoheart Cancún · Bukkadent Odontología Avanzada:</strong> beneficios para asegurados.</span></li>
       </ul>
     </details>
-    <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0">Asistencia Médica Móvil · 6 servicios</summary>
+    <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0"><span data-cms-html="gmm.benefits.movil.title">Asistencia Médica Móvil · 6 servicios</span></summary>
       <ol style="margin:6px 0 10px 18px;color:var(--gray-700);font-size:13px;line-height:1.6">
-        <li>Orientación médica telefónica</li>
-        <li>Orientación médica por videollamada</li>
-        <li>Consulta médica a domicilio</li>
-        <li>Ambulancia por emergencia</li>
-        <li>Traslados programados a costo preferencial</li>
-        <li>Concierge para referencias médicas y hospitalarias</li>
+        <li><span data-cms-html="gmm.benefits.movil.s1">Orientación médica telefónica</span></li>
+        <li><span data-cms-html="gmm.benefits.movil.s2">Orientación médica por videollamada</span></li>
+        <li><span data-cms-html="gmm.benefits.movil.s3">Consulta médica a domicilio</span></li>
+        <li><span data-cms-html="gmm.benefits.movil.s4">Ambulancia por emergencia</span></li>
+        <li><span data-cms-html="gmm.benefits.movil.s5">Traslados programados a costo preferencial</span></li>
+        <li><span data-cms-html="gmm.benefits.movil.s6">Concierge para referencias médicas y hospitalarias</span></li>
       </ol>
     </details>
-    <details><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0">Terminología que vas a escuchar</summary>
+    <details><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0"><span data-cms-html="gmm.terminologia.title">Terminología que vas a escuchar</span></summary>
       <dl style="margin:6px 0 0 0;color:var(--gray-700);font-size:13px;line-height:1.6">
-        <dt style="font-weight:800;color:var(--navy);margin-top:8px">Deducible</dt>
-        <dd style="margin:2px 0 0 0">Cantidad fija que pagas cada vez que usas el seguro. Puede ser único (se paga una vez al inicio de cada enfermedad y al agotarse la suma, termina el seguro para ese padecimiento) o anual por enfermedad (se paga cada vez que se utiliza pero la suma asegurada se reinstala, volviéndose ilimitada).</dd>
-        <dt style="font-weight:800;color:var(--navy);margin-top:8px">Coaseguro</dt>
-        <dd style="margin:2px 0 0 0">Porcentaje sobre la factura hospitalaria que tú pagas en cada siniestro, con tope. Su objetivo es que revises los gastos en factura y los prestadores no se excedan.</dd>
-        <dt style="font-weight:800;color:var(--navy);margin-top:8px">Suma asegurada</dt>
-        <dd style="margin:2px 0 0 0">Monto total por el que estás protegido. Se elige al contratar y puede ser única o reinstalable anual, dependiendo de si el deducible es único o anual.</dd>
-        <dt style="font-weight:800;color:var(--navy);margin-top:8px">Tabulador médico</dt>
-        <dd style="margin:2px 0 0 0">Monto máximo que GNP acepta pagar al médico por consultas, cirugías y procedimientos. Varía según nivel hospitalario.</dd>
+        <dt style="font-weight:800;color:var(--navy);margin-top:8px"><span data-cms-html="gmm.terminologia.deducible.term">Deducible</span></dt>
+        <dd style="margin:2px 0 0 0"><span data-cms-html="gmm.terminologia.deducible.def">Cantidad fija que pagas cada vez que usas el seguro. Puede ser único (se paga una vez al inicio de cada enfermedad y al agotarse la suma, termina el seguro para ese padecimiento) o anual por enfermedad (se paga cada vez que se utiliza pero la suma asegurada se reinstala, volviéndose ilimitada).</span></dd>
+        <dt style="font-weight:800;color:var(--navy);margin-top:8px"><span data-cms-html="gmm.terminologia.coaseguro.term">Coaseguro</span></dt>
+        <dd style="margin:2px 0 0 0"><span data-cms-html="gmm.terminologia.coaseguro.def">Porcentaje sobre la factura hospitalaria que tú pagas en cada siniestro, con tope. Su objetivo es que revises los gastos en factura y los prestadores no se excedan.</span></dd>
+        <dt style="font-weight:800;color:var(--navy);margin-top:8px"><span data-cms-html="gmm.terminologia.suma.term">Suma asegurada</span></dt>
+        <dd style="margin:2px 0 0 0"><span data-cms-html="gmm.terminologia.suma.def">Monto total por el que estás protegido. Se elige al contratar y puede ser única o reinstalable anual, dependiendo de si el deducible es único o anual.</span></dd>
+        <dt style="font-weight:800;color:var(--navy);margin-top:8px"><span data-cms-html="gmm.terminologia.tabulador.term">Tabulador médico</span></dt>
+        <dd style="margin:2px 0 0 0"><span data-cms-html="gmm.terminologia.tabulador.def">Monto máximo que GNP acepta pagar al médico por consultas, cirugías y procedimientos. Varía según nivel hospitalario.</span></dd>
       </dl>
     </details>
   </div>`;
@@ -2045,13 +2045,13 @@ function autoStepBasic(){
     rec:`Si no recuerdas el modelo exacto, está bien. Andy te ayuda a confirmar después.`
   })}
   <div class="field-grid">
-    <div class="field"><label class="field-label">Marca</label><input class="field-input" id="autoBrand" placeholder="Nissan, Toyota, etc." value="${state.auto.brand}"></div>
-    <div class="field"><label class="field-label">Modelo</label><input class="field-input" id="autoModel" placeholder="Sentra, Corolla..." value="${state.auto.model}"></div>
+    <div class="field"><label class="field-label"><span data-cms-html="auto.field_label.marca">Marca</span></label><input class="field-input" id="autoBrand" placeholder="Nissan, Toyota, etc." value="${state.auto.brand}"></div>
+    <div class="field"><label class="field-label"><span data-cms-html="auto.field_label.modelo">Modelo</span></label><input class="field-input" id="autoModel" placeholder="Sentra, Corolla..." value="${state.auto.model}"></div>
   </div>
   <div class="step-help" style="margin-top:18px"><span data-cms-html="auto.step_help.55"><strong>Año del modelo</strong></span></div>
   <div class="slider-wrap">
     <div class="slider-row">
-      <div><span class="slider-value" id="yearVal">${state.auto.year}</span><span class="slider-suffix">año</span></div>
+      <div><span class="slider-value" id="yearVal">${state.auto.year}</span><span class="slider-suffix"><span data-cms-html="auto.slider_suffix.ano">año</span></span></div>
     </div>
     <input type="range" min="2005" max="2026" value="${state.auto.year}" class="slider" id="yearSlider">
     <div class="slider-marks"><span data-cms-html="auto.slider_mark.70">2005</span><span data-cms-html="auto.slider_mark.71">2015</span><span data-cms-html="auto.slider_mark.72">2020</span><span data-cms-html="auto.slider_mark.73">2026</span></div>
@@ -2060,7 +2060,7 @@ function autoStepBasic(){
   <div class="slider-wrap">
     <div class="slider-row"><div><span class="slider-value" id="vvalVal">$${fmt(state.auto.vehicleValue)}</span></div></div>
     <input type="range" min="80000" max="1500000" step="10000" value="${state.auto.vehicleValue}" class="slider" id="vvalSlider">
-    <div class="slider-marks"><span>$80k</span><span>$300k</span><span>$700k</span><span>$1.5M</span></div>
+    <div class="slider-marks"><span data-cms-html="auto.slider_mark.vval.80k">$80k</span><span data-cms-html="auto.slider_mark.vval.300k">$300k</span><span data-cms-html="auto.slider_mark.vval.700k">$700k</span><span data-cms-html="auto.slider_mark.vval.1_5m">$1.5M</span></div>
   </div>`;
 }
 function autoStepUse(){
@@ -2096,7 +2096,7 @@ function autoStepCoverage(){
   })}
   <div class="opts">
     <button class="opt ${state.auto.coverage==='rc'?'selected':''}" data-coverage="rc">
-      <div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.7">Solo RC (Responsabilidad Civil)</span></div><div class="opt-meta"><strong>Tu auto NO está cubierto.</strong> Solo pagas por daños a otros.</div></div>
+      <div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.7">Solo RC (Responsabilidad Civil)</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.rc"><strong>Tu auto NO está cubierto.</strong> Solo pagas por daños a otros.</span></div></div>
       <span class="opt-pill" style="background:var(--success)"><span data-cms-html="auto.opt_pill.42">−60%</span></span>
     </button>
     <button class="opt ${state.auto.coverage==='limitada'?'selected':''}" data-coverage="limitada">
@@ -2134,7 +2134,7 @@ function autoStepDeductible(){
     ${[5,10,15].map(v=>`
       <button class="opt ${state.auto.deductibleTheft===v?'selected':''}" data-dt="${v}">
         ${v===10?REC_BADGE:''}
-        <div class="opt-body"><div class="opt-label">${v}%</div><div class="opt-meta">${v===5?'anualidad alta':v===10?'estándar':'anualidad baja'}</div></div>
+        <div class="opt-body"><div class="opt-label">${v}%</div><div class="opt-meta">${v===5?T('auto.deductible.theft.alta','anualidad alta'):v===10?T('auto.deductible.theft.estandar','estándar'):T('auto.deductible.theft.baja','anualidad baja')}</div></div>
       </button>`).join('')}
   </div>
   <div class="step-help" style="margin-top:14px"><span data-cms-html="auto.step_help.58"><strong>Daños materiales</strong> · si chocas o te chocan</span></div>
@@ -2142,7 +2142,7 @@ function autoStepDeductible(){
     ${[3,5,10].map(v=>`
       <button class="opt ${state.auto.deductibleDamage===v?'selected':''}" data-dd="${v}">
         ${v===5?REC_BADGE:''}
-        <div class="opt-body"><div class="opt-label">${v}%</div><div class="opt-meta">${v===3?'anualidad alta':v===5?'estándar':'anualidad baja'}</div></div>
+        <div class="opt-body"><div class="opt-label">${v}%</div><div class="opt-meta">${v===3?T('auto.deductible.damage.alta','anualidad alta'):v===5?T('auto.deductible.damage.estandar','estándar'):T('auto.deductible.damage.baja','anualidad baja')}</div></div>
       </button>`).join('')}
   </div>`;
 }
@@ -2155,10 +2155,10 @@ function autoStepAddons(){
     rec:`<strong>Auto sustituto</strong> solo si dependes diario del coche y no tienes otro. Llantas y rines vale la pena en zonas con baches. Los demás según tu uso.`
   })}
   <div class="opts">
-    ${[['sustituto','<span data-cms-html="auto.arr_label.91">Auto sustituto</span>','Auto rentado mientras reparan el tuyo (10-30 días).',960],['llantas','<span data-cms-html="auto.arr_label.92">Ayuda para llantas y rines</span>','Cubre hasta $25,000 con deducible del 25%.',1511],['llave','<span data-cms-html="auto.arr_label.93">Llave de repuesto</span>','Cubre hasta $5,000 con deducible del 20%.',621],['cero','<span data-cms-html="auto.arr_label.94">Deducible cero</span>','Si chocas tu auto, no pagas el deducible — la aseguradora cubre todo.',null],['agencia','<span data-cms-html="auto.arr_label.95">Siempre en agencia</span>','Reparan tu coche siempre en la agencia.',null]].map(([k,l,m,p])=>`
+    ${[['sustituto','<span data-cms-html="auto.arr_label.91">Auto sustituto</span>','<span data-cms-html="auto.addons.sustituto.meta">Auto rentado mientras reparan el tuyo (10-30 días).</span>',960],['llantas','<span data-cms-html="auto.arr_label.92">Ayuda para llantas y rines</span>','<span data-cms-html="auto.addons.llantas.meta">Cubre hasta $25,000 con deducible del 25%.</span>',1511],['llave','<span data-cms-html="auto.arr_label.93">Llave de repuesto</span>','<span data-cms-html="auto.addons.llave.meta">Cubre hasta $5,000 con deducible del 20%.</span>',621],['cero','<span data-cms-html="auto.arr_label.94">Deducible cero</span>','<span data-cms-html="auto.addons.cero.meta">Si chocas tu auto, no pagas el deducible — la aseguradora cubre todo.</span>',null],['agencia','<span data-cms-html="auto.arr_label.95">Siempre en agencia</span>','<span data-cms-html="auto.addons.agencia.meta">Reparan tu coche siempre en la agencia.</span>',null]].map(([k,l,m,p])=>`
       <button class="opt ${ad.includes(k)?'selected':''}" data-aaddon="${k}">
         <div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div>
-        <span class="opt-pill">${p?('+'+fmtMx(p)+'/año'):'según vehículo'}</span>
+        <span class="opt-pill">${p?('+'+fmtMx(p)+'/año'):T('auto.addons.pill.segun_vehiculo','según vehículo')}</span>
       </button>`).join('')}
   </div>`;
 }
@@ -2254,7 +2254,7 @@ const GENERIC_FLOWS = {
         </div>
         <div class="step-help" style="margin-top:18px"><span data-cms-html="auto.step_help.59"><strong>Edad de tu mascota</strong></span></div>
         <div class="slider-wrap">
-          <div class="slider-row"><div><span class="slider-value" id="petAgeVal">${state.mascota.petAge}</span><span class="slider-suffix">años</span></div></div>
+          <div class="slider-row"><div><span class="slider-value" id="petAgeVal">${state.mascota.petAge}</span><span class="slider-suffix"><span data-cms-html="mascota.slider_suffix.anos">años</span></span></div></div>
           <input type="range" min="0" max="9" value="${state.mascota.petAge}" class="slider" id="petAgeSlider">
           <div class="slider-marks"><span data-cms-html="auto.slider_mark.74">3 meses</span><span data-cms-html="auto.slider_mark.75">5</span><span data-cms-html="auto.slider_mark.76">9 años</span></div>
         </div>
@@ -2276,7 +2276,7 @@ const GENERIC_FLOWS = {
         <div class="slider-wrap">
           <div class="slider-row"><div><span class="slider-value" id="petSumVal">$${fmt(state.mascota.sumInsured)}</span></div></div>
           <input type="range" min="15000" max="80000" step="5000" value="${state.mascota.sumInsured}" class="slider" id="petSumSlider">
-          <div class="slider-marks"><span>$15k</span><span>$30k</span><span>$50k</span><span>$80k</span></div>
+          <div class="slider-marks"><span data-cms-html="mascota.slider_mark.sum.15k">$15k</span><span data-cms-html="mascota.slider_mark.sum.30k">$30k</span><span data-cms-html="mascota.slider_mark.sum.50k">$50k</span><span data-cms-html="mascota.slider_mark.sum.80k">$80k</span></div>
         </div>`,
       deductible:()=>`${stepDotsHTML(2, 4)}
         <h3 class="step-title"><span data-cms-html="auto.step_title.16">Deducible por evento</span></h3>
@@ -2286,11 +2286,11 @@ const GENERIC_FLOWS = {
           rec:`Lo que sí varía por póliza es la suma asegurada anual y los addons. Andy te ayuda a ajustar el plan a tu presupuesto.`
         })}
         <div class="opts opts-3">
-          ${[500,1500,3000].map(v=>`<button class="opt ${state.mascota.deductible===v?'selected':''}" data-pded="${v}">${v===1500?REC_BADGE:''}<div class="opt-body"><div class="opt-label">$${fmt(v)}</div><div class="opt-meta">${v===500?'anualidad alta':v===1500?'estándar':'anualidad baja'}</div></div></button>`).join('')}
+          ${[500,1500,3000].map(v=>`<button class="opt ${state.mascota.deductible===v?'selected':''}" data-pded="${v}">${v===1500?REC_BADGE:''}<div class="opt-body"><div class="opt-label">$${fmt(v)}</div><div class="opt-meta">${v===500?T('mascota.deductible.alta','anualidad alta'):v===1500?T('mascota.deductible.estandar','estándar'):T('mascota.deductible.baja','anualidad baja')}</div></div></button>`).join('')}
         </div>`,
       addons:()=>{
         const ad = state.mascota.addons;
-        const items = [['fallece','<span data-cms-html="auto.arr_label.96">Fallecimiento</span>','Indemnización por fallecimiento por enfermedad o accidente. Espera 360 días desde la firma.',720],['robo','<span data-cms-html="auto.arr_label.97">Robo con violencia</span>','Indemnización tras presentar acta ante el MP.',480],['rc','<span data-cms-html="auto.arr_label.98">RC mascota ampliada</span>','Cobertura ampliada de daños a terceros — la mordida importa.',540]];
+        const items = [['fallece','<span data-cms-html="auto.arr_label.96">Fallecimiento</span>','<span data-cms-html="mascota.addons.fallece.meta">Indemnización por fallecimiento por enfermedad o accidente. Espera 360 días desde la firma.</span>',720],['robo','<span data-cms-html="auto.arr_label.97">Robo con violencia</span>','<span data-cms-html="mascota.addons.robo.meta">Indemnización tras presentar acta ante el MP.</span>',480],['rc','<span data-cms-html="auto.arr_label.98">RC mascota ampliada</span>','<span data-cms-html="mascota.addons.rc.meta">Cobertura ampliada de daños a terceros — la mordida importa.</span>',540]];
         return `${stepDotsHTML(3, 4)}
         <h3 class="step-title"><span data-cms-html="auto.step_title.17">Último paso: extras</span></h3>
         ${explainerHTML({_cmsKey:'auto.exp.17', intro:'Coberturas opcionales',
@@ -2363,7 +2363,7 @@ const GENERIC_FLOWS = {
                 <div class="opt-label">${T('productos.ahorro.'+p.name+'.name', p.name)}</div>
                 <div class="opt-meta" style="font-size:13px;color:var(--gray-700);margin-bottom:6px"><em>${T('productos.ahorro.'+p.name+'.tag', p.tag)}</em></div>
                 <div class="opt-meta">${T('productos.ahorro.'+p.name+'.description', p.description)}</div>
-                <div class="opt-meta" style="margin-top:6px;font-size:11px;color:var(--orange-dark)"><strong>Ideal para:</strong> ${T('productos.ahorro.'+p.name+'.bestFor', p.bestFor)}</div>
+                <div class="opt-meta" style="margin-top:6px;font-size:11px;color:var(--orange-dark)"><span data-cms-html="ahorro.product.ideal_para_label"><strong>Ideal para:</strong></span> ${T('productos.ahorro.'+p.name+'.bestFor', p.bestFor)}</div>
               </div>
             </button>`).join('')}
         </div>`;
@@ -2378,7 +2378,7 @@ const GENERIC_FLOWS = {
           rec:`% recomendado a aportar de tu salario según edad: 25→10%, 35→15%, 45→25%, 55→55%. Mientras más tarde inicies, más esfuerzo necesitas.`
         })}
         <div class="slider-wrap">
-          <div class="slider-row"><div><span class="slider-value" id="ahAgeVal">${state.ahorro.age}</span><span class="slider-suffix">años</span></div></div>
+          <div class="slider-row"><div><span class="slider-value" id="ahAgeVal">${state.ahorro.age}</span><span class="slider-suffix"><span data-cms-html="ahorro.slider_suffix.anos">años</span></span></div></div>
           <input type="range" min="0" max="60" value="${state.ahorro.age}" class="slider" id="ahAgeSlider">
           <div class="slider-marks"><span data-cms-html="auto.slider_mark.77">0</span><span data-cms-html="auto.slider_mark.78">20</span><span data-cms-html="auto.slider_mark.79">40</span><span data-cms-html="auto.slider_mark.80">60</span></div>
         </div>`;
@@ -2393,11 +2393,11 @@ const GENERIC_FLOWS = {
           rec:`Si recién empiezas y tienes 30+ años para retiro, $24,000-$36,000/año ($2k-$3k/mes) es un arranque sólido.`
         })}
         <div class="slider-wrap">
-          <div class="slider-row"><div><span class="slider-value" id="ahCVal">$${fmt(state.ahorro.annualContribution)}</span><span class="slider-suffix">/año</span></div></div>
+          <div class="slider-row"><div><span class="slider-value" id="ahCVal">$${fmt(state.ahorro.annualContribution)}</span><span class="slider-suffix"><span data-cms-html="ahorro.slider_suffix.ano_slash">/año</span></span></div></div>
           <input type="range" min="12000" max="240000" step="6000" value="${state.ahorro.annualContribution}" class="slider" id="ahCSlider">
-          <div class="slider-marks"><span>$12k</span><span>$50k</span><span>$120k</span><span>$240k</span></div>
+          <div class="slider-marks"><span data-cms-html="ahorro.slider_mark.contrib.12k">$12k</span><span data-cms-html="ahorro.slider_mark.contrib.50k">$50k</span><span data-cms-html="ahorro.slider_mark.contrib.120k">$120k</span><span data-cms-html="ahorro.slider_mark.contrib.240k">$240k</span></div>
         </div>
-        <p class="step-help" style="margin-top:8px;font-size:12px;color:var(--gray-400)">Equivale a ~$${fmt(Math.round(state.ahorro.annualContribution/12))}/mes si prefieres pago mensual.</p>`;
+        <p class="step-help" style="margin-top:8px;font-size:12px;color:var(--gray-400)"><span data-cms-html="ahorro.equivale_prefix">Equivale a</span> ~$${fmt(Math.round(state.ahorro.annualContribution/12))}<span data-cms-html="ahorro.equivale_suffix">/mes si prefieres pago mensual.</span></p>`;
       },
       years:()=>{
         const p = PRODUCTOS_AHORRO[state.ahorro.product];
@@ -2410,7 +2410,7 @@ const GENERIC_FLOWS = {
           rec:`<strong>${validYears.length>1?'10 años':'10 años (único plazo)'}</strong> es el balance más común — total aportado manejable y suficiente tiempo para que el interés compuesto haga lo suyo.`
         })}
         <div class="opts opts-3">
-          ${validYears.map(v=>`<button class="opt ${state.ahorro.years===v?'selected':''}" data-ayears="${v}">${v===10?REC_BADGE:''}<div class="opt-body"><div class="opt-label">${v} años</div><div class="opt-meta">Total aportado: $${fmt(state.ahorro.annualContribution * v)}</div></div></button>`).join('')}
+          ${validYears.map(v=>`<button class="opt ${state.ahorro.years===v?'selected':''}" data-ayears="${v}">${v===10?REC_BADGE:''}<div class="opt-body"><div class="opt-label">${v} años</div><div class="opt-meta"><span data-cms-html="ahorro.years.meta_prefix">Total aportado:</span> $${fmt(state.ahorro.annualContribution * v)}</div></div></button>`).join('')}
         </div>`;
       }
     },
@@ -2517,16 +2517,16 @@ const GENERIC_FLOWS = {
     summary:()=>{
       const c=GENERIC_FLOWS.educativo.cases[state.educativo.proteccion][state.educativo.plazo];
       return [
-        ['Plan','<span data-cms-html="auto.arr_meta.39">Educativo · Profesional GNP</span>'],
-        ['Protección garantizada','$'+fmt(state.educativo.proteccion)],
-        ['Plazo de pago',state.educativo.plazo+' años'],
-        ['Prima anual','$'+fmt(c.prima)],
-        ['Total que aportas','$'+fmt(c.total)],
+        ['<span data-cms-html="educativo.summary.plan_label">Plan</span>','<span data-cms-html="auto.arr_meta.39">Educativo · Profesional GNP</span>'],
+        ['<span data-cms-html="educativo.summary.proteccion_garantizada">Protección garantizada</span>','$'+fmt(state.educativo.proteccion)],
+        ['<span data-cms-html="educativo.summary.plazo_label">Plazo de pago</span>',state.educativo.plazo+' <span data-cms-html="educativo.summary.anios_suffix">años</span>'],
+        ['<span data-cms-html="educativo.summary.prima_anual">Prima anual</span>','$'+fmt(c.prima)],
+        ['<span data-cms-html="educativo.summary.total_aportas">Total que aportas</span>','$'+fmt(c.total)],
         ['Tu hijo/a recibe (~'+c.entrega+' años)','$'+fmt(c.valor)],
-        ['Recuperación',c.rec+'% de lo aportado'],
+        ['<span data-cms-html="educativo.summary.recuperacion">Recuperación</span>',c.rec+'<span data-cms-html="educativo.summary.de_lo_aportado">% de lo aportado</span>'],
         ['Exención de prima','<span data-cms-html="auto.arr_meta.40">Si faltas, GNP completa los aportes</span>'],
-        ['Incapacidad total','Anticipo de $2,000,000'],
-        ['Enfermedad terminal','Anticipo de $600,000 + gastos funerarios']
+        ['<span data-cms-html="educativo.summary.incapacidad_label">Incapacidad total</span>','<span data-cms-html="educativo.summary.incapacidad_value">Anticipo de $2,000,000</span>'],
+        ['<span data-cms-html="educativo.summary.enf_terminal_label">Enfermedad terminal</span>','<span data-cms-html="educativo.summary.enf_terminal_value">Anticipo de $600,000 + gastos funerarios</span>']
       ];
     }
   },
@@ -2546,7 +2546,7 @@ const GENERIC_FLOWS = {
         <div class="slider-wrap">
           <div class="slider-row"><div><span class="slider-value" id="hvVal">$${fmt(state.patrimonial.homeValue)}</span></div></div>
           <input type="range" min="500000" max="10000000" step="100000" value="${state.patrimonial.homeValue}" class="slider" id="hvSlider">
-          <div class="slider-marks"><span>$500k</span><span>$2M</span><span>$5M</span><span>$10M</span></div>
+          <div class="slider-marks"><span data-cms-html="patrimonial.homeValue.mark.500k">$500k</span><span data-cms-html="patrimonial.homeValue.mark.2m">$2M</span><span data-cms-html="patrimonial.homeValue.mark.5m">$5M</span><span data-cms-html="patrimonial.homeValue.mark.10m">$10M</span></div>
         </div>`,
       contentsValue:()=>`${stepDotsHTML(1, 4)}
         <h3 class="step-title">${T('wizards.patrimonial.steps.contentsValue.title','¿Y los contenidos?')}</h3>
@@ -2560,7 +2560,7 @@ const GENERIC_FLOWS = {
         <div class="slider-wrap">
           <div class="slider-row"><div><span class="slider-value" id="cvVal">$${fmt(state.patrimonial.contentsValue)}</span></div></div>
           <input type="range" min="50000" max="2000000" step="50000" value="${state.patrimonial.contentsValue}" class="slider" id="cvSlider">
-          <div class="slider-marks"><span>$50k</span><span>$500k</span><span>$1M</span><span>$2M</span></div>
+          <div class="slider-marks"><span data-cms-html="patrimonial.contentsValue.mark.50k">$50k</span><span data-cms-html="patrimonial.contentsValue.mark.500k">$500k</span><span data-cms-html="patrimonial.contentsValue.mark.1m">$1M</span><span data-cms-html="patrimonial.contentsValue.mark.2m">$2M</span></div>
         </div>`,
       package:()=>{
         const productos = Object.values(PRODUCTOS_PATRIMONIAL);
@@ -2582,8 +2582,8 @@ const GENERIC_FLOWS = {
               <div class="opt-body">
                 <div class="opt-label">${T('productos.patrimonial.'+p.name+'.name', p.name)} <span style="font-weight:400;color:var(--orange-dark);font-size:13px">— $${fmt(calcPrima(p))}/año</span></div>
                 <div class="opt-meta" style="font-size:13px;color:var(--gray-700);margin-bottom:6px"><em>${T('productos.patrimonial.'+p.name+'.tag', p.tag)}</em></div>
-                <div class="opt-meta" style="font-size:12px;margin-top:6px">${p.coberturas.slice(0,4).map((c,i)=>`<div style=\"display:flex;justify-content:space-between;gap:8px;padding:2px 0\"><span>${T('productos.patrimonial.'+p.name+'.coberturas.'+i+'.name', c[0])}<strong>${T('productos.patrimonial.'+p.name+'.coberturas.'+i+'.value', c[1])}</strong></span></div>`).join('')}${p.coberturas.length>4?`<div style=\"color:var(--gray-400);font-size:11px;margin-top:4px\">+${p.coberturas.length-4} coberturas más</div>`:''}</div>
-                <div class="opt-meta" style="margin-top:8px;font-size:11px;color:var(--orange-dark)"><strong>Ideal para:</strong> ${T('productos.patrimonial.'+p.name+'.bestFor', p.bestFor)}</div>
+                <div class="opt-meta" style="font-size:12px;margin-top:6px">${p.coberturas.slice(0,4).map((c,i)=>`<div style=\"display:flex;justify-content:space-between;gap:8px;padding:2px 0\"><span>${T('productos.patrimonial.'+p.name+'.coberturas.'+i+'.name', c[0])}<strong>${T('productos.patrimonial.'+p.name+'.coberturas.'+i+'.value', c[1])}</strong></span></div>`).join('')}${p.coberturas.length>4?`<div style=\"color:var(--gray-400);font-size:11px;margin-top:4px\">+${p.coberturas.length-4} <span data-cms-html=\"patrimonial.package.more_coverages_suffix\">coberturas más</span></div>`:''}</div>
+                <div class="opt-meta" style="margin-top:8px;font-size:11px;color:var(--orange-dark)"><strong><span data-cms-html="patrimonial.package.ideal_para_label">Ideal para:</span></strong> ${T('productos.patrimonial.'+p.name+'.bestFor', p.bestFor)}</div>
               </div>
             </button>`).join('')}
         </div>`;
@@ -2593,9 +2593,9 @@ const GENERIC_FLOWS = {
         const hv = state.patrimonial.homeValue;
         const hidrometCost = Math.round(hv * 0.003);
         const items = [
-          ['hidromet','<span data-cms-html="auto.arr_label.99">Hidrometereologicos</span>','Cubre las pérdidas y/o daños físicos al inmueble, así como a sus cimentaciones e instalaciones fijas subterráneas, originados por Avalanchas de lodo, Granizo, Helada, Huracán, Inundación, Inundación por lluvia, Golpe de mar, Tsunami, Marejada, Nevada y Vientos tempestuosos.',hidrometCost],
-          ['terremoto','<span data-cms-html="auto.arr_label.100">Terremoto</span>','Se cubren las pérdidas por daños materiales al inmueble Asegurado, así como a sus cimientos e instalaciones fijas subterráneas, causados por Terremoto y/o Erupción Volcánica.',0],
-          ['funmascotas','<span data-cms-html="auto.arr_label.101">Servicio funerario mascotas</span>','En caso de fallecimiento de tu mascota, esta asistencia brinda los siguientes servicios; Recolección del cuerpo, Cremación individual de la mascota, Urna básica y Entrega a domicilio de las cenizas.',1200]
+          ['hidromet','<span data-cms-html="auto.arr_label.99">Hidrometereologicos</span>','<span data-cms-html="patrimonial.addon.hidromet.desc">Cubre las pérdidas y/o daños físicos al inmueble, así como a sus cimentaciones e instalaciones fijas subterráneas, originados por Avalanchas de lodo, Granizo, Helada, Huracán, Inundación, Inundación por lluvia, Golpe de mar, Tsunami, Marejada, Nevada y Vientos tempestuosos.</span>',hidrometCost],
+          ['terremoto','<span data-cms-html="auto.arr_label.100">Terremoto</span>','<span data-cms-html="patrimonial.addon.terremoto.desc">Se cubren las pérdidas por daños materiales al inmueble Asegurado, así como a sus cimientos e instalaciones fijas subterráneas, causados por Terremoto y/o Erupción Volcánica.</span>',0],
+          ['funmascotas','<span data-cms-html="auto.arr_label.101">Servicio funerario mascotas</span>','<span data-cms-html="patrimonial.addon.funmascotas.desc">En caso de fallecimiento de tu mascota, esta asistencia brinda los siguientes servicios; Recolección del cuerpo, Cremación individual de la mascota, Urna básica y Entrega a domicilio de las cenizas.</span>',1200]
         ];
         return `${stepDotsHTML(3, 4)}
         <h3 class="step-title">${T('wizards.patrimonial.steps.addons.title','Último paso: extras')}</h3>
@@ -2605,7 +2605,7 @@ const GENERIC_FLOWS = {
           body:`El plan base ya cubre incendio, robo con violencia, bienes en tránsito y fenómenos naturales.<br>Estas son protecciones adicionales para situaciones específicas.`
         })}
         <div class="opts">
-          ${items.map(([k,l,m,p])=>`<button class="opt ${ad.includes(k)?'selected':''}" data-padon="${k}" data-pcost="${p}">${k==='hidromet'?REC_BADGE:''}<div class="opt-body"><div class="opt-label">${T('wizards.patrimonial.addons.'+k+'.label', l)}</div><div class="opt-meta">${T('wizards.patrimonial.addons.'+k+'.desc', m)}</div></div><span class="opt-pill">${p===0?'Consultar':'+'+fmtMx(p)+'/año'}</span></button>`).join('')}
+          ${items.map(([k,l,m,p])=>`<button class="opt ${ad.includes(k)?'selected':''}" data-padon="${k}" data-pcost="${p}">${k==='hidromet'?REC_BADGE:''}<div class="opt-body"><div class="opt-label">${T('wizards.patrimonial.addons.'+k+'.label', l)}</div><div class="opt-meta">${T('wizards.patrimonial.addons.'+k+'.desc', m)}</div></div><span class="opt-pill">${p===0?T('patrimonial.addon.pill.consultar','Consultar'):'+'+fmtMx(p)+'/año'}</span></button>`).join('')}
         </div>`;
       }
     },
@@ -2640,19 +2640,19 @@ const GENERIC_FLOWS = {
       const cv = state.patrimonial.contentsValue;
       const primaBase = Math.round(hv*p.homeRate + cv*p.contentsRate + p.fixedBase);
       const lines = [
-        ['Paquete','GNP Hogar '+p.name],
-        ['Valor casa (reconstrucción)','$'+fmt(hv)],
-        ['Contenidos','$'+fmt(cv)],
-        ['Prima base del paquete','$'+fmt(primaBase)+'/año']
+        ['<span data-cms-html="patrimonial.summary.paquete">Paquete</span>','GNP Hogar '+p.name],
+        ['<span data-cms-html="patrimonial.summary.valor_casa">Valor casa (reconstrucción)</span>','$'+fmt(hv)],
+        ['<span data-cms-html="patrimonial.summary.contenidos">Contenidos</span>','$'+fmt(cv)],
+        ['<span data-cms-html="patrimonial.summary.prima_base">Prima base del paquete</span>','$'+fmt(primaBase)+'/año']
       ];
       p.coberturas.slice(0,4).forEach(c=>lines.push(['· '+c[0], c[1]]));
-      lines.push(['Deducibles', p.deducibleNote]);
+      lines.push(['<span data-cms-html="patrimonial.summary.deducibles">Deducibles</span>', p.deducibleNote]);
       if(state.patrimonial.addons.length){
-        const addonLabels = {hidromet:'Hidrometeorológicos', terremoto:'Terremoto/Erupción volcánica', funmascotas:'Servicio funerario mascotas'};
+        const addonLabels = {hidromet:'<span data-cms-html="patrimonial.summary.addon.hidromet">Hidrometeorológicos</span>', terremoto:'<span data-cms-html="patrimonial.summary.addon.terremoto">Terremoto/Erupción volcánica</span>', funmascotas:'<span data-cms-html="patrimonial.summary.addon.funmascotas">Servicio funerario mascotas</span>'};
         const hidrometCost = Math.round(hv * 0.003);
         const addonCosts = {hidromet:hidrometCost, terremoto:0, funmascotas:1200};
         state.patrimonial.addons.forEach(k=>{
-          const costoStr = addonCosts[k]===0 ? 'Cotiza Andy aparte' : '$'+fmt(addonCosts[k])+'/año';
+          const costoStr = addonCosts[k]===0 ? '<span data-cms-html="patrimonial.summary.addon.cotiza_aparte">Cotiza Andy aparte</span>' : '$'+fmt(addonCosts[k])+'/año';
           lines.push(['+ '+addonLabels[k], costoStr]);
         });
       }
