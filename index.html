@@ -2812,11 +2812,49 @@ updateProgress('stage-hero');
                                no tiene la clave, usa el fallback.
 */
 window.__cms = { data: null, get: () => undefined };
+
+// FIX BUG-005: escapar path (atributo) y fallback (texto) para evitar
+// que comillas/HTML legítimos rompan el span generado por T().
+function __cmsEscAttr(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
 window.T = function(path, fallback) {
   const v = window.__cms.get(path);
-  const txt = (typeof v === 'string') ? v : fallback;
-  return `<span data-cms-html="${path}">${txt}</span>`;
+  const txt = (typeof v === 'string') ? v : (fallback == null ? '' : fallback);
+  return '<span data-cms-html="' + __cmsEscAttr(path) + '">' + txt + '</span>';
 };
+
+// FIX BUG-001: sanitizador HTML mínimo para uso en visitantes públicos
+// (cuando edit.js no está cargado por no estar en ?edit=1). Reutiliza
+// window.__cmsSanitize si el editor ya lo expuso, si no usa este fallback.
+function __cmsSanitizeFallback(html){
+  if (typeof html !== 'string') return '';
+  var ALLOWED = {B:1,I:1,EM:1,STRONG:1,BR:1,A:1,SPAN:1,U:1,SMALL:1};
+  var tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  (function walk(node){
+    Array.prototype.slice.call(node.childNodes).forEach(function(c){
+      if (c.nodeType === 3) return;
+      if (c.nodeType !== 1) { c.remove(); return; }
+      if (!ALLOWED[c.tagName]) {
+        while (c.firstChild) node.insertBefore(c.firstChild, c);
+        c.remove();
+        return;
+      }
+      Array.prototype.slice.call(c.attributes).forEach(function(a){
+        var n = a.name.toLowerCase(), val = a.value || '';
+        if (n === 'href' && c.tagName === 'A') {
+          if (/^\s*(javascript|data|vbscript):/i.test(val)) c.removeAttribute(a.name);
+          else c.setAttribute('rel','noopener noreferrer');
+        } else {
+          c.removeAttribute(a.name);
+        }
+      });
+      walk(c);
+    });
+  })(tmp);
+  return tmp.innerHTML;
+}
+
 (async function hydrateCMS(){
   try {
     const res = await fetch('content/content.json', { cache: 'no-store' });
@@ -2824,13 +2862,14 @@ window.T = function(path, fallback) {
     const data = await res.json();
     const get = (path) => path.split('.').reduce((o, k) => (o == null ? o : o[k]), data);
     window.__cms = { data, get };
+    const safe = window.__cmsSanitize || __cmsSanitizeFallback;
     document.querySelectorAll('[data-cms]').forEach(el => {
       const v = get(el.dataset.cms);
       if (typeof v === 'string') el.textContent = v;
     });
     document.querySelectorAll('[data-cms-html]').forEach(el => {
       const v = get(el.dataset.cmsHtml);
-      if (typeof v === 'string') el.innerHTML = v;
+      if (typeof v === 'string') el.innerHTML = safe(v);
     });
     // Avisa al editor que los datos están listos (por si el editor cargó antes).
     document.dispatchEvent(new CustomEvent('cms:ready', { detail: data }));
