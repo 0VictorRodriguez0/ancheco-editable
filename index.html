@@ -2410,7 +2410,7 @@ const GENERIC_FLOWS = {
           rec:`<strong>${validYears.length>1?'10 años':'10 años (único plazo)'}</strong> es el balance más común — total aportado manejable y suficiente tiempo para que el interés compuesto haga lo suyo.`
         })}
         <div class="opts opts-3">
-          ${validYears.map(v=>`<button class="opt ${state.ahorro.years===v?'selected':''}" data-ayears="${v}">${v===10?REC_BADGE:''}<div class="opt-body"><div class="opt-label">${v} años</div><div class="opt-meta"><span data-cms-html="ahorro.years.meta_prefix">Total aportado:</span> $${fmt(state.ahorro.annualContribution * v)}</div></div></button>`).join('')}
+          ${validYears.map(v=>`<button class="opt ${state.ahorro.years===v?'selected':''}" data-ayears="${v}">${v===10?REC_BADGE:''}<div class="opt-body"><div class="opt-label">${v} ${T('ahorro.years.opt.anios','años')}</div><div class="opt-meta"><span data-cms-html="ahorro.years.meta_prefix">Total aportado:</span> $${fmt(state.ahorro.annualContribution * v)}</div></div></button>`).join('')}
         </div>`;
       }
     },
@@ -2495,7 +2495,7 @@ const GENERIC_FLOWS = {
         <div class="opts">
           ${plazos.map(pl=>{const c=cases[pl];return `
             <button class="opt ${state.educativo.plazo===pl?'selected':''}" data-edplazo="${pl}">
-              <div class="opt-body"><div class="opt-label">${pl} años de pago · $${fmt(c.prima)}/año</div><div class="opt-meta">Entrega a los ${c.entrega} años → tu hijo/a recibe ~$${fmt(c.valor)} (${c.rec}% de lo aportado)</div></div>
+              <div class="opt-body"><div class="opt-label">${pl} ${T('educativo.plazo.opt.anios_de_pago','años de pago')} · $${fmt(c.prima)}${T('educativo.plazo.opt.por_anio','/año')}</div><div class="opt-meta">${T('educativo.plazo.opt.entrega_a_los','Entrega a los')} ${c.entrega} ${T('educativo.plazo.opt.anios','años')} → ${T('educativo.plazo.opt.tu_hijo_recibe','tu hijo/a recibe')} ~$${fmt(c.valor)} (${c.rec}${T('educativo.plazo.opt.pct_aportado','% de lo aportado')})</div></div>
             </button>`}).join('')}
         </div>`;
       }
