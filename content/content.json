@@ -1,137 +1,137 @@
 {
   "hero": {
-    "eyebrow": "Andy Cherro Corallo · Agente de Seguros · México · cédula profesional V338401",
-    "title_pre": "¿Qué quieres ",
-    "title_accent": "protegel",
-    "title_post": "?",
-    "sub": "Cada decisión tomada hoy — salud, protección, retiro digno — tiene una consecuencia concreta. Te damos las herramientas para tomar la mejor decisión.",
-    "script": "Elección consciente."
+    "eyebrow": "Andy Cherro Corallo · Agente de Seguros · México · cédula profesional V338401 ✓",
+    "title_pre": "¿Qué quieres  ✓",
+    "title_accent": "protegel ✓",
+    "title_post": "? ✓",
+    "sub": "Cada decisión tomada hoy — salud, protección, retiro digno — tiene una consecuencia concreta. Te damos las herramientas para tomar la mejor decisión. ✓",
+    "script": "Elección consciente. ✓"
   },
   "cards": {
     "gmm": {
-      "name": "Gastos Médicos Mayores",
-      "desc": "Los accidentes y enfermedades ocurren de un día para otro, preferible tener un seguro y no necesitarlo, que necesitarlo y no tenerlo; PROTEGETE!",
-      "badge": "Más solicitado"
+      "name": "Gastos Médicos Mayores ✓",
+      "desc": "Los accidentes y enfermedades ocurren de un día para otro, preferible tener un seguro y no necesitarlo, que necesitarlo y no tenerlo; PROTEGETE! ✓",
+      "badge": "Más solicitado ✓"
     },
     "auto": {
-      "name": "Auto",
-      "desc": "Responsabilidad civil, robo total, daños materiales. Obligatorio en muchos estados."
+      "name": "Auto ✓",
+      "desc": "Responsabilidad civil, robo total, daños materiales. Obligatorio en muchos estados. ✓"
     },
     "mascota": {
-      "name": "Mascota",
-      "desc": "GNP Mi Mascota. Perros y gatos de 3 meses a 9 años. Suma y deducible modulares."
+      "name": "Mascota ✓",
+      "desc": "GNP Mi Mascota. Perros y gatos de 3 meses a 9 años. Suma y deducible modulares. ✓"
     },
     "ahorro": {
-      "name": "Ahorro · Inversión · Retiro",
-      "desc": "Plan Personal de Retiro con beneficios fiscales. Aportación deducible de ISR."
+      "name": "Ahorro · Inversión · Retiro ✓",
+      "desc": "Plan Personal de Retiro con beneficios fiscales. Aportación deducible de ISR. ✓"
     },
     "patrimonial": {
-      "name": "Casa / Patrimonial",
-      "desc": "Seas propietario o inquilino, protege tu casa y tus bienes dentro y fuera de ella. ¡TU PATRIMONIO TU TRANQUILIDAD!"
+      "name": "Casa / Patrimonial ✓",
+      "desc": "Seas propietario o inquilino, protege tu casa y tus bienes dentro y fuera de ella. ¡TU PATRIMONIO TU TRANQUILIDAD! ✓"
     },
     "educativo": {
-      "name": "Educativo · Profesional",
-      "desc": "Asegura el futuro académico de tus hijos. Plan de ahorro con protección desde hoy."
+      "name": "Educativo · Profesional ✓",
+      "desc": "Asegura el futuro académico de tus hijos. Plan de ahorro con protección desde hoy. ✓"
     }
   },
   "trust": [
     {
-      "num": "GNP",
-      "lbl": "+120 años en el mercado"
+      "num": "GNP ✓",
+      "lbl": "+120 años en el mercado ✓"
     },
     {
-      "num": "5 min",
-      "lbl": "Cotización completa"
+      "num": "5 min ✓",
+      "lbl": "Cotización completa ✓"
     },
     {
-      "num": "México",
-      "lbl": "Presencial o remoto"
+      "num": "México ✓",
+      "lbl": "Presencial o remoto ✓"
     },
     {
-      "num": "Personal",
-      "lbl": "Andy te contacta directo"
+      "num": "Personal ✓",
+      "lbl": "Andy te contacta directo ✓"
     }
   ],
   "about": {
-    "eyebrow": "¿Quiénes somos?",
-    "title_pre": "Andy Cherro ",
-    "title_accent": "Corallo",
-    "badge_mdrt": "Miembro MDRT",
-    "badge_cedula": "Cédula profesional V338401",
-    "p1": "Asesora profesional integral de <strong>Seguros, Ahorro e Inversión</strong>, certificada por la Comisión Nacional de Seguros y Fianzas, con más de <strong>250 asegurados</strong>. Miembro del <strong>MDRT</strong> (Million Dollar Round Table), la asociación que reconoce a los asesores financieros de más alto desempeño a nivel mundial.",
-    "p2": "Formo parte de <strong>Grupo APSAR</strong> desde hace 8 años y de <strong>Grupo AARCO</strong> hace 4, despachos con más de 30 años de experiencia en el ramo asegurador. Trabajo junto a mi hija <strong>Xime Palacio Cherro</strong> para dar mayor atención y acompañamiento a nuestros asegurados.",
-    "p3": "Trabajamos con <strong>todas las aseguradoras del mercado</strong> para encontrar la opción que mejor se ajuste a lo que necesitas.",
-    "p4_pre": "Nuestro compromiso es estar a tu lado en los momentos en que nos necesites, apoyarte y abogar por ti en todo momento. ",
-    "script": "Estamos a tus órdenes."
+    "eyebrow": "¿Quiénes somos? ✓",
+    "title_pre": "Andy Cherro  ✓",
+    "title_accent": "Corallo ✓",
+    "badge_mdrt": "Miembro MDRT ✓",
+    "badge_cedula": "Cédula profesional V338401 ✓",
+    "p1": "Asesora profesional integral de <strong>Seguros, Ahorro e Inversión</strong>, certificada por la Comisión Nacional de Seguros y Fianzas, con más de <strong>250 asegurados</strong>. Miembro del <strong>MDRT</strong> (Million Dollar Round Table), la asociación que reconoce a los asesores financieros de más alto desempeño a nivel mundial. ✓",
+    "p2": "Formo parte de <strong>Grupo APSAR</strong> desde hace 8 años y de <strong>Grupo AARCO</strong> hace 4, despachos con más de 30 años de experiencia en el ramo asegurador. Trabajo junto a mi hija <strong>Xime Palacio Cherro</strong> para dar mayor atención y acompañamiento a nuestros asegurados. ✓",
+    "p3": "Trabajamos con <strong>todas las aseguradoras del mercado</strong> para encontrar la opción que mejor se ajuste a lo que necesitas. ✓",
+    "p4_pre": "Nuestro compromiso es estar a tu lado en los momentos en que nos necesites, apoyarte y abogar por ti en todo momento.  ✓",
+    "script": "Estamos a tus órdenes. ✓"
   },
   "ctas": {
-    "topbar": "WhatsApp directo",
-    "ribbon_step1": "Andy Cherro Corallo te contacta personalmente con la cotización real, comparativos y siguiente paso. Sin spam, sin llamadas robot.",
-    "ribbon_step2": "Andy Cherro Corallo revisa tu configuración y te devuelve una cotización real con tarifas vigentes de GNP en menos de 24 horas."
+    "topbar": "WhatsApp directo ✓",
+    "ribbon_step1": "Andy Cherro Corallo te contacta personalmente con la cotización real, comparativos y siguiente paso. Sin spam, sin llamadas robot. ✓",
+    "ribbon_step2": "Andy Cherro Corallo revisa tu configuración y te devuelve una cotización real con tarifas vigentes de GNP en menos de 24 horas. ✓"
   },
   "progress": {
-    "initial": "Empieza tu cotización",
-    "configuring": "Configurando tu plan",
-    "contact": "Último paso",
-    "done": "Pre-cotización lista"
+    "initial": "Empieza tu cotización ✓",
+    "configuring": "Configurando tu plan ✓",
+    "contact": "Último paso ✓",
+    "done": "Pre-cotización lista ✓"
   },
   "quote_panel": {
-    "tag": "Tu cotización en vivo",
-    "period_hero": "aprox. anual · simulación · GNP financia 3 y 6 MSI el 1er año",
-    "period_simple": "aprox. anual · simulación",
-    "disclaimer": "Pre-cotización informativa. La anualidad final se emite tras suscripción con la aseguradora."
+    "tag": "Tu cotización en vivo ✓",
+    "period_hero": "aprox. anual · simulación · GNP financia 3 y 6 MSI el 1er año ✓",
+    "period_simple": "aprox. anual · simulación ✓",
+    "disclaimer": "Pre-cotización informativa. La anualidad final se emite tras suscripción con la aseguradora. ✓"
   },
   "contact": {
-    "title_pre": "Último paso · ",
-    "title_accent": "tus datos",
-    "label_name": "Nombre completo",
-    "label_phone": "WhatsApp",
-    "label_email": "Email",
-    "label_city": "Ciudad",
-    "label_timing": "¿Cuándo te gustaría empezar?",
-    "placeholder_name": "Ej. María González",
-    "placeholder_phone": "998 000 0000",
-    "placeholder_email": "tu@email.com",
-    "placeholder_city": "Cancún, QR",
+    "title_pre": "Último paso ·  ✓",
+    "title_accent": "tus datos ✓",
+    "label_name": "Nombre completo ✓",
+    "label_phone": "WhatsApp ✓",
+    "label_email": "Email ✓",
+    "label_city": "Ciudad ✓",
+    "label_timing": "¿Cuándo te gustaría empezar? ✓",
+    "placeholder_name": "Ej. María González ✓",
+    "placeholder_phone": "998 000 0000 ✓",
+    "placeholder_email": "tu@email.com ✓",
+    "placeholder_city": "Cancún, QR ✓",
     "timing_options": {
-      "ya": "Lo antes posible",
-      "mes": "En 1 mes",
-      "3meses": "En 3 meses",
-      "explorando": "Solo estoy explorando"
+      "ya": "Lo antes posible ✓",
+      "mes": "En 1 mes ✓",
+      "3meses": "En 3 meses ✓",
+      "explorando": "Solo estoy explorando ✓"
     },
-    "btn_back": "← Atrás",
-    "btn_submit": "Ver mi pre-cotización →"
+    "btn_back": "← Atrás ✓",
+    "btn_submit": "Ver mi pre-cotización → ✓"
   },
   "wizard_nav": {
-    "back": "← Atrás",
-    "back_root": "← Cambiar tipo",
-    "next": "Siguiente →",
-    "continue": "Continuar →"
+    "back": "← Atrás ✓",
+    "back_root": "← Cambiar tipo ✓",
+    "next": "Siguiente → ✓",
+    "continue": "Continuar → ✓"
   },
   "final": {
-    "badge": "Pre-cotización lista",
-    "title_pre": "Listo, ",
-    "title_accent": "amig@",
-    "card_tag": "Pre-cotización · simulación",
-    "card_period": "aprox. anual MXN · GNP financia 3 y 6 MSI el 1er año · simulación basada en tus elecciones",
-    "summary_title": "Tu configuración",
-    "btn_whatsapp": "Mandar mi resumen por WhatsApp",
-    "btn_restart": "← Empezar otra cotización",
-    "legal_note": "Esta es una <strong>pre-cotización informativa</strong>. La anualidad exacta depende de cuestionario médico/revisión técnica y la calcula la aseguradora. Andy te explica todo personalmente, sin compromiso."
+    "badge": "Pre-cotización lista ✓",
+    "title_pre": "Listo,  ✓",
+    "title_accent": "amig@ ✓",
+    "card_tag": "Pre-cotización · simulación ✓",
+    "card_period": "aprox. anual MXN · GNP financia 3 y 6 MSI el 1er año · simulación basada en tus elecciones ✓",
+    "summary_title": "Tu configuración ✓",
+    "btn_whatsapp": "Mandar mi resumen por WhatsApp ✓",
+    "btn_restart": "← Empezar otra cotización ✓",
+    "legal_note": "Esta es una <strong>pre-cotización informativa</strong>. La anualidad exacta depende de cuestionario médico/revisión técnica y la calcula la aseguradora. Andy te explica todo personalmente, sin compromiso. ✓"
   },
   "footer": {
-    "main": "<strong>ANCHECO</strong> · Andy Cherro Corallo · Agente profesional de seguros · Aliada GNP · cédula profesional V338401",
-    "contact_pre": "Tel ",
-    "contact_phone": "998 163 3443",
-    "contact_mid": " · Email ",
-    "contact_email": "ancheco.gnp@gmail.com",
-    "contact_post": " · México",
-    "legal": "Pre-cotización informativa basada en parámetros de mercado 2026. La anualidad exacta la emite la aseguradora tras suscripción y cuestionario médico."
+    "main": "<strong>ANCHECO</strong> · Andy Cherro Corallo · Agente profesional de seguros · Aliada GNP · cédula profesional V338401 ✓",
+    "contact_pre": "Tel  ✓",
+    "contact_phone": "998 163 3443 ✓",
+    "contact_mid": " · Email  ✓",
+    "contact_email": "ancheco.gnp@gmail.com ✓",
+    "contact_post": " · México ✓",
+    "legal": "Pre-cotización informativa basada en parámetros de mercado 2026. La anualidad exacta la emite la aseguradora tras suscripción y cuestionario médico. ✓"
   },
   "auto": {
     "exp": {
       "19": {
-        "rec": "% recomendado a aportar de tu salario según edad: 25→10%, 35→15%, 45→25%, 55→55%. Mientras más tarde inicies, más esfuerzo necesitas."
+        "rec": "% recomendado a aportar de tu salario según edad: 25→10%, 35→15%, 45→25%, 55→55%. Mientras más tarde inicies, más esfuerzo necesitas. ✓"
       }
     }
   }
