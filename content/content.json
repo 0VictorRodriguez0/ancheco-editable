@@ -127,5 +127,12 @@
     "contact_email": "ancheco.gnp@gmail.com",
     "contact_post": " · México",
     "legal": "Pre-cotización informativa basada en parámetros de mercado 2026. La anualidad exacta la emite la aseguradora tras suscripción y cuestionario médico."
+  },
+  "auto": {
+    "exp": {
+      "19": {
+        "rec": "% recomendado a aportar de tu salario según edad: 25→10%, 35→15%, 45→25%, 55→55%. Mientras más tarde inicies, más esfuerzo necesitat."
+      }
+    }
   }
 }
