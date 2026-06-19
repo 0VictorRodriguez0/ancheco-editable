@@ -130,6 +130,12 @@
   },
   "auto": {
     "exp": {
+      "8": {
+        "intro": "¿qué auto vas a asegurar?",
+        "body": "Te voy a hacer algunas preguntas, las respuestas determinaran tu anualidad.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <strong>Pon datos reales</strong> — la aseguradora los verifica con la factura del auto cuando emiten la póliza.&nbsp;",
+        "rec": "Si no recuerdas el modelo exacto, no te preocupes. te ayudamos a confirmarlo.",
+        "example": "Mientras más nuevo y más caro sea tu auto, más cara será la anualidad; un Versa 2018 cuesta mucho menos asegurar que un Honda HRV 2024.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tambien varía el costo, de acuerdo a la edad del conductor habitual (a mayor edad menor costo) y del CP de residencia (según la siniestralidad de la marca en cada edo).<br>"
+      },
       "14": {
         "body": "Cubre <strong>gastos médicos veterinarios</strong> por accidente o enfermedad — cirugías, hospitalización, análisis.&nbsp;<br>También incluye&nbsp;<strong>Robo</strong>&nbsp; con violencia,&nbsp;\n\n<strong>Fallecimiento</strong>,\n\n<strong>RC </strong>(si tu perro muerde a alguien o rompe algo), orientación veterinaria&nbsp;<strong>24/7</strong>&nbsp;y Cremación.<br><br><strong>Mascotas elegibles:</strong> perros y gatos entre 3 meses y 9 años.<br><br><strong>Servicios y asistencias:&nbsp;</strong><br>los Servicios operan mediante&nbsp;<strong>CITA PREVIA</strong>&nbsp;y se pagarán hasta el monto indicado, y los pagos de las Asistencias&nbsp;\n\n<strong>NO operan por reembolso.</strong><br>&nbsp; &nbsp; &nbsp;<br><b>*&nbsp;</b>&nbsp;Orientación veterinaria telefónica - las 24 horas los 365 dias del año&nbsp; &nbsp;<br><b>*&nbsp;</b>&nbsp;Desparacitación - hasta&nbsp;<strong>$500&nbsp;</strong>&nbsp;<br><b>*&nbsp;</b>&nbsp;Pipeta antipulgas - hasta&nbsp;<strong>$500</strong>&nbsp;<br><b>*&nbsp;</b>&nbsp;Vacuna antirrábica - hasta&nbsp;<strong>$500&nbsp;</strong>&nbsp;<br><b>*&nbsp;</b>&nbsp;Servicio de Cremación - hasta&nbsp;<strong>$1,500&nbsp;</strong>&nbsp;<br><b>*&nbsp;</b>&nbsp;Servicio de esterilización - Pago directo,&nbsp;<strong>solo en red&nbsp;</strong>&nbsp;<br><b>*&nbsp;</b>&nbsp;Baño y peluqueria canina - hasta&nbsp;<strong>$500&nbsp;</strong>&nbsp;<br><b>*&nbsp;</b>&nbsp;Corte de uñas, limpieza de dientes y oidos (externo) - hasta&nbsp;<strong>$700</strong><br><b>*&nbsp;</b>&nbsp;Consulta veterinaria en red o domicilio - hasta&nbsp;<strong>$900</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
         "example": "<br><strong>Periodos de espera:</strong>&nbsp;<br>Si contratas hoy, los&nbsp; <b>accidentes</b>&nbsp;y el&nbsp;\n\n<strong>Robo</strong>&nbsp;están cubiertos en&nbsp; <b>10 dias</b>,&nbsp; las&nbsp; <b>enfermedades</b>&nbsp;&nbsp;hasta dentro de 6 meses y el&nbsp; <b>fallecimiento&nbsp;</b>\n\na partir de<b>&nbsp;</b><b>1 año</b>.",
@@ -155,6 +161,7 @@
       }
     },
     "step_help": {
+      "56": "<strong>Valor del auto</strong> · Casi todas las aseguradoras en caso de Perdida Total o Robo te pagan tu carro a VALOR COMERCIAL (lo que diga el Libro Azul), te aconsejamos que elijas la aseguradora que te lo pague a VALOR CONVENIDO y saber desde antes el monto y cuanto será tu deducible.",
       "60": "&nbsp;"
     },
     "opt_meta": {
@@ -170,10 +177,19 @@
       "15": ""
     },
     "step_title": {
+      "8": "Empezamos:&nbsp;<br><br>",
       "16": "Variables de contratacion"
     },
     "arr_label": {
       "98": "RC (responsabilidad civil)&nbsp;"
+    },
+    "slider_mark": {
+      "vval": {
+        "80k": "<br>",
+        "300k": "<br>",
+        "700k": "<br>",
+        "1_5m": "<br>"
+      }
     }
   },
   "mascota": {
