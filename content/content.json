@@ -213,6 +213,11 @@
         "body": "Lo que puedes&nbsp;\n\n<b>agregar</b>&nbsp;al plan base<br>",
         "rec": "<br>Si tu mascota es <strong>perro de raza grande o de protección</strong>, agrega Robo y RC alta — una mordida puede costar caro en demanda."
       },
+      "18": {
+        "body": "GNP tiene <strong>4 productos de ahorro/inversión&nbsp;</strong>que recomendamos.<br>Cada uno está diseñado para un objetivo distinto: flexibilidad, inversión, beneficio fiscal, o disciplina forzada.&nbsp;<br><br>Todos incluyen <strong>seguro de vida</strong> desde el primer día.",
+        "example": "<br><strong>Sofía de 18 años con TRASCIENDE:</strong> aporta $43,374/año durante solo 10 años ($545,554 total) y a sus 65 años su saldo proyectado es&nbsp; de $9,443,117 — <strong>17 veces lo aportado</strong>, libre de impuestos, y desde el dia 1 tiene protección por fallecimiento vitalicio de&nbsp; $1.9 millones ajustables año con año a la inflacioón real.",
+        "rec": "<br><strong>TRASCIENDE</strong> si quieres flexibilidad, mayor protección y herencia.&nbsp;<br><strong>CAPITALIZA</strong> si te gusta invertir y quieres control activo de tu inversión. <strong>CONSOLIDA</strong> si tu prioridad es deducir ISR, bajar tu tasa gravable o recibir devolución de impuestos.&nbsp;<br><strong>PROYECTA</strong> si quieres una meta rígida de retiro con mayor rendimiento y sin riesgo."
+      },
       "19": {
         "rec": "% recomendado a aportar de tu salario según edad: 25→10%, 35→15%, 45→25%, 55→55%. Mientras más tarde inicies, más esfuerzo necesitas."
       }
@@ -331,6 +336,22 @@
       "tabulador": {
         "term": "",
         "def": ""
+      }
+    }
+  },
+  "productos": {
+    "ahorro": {
+      "PROYECTA": {
+        "description": "Plan rígido especialmente para retiro con aportaciones limitadas durante&nbsp;<strong>solo 10 o 15 años</strong>, sin mas aportaciones, tu dinero crece por la sumatoria del interés compuesto y a los 65 o 70 años lo recibes <strong>todo junto o en rentas</strong> mensuales. Ahí termina tu plan y protección."
+      },
+      "CONSOLIDA": {
+        "description": "Genera ahorro garantizado para tu retiro <strong>y reduces IMPUESTOS.</strong><br>Deducible hasta el 10% de tu ingreso anual (tope 5 UMA — ~$213,973 en 2026). tiene 3 fondos disponibles para realizar aportaciones,&nbsp; y puedes realizar retiros parciales desde año 3 si lo necesitas."
+      },
+      "CAPITALIZA": {
+        "description": "Inversión flexible con <strong>14 portafolios</strong> para elegir tu estrategia,&nbsp; aportaciones limitadas a 10 o 15 años, Premio de Lealtad, posibilidad de realizar&nbsp;<strong>Aportaciones adicionales desde $1,000</strong> en cualquier momento e invertirlos en el portafolio que prefieras, portal personal para tus movimeintos personales, retiros libres desde año 11."
+      },
+      "TRASCIENDE": {
+        "description": "Aportas <strong>solo 5, 10 o 15 años</strong>, desde el año 11 hasta tus 60 años puedes hacer 3 retiros y después un retiro anual, hasta el 50% del saldo al momento de los retiros .&nbsp;<br>Es un plan&nbsp;<strong>vitalicio,&nbsp;</strong>el dinero que dejes sigue creciendo y siempre tienes protección por fallecimiento ."
       }
     }
   }
