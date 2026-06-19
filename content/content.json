@@ -279,6 +279,9 @@
   "gmm": {
     "health": {
       "preexistencias_note": ""
+    },
+    "compare": {
+      "legend": "Lo que tú pagas (deducible + coaseguro hasta el tope)"
     }
   }
 }
