@@ -142,6 +142,11 @@
         "example": "<br>Costo de una ersona sana, no fumadora,&nbsp; con&nbsp;&nbsp;<strong>Tabulador médico B&nbsp;</strong>y suma asegurada de&nbsp; <b>40 millones anuales</b>:&nbsp;<br><b>25&nbsp;</b>años ~$18,100/año.&nbsp;<br><b>35</b>&nbsp;años ~$25,812/año.&nbsp;<br><b>50</b>&nbsp;años ~$38,056/año.&nbsp;<br><b>65</b>&nbsp;años ~$101,664/año.&nbsp;<br>Los&nbsp;\n\n<b>niños&nbsp;</b>son más económicos de asegurar, los&nbsp; <b>bebes&nbsp;</b>y niños pequeños son mas caros por las estadisticas de enfermedades y accidentes.",
         "rec": ""
       },
+      "3": {
+        "body": "Los fumadores pagan más anualidad — son estadísticas de salud.&nbsp;<br>Si fumas y <strong>no lo declaras</strong>, cuando haya un siniestro y se compruebe de que sí (autopsia, expediente médico, etc), <strong>la aseguradora anula tu póliza y no paga</strong>.",
+        "example": "El factor exacto varía por aseguradora pero típicamente <strong>15-20%</strong> en GMM. Misma persona,&nbsp; <b>35 años</b>, mismo plan: no fumadora ~$30,000 vs fumadora ~$36,000.&nbsp;&nbsp;<br><strong>Diferencia anual:</strong>&nbsp;\n\n<strong>$6,000.</strong>&nbsp;",
+        "rec": "Sé honesto, vale más pagar la anualidad correcta que dejar a tu familia sin cobertura cuando más se necesita.&nbsp;<br>Si dejas de fumar&nbsp; <b>12 meses</b>&nbsp;seguidos, casi todas las aseguradoras te bajan a tarifa de no fumador."
+      },
       "8": {
         "intro": "¿qué auto vas a asegurar?",
         "body": "Te voy a hacer algunas preguntas, las respuestas determinaran tu anualidad.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <strong>Pon datos reales</strong> — la aseguradora los verifica con la factura del auto cuando emiten la póliza.&nbsp;",
@@ -264,6 +269,11 @@
       "alta": "",
       "estandar": "",
       "baja": ""
+    }
+  },
+  "gmm": {
+    "health": {
+      "preexistencias_note": ""
     }
   }
 }
