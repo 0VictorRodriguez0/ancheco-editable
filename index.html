@@ -2258,14 +2258,7 @@ const GENERIC_FLOWS = {
           <input type="range" min="0" max="9" value="${state.mascota.petAge}" class="slider" id="petAgeSlider">
           <div class="slider-marks"><span data-cms-html="auto.slider_mark.74">3 meses</span><span data-cms-html="auto.slider_mark.75">5</span><span data-cms-html="auto.slider_mark.76">9 años</span></div>
         </div>
-        ${state.mascota.species==='perro'?`
-        <div class="step-help" style="margin-top:18px"><span data-cms-html="auto.step_help.60"><strong>Tamaño/raza</strong> · razas grandes y consideradas peligrosas suben anualidad por mayor riesgo de cirugías mayores y RC.</span></div>
-        <div class="opts opts-2">
-          <button class="opt ${state.mascota.petSize==='pequeno'?'selected':''}" data-psize="pequeno"><div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.12">Pequeño</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.29">menos de 10 kg (Chihuahua, Pug, Yorkie)</span></div></div></button>
-          <button class="opt ${state.mascota.petSize==='mediano'?'selected':''}" data-psize="mediano">${REC_BADGE}<div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.13">Mediano</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.30">10-25 kg (Beagle, Bulldog Francés, Cocker)</span></div></div></button>
-          <button class="opt ${state.mascota.petSize==='grande'?'selected':''}" data-psize="grande"><div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.14">Grande</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.31">25-40 kg (Labrador, Golden, Pastor)</span></div></div></button>
-          <button class="opt ${state.mascota.petSize==='peligrosa'?'selected':''}" data-psize="peligrosa"><div class="opt-body"><div class="opt-label"><span data-cms-html="auto.opt_label.15">Raza considerada peligrosa</span></div><div class="opt-meta"><span data-cms-html="auto.opt_meta.32">Pitbull, Rottweiler, Doberman, Akita</span></div></div></button>
-        </div>`:''}`,
+        `,
       sumInsured:()=>`${stepDotsHTML(1, 4)}
         <h3 class="step-title"><span data-cms-html="auto.step_title.15">Suma asegurada anual</span></h3>
         ${explainerHTML({_cmsKey:'auto.exp.15', intro:'El tope anual',
@@ -2321,16 +2314,12 @@ const GENERIC_FLOWS = {
       base *= 1 + Math.max(0,state.mascota.petAge-3)*0.06;
       const dedMult = {500:1.3,1500:1.0,3000:0.85}[state.mascota.deductible];
       base *= dedMult;
-      if(state.mascota.species==='perro'){
-        const sizeMult = {pequeno:0.9,mediano:1.0,grande:1.2,peligrosa:1.55}[state.mascota.petSize] || 1.0;
-        base *= 1.1 * sizeMult;
-      }
+      if(state.mascota.species==='perro') base *= 1.1;
       const ad = state.mascota.addons.reduce((s,k)=>s+({fallece:720,robo:480,rc:540}[k]||0),0);
       return Math.round(base + ad);
     },
     summary:()=>{
-      const sizeLbl = {pequeno:'pequeño',mediano:'mediano',grande:'grande',peligrosa:'raza peligrosa'}[state.mascota.petSize];
-      const speciesLbl = state.mascota.species==='perro' ? `Perro ${sizeLbl}` : 'Gato';
+      const speciesLbl = state.mascota.species==='perro' ? 'Perro' : 'Gato';
       const lines = [
         ['Mascota',speciesLbl+' · '+state.mascota.petAge+' años'],
         ['Suma asegurada','$'+fmt(state.mascota.sumInsured)+'/año'],
