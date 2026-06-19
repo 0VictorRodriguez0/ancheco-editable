@@ -136,6 +136,23 @@
         "rec": "Si no recuerdas el modelo exacto, no te preocupes. te ayudamos a confirmarlo.",
         "example": "Mientras más nuevo y más caro sea tu auto, más cara será la anualidad; un Versa 2018 cuesta mucho menos asegurar que un Honda HRV 2024.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tambien varía el costo, de acuerdo a la edad del conductor habitual (a mayor edad menor costo) y del CP de residencia (según la siniestralidad de la marca en cada edo).<br>"
       },
+      "9": {
+        "body": "Si usas tu auto para <strong>generar ingreso</strong> (Uber, DiDi, repartos, taxi), la aseguradora lo considera comercial y la anualidad sube aproxiimadamente el ~30%. Las aseguradoras lo verifican y si reportas como \"particular\" pero lo usas para trabajar, en un siniestro <strong>te pueden negar el pago</strong>.",
+        "rec": "Sé honesto, si usas tu auto comercialmente más del 20% del tiempo, decláralo; la anualidad sube pero tienes cobertura real cuando algo pase."
+      },
+      "10": {
+        "body": "Hay <strong>4 niveles</strong> de cobertura y la diferencia entre ellos es enorme — define qué cubre y qué no cuando hay un siniestro.",
+        "bullet0": "<strong>RC (Responsabilidad Civil):</strong> solo daños a TERCEROS — otra persona, otro auto.&nbsp;<br>Tu auto no está cubierto en ningún caso. Es el mínimo legal.",
+        "bullet1": "<strong>Limitada:</strong> RC + robo total + asistencia vial. Si chocas, tu auto no será reparado.",
+        "bullet2": "<strong>Amplia:</strong> todo lo anterior + daños materiales (choques, vandalismo, fenómenos naturales) + cristales amparados. Cubre tu auto pase lo que pase.&nbsp;",
+        "rec": "<br><strong>Si tu auto vale más de $150,000, contrata Amplia, </strong>la diferencia en la anualidad la recuperas en un solo siniestro.&nbsp;&nbsp;<strong>RC</strong>&nbsp;solo tiene sentido para autos que no valen mucho, mas antiguos del 2006.&nbsp;<br>Si quieres no pagar deducible en choques, <strong>Amplia Total</strong> compensa la diferencia.&nbsp;<br><strong>Agrégale</strong>&nbsp;a cualquiera de las opciones, la máxima cobertura de Gastos Medicos para los ocupantes de tu carro en caso de accidente; GNP te da la opcion de&nbsp;\n\n<strong>1 millón de pesos</strong>&nbsp;y eso puede hacer la diferencia en una catástrofe.<br>",
+        "example": "<br>Mazda CX-5 2015, valor $178,000, conductor 51 años y CP Cancún:&nbsp;<br><strong>RC $5,985/año</strong>&nbsp;·&nbsp;<strong>Limitada $6,504/año</strong>&nbsp;·&nbsp;<strong>Amplia $10,400/año</strong> · <strong>Amplia Total $12,338/año</strong>."
+      },
+      "12": {
+        "body": "En los seguros de auto, el deducible <strong>NO es un monto fijo</strong> — es un <strong>porcentaje del valor de tu auto</strong>. entre el 3% y el 10%; a menor porsentaje mayor anualidad.&nbsp;<br>Cuando hay siniestro, tú pones ese porcentaje y la aseguradora paga el resto.",
+        "example": "<br>Auto con&nbsp;&nbsp;<strong>valor CONVENIDO</strong>&nbsp; de $300,000 con deducible por robo del&nbsp;<strong>10%</strong>&nbsp;y por daños materiales del\n\n<strong>5%</strong>: si te lo roban, tú pones $30,000 y la aseguradora $270,000, y si chocas o te choca una moto sin seguro, tu pones $15,000 y la aseguradora repara los daños a tu coche.&nbsp;<br>Con deducible por daños del&nbsp;<strong>3%</strong>, tu pones solo $9,000 pero la anualidad será un poco mayor.",
+        "rec": "<strong>Daños materiales 3%, robo total 10%</strong>&nbsp;dan buen balance.&nbsp;<br>Bajarlos sube tu anualidad y subirlos la baja."
+      },
       "14": {
         "body": "Cubre <strong>gastos médicos veterinarios</strong> por accidente o enfermedad — cirugías, hospitalización, análisis.&nbsp;<br>También incluye&nbsp;<strong>Robo</strong>&nbsp; con violencia,&nbsp;\n\n<strong>Fallecimiento</strong>,\n\n<strong>RC </strong>(si tu perro muerde a alguien o rompe algo), orientación veterinaria&nbsp;<strong>24/7</strong>&nbsp;y Cremación.<br><br><strong>Mascotas elegibles:</strong> perros y gatos entre 3 meses y 9 años.<br><br><strong>Servicios y asistencias:&nbsp;</strong><br>los Servicios operan mediante&nbsp;<strong>CITA PREVIA</strong>&nbsp;y se pagarán hasta el monto indicado, y los pagos de las Asistencias&nbsp;\n\n<strong>NO operan por reembolso.</strong><br>&nbsp; &nbsp; &nbsp;<br><b>*&nbsp;</b>&nbsp;Orientación veterinaria telefónica - las 24 horas los 365 dias del año&nbsp; &nbsp;<br><b>*&nbsp;</b>&nbsp;Desparacitación - hasta&nbsp;<strong>$500&nbsp;</strong>&nbsp;<br><b>*&nbsp;</b>&nbsp;Pipeta antipulgas - hasta&nbsp;<strong>$500</strong>&nbsp;<br><b>*&nbsp;</b>&nbsp;Vacuna antirrábica - hasta&nbsp;<strong>$500&nbsp;</strong>&nbsp;<br><b>*&nbsp;</b>&nbsp;Servicio de Cremación - hasta&nbsp;<strong>$1,500&nbsp;</strong>&nbsp;<br><b>*&nbsp;</b>&nbsp;Servicio de esterilización - Pago directo,&nbsp;<strong>solo en red&nbsp;</strong>&nbsp;<br><b>*&nbsp;</b>&nbsp;Baño y peluqueria canina - hasta&nbsp;<strong>$500&nbsp;</strong>&nbsp;<br><b>*&nbsp;</b>&nbsp;Corte de uñas, limpieza de dientes y oidos (externo) - hasta&nbsp;<strong>$700</strong><br><b>*&nbsp;</b>&nbsp;Consulta veterinaria en red o domicilio - hasta&nbsp;<strong>$900</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
         "example": "<br><strong>Periodos de espera:</strong>&nbsp;<br>Si contratas hoy, los&nbsp; <b>accidentes</b>&nbsp;y el&nbsp;\n\n<strong>Robo</strong>&nbsp;están cubiertos en&nbsp; <b>10 dias</b>,&nbsp; las&nbsp; <b>enfermedades</b>&nbsp;&nbsp;hasta dentro de 6 meses y el&nbsp; <b>fallecimiento&nbsp;</b>\n\na partir de<b>&nbsp;</b><b>1 año</b>.",
@@ -165,12 +182,17 @@
       "60": "&nbsp;"
     },
     "opt_meta": {
+      "27": "RC + robo total + asistencias + Gastos Médicos\n\n+ Protección Legal.&nbsp; Daños a tu auto&nbsp;\n\n<strong>NO cubiertos</strong>.",
+      "28": "Daños materiales + Robo total + Cristales + RC + Gastos médicos\n\n+ Protección Legal&nbsp;+ Club GNP.",
       "29": "",
       "30": "",
       "31": "",
-      "32": ""
+      "32": "",
+      "rc": "<strong>Tu auto NO está cubierto,</strong>&nbsp;solo pagas por daños causados a otros.",
+      "ampliaTotal": "Todo lo de&nbsp;\n<strong>Amplia</strong>&nbsp;+ <strong>Eliminación de Deducible en Pérdidas Parciales</strong> + Club GNP Plus. <em>Requiere inspección vehicular acreditada — sin la inspección no aplica la eliminación del deducible.</em>"
     },
     "opt_label": {
+      "7": "Solo RC",
       "12": "",
       "13": "",
       "14": "",
@@ -189,6 +211,11 @@
         "300k": "<br>",
         "700k": "<br>",
         "1_5m": "<br>"
+      }
+    },
+    "deductible": {
+      "damage": {
+        "alta": "anualidad un poco mayor"
       }
     }
   },
