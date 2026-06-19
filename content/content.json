@@ -152,6 +152,15 @@
         "example": "<strong>Nivel A</strong>: vas al ABC en CDMX o al Amerimed en Cancún,&nbsp;&nbsp;<strong>tú pagas $21,000 de deducible y el 20%</strong> de la cuenta (máximo $94,000). <strong>Nivel C:</strong>&nbsp;\n\nvas al Star Medica Centro en CDMX o al Hospiten en Cancún,&nbsp;<strong>tú pagas solo $11,000 de deducible y el 10%</strong>&nbsp;de coaseguro (máximo $48,000).",
         "rec": "Elige el&nbsp; <b>Hospital&nbsp;</b>considerando la urgencia o gravedad de tu padecimiento, y tu presupuesto, ya que a mayor nivel mayor será tu participación."
       },
+      "5": {
+        "body": "GNP te da <strong>10 opciones de deducible</strong>, empezando desde <strong>$21,000</strong> pesos mexicanos hasta <strong>$233,000</strong>.",
+        "example": "Si eliges un hospital de Nivel A y la cuenta fue de $200,000.&nbsp;<br>Deducible $21,000 más Coaseguro del 20% — tú pones <strong>$56,800&nbsp;</strong>y GNP cubre <strong>$143,200</strong>.&nbsp;<br>Mira la barra cómo cambia conforme eliges.",
+        "rec": "Para empezar elige las <strong>2 opciones más bajas</strong> ($21,000-$32,000) dan el balance anualidad/protección que Andy recomienda. Si tienes ahorro de emergencia (+ de $100mil pesos), puedes elefir las opciones 4 o 5 y baja anualidad."
+      },
+      "6": {
+        "body": "Es el <strong>máximo que GNP pagará</strong> en gastos médicos al año por enfermedad o accidente.&nbsp;<br>En Personaliza Variable la suma se <strong>reinstala cada año</strong> automáticamente, así que vuelve a estar disponible aunque la hayas usado toda el año anterior.",
+        "rec": "&nbsp;<strong>$40,800,000</strong> para cubrir cualquier posible evento o enfermedad catastrófica, historicamente no se ha registrado ninguna enfermedad que sus gastos hayan superado los 20 millones anuales.<br>Bajar la suma casi no abarata la anualidad (a veces ~$200 al año) y te deja expuesto a un gasto grande."
+      },
       "8": {
         "intro": "¿qué auto vas a asegurar?",
         "body": "Te voy a hacer algunas preguntas, las respuestas determinaran tu anualidad.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <strong>Pon datos reales</strong> — la aseguradora los verifica con la factura del auto cuando emiten la póliza.&nbsp;",
