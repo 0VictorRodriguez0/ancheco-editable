@@ -2268,7 +2268,7 @@ const GENERIC_FLOWS = {
         })}
         <div class="slider-wrap">
           <div class="slider-row"><div><span class="slider-value" id="petSumVal">$${fmt(state.mascota.sumInsured)}</span></div></div>
-          <input type="range" min="15000" max="80000" step="5000" value="${state.mascota.sumInsured}" class="slider" id="petSumSlider">
+          <input type="range" min="5000" max="30000" step="5000" value="${state.mascota.sumInsured}" class="slider" id="petSumSlider">
           <div class="slider-marks"><span data-cms-html="mascota.slider_mark.sum.15k">$15k</span><span data-cms-html="mascota.slider_mark.sum.30k">$30k</span><span data-cms-html="mascota.slider_mark.sum.50k">$50k</span><span data-cms-html="mascota.slider_mark.sum.80k">$80k</span></div>
         </div>`,
       deductible:()=>`${stepDotsHTML(2, 4)}
