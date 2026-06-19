@@ -1196,7 +1196,7 @@ const state = {
   type:null,
   gmm:{step:0,who:'individual',age:35,sex:'F',smoker:false,partnerAge:35,kidsCount:1,kidsAvgAge:8,hospitalTier:'A',deductible:21000,sumInsured:40.8,addons:[]},
   auto:{step:0,brand:'',model:'',year:2020,vehicleValue:300000,use:'particular',coverage:'amplia',deductibleTheft:10,deductibleDamage:5,addons:[]},
-  mascota:{step:0,species:'perro',petAge:3,petSize:'mediano',sumInsured:30000,deductible:1500,addons:[]},
+  mascota:{step:0,species:'perro',petAge:3,petSize:'mediano',sumInsured:30000,deductible:1500,paquete:'maximo',addons:[]},
   ahorro:{step:0,product:'TRASCIENDE',age:35,annualContribution:36000,years:10},
   patrimonial:{step:0,homeValue:2000000,contentsValue:300000,package:'VITAL',addons:['hidromet']},
   educativo:{step:0,proteccion:1000000,plazo:11},
@@ -2271,16 +2271,23 @@ const GENERIC_FLOWS = {
           <input type="range" min="5000" max="30000" step="5000" value="${state.mascota.sumInsured}" class="slider" id="petSumSlider">
           <div class="slider-marks"><span data-cms-html="mascota.slider_mark.sum.15k">$15k</span><span data-cms-html="mascota.slider_mark.sum.30k">$30k</span><span data-cms-html="mascota.slider_mark.sum.50k">$50k</span><span data-cms-html="mascota.slider_mark.sum.80k">$80k</span></div>
         </div>`,
-      deductible:()=>`${stepDotsHTML(2, 4)}
-        <h3 class="step-title"><span data-cms-html="auto.step_title.16">Deducible por evento</span></h3>
-        ${explainerHTML({_cmsKey:'auto.exp.16', intro:'Estructura real GNP Mi Mascota',
-          body:`En GNP Mi Mascota, el deducible aplica como <strong>50% del gasto veterinario por evento</strong> (estructural, no opcional). Los montos abajo son <em>simulación</em> aplicada a una cuenta veterinaria típica para que veas cómo se siente. La cifra exacta depende del costo real del evento.`,
-          example:`Tu perro se intoxica. Cuenta vet: $8,000. GNP cubre el 50% = $4,000. Tú pones los otros $4,000.`,
-          rec:`Lo que sí varía por póliza es la suma asegurada anual y los addons. Andy te ayuda a ajustar el plan a tu presupuesto.`
+      deductible:()=>{
+        if(!state.mascota.paquete) state.mascota.paquete = 'maximo';
+        const planes = [
+          ['maximo','Cuidado Máximo','3 asistencias + 3 consultas veterinarias · suma asegurada hasta $30,000', true],
+          ['superior','Cuidado Superior','2 asistencias + 2 consultas veterinarias · suma asegurada hasta $20,000', false],
+          ['esencial','Cuidado Esencial','1 asistencia + 1 consulta veterinaria · suma asegurada hasta $10,000', false]
+        ];
+        return `${stepDotsHTML(2, 4)}
+        <h3 class="step-title"><span data-cms-html="mascota.plan.title">Plan de contratación</span></h3>
+        ${explainerHTML({_cmsKey:'mascota.plan', intro:'3 opciones GNP Mi Mascota',
+          body:`Elige el plan que se ajusta a tus necesidades. Se diferencian por la <strong>suma asegurada</strong> y la cantidad de <strong>asistencias</strong> y <strong>servicios</strong> al año. Se pueden modificar cuando solicites una cotización real.`,
+          rec:`No hay mucha diferencia en el costo entre las opciones, más vale que sobre y no que falte; te ayudamos a ajustar el plan a tu presupuesto.`
         })}
-        <div class="opts opts-3">
-          ${[500,1500,3000].map(v=>`<button class="opt ${state.mascota.deductible===v?'selected':''}" data-pded="${v}">${v===1500?REC_BADGE:''}<div class="opt-body"><div class="opt-label">$${fmt(v)}</div><div class="opt-meta">${v===500?T('mascota.deductible.alta','anualidad alta'):v===1500?T('mascota.deductible.estandar','estándar'):T('mascota.deductible.baja','anualidad baja')}</div></div></button>`).join('')}
-        </div>`,
+        <div class="opts">
+          ${planes.map(([k,l,m,rec])=>`<button class="opt ${state.mascota.paquete===k?'selected':''}" data-pplan="${k}">${rec?REC_BADGE:''}<div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div></button>`).join('')}
+        </div>`;
+      },
       addons:()=>{
         const ad = state.mascota.addons;
         const items = [['fallece','<span data-cms-html="auto.arr_label.96">Fallecimiento</span>','<span data-cms-html="mascota.addons.fallece.meta">Indemnización por fallecimiento por enfermedad o accidente. Espera 360 días desde la firma.</span>',720],['robo','<span data-cms-html="auto.arr_label.97">Robo con violencia</span>','<span data-cms-html="mascota.addons.robo.meta">Indemnización tras presentar acta ante el MP.</span>',480],['rc','<span data-cms-html="auto.arr_label.98">RC mascota ampliada</span>','<span data-cms-html="mascota.addons.rc.meta">Cobertura ampliada de daños a terceros — la mordida importa.</span>',540]];
@@ -2301,6 +2308,7 @@ const GENERIC_FLOWS = {
       const a=document.getElementById('petAgeSlider');if(a)a.addEventListener('input',()=>{state.mascota.petAge=parseInt(a.value);document.getElementById('petAgeVal').textContent=a.value;renderGenericQuote()});
       const s=document.getElementById('petSumSlider');if(s)s.addEventListener('input',()=>{state.mascota.sumInsured=parseInt(s.value);document.getElementById('petSumVal').textContent='$'+fmt(parseInt(s.value));renderGenericQuote()});
       document.querySelectorAll('[data-pded]').forEach(b=>b.addEventListener('click',()=>{state.mascota.deductible=parseInt(b.dataset.pded);renderGeneric();renderGenericQuote()}));
+      document.querySelectorAll('[data-pplan]').forEach(b=>b.addEventListener('click',()=>{state.mascota.paquete=b.dataset.pplan;renderGeneric();renderGenericQuote()}));
       document.querySelectorAll('[data-padon]').forEach(b=>b.addEventListener('click',()=>{
         const k=b.dataset.padon;const i=state.mascota.addons.indexOf(k);
         if(i>=0)state.mascota.addons.splice(i,1);else state.mascota.addons.push(k);
@@ -2312,18 +2320,19 @@ const GENERIC_FLOWS = {
       let base = 2160;
       base *= state.mascota.sumInsured/30000;
       base *= 1 + Math.max(0,state.mascota.petAge-3)*0.06;
-      const dedMult = {500:1.3,1500:1.0,3000:0.85}[state.mascota.deductible];
-      base *= dedMult;
+      const planMult = {maximo:1.3,superior:1.0,esencial:0.85}[state.mascota.paquete] || 1.0;
+      base *= planMult;
       if(state.mascota.species==='perro') base *= 1.1;
       const ad = state.mascota.addons.reduce((s,k)=>s+({fallece:720,robo:480,rc:540}[k]||0),0);
       return Math.round(base + ad);
     },
     summary:()=>{
       const speciesLbl = state.mascota.species==='perro' ? 'Perro' : 'Gato';
+      const planLbl = {maximo:'Cuidado Máximo',superior:'Cuidado Superior',esencial:'Cuidado Esencial'}[state.mascota.paquete] || 'Cuidado Máximo';
       const lines = [
         ['Mascota',speciesLbl+' · '+state.mascota.petAge+' años'],
         ['Suma asegurada','$'+fmt(state.mascota.sumInsured)+'/año'],
-        ['Deducible','50% del gasto']
+        ['Plan',planLbl]
       ];
       if(state.mascota.addons.length){
         lines.push(['Extras',state.mascota.addons.map(k=>({fallece:'Fallecimiento',robo:'Robo violento',rc:'RC ampliada'}[k])).join(', ')]);
