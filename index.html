@@ -2274,18 +2274,19 @@ const GENERIC_FLOWS = {
       deductible:()=>{
         if(!state.mascota.paquete) state.mascota.paquete = 'maximo';
         const planes = [
-          ['maximo','Cuidado Máximo','3 asistencias + 3 consultas veterinarias · suma asegurada hasta $30,000', true],
-          ['superior','Cuidado Superior','2 asistencias + 2 consultas veterinarias · suma asegurada hasta $20,000', false],
-          ['esencial','Cuidado Esencial','1 asistencia + 1 consulta veterinaria · suma asegurada hasta $10,000', false]
+          ['maximo','Cuidado Máximo', true],
+          ['superior','Cuidado Superior', false],
+          ['esencial','Cuidado Esencial', false]
         ];
         return `${stepDotsHTML(2, 4)}
-        <h3 class="step-title"><span data-cms-html="mascota.plan.title">Plan de contratación</span></h3>
-        ${explainerHTML({_cmsKey:'mascota.plan', intro:'3 opciones GNP Mi Mascota',
-          body:`Elige el plan que se ajusta a tus necesidades. Se diferencian por la <strong>suma asegurada</strong> y la cantidad de <strong>asistencias</strong> y <strong>servicios</strong> al año. Se pueden modificar cuando solicites una cotización real.`,
-          rec:`No hay mucha diferencia en el costo entre las opciones, más vale que sobre y no que falte; te ayudamos a ajustar el plan a tu presupuesto.`
+        <h3 class="step-title"><span data-cms-html="auto.step_title.16">Variables de contratacion</span></h3>
+        ${explainerHTML({_cmsKey:'auto.exp.16', intro:'Estructura GNP Mi Mascota',
+          body:`En GNP Mi Mascota tienes <strong>3 opciones</strong> ya estructuradas, se diferencian por las <strong>sumas aseguradas</strong> y la cantidad de <strong>asistencias</strong> y <strong>servicios</strong> al año que quieras; se pueden modificar cuando solicites una cotizacion real.`,
+          example:`<strong>Cuidado Máximo</strong><br>3 asistencias + 3 consultas veterinarias y suma asegurada hasta $30,000<br><br><strong>Cuidado Superior</strong><br>2 asistencias + 2 consultas veterinarias y suma asegurada hasta $20,000<br><br><strong>Cuidado Esencial</strong><br>1 asistencia + 1 consulta veterinaria y suma asegurada hasta $10,000`,
+          rec:`No hay mucha diferencia en el costo entre las opciones, mas vale que sobre y no que falte; te ayudamos a ajustar el plan a tu presupuesto.`
         })}
-        <div class="opts">
-          ${planes.map(([k,l,m,rec])=>`<button class="opt ${state.mascota.paquete===k?'selected':''}" data-pplan="${k}">${rec?REC_BADGE:''}<div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div></button>`).join('')}
+        <div class="opts opts-3">
+          ${planes.map(([k,l,rec])=>`<button class="opt ${state.mascota.paquete===k?'selected':''}" data-pplan="${k}">${rec?REC_BADGE:''}<div class="opt-body"><div class="opt-label">${l}</div></div></button>`).join('')}
         </div>`;
       },
       addons:()=>{
