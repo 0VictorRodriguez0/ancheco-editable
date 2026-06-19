@@ -1572,11 +1572,10 @@ function gmmStepWho(){
   <h3 class="step-title"><span data-cms-html="auto.step_title.1">Empezamos: ¿quién va a estar cubierto?</span></h3>
   ${explainerHTML({_cmsKey:'auto.exp.1', intro:'Empezamos:',
     body:`Los accidentes y enfermedades ocurren de un día para otro, preferible tener un seguro y no necesitarlo, que necesitarlo y no tenerlo; <strong>PROTEGETE!</strong><br><br><strong>Terminología que vas a escuchar</strong><br><br><strong>Suma asegurada</strong><br>Monto total por el que estás protegido.<br>Se elige al contratar y puede ser única o reinstalable anual, dependiendo de si el deducible es único o anual.<br><br><strong>Deducible</strong><br>Cantidad fija que pagas cada vez que usas el seguro. Puede ser único (se paga una vez al inicio de cada enfermedad y al agotarse la suma, termina el seguro para ese padecimiento) o anual por enfermedad (se paga cada vez que se utiliza pero la suma asegurada se reinstala, volviéndose ilimitada).<br><em>Deducibles anuales por padecimiento, tope de 2 deducibles por año por póliza</em><br><br><strong>Coaseguro</strong><br>Porcentaje sobre la factura hospitalaria que tú pagas en cada siniestro, con tope. Su objetivo es que revises los gastos en factura y los prestadores no se excedan.<br><br><strong>Tabulador médico</strong><br>Monto máximo que GNP acepta pagar al médico por consultas, cirugías, procedimientos, terapias, etc; cuanto mejor sea el tabulador más alta será tu anualidad.<br><br><strong>Prima / costo del seguro</strong><br><br>El seguro de <strong>gastos médicos mayores</strong> cubre padecimientos <strong>grandes, cuando el gasto ocasionado es mayor a tu deducible</strong> — hospitalizaciones, cirugías, enfermedades graves. <strong>No</strong> cubre consultas preventivas con tu médico ni medicina del día a día.<br><br>Te voy a hacer algunas preguntas, y en cada una te explico qué significa, qué te recomiendo y cómo cambia la prima anual.`,
-    example:`Una familia de 4 (2 adultos + 2 hijos) con tabulador B y suma asegurada de $40millones paga ~$66,500/año en una sola póliza.`,
-    rec:`El descuento familiar aplica a partir de 4 integrantes, con menos personas cada quien paga según su propia edad, sin descuento.`
+    example:`Una familia de 4 (2 adultos + 2 hijos) con tabulador B y suma asegurada de $40millones paga ~$66,500/año en una sola póliza.`
   })}
-  <div class="opts opts-3">
-    ${[['individual','<span data-cms-html="auto.arr_label.81">Individual</span>',false],['pareja','<span data-cms-html="auto.arr_label.82">Pareja</span>',false],['familia','<span data-cms-html="auto.arr_label.83">Familiar</span>',true]].map(([k,l,r])=>`
+  <div class="opts opts-2">
+    ${[['individual','<span data-cms-html="auto.arr_label.81">Individual</span>',false],['familia','<span data-cms-html="auto.arr_label.83">Familiar</span>',true]].map(([k,l,r])=>`
     <button class="opt ${state.gmm.who===k?'selected':''}" data-who="${k}">
       ${r?REC_BADGE:''}
       <div class="opt-body"><div class="opt-label">${l}</div></div>
@@ -1590,8 +1589,7 @@ function gmmStepAge(){
   <h3 class="step-title"><span data-cms-html="auto.step_title.2">Edad${showKids||showPartner?'es':''} y sexo</span></h3>
   ${explainerHTML({_cmsKey:'auto.exp.2', intro:'¿Por qué te lo pregunto?',
     body:`La edad es el factor que <strong>más mueve la anualidad</strong>. Es así para todas las aseguradoras — son estadísticas de salud, no es personal.${showPartner?' En planes de pareja/familia, cada miembro suma según su propia edad.':''}`,
-    example:`Persona sana, no fumadora, Tabulador B, suma 40M: 25 años ~$18,100/año. 35 años ~$25,812/año. 50 años ~$38,056/año. 65 años ~$101,664/año.${showKids?' Los hijos menores de 10 años son más baratos de asegurar.':''}`,
-    rec:`Pon edades reales. Contratar joven sale mucho más barato a largo plazo — la anualidad se calcula con la edad de ingreso, y GNP financia con 3 y 6 MSI con tarjetas participantes el 1er año.`
+    example:`Persona sana, no fumadora, Tabulador B, suma 40M: 25 años ~$18,100/año. 35 años ~$25,812/año. 50 años ~$38,056/año. 65 años ~$101,664/año.${showKids?' Los hijos menores de 10 años son más baratos de asegurar.':''}`
   })}
   <div class="step-help" style="margin-top:6px"><span data-cms-html="auto.step_help.49"><strong>${showPartner?'Tu edad':'Edad'}</strong></span></div>
   <div class="slider-wrap">
@@ -2056,12 +2054,7 @@ function autoStepBasic(){
     <input type="range" min="2005" max="2026" value="${state.auto.year}" class="slider" id="yearSlider">
     <div class="slider-marks"><span data-cms-html="auto.slider_mark.70">2005</span><span data-cms-html="auto.slider_mark.71">2015</span><span data-cms-html="auto.slider_mark.72">2020</span><span data-cms-html="auto.slider_mark.73">2026</span></div>
   </div>
-  <div class="step-help" style="margin-top:14px"><span data-cms-html="auto.step_help.56"><strong>Valor aproximado del auto</strong> · es el factor #1 que define tu anualidad de auto. Valor de mercado actual, no lo que pagaste cuando lo compraste nuevo.</span></div>
-  <div class="slider-wrap">
-    <div class="slider-row"><div><span class="slider-value" id="vvalVal">$${fmt(state.auto.vehicleValue)}</span></div></div>
-    <input type="range" min="80000" max="1500000" step="10000" value="${state.auto.vehicleValue}" class="slider" id="vvalSlider">
-    <div class="slider-marks"><span data-cms-html="auto.slider_mark.vval.80k">$80k</span><span data-cms-html="auto.slider_mark.vval.300k">$300k</span><span data-cms-html="auto.slider_mark.vval.700k">$700k</span><span data-cms-html="auto.slider_mark.vval.1_5m">$1.5M</span></div>
-  </div>`;
+  `;
 }
 function autoStepUse(){
   return `${stepDotsHTML(1, autoSteps.length)}
