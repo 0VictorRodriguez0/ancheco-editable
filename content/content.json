@@ -161,6 +161,11 @@
         "body": "Es el <strong>máximo que GNP pagará</strong> en gastos médicos al año por enfermedad o accidente.&nbsp;<br>En Personaliza Variable la suma se <strong>reinstala cada año</strong> automáticamente, así que vuelve a estar disponible aunque la hayas usado toda el año anterior.",
         "rec": "&nbsp;<strong>$40,800,000</strong> para cubrir cualquier posible evento o enfermedad catastrófica, historicamente no se ha registrado ninguna enfermedad que sus gastos hayan superado los 20 millones anuales.<br>Bajar la suma casi no abarata la anualidad (a veces ~$200 al año) y te deja expuesto a un gasto grande."
       },
+      "7": {
+        "body": "El plan base ya incluye <strong>Asistencia en Viajes</strong>, <strong>Membresía Médica Móvil</strong> (orientación médica telefónica, orientación por videollamada, consulta médica a domicilio, ambulancia por emergencia, traslados programados a costo preferencial, concierge para referencias médicas y hospitalarias),&nbsp;<strong>Ayuda para Maternidad básica ($21,000)&nbsp;</strong>y&nbsp;<strong>Consultas Psicológicas.&nbsp;</strong>&nbsp;&nbsp;<br>",
+        "rec": "<br>Incluye siempre&nbsp;<strong>0 deducible en accidentes&nbsp;</strong>y&nbsp;<strong>Ampliacion Hospitalaria Nacional</strong>. así podrás utilizar mas tu seguro y en cualquier parte de Mexico sin ninguna penalización.&nbsp;<br>Agrega&nbsp;<strong>Maternidad Plus</strong>&nbsp;\n\nsi planeas embarazo en los próximos 2-3 años, vale la pena.&nbsp;(10 meses de espera).&nbsp;&nbsp;<br><br>Estas son las coberturas&nbsp;<strong>opcionales</strong>&nbsp;que puedes agregar.",
+        "example": ""
+      },
       "8": {
         "intro": "¿qué auto vas a asegurar?",
         "body": "Te voy a hacer algunas preguntas, las respuestas determinaran tu anualidad.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <strong>Pon datos reales</strong> — la aseguradora los verifica con la factura del auto cuando emiten la póliza.&nbsp;",
@@ -291,6 +296,41 @@
     },
     "compare": {
       "legend": "Lo que tú pagas (deducible + coaseguro hasta el tope)"
+    },
+    "addons": {
+      "cda": {
+        "desc": "Si te accidentas (caída, choque, etc.)&nbsp;<strong>no pagas&nbsp;</strong>deducible,&nbsp; GNP cubre desde el primer peso."
+      },
+      "mp": {
+        "desc": "3 opciones de cobertura: $47,000, $64,500 y $81,500.&nbsp;\n\n<strong>10 meses de espera</strong>."
+      },
+      "ahr": {
+        "desc": "Acceso a todos los Hopitales del país, no solo tu ciudad base."
+      }
+    },
+    "benefits": {
+      "vip": {
+        "dentales": "<strong>Odontoheart Cancún · Bukkadent Odontología Avanzada:</strong> beneficios para asegurados.<br>"
+      }
+    },
+    "terminologia": {
+      "deducible": {
+        "term": "",
+        "def": ""
+      },
+      "title": "",
+      "coaseguro": {
+        "term": "",
+        "def": ""
+      },
+      "suma": {
+        "term": "",
+        "def": ""
+      },
+      "tabulador": {
+        "term": "",
+        "def": ""
+      }
     }
   }
 }
