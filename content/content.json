@@ -15,7 +15,7 @@
     },
     "auto": {
       "name": "Auto",
-      "desc": "Responsabilidad civil, robo total, daños materiales. Obligatorio en muchos estados."
+      "desc": "Protege tu auto, tu patrimonio y a quienes más quieres.Conduce con confianza que nosotros te respaldamos en cada kilómetro; la PROTECCION que mereces al MEJOR COSTO!"
     },
     "mascota": {
       "name": "Mascota",
@@ -130,9 +130,76 @@
   },
   "auto": {
     "exp": {
+      "14": {
+        "body": "Cubre <strong>gastos médicos veterinarios</strong> por accidente o enfermedad — cirugías, hospitalización, análisis.&nbsp;<br>También incluye&nbsp;<strong>Robo</strong>&nbsp; con violencia,&nbsp;\n\n<strong>Fallecimiento</strong>,\n\n<strong>RC </strong>(si tu perro muerde a alguien o rompe algo), orientación veterinaria&nbsp;<strong>24/7</strong>&nbsp;y Cremación.<br><br><strong>Mascotas elegibles:</strong> perros y gatos entre 3 meses y 9 años.&nbsp;",
+        "example": "<br><strong>Periodos de espera:</strong>&nbsp;<br>Si contratas hoy, los&nbsp; <b>accidentes</b>&nbsp;y el&nbsp;\n\n<strong>Robo</strong>&nbsp;están cubiertos en&nbsp; <b>10 dias</b>,&nbsp; las&nbsp; <b>enfermedades</b>&nbsp;&nbsp;hasta dentro de 6 meses y el&nbsp; <b>fallecimiento&nbsp;</b>\n\na partir de<b>&nbsp;</b><b>1 año</b>.",
+        "rec": "Protegelo desde&nbsp;<b>ahora</b>&nbsp;para que si en algun lo necesitas lo tengas disponible, los accidentes y enfermedades no avisan."
+      },
+      "15": {
+        "body": "Es el máximo que GNP cubrirá en gastos veterinarios al año; pasada esa cifra, tú asumes el resto.",
+        "example": "<br>Costos típicos en hospital veterinario privado:&nbsp;<br>Obstrucción intestinal con hospitalización <strong>$8-25 mil</strong>.&nbsp;<br>Tratamiento oncológico con seguimiento <strong>$10-30 mil</strong>.&nbsp;<br>Hospitalización por accidente <strong>$5-15 mil</strong>.",
+        "rec": "<br><strong>$30,000</strong>&nbsp; cubre la mayoría de eventos médicos sin pagar una anualidad de lujo.&nbsp;"
+      },
+      "16": {
+        "intro": "Estructura GNP Mi Mascota",
+        "body": "En GNP Mi Mascota tienes&nbsp;&nbsp;<strong>3 opciones </strong>ya estructuradas, se diferencian por las&nbsp; <b>sumas aseguradas</b>&nbsp;y la cantidad de <strong>asistencias</strong>&nbsp;y <strong>servicios</strong>&nbsp;al año que quieras; se pueden modificar cuando solicites una cotizacion real.",
+        "example": "&nbsp;&nbsp;<br><strong>Cuidado Máximo&nbsp;</strong>&nbsp;&nbsp;&nbsp;<br>3 asistencias + 3 consultas veterinarias y suma asegurada hasta $30,000&nbsp;<br><strong>Cuidado Superior&nbsp;</strong>&nbsp;&nbsp;&nbsp;<br>2 asistencias + 2 consultas veterinarias&nbsp;\n\ny suma asegurada hasta $20,000&nbsp;&nbsp;&nbsp;<br><strong>Cuidado Esencial&nbsp;</strong>&nbsp;&nbsp;&nbsp;<br>1 asistencias + 1 consultas veterinarias&nbsp;\n\ny suma asegurada hasta $10,000",
+        "rec": "&nbsp;<br>No hay mucha diferencia en el costo entre las opciones, mas vale que sobre y no que falte; te ayudamos a ajustar el plan a tu presupuesto."
+      },
+      "17": {
+        "body": "Lo que puedes&nbsp;\n\n<b>agregar</b>&nbsp;al plan base<br>",
+        "rec": "<br>Si tu mascota es <strong>perro de raza grande o de protección</strong>, agrega Robo y RC alta — una mordida puede costar caro en demanda."
+      },
       "19": {
         "rec": "% recomendado a aportar de tu salario según edad: 25→10%, 35→15%, 45→25%, 55→55%. Mientras más tarde inicies, más esfuerzo necesitas."
       }
+    },
+    "step_help": {
+      "60": "&nbsp;"
+    },
+    "opt_meta": {
+      "29": "",
+      "30": "",
+      "31": "",
+      "32": ""
+    },
+    "opt_label": {
+      "12": "",
+      "13": "",
+      "14": "",
+      "15": ""
+    },
+    "step_title": {
+      "16": "Variables de contratacion"
+    },
+    "arr_label": {
+      "98": "RC (responsabilidad civil)&nbsp;"
+    }
+  },
+  "mascota": {
+    "slider_mark": {
+      "sum": {
+        "15k": "$5,000",
+        "30k": "$10,000",
+        "80k": "$30,000",
+        "50k": "$20,000"
+      }
+    },
+    "addons": {
+      "fallece": {
+        "meta": "Indemnización por fallecimiento por enfermedad o accidente.&nbsp;<br>Espera 360 días desde la firma."
+      },
+      "robo": {
+        "meta": "Indemnización tras presentar acta ante el MP.&nbsp;<br>Cubierto a partir de los 10 dias.&nbsp; &nbsp;<br>"
+      },
+      "rc": {
+        "meta": "Cobertura&nbsp; de daños a terceros — desde $2,000 hasta $35,000."
+      }
+    },
+    "deductible": {
+      "alta": "",
+      "estandar": "",
+      "baja": ""
     }
   }
 }
