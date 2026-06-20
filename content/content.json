@@ -294,6 +294,9 @@
     },
     "badge": {
       "46": "mas solicitado&nbsp;"
+    },
+    "arr_meta": {
+      "40": ""
     }
   },
   "mascota": {
@@ -396,6 +399,17 @@
           "example": "Contenidos de casa promedio: muebles $200,000 + electrodomésticos $50,000 + ropa $50,000 + electrónicos $100,000 = ~<strong>$400,000</strong>."
         }
       }
+    }
+  },
+  "educativo": {
+    "summary": {
+      "total_aportas": "",
+      "recuperacion": "",
+      "incapacidad_label": "",
+      "enf_terminal_label": "",
+      "enf_terminal_value": "",
+      "incapacidad_value": "",
+      "de_lo_aportado": ""
     }
   }
 }
