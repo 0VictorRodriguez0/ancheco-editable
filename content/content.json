@@ -370,5 +370,17 @@
         "description": "Aportas <strong>solo 5, 10 o 15 años</strong>, desde el año 11 hasta tus 60 años puedes hacer 3 retiros y después un retiro anual, hasta el 50% del saldo al momento de los retiros .&nbsp;<br>Es un plan&nbsp;<strong>vitalicio,&nbsp;</strong>el dinero que dejes sigue creciendo y siempre tienes protección por fallecimiento ."
       }
     }
+  },
+  "wizards": {
+    "patrimonial": {
+      "steps": {
+        "homeValue": {
+          "body": "Protege tu casa contra <strong>incendio, robo, fenómenos naturales</strong> (huracanes, sismos, inundaciones, etc), <strong>explosiones y daños eléctricos</strong>.&nbsp;<br>Se toma en cuenta el <strong>valor de reconstrucción</strong>.",
+          "example": "Si tu casa vale $4 millones a la venta pero reconstruirla costaría $2.5 millones (terreno aparte), se aseguran solo los $2.5 millones; pagar más es desperdicio y pagar menos te deja descubierto.",
+          "title": "¿Cuánto vale tu casa?",
+          "rec": "Si no sabes el valor exacto de tu casa, te comparto una regla aproximada: <strong>$15,000-$25,000 por m²</strong> en zonas costeras (Cancún) y <strong>$10,000-$15,000</strong> en el interior (CDMX). Andy te ayuda a calcular si es preciso."
+        }
+      }
+    }
   }
 }
