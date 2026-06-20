@@ -267,6 +267,9 @@
       "cero": {
         "meta": "No pagas el deducible en caso de robo o perdida total&nbsp; — la aseguradora cubre todo."
       }
+    },
+    "badge": {
+      "46": "mas solicitado&nbsp;"
     }
   },
   "mascota": {
