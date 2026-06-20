@@ -4,7 +4,7 @@
     "title_pre": "¿Qué quieres ",
     "title_accent": "proteger",
     "title_post": "?",
-    "sub": "*Tu FUTURO no es cuestión de suerte. ¡No decidas a ciegas!\nCada paso que das HOY en Salud, Protección o un Retiro digno, define tu mañana; cada decisión tiene una consecuencia.                                                          Aqui te damos la información clave y las herramientas necesarias para tomar el control y elijas con total seguridad..",
+    "sub": "*Tu FUTURO no es cuestión de suerte. ¡No decidas a ciegas!\nCada paso que das HOY en Salud, Protección o un Retiro digno, define tu mañana; cada decisión tiene una consecuencia.  Aqui te damos la información clave y las herramientas necesarias para tomar el control y elijas con total seguridad..",
     "script": "Elección consciente."
   },
   "cards": {
@@ -19,7 +19,7 @@
     },
     "mascota": {
       "name": "Mascota",
-      "desc": "Diseñado para respaldarte y cubrir a tu perro o gato ante riesgos a los que se puede encontrar expuesto en el día a día.  Ellos también son parte de tu familia, PROTEGELOS!"
+      "desc": "Diseñado para respaldarte y cubrir a tu perro o gato ante riesgos a los que se puede encontrar expuesto en el día a día.  Ellos también son parte de tu familia, PROTEGELOS!"
     },
     "ahorro": {
       "name": "Ahorro · Inversión · Retiro",
@@ -27,11 +27,11 @@
     },
     "patrimonial": {
       "name": "Casa / Patrimonial",
-      "desc": "Seas propietario o inquilino, protege tu casa y tus bienes dentro y fuera de ella.                          ¡TU PATRIMONIO TU TRANQUILIDAD!"
+      "desc": "Seas propietario o inquilino, protege tu casa y tus bienes dentro y fuera de ella. ¡TU PATRIMONIO TU TRANQUILIDAD!"
     },
     "educativo": {
       "name": "Educativo · Profesional",
-      "desc": "Planea con anticipación la educación, el inicio profesional o el SUEÑO de tus hijos, sobrinos o nietos; GARANTIZA su futuro.           ¡PROTECCION y AHORRO en un solo PLAN!"
+      "desc": "Planea con anticipación la educación, el inicio profesional o el SUEÑO de tus hijos, sobrinos o nietos; GARANTIZA su futuro. ¡PROTECCION y AHORRO en un solo PLAN!"
     }
   },
   "trust": [
