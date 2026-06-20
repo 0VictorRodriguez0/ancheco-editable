@@ -66,7 +66,7 @@
   },
   "ctas": {
     "topbar": "WhatsApp directo",
-    "ribbon_step1": "Andy Cherro Corallo te contacta personalmente con la cotización real, comparativos y siguiente paso. Sin spam, sin llamadas robot.",
+    "ribbon_step1": "Andy Cherro Corallo te contactará personalmente con la cotización real, comparativos y siguiente paso. Sin spam, sin llamadas robot.",
     "ribbon_step2": "Andy Cherro Corallo revisa tu configuración y te devuelve una cotización real con tarifas vigentes de GNP en menos de 24 horas."
   },
   "progress": {
@@ -397,6 +397,9 @@
         "contentsValue": {
           "body": "<strong>CONTENIDOS:</strong> Muebles, decoración, artículos personales y electrodomésticos;&nbsp;\n\nsi se queman, rompen o roban, la aseguradora te los repone.<br><br><strong>ELECTRONICOS:</strong> Televisores, computo, celulares, audio, entretenimiento, etc (aplica deducible).<br><br><strong>BIENES EN TRANSITO:</strong> Te cubre el robo con violencia de tus artículos portátiles de uso personal que se encuentren temporalmente fuera del inmueble, tales como celulares, tabletas, ropa y accesorios, bolsas, carteras, relojes, binoculares, anteojos, plumas estilográficas, lapiceros, joyas, bicicletas, patines y patinetas, aparatos fotográficos o de video, artículos y aparatos deportivos; se te repondrán descontándole el deducible correspondiente.<br><br><br>",
           "example": "Contenidos de una casa promedio: muebles $200,000 + electrodomésticos $50,000 + ropa $50,000 + electrónicos $100,000 = ~<strong>$400,000</strong>."
+        },
+        "addons": {
+          "body": "El plan base ya cubre incendio, robo con violencia, bienes en tránsito y fenómenos naturales.<br><br>Estas son protecciones adicionales para situaciones específicas."
         }
       }
     }
