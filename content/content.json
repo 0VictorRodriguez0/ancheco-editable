@@ -222,6 +222,17 @@
         "rec": "Cuanto antes empieces con tu ahorro, mas beneficio obtendrás del interes compuesto, y cuanto mas demores en iniciar, mayor esfuerzo vas a tener que hacer.&nbsp;<br><br>Porcentaje&nbsp;\n\nde tu salario&nbsp;recomendado para ahorrar según tu edad:&nbsp;<br><strong>25 años</strong>&nbsp;→10%&nbsp;<br><strong>35 años</strong>&nbsp;→15%&nbsp;<br><strong>45 años</strong>&nbsp;→25%<br><strong>55 años</strong>&nbsp;→55%.&nbsp;",
         "body": "Los intereses generados se le van inyectando a tu capital haciendo una bola de nive, por lo cual, empezar joven con un plan de ahorro multiplica tu retiro <strong>exponencialmente</strong>; mientras más años haya entre hoy y tus 65 años, más crecerá tu dinero.&nbsp;<br>",
         "example": "<br>Haciendo un mismo ahorro de<strong><span>&nbsp;$45,000/año × 10 años:&nbsp;</span></strong><br>&nbsp;*Renata de&nbsp;&nbsp;<strong>25 años</strong>&nbsp;recibe&nbsp;a sus 65 años<strong><span>&nbsp;$7.4 millones&nbsp;</span></strong>(1,203% mas de lo aportado)<br>&nbsp;*Elia de&nbsp;&nbsp;<strong>45 años</strong>&nbsp;recibe&nbsp;a sus 65 años<strong>&nbsp;$1.5 millones&nbsp;</strong>(164% mas de lo que aportó).&nbsp; ."
+      },
+      "20": {
+        "intro": "pequeños ahorros constantes se convierten en grandes logros",
+        "body": "Descubre como un&nbsp;\n\n<strong>ahorro constante&nbsp;</strong>HOY puede ayudarte a construir una mejor pensión, disfrutar de un retiro con mayor tranquilidad financiera o lograr tus sueños a&nbsp; <b>mediano y largo plazo</b>. GNP te permite elegir plazos de aportaciones flexibles de 1, 5,&nbsp; <b>10</b>, 15 y 20 años, o hasta llegar a tus 65 años.&nbsp;&nbsp;<br>Tu <b>anualidad</b>&nbsp;dependera de tu capacidad de ahorro actual&nbsp; o de lo que estes dispuesto a ahorrar para llegar a tu objetivo.&nbsp;&nbsp;<br><b>Cualquier monto cuenta, lo importante es la constancia.</b>",
+        "example": "",
+        "rec": "Si recién empiezas y te faltan 30 años o mas para llegar a tu etapa de retiro,&nbsp; <b>$24,000 o $36,000/año</b>&nbsp;($2,000 o $3,000/mes) es un arranque sólido."
+      },
+      "21": {
+        "intro": "Plazos disponibles",
+        "body": "Tú eliges <strong>cuántos años aportas</strong>. solo recuerda que en cuantos menos años quieras ahorrar mayor anualidad tendrás.&nbsp;<br>El&nbsp; <b>tiempo</b>&nbsp;es uno de los factores mas importantes para alcanzar tus metas financieras; mientras mas años dejes crecer tu ahorro, mayor sera el potencial de crecimiento de tu patrimonio gracias al&nbsp;<b>interés compuesto</b>.&nbsp;<br>",
+        "rec": "elige el plazo que mejor se adapte a tu o tus objetivos y descubre cuanto podrías recibir a largo plazo;&nbsp;deja&nbsp;que el interés compuesto haga lo suyo.&nbsp;&nbsp;&nbsp;<br><strong>10 años</strong> es el plazo más común, pero todo depende de tu capacidad de ahorro y tu objetivo&nbsp;"
       }
     },
     "step_help": {
