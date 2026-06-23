@@ -293,7 +293,7 @@
       }
     },
     "badge": {
-      "46": "mas solicitado&nbsp;"
+      "46": "Segun ubicacion&nbsp;"
     },
     "arr_meta": {
       "40": ""
@@ -409,7 +409,10 @@
         },
         "package": {
           "example": "Casa de $2 millones + $300 mil de contenidos + $150 mil de equipo electronico + $50 mil de bienes en transito: <strong>$6,360/año.</strong>&nbsp;Con protección contra huracanes :<strong>&nbsp;$12,396</strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<strong>&nbsp;· Cotización a tu medida</strong>.",
-          "rec": "<b>Define&nbsp;</b>bien&nbsp;que es lo que mas quieres proteger, si la casa y sus cimientos o tus bienes personales dentro de la casa y en la calle; estos valores son lo que definen la anualidad&nbsp;<b>&nbsp;</b>"
+          "rec": "<b>Define&nbsp;</b>bien&nbsp;que es lo que mas quieres proteger, si la casa y sus cimientos o tus&nbsp;\n\n<strong>bienes personales</strong>&nbsp;dentro de la casa y en la calle; estos valores son lo que cambian la anualidad&nbsp;<b>&nbsp;</b>",
+          "title": "Elige tu cobertura",
+          "intro": "COBERTURAS ADICIONALES",
+          "body": "El plan base cubre incendio, robo con violencia, bienes en tránsito y fenómenos naturales.<br>Hay protecciones adicionales que le puedes agregar&nbsp;para situaciones específicas si vives en alguna zona de riesgo de siniestros.&nbsp;&nbsp;&nbsp;<strong>&nbsp;</strong>"
         }
       }
     }
@@ -423,6 +426,13 @@
       "enf_terminal_value": "",
       "incapacidad_value": "",
       "de_lo_aportado": ""
+    }
+  },
+  "patrimonial": {
+    "addon": {
+      "pill": {
+        "consultar": "Segun CP"
+      }
     }
   }
 }
