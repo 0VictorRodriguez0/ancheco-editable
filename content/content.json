@@ -433,6 +433,9 @@
       "pill": {
         "consultar": "Segun CP"
       }
+    },
+    "summary": {
+      "prima_base": ""
     }
   }
 }
