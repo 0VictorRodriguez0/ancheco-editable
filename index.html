@@ -2582,7 +2582,7 @@ const GENERIC_FLOWS = {
         const items = [
           ['hidromet','<span data-cms-html="auto.arr_label.99">Hidrometereologicos</span>','<span data-cms-html="patrimonial.addon.hidromet.desc">Cubre las pérdidas y/o daños físicos al inmueble, así como a sus cimentaciones e instalaciones fijas subterráneas, originados por Avalanchas de lodo, Granizo, Helada, Huracán, Inundación, Inundación por lluvia, Golpe de mar, Tsunami, Marejada, Nevada y Vientos tempestuosos.</span>',basePrima],
           ['terremoto','<span data-cms-html="auto.arr_label.100">Terremoto</span>','<span data-cms-html="patrimonial.addon.terremoto.desc">Se cubren las pérdidas por daños materiales al inmueble Asegurado, así como a sus cimientos e instalaciones fijas subterráneas, causados por Terremoto y/o Erupción Volcánica.</span>',0],
-          ['funmascotas','<span data-cms-html="auto.arr_label.101">Servicio funerario mascotas</span>','<span data-cms-html="patrimonial.addon.funmascotas.desc">En caso de fallecimiento de tu mascota, esta asistencia brinda los siguientes servicios; Recolección del cuerpo, Cremación individual de la mascota, Urna básica y Entrega a domicilio de las cenizas.</span>',1200]
+          ['funmascotas','<span data-cms-html="auto.arr_label.101">Servicio funerario mascotas</span>','<span data-cms-html="patrimonial.addon.funmascotas.desc">En caso de fallecimiento de tu mascota, esta asistencia brinda los siguientes servicios; Recolección del cuerpo, Cremación individual de la mascota, Urna básica y Entrega a domicilio de las cenizas.</span>',348]
         ];
         return `${stepDotsHTML(2, 3)}
         <h3 class="step-title">${T('wizards.patrimonial.steps.addons.title','Coberturas adicionales')}</h3>
@@ -2610,7 +2610,7 @@ const GENERIC_FLOWS = {
       const p = PRODUCTOS_PATRIMONIAL.VITAL;
       const hv = state.patrimonial.homeValue, cv = state.patrimonial.contentsValue;
       const basePrima = Math.round(hv*p.homeRate + cv*p.contentsRate + p.fixedBase);
-      const costs = {hidromet:basePrima, terremoto:0, funmascotas:1200};
+      const costs = {hidromet:basePrima, terremoto:0, funmascotas:348};
       const ad = state.patrimonial.addons.reduce((s,k)=>s+(costs[k]||0),0);
       return basePrima + ad;
     },
@@ -2626,7 +2626,7 @@ const GENERIC_FLOWS = {
       p.coberturas.slice(0,4).forEach(c=>lines.push(['· '+c[0], c[1]]));
       if(state.patrimonial.addons.length){
         const addonLabels = {hidromet:'<span data-cms-html="patrimonial.summary.addon.hidromet">Hidrometeorológicos</span>', terremoto:'<span data-cms-html="patrimonial.summary.addon.terremoto">Terremoto/Erupción volcánica</span>', funmascotas:'<span data-cms-html="patrimonial.summary.addon.funmascotas">Servicio funerario mascotas</span>'};
-        const addonCosts = {hidromet:basePrima, terremoto:0, funmascotas:1200};
+        const addonCosts = {hidromet:basePrima, terremoto:0, funmascotas:348};
         state.patrimonial.addons.forEach(k=>{
           const costoStr = addonCosts[k]===0 ? '<span data-cms-html="patrimonial.summary.addon.cotiza_aparte">Según CP (cotiza Andy aparte)</span>' : '$'+fmt(addonCosts[k])+'/año';
           lines.push(['+ '+addonLabels[k], costoStr]);
