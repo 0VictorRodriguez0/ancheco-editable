@@ -1199,7 +1199,7 @@ const state = {
   mascota:{step:0,species:'perro',petAge:3,petSize:'mediano',sumInsured:30000,deductible:1500,paquete:'maximo',addons:[]},
   ahorro:{step:0,product:'TRASCIENDE',age:35,annualContribution:36000,years:10},
   patrimonial:{step:0,homeValue:2000000,contentsValue:300000,package:'VITAL',addons:['hidromet']},
-  educativo:{step:0,titularAge:35,menorAge:5,proteccion:1000000,plazo:11},
+  educativo:{step:0,titularAge:35,menorAge:5,proteccion:1000000,plazo:'10'},
   contact:{name:'',phone:'',email:'',city:'',timing:'ya'},
   finalAmount:0,
   finalSummaryLines:[]
@@ -2441,18 +2441,12 @@ const GENERIC_FLOWS = {
   educativo:{
     title:'Plan Educativo · Profesional',
     steps:['edades','proteccion','plazo'],
-    // Casos reales GNP Profesional (material AnCheco 19-may, proyección al 5% de inflación)
+    // Referencia AnCheco: Papá 37, hijo 1, meta $1.1M entregable a los 18 años. La prima escala linealmente con la proteccion elegida.
+    refProteccion:1100000,
     cases:{
-      500000:{
-        7:{prima:39235,total:319452,entrega:18,valor:335024,rec:105},
-        10:{prima:28730,total:361363,entrega:21,valor:387832,rec:107},
-        11:{prima:27975,total:351867,entrega:18,valor:407224,rec:116},
-        14:{prima:27395,total:344571,entrega:21,valor:471412,rec:137}
-      },
-      1000000:{
-        7:{prima:75670,total:616106,entrega:18,valor:670048,rec:109},
-        11:{prima:53150,total:668515,entrega:18,valor:814447,rec:122}
-      }
+      '5':{prima:82670},
+      '10':{prima:43735},
+      'alcanzada':{prima:25760}
     },
     render:{
       edades:()=>`${stepDotsHTML(0, 3)}
@@ -2487,19 +2481,28 @@ const GENERIC_FLOWS = {
             </button>`).join('')}
         </div>`,
       plazo:()=>{
-        const cases = GENERIC_FLOWS.educativo.cases[state.educativo.proteccion];
-        const plazos = Object.keys(cases).map(Number).sort((a,b)=>a-b);
+        const cases = GENERIC_FLOWS.educativo.cases;
+        const factor = state.educativo.proteccion / GENERIC_FLOWS.educativo.refProteccion;
+        const yearsAlcanzada = Math.max(1, 18 - state.educativo.menorAge);
+        const opciones = [
+          {key:'5',         cmsLabel:'educativo.plazo.opt.5_anios',          label:'5 AÑOS'},
+          {key:'10',        cmsLabel:'educativo.plazo.opt.10_anios',         label:'10 AÑOS'},
+          {key:'alcanzada', cmsLabel:'educativo.plazo.opt.hasta_alcanzada',  label:'HASTA EDAD ALCANZADA'}
+        ];
         return `${stepDotsHTML(2, 3)}
         <h3 class="step-title"><span data-cms-html="auto.step_title.23">¿Durante cuántos años quieres pagar?</span></h3>
         ${explainerHTML({_cmsKey:'auto.exp.23', intro:'El plazo define tu prima',
-          body:`Mientras <strong>más corto el plazo</strong>, mayor la prima anual pero terminas de pagar antes. Plazos más largos bajan la prima. Todos los montos son <strong>casos reales GNP</strong>, proyectados al 5% de inflación.`,
-          rec:`Si tu hijo es pequeño, un plazo largo (11-14 años) baja la prima y deja crecer más el ahorro.`
+          body:`Mientras <strong>más corto el plazo</strong>, mayor la prima anual pero terminas de pagar antes. Plazos más largos bajan la prima.`
         })}
         <div class="opts">
-          ${plazos.map(pl=>{const c=cases[pl];return `
-            <button class="opt ${state.educativo.plazo===pl?'selected':''}" data-edplazo="${pl}">
-              <div class="opt-body"><div class="opt-label">${pl} ${T('educativo.plazo.opt.anios_de_pago','años de pago')} · $${fmt(c.prima)}${T('educativo.plazo.opt.por_anio','/año')}</div><div class="opt-meta">${T('educativo.plazo.opt.entrega_a_los','Entrega a los')} ${c.entrega} ${T('educativo.plazo.opt.anios','años')} → ${T('educativo.plazo.opt.tu_hijo_recibe','tu hijo/a recibe')} ~$${fmt(c.valor)} (${c.rec}${T('educativo.plazo.opt.pct_aportado','% de lo aportado')})</div></div>
-            </button>`}).join('')}
+          ${opciones.map(o=>{
+            const prima = Math.round(cases[o.key].prima * factor);
+            const sub = o.key==='alcanzada' ? '$'+fmt(prima)+'/año · '+yearsAlcanzada+' años' : '$'+fmt(prima)+'/año';
+            return `
+            <button class="opt ${state.educativo.plazo===o.key?'selected':''}" data-edplazo="${o.key}">
+              <div class="opt-body"><div class="opt-label"><span data-cms-html="${o.cmsLabel}">${o.label}</span></div><div class="opt-meta">${sub}</div></div>
+            </button>`;
+          }).join('')}
         </div>`;
       }
     },
@@ -2507,29 +2510,33 @@ const GENERIC_FLOWS = {
       const t=document.getElementById('edTitularAgeSlider');if(t)t.addEventListener('input',()=>{state.educativo.titularAge=parseInt(t.value);document.getElementById('edTitularAgeVal').textContent=t.value;renderGenericQuote()});
       const m=document.getElementById('edMenorAgeSlider');if(m)m.addEventListener('input',()=>{state.educativo.menorAge=parseInt(m.value);document.getElementById('edMenorAgeVal').textContent=m.value;renderGenericQuote()});
       document.querySelectorAll('[data-edprot]').forEach(b=>b.addEventListener('click',()=>{
-        const v=parseInt(b.dataset.edprot);
-        state.educativo.proteccion=v;
-        const cases=GENERIC_FLOWS.educativo.cases[v];
-        if(!cases[state.educativo.plazo]) state.educativo.plazo=parseInt(Object.keys(cases)[0]);
+        state.educativo.proteccion=parseInt(b.dataset.edprot);
         renderGeneric();renderGenericQuote();
       }));
       document.querySelectorAll('[data-edplazo]').forEach(b=>b.addEventListener('click',()=>{
-        state.educativo.plazo=parseInt(b.dataset.edplazo);
+        state.educativo.plazo=b.dataset.edplazo;
         renderGeneric();renderGenericQuote();
       }));
     },
-    price:()=>GENERIC_FLOWS.educativo.cases[state.educativo.proteccion][state.educativo.plazo].prima,
+    price:()=>{
+      const factor = state.educativo.proteccion / GENERIC_FLOWS.educativo.refProteccion;
+      return Math.round(GENERIC_FLOWS.educativo.cases[state.educativo.plazo].prima * factor);
+    },
     summary:()=>{
-      const c=GENERIC_FLOWS.educativo.cases[state.educativo.proteccion][state.educativo.plazo];
+      const factor = state.educativo.proteccion / GENERIC_FLOWS.educativo.refProteccion;
+      const prima = Math.round(GENERIC_FLOWS.educativo.cases[state.educativo.plazo].prima * factor);
+      const yearsAlcanzada = Math.max(1, 18 - state.educativo.menorAge);
+      const plazoDisplay = state.educativo.plazo==='alcanzada'
+        ? '<span data-cms-html="educativo.summary.plazo_alcanzada">Hasta edad alcanzada</span> ('+yearsAlcanzada+' <span data-cms-html="educativo.summary.anios_suffix">años</span>)'
+        : state.educativo.plazo+' <span data-cms-html="educativo.summary.anios_suffix">años</span>';
       return [
         ['<span data-cms-html="educativo.summary.plan_label">Plan</span>','<span data-cms-html="auto.arr_meta.39">Educativo · Profesional GNP</span>'],
         ['<span data-cms-html="educativo.summary.titular_age_label">Edad del contratante</span>',state.educativo.titularAge+' <span data-cms-html="educativo.summary.anios_suffix_titular">años</span>'],
         ['<span data-cms-html="educativo.summary.menor_age_label">Edad del menor</span>',state.educativo.menorAge+' <span data-cms-html="educativo.summary.anios_suffix_menor">años</span>'],
         ['<span data-cms-html="educativo.summary.proteccion_garantizada">Protección garantizada</span>','$'+fmt(state.educativo.proteccion)],
-        ['<span data-cms-html="educativo.summary.plazo_label">Plazo de pago</span>',state.educativo.plazo+' <span data-cms-html="educativo.summary.anios_suffix">años</span>'],
-        ['<span data-cms-html="educativo.summary.prima_anual">Prima anual</span>','$'+fmt(c.prima)],
-        ['Tu hijo/a recibe (~'+c.entrega+' años)','$'+fmt(c.valor)],
-        ['<span data-cms-html="educativo.summary.recuperacion">Recuperación</span>',c.rec+'<span data-cms-html="educativo.summary.de_lo_aportado">% de lo aportado</span>'],
+        ['<span data-cms-html="educativo.summary.plazo_label">Plazo de pago</span>',plazoDisplay],
+        ['<span data-cms-html="educativo.summary.prima_anual">Prima anual</span>','$'+fmt(prima)],
+        ['<span data-cms-html="educativo.summary.tu_hijo_recibe">Tu hijo/a recibe (~18 años)</span>','$'+fmt(state.educativo.proteccion)],
         ['<span data-cms-html="educativo.summary.incapacidad_label">Incapacidad total</span>','<span data-cms-html="educativo.summary.incapacidad_value">Anticipo de $2,000,000</span>'],
         ['<span data-cms-html="educativo.summary.enf_terminal_label">Enfermedad terminal</span>','<span data-cms-html="educativo.summary.enf_terminal_value">Anticipo de $600,000 + gastos funerarios</span>']
       ];
