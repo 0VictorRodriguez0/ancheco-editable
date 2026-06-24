@@ -2348,7 +2348,11 @@ const GENERIC_FLOWS = {
                 <div class="opt-meta" style="margin-top:6px;font-size:11px;color:var(--orange-dark)"><span data-cms-html="ahorro.product.ideal_para_label"><strong>Ideal para:</strong></span> ${T('productos.ahorro.'+p.name+'.bestFor', p.bestFor)}</div>
               </div>
             </button>`).join('')}
-        </div>`;
+        </div>
+        ${explainerHTML({_cmsKey:'auto.exp.18b',
+          example:`<strong>Sofía, 18 años en TRASCIENDE:</strong> aportó $43,374/año durante 10 años ($545,554 total). A los 65 años, su saldo proyectado es $9,443,117 — <strong>17 veces lo aportado</strong>, libre de impuestos. Y tuvo $1.1M de seguro de vida desde el día 1.`,
+          rec:`<strong>TRASCIENDE</strong> para flexibilidad y herencia. <strong>CAPITALIZA</strong> si quieres control activo de inversión. <strong>CONSOLIDA</strong> si tu prioridad es deducir ISR. <strong>PROYECTA</strong> si quieres meta rígida de retiro.`
+        })}`;
       },
       age:()=>{
         const p = PRODUCTOS_AHORRO[state.ahorro.product];
