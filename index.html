@@ -2658,13 +2658,14 @@ function renderFinal(){
   document.getElementById('fSummary').innerHTML = lines.map(([l,v],i)=>`<div class="quote-line" style="animation-delay:${.4+i*.07}s"><span class="lbl">${l}</span><span class="val">${v}</span></div>`).join('');
 }
 document.getElementById('fWhats').addEventListener('click',()=>{
+  const stripHtml = s => String(s).replace(/<[^>]*>/g,'').replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/\s+/g,' ').trim();
   const product = {gmm:'Gastos Médicos Mayores (Personaliza Variable)',auto:'Auto',mascota:'Mascota',ahorro:'Ahorro/Retiro',patrimonial:'Casa/Patrimonial',educativo:'Educativo · Profesional'}[state.type];
   let msg = `Hola Andy! Soy ${state.contact.name}.\n\nCompleté la pre-cotización en tu landing:\n\n`;
   msg += `*Producto:* ${product}\n`;
   const labelMonto = (state.type==='ahorro' || state.type==='educativo') ? 'aportación anual' : 'anualidad simulada';
   msg += `*Pre-cotización:* $${fmt(state.finalAmount)} (${labelMonto})\n\n`;
   msg += `*Mi configuración:*\n`;
-  state.finalSummaryLines.forEach(([l,v])=>msg+=`• ${l}: ${v}\n`);
+  state.finalSummaryLines.forEach(([l,v])=>msg+=`• ${stripHtml(l)}: ${stripHtml(v)}\n`);
   msg += `\n*Mis datos:*\n`;
   msg += `Tel: ${state.contact.phone}\n`;
   if(state.contact.email) msg += `Email: ${state.contact.email}\n`;
