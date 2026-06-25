@@ -1646,56 +1646,19 @@ function gmmStepHealth(){
   <p class="step-help" style="margin-top:18px;font-size:12px;color:var(--gray-400)"><span data-cms-html="gmm.health.preexistencias_note"><strong>Sobre condiciones preexistentes</strong> (diabetes, hipertensión, etc.): si las tienes, hay que declararlas. GNP cubre preexistencias después de 6 meses a 2 años de vigencia (con previa selección de riesgos), o después de 5 años sin tratamiento (cobertura $500K-$1M). Andy revisa cada caso.</span></p>`;
 }
 function gmmStepHospital(){
-  const hospitalsByRegion = {
-    qroo:{
-      A:'Amerimed, Cozumel International Clinic',
-      B:'Galenia, Costamed, Playamed',
-      C:'Hospiten, Quirúrgica del Sur, Clínica Carranza, Clínica Nazareth, Hospital de Tulum, Médica San Miguel Cozumel',
-      D:'Mayan Medical, Group Onco Center Cancún, UMIS (Unidad Médica Integral del Sur)'
-    },
-    yucatan:{
-      A:'Faro del Mayab',
-      B:'Star Médica, Mérida CEM, Clínica de Mérida, Medimac Mérida',
-      C:'Centro Médico de las Américas, Grupo Médico de Mérida, Centro Médico Americano',
-      D:'—'
-    },
-    cdmx:{
-      A:'ABC Observatorio, Hospital Ángeles Universidad, ABC Santa Fe, Hospital Ángeles del Pedregal',
-      B:'Médica Sur, Hospital Ángeles (Santa Mónica, Mocel, Roma, Clínica Londres, Metropolitano, Acoxpa, Lindavista, México), San Ángel Inn (Universidad, Sur, Chapultepec, Patriotismo), Hospital Español, HMG Coyoacán, Diomed, Centro Médico Dalinde, Hospital Infantil Privado',
-      C:'Star Médica Centro, Hospital Bite Médica, Centro Quirúrgico Río Consulado, Hospital MIG, Hospital Escandón, Hospital Mac La Viga, Medimac Cuemanco',
-      D:'Conde de Valenciana IAP, Unidad Oftalmológica del Valle, Centro Oftalmológico del Sur, Onco Quality Care, Superare, Medici, Laser Ocular Lomas, Clínica Quirúrgica Berlín, Centro Oncológico de Alta Especialidad, FUCAM, Clínica Atrys, San Ángel Inn del Valle, Elite Klinik'
-    }
-  };
-  if(!state.gmm.region) state.gmm.region = 'qroo';
-  const hb = hospitalsByRegion[state.gmm.region];
-  const tiers = [
-    {k:'A', label:'Nivel A · Top tier', desc:'Hospitales premium del país', extra:`Coaseguro 20% · Tope ${fmtMx(94000)}`, rec:false, hospitales:hb.A},
-    {k:'B', label:'Nivel B · Alta gama', desc:'Hospitales sólidos', extra:`Coaseguro 15% · Tope ${fmtMx(70000)}`, rec:true, hospitales:hb.B},
-    {k:'C', label:'Nivel C · Gama media', desc:'Privados regionales', extra:`Coaseguro 10% · Tope ${fmtMx(53000)}`, rec:false, hospitales:hb.C},
-    {k:'D', label:'Nivel D · Clínicas de corta estancia', desc:'Privados básicos', extra:`Coaseguro 5% · Tope ${fmtMx(35000)}`, rec:false, hospitales:hb.D}
-  ];
-  const regionPicker = `<div class="opts opts-3" style="margin-bottom:14px">
-    ${[['qroo','<span data-cms-html="auto.arr_label.84">Quintana Roo</span>'],['yucatan','<span data-cms-html="auto.arr_label.85">Yucatán</span>'],['cdmx','<span data-cms-html="auto.arr_label.86">CDMX</span>']].map(([k,l])=>`
-      <button class="opt ${state.gmm.region===k?'selected':''}" data-region="${k}">
-        <div class="opt-body"><div class="opt-label">${l}</div></div>
-      </button>`).join('')}
-  </div>`;
   return `${stepDotsHTML(3, gmmSteps.length)}
   <h3 class="step-title"><span data-cms-html="auto.step_title.4">Nivel hospitalario - Todo México</span></h3>
   ${explainerHTML({_cmsKey:'auto.exp.4', intro:'4 niveles de red hospitalaria',
-    body:`GNP <strong>Personaliza Variable</strong> tiene <strong>4 niveles</strong> de red hospitalaria. Cada nivel determina <strong>a qué hospitales puedes ir</strong> y <strong>cuánto absorbes tú</strong> en cada hospitalización (coaseguro y deducible mínimo).`,
+    body:`El plan <strong>Personaliza Variable</strong> tiene <strong>4 niveles</strong> de red hospitalaria, y puedes elegir el hospital de tu preferencia <strong>al momento de que lo necesites usar</strong>. El hospital que elijas, determina cuánto absorbes tú en cada evento (deducible + coaseguro hasta el tope).`,
     bullets:[
       `<strong>Nivel A:</strong> hospitales más caros del país. Coaseguro 20% (tope $94,000).`,
       `<strong>Nivel B:</strong> alta gama. Coaseguro 15% (tope $70,000).`,
       `<strong>Nivel C:</strong> gama media. Coaseguro 10% (tope $53,000).`,
       `<strong>Nivel D:</strong> clínicas de corta estancia. Coaseguro 5% (tope $35,000).`
     ],
-    example:`<strong>Nivel A</strong>: vas al ABC en CDMX o Amerimed en Cancún, pero <strong>tú pagas 20%</strong> de la cuenta (máximo $94,000). <strong>Nivel D</strong> (Mayan, UMIS en Cancún): <strong>tú pagas solo 5%</strong> (máximo $35,000).`,
-    rec:`<strong>Nivel B</strong> es el sweet spot para la mayoría — Galenia, Médica Sur, Costamed cubren bien sin el costo de Nivel A. Si vives en CDMX y quieres ABC sí o sí, ve a Nivel A.`
+    example:`si vas a un hospital <strong>Nivel A</strong> (ABC en CDMX o Amerimed en Cancún), tú pagas el <strong>20% de la cuenta</strong> (máximo $94,000), pero si vas a un hospital <strong>Nivel C</strong> (Hospiten en Cancún) tú pagas solo el <strong>10% de la cuenta</strong> (máximo $48,000).`,
+    rec:`Elegir el hospital considerando la urgencia, gravedad y tu presupuesto ya que a mayor nivel hospitalario mayor será tu gasto.`
   })}
-  <div class="step-help" style="margin-top:14px;margin-bottom:8px"><span data-cms-html="auto.step_help.54"><strong>Tu región</strong> · los hospitales disponibles por nivel cambian por estado</span></div>
-  ${regionPicker}
-  <p class="step-help" style="margin-top:10px;font-size:11px;color:var(--gray-400)"><span data-cms-html="gmm.deducibles_note">Deducibles anuales por padecimiento, tope de 2 deducibles por año por póliza.</span></p>
   ${comparativeTiersHTML(200000)}
   <p class="step-help" style="margin-top:16px;font-weight:800;color:var(--navy);background:var(--orange-light);padding:12px 14px;border-radius:10px"><span data-cms-html="gmm.tier_choice_note">El nivel hospitalario lo eliges en el momento de usar tu seguro, no al contratarlo. Atenderte en un hospital de menor nivel reduce tu deducible y coaseguro.</span></p>`;
 }
