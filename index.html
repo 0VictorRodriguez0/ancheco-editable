@@ -1554,6 +1554,7 @@ const gmmSteps = [
   {render:gmmStepWho,validate:()=>true},
   {render:gmmStepAge,validate:()=>true},
   {render:gmmStepHealth,validate:()=>true},
+  {render:gmmStepHospital,validate:()=>true},
   {render:gmmStepDeductible,validate:()=>true},
   {render:gmmStepSum,validate:()=>true},
   {render:gmmStepAddons,validate:()=>true},
@@ -1694,17 +1695,6 @@ function gmmStepHospital(){
   })}
   <div class="step-help" style="margin-top:14px;margin-bottom:8px"><span data-cms-html="auto.step_help.54"><strong>Tu región</strong> · los hospitales disponibles por nivel cambian por estado</span></div>
   ${regionPicker}
-  <div class="opts">
-    ${tiers.map(t=>`
-      <button class="opt ${state.gmm.hospitalTier===t.k?'selected':''}" data-tier="${t.k}">
-        ${t.rec?REC_BADGE:''}
-        <div class="opt-body">
-          <div class="opt-label">${T('gmm.tiers.'+t.k+'.label', t.label)}</div>
-          <div class="opt-meta">${T('gmm.tiers.'+t.k+'.desc', t.desc)} · ${T('gmm.tiers.'+t.k+'.extra', t.extra)}</div>
-          <div class="opt-meta" style="font-size:11px;color:var(--gray-400);margin-top:4px"><span data-cms-html="gmm.tiers.${t.k}.hospitales_label">Hospitales en ${state.gmm.region==='qroo'?'Q.Roo':state.gmm.region==='yucatan'?'Yucatán':'CDMX'}</span>: ${t.hospitales}</div>
-        </div>
-      </button>`).join('')}
-  </div>
   <p class="step-help" style="margin-top:10px;font-size:11px;color:var(--gray-400)"><span data-cms-html="gmm.deducibles_note">Deducibles anuales por padecimiento, tope de 2 deducibles por año por póliza.</span></p>
   ${comparativeTiersHTML(200000)}
   <p class="step-help" style="margin-top:16px;font-weight:800;color:var(--navy);background:var(--orange-light);padding:12px 14px;border-radius:10px"><span data-cms-html="gmm.tier_choice_note">El nivel hospitalario lo eliges en el momento de usar tu seguro, no al contratarlo. Atenderte en un hospital de menor nivel reduce tu deducible y coaseguro.</span></p>`;
