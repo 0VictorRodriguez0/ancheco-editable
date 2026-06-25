@@ -2270,7 +2270,7 @@ const GENERIC_FLOWS = {
       const lines = [
         ['Mascota',speciesLbl+' · '+state.mascota.petAge+' años'],
         ['Plan',planLbl],
-        ['Gastos médicos veterinarios','$'+fmt(sumPorPlan)+'/año']
+        ['<span data-cms-html="mascota.summary.suma_asegurada">Suma asegurada</span>','$'+fmt(sumPorPlan)]
       ];
       if(state.mascota.addons.length){
         lines.push(['Extras',state.mascota.addons.map(k=>({fallece:'Fallecimiento',robo:'Robo violento',rc:'RC ampliada'}[k])).join(', ')]);
