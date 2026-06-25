@@ -2441,12 +2441,18 @@ const GENERIC_FLOWS = {
   educativo:{
     title:'Plan Educativo · Profesional',
     steps:['edades','proteccion','plazo'],
-    // Referencia AnCheco: Papá 37, hijo 1, meta $1.1M entregable a los 18 años. La prima escala linealmente con la proteccion elegida.
+    // Referencia AnCheco: Papá 37, hijo 1, meta $1.1M entregable a los 18 años. La prima escala con la proteccion y con la edad del contratante (Andy: "el costo depende de la edad del papá y el plazo del seguro").
     refProteccion:1100000,
+    refTitularAge:37,
     cases:{
       '5':{prima:82670},
       '10':{prima:43735},
       'alcanzada':{prima:25760}
+    },
+    ageFactor:(age)=>{
+      // Aproximación: +4% por año sobre la referencia de 37, acotada entre 0.5x y 3x.
+      const f = 1 + (age - 37) * 0.04;
+      return Math.max(0.5, Math.min(3, f));
     },
     render:{
       edades:()=>`${stepDotsHTML(0, 3)}
@@ -2482,7 +2488,7 @@ const GENERIC_FLOWS = {
         </div>`,
       plazo:()=>{
         const cases = GENERIC_FLOWS.educativo.cases;
-        const factor = state.educativo.proteccion / GENERIC_FLOWS.educativo.refProteccion;
+        const factor = (state.educativo.proteccion / GENERIC_FLOWS.educativo.refProteccion) * GENERIC_FLOWS.educativo.ageFactor(state.educativo.titularAge);
         const yearsAlcanzada = Math.max(1, 18 - state.educativo.menorAge);
         const opciones = [
           {key:'5',         cmsLabel:'educativo.plazo.opt.5_anios',          label:'5 AÑOS'},
@@ -2519,11 +2525,11 @@ const GENERIC_FLOWS = {
       }));
     },
     price:()=>{
-      const factor = state.educativo.proteccion / GENERIC_FLOWS.educativo.refProteccion;
+      const factor = (state.educativo.proteccion / GENERIC_FLOWS.educativo.refProteccion) * GENERIC_FLOWS.educativo.ageFactor(state.educativo.titularAge);
       return Math.round(GENERIC_FLOWS.educativo.cases[state.educativo.plazo].prima * factor);
     },
     summary:()=>{
-      const factor = state.educativo.proteccion / GENERIC_FLOWS.educativo.refProteccion;
+      const factor = (state.educativo.proteccion / GENERIC_FLOWS.educativo.refProteccion) * GENERIC_FLOWS.educativo.ageFactor(state.educativo.titularAge);
       const prima = Math.round(GENERIC_FLOWS.educativo.cases[state.educativo.plazo].prima * factor);
       const yearsAlcanzada = Math.max(1, 18 - state.educativo.menorAge);
       const plazoDisplay = state.educativo.plazo==='alcanzada'
@@ -2577,7 +2583,7 @@ const GENERIC_FLOWS = {
       addons:()=>{
         const ad = state.patrimonial.addons;
         const hv = state.patrimonial.homeValue, cv = state.patrimonial.contentsValue;
-        const p = PRODUCTOS_PATRIMONIAL.VITAL;
+        const p = PRODUCTOS_PATRIMONIAL.AMEDIDA;
         const basePrima = Math.round(hv*p.homeRate + cv*p.contentsRate + p.fixedBase);
         const items = [
           ['hidromet','<span data-cms-html="auto.arr_label.99">Hidrometereologicos</span>','<span data-cms-html="patrimonial.addon.hidromet.desc">Cubre las pérdidas y/o daños físicos al inmueble, así como a sus cimentaciones e instalaciones fijas subterráneas, originados por Avalanchas de lodo, Granizo, Helada, Huracán, Inundación, Inundación por lluvia, Golpe de mar, Tsunami, Marejada, Nevada y Vientos tempestuosos.</span>',basePrima],
@@ -2607,7 +2613,7 @@ const GENERIC_FLOWS = {
     },
     price:()=>{
       // Hidromet ≈ duplica la prima base (instrucción AnCheco: varía pero más o menos duplica la anualidad).
-      const p = PRODUCTOS_PATRIMONIAL.VITAL;
+      const p = PRODUCTOS_PATRIMONIAL.AMEDIDA;
       const hv = state.patrimonial.homeValue, cv = state.patrimonial.contentsValue;
       const basePrima = Math.round(hv*p.homeRate + cv*p.contentsRate + p.fixedBase);
       const costs = {hidromet:basePrima, terremoto:0, funmascotas:348};
@@ -2615,11 +2621,11 @@ const GENERIC_FLOWS = {
       return basePrima + ad;
     },
     summary:()=>{
-      const p = PRODUCTOS_PATRIMONIAL.VITAL;
+      const p = PRODUCTOS_PATRIMONIAL.AMEDIDA;
       const hv = state.patrimonial.homeValue, cv = state.patrimonial.contentsValue;
       const basePrima = Math.round(hv*p.homeRate + cv*p.contentsRate + p.fixedBase);
       const lines = [
-        ['<span data-cms-html="patrimonial.summary.paquete">Plan</span>','<span data-cms-html="patrimonial.summary.paquete_value">GNP Hogar</span>'],
+        ['<span data-cms-html="patrimonial.summary.paquete">Plan</span>','<span data-cms-html="patrimonial.summary.paquete_value">GNP Hogar · A tu medida</span>'],
         ['<span data-cms-html="patrimonial.summary.valor_casa">Valor casa (reconstrucción)</span>','$'+fmt(hv)],
         ['<span data-cms-html="patrimonial.summary.contenidos">Contenidos</span>','$'+fmt(cv)]
       ];
