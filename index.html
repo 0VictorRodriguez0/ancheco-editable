@@ -2543,6 +2543,7 @@ const GENERIC_FLOWS = {
           ['funmascotas','<span data-cms-html="auto.arr_label.101">Servicio funerario mascotas</span>','<span data-cms-html="patrimonial.addon.funmascotas.desc">En caso de fallecimiento de tu mascota, esta asistencia brinda los siguientes servicios; Recolección del cuerpo, Cremación individual de la mascota, Urna básica y Entrega a domicilio de las cenizas.</span>',348]
         ];
         return `${stepDotsHTML(2, 3)}
+        <h3 class="step-title">${T('wizards.patrimonial.steps.addons.title','Coberturas adicionales')}</h3>
         <div class="opts">
           ${items.map(([k,l,m,p])=>`<button class="opt ${ad.includes(k)?'selected':''}" data-padon="${k}" data-pcost="${p}">${k==='hidromet'?REC_BADGE:''}<div class="opt-body"><div class="opt-label">${T('wizards.patrimonial.addons.'+k+'.label', l)}</div><div class="opt-meta">${T('wizards.patrimonial.addons.'+k+'.desc', m)}</div></div><span class="opt-pill">${p===0?T('patrimonial.addon.pill.consultar','Según CP'):'+'+fmtMx(p)+'/año'}</span></button>`).join('')}
         </div>`;
