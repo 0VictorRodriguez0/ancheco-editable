@@ -511,6 +511,8 @@
       { key:'40.8', label:'$40.8M · Personaliza estándar', fallback:1.0 },
       { key:'58.3', label:'$58.3M · Premium', fallback:1.12 }
     ], min:0.1, max:5, step:0.01, affects:'gmm' },
+    'gmmTables.dedStep': { kind:'single', label:'Step del factor deducible (×)', hint:'Cuánto baja la prima por cada paso de deducible más alto. Default 0.955 = baja ~4.5% por paso.', unit:'', suffix:'× por paso', min:0.5, max:1, step:0.005, fallback:0.955, affects:'gmm' },
+    'gmmTables.dedRef': { kind:'single', label:'Índice del deducible de referencia', hint:'Qué opción de deducible vale 1.0. Default 2 = la 3ra opción (10 opciones totales: índices 0-9).', unit:'', suffix:'(0-9)', min:0, max:9, step:1, fallback:2, affects:'gmm' },
     // ===== AUTO =====
     'auto.baseRate': { kind:'single', label:'Tasa base (% del valor del auto)', hint:'Default 5% (0.05). Es el ancla de toda la prima Auto.', unit:'', suffix:'× valor', min:0.01, max:0.20, step:0.005, fallback:0.05, affects:'auto' },
     'auto.covMult': { kind:'table', label:'Multiplicador por cobertura', hint:'Amplia = 1.0 (referencia). RC mucho más barato, Amplia Total más caro.', rows:[
@@ -841,7 +843,9 @@
     const ageMultFallback = edad <= 45 ? (1 + 0.0093*(edad-25)) : (1 + 0.0093*20 + 0.05*(edad-45));
     const ageMult = F('gmm.ageMultiplier', {edad}, ageMultFallback);
     const tierMult = NT('gmmTables.tierMult', 'B', 1.0);
-    const dedMult = Math.pow(0.955, -2);
+    const dedStep = N('gmmTables.dedStep', 0.955);
+    const dedRef = N('gmmTables.dedRef', 2);
+    const dedMult = Math.pow(dedStep, 0 - dedRef); // dedIdx=0 (primera opción)
     const sumMult = NT('gmmTables.sumMult', '40.8', 1.0);
     const neta = maleRef25 * ageMult * tierMult * dedMult * sumMult;
     const derecho = N('factors.gmm.derechoPoliza', 970);
@@ -855,7 +859,7 @@
       { op:'×' },
       { name:'Factor nivel B', value: `×${tierMult.toFixed(2)}`, editable:true, kind:'table', path:'gmmTables.tierMult' },
       { op:'×' },
-      { name:'Factor deducible', value: `×${dedMult.toFixed(3)}`, editable:false, title:'0.955^(deducible − referencia). Se puede editar desde aquí en versión futura.' },
+      { name:'Factor deducible', value: `×${dedMult.toFixed(3)}`, editable:true, kind:'number', path:'gmmTables.dedStep', title:`${dedStep}^(0 − ${dedRef}) = ${dedMult.toFixed(3)} — click para editar el step (el índice de referencia también es editable en "Números editables")` },
       { op:'×' },
       { name:'Factor suma asegurada', value: `×${sumMult.toFixed(2)}`, editable:true, kind:'table', path:'gmmTables.sumMult' },
       { op:'+' },

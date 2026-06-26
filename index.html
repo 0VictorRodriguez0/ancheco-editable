@@ -1919,10 +1919,10 @@ function gmmCalcPrice(){
   // Hospital tier relativo a Nivel B (ref). D = mejor cobertura (5% coas) = más caro
   const tierMult = NT('gmmTables.tierMult', state.gmm.hospitalTier, 1.0);
   aggregate *= tierMult;
-  // Deducible: 10 opciones por nivel. Referencia = opción media (índice 2). Cada paso arriba reduce ~4.5%
+  // Deducible: 10 opciones por nivel. Referencia y step son editables desde el panel.
   const data = NIVEL_DATA[state.gmm.hospitalTier] || NIVEL_DATA.A;
   const dedIdx = data.deducibles.indexOf(state.gmm.deductible);
-  const dedMult = Math.pow(0.955, dedIdx - 2);
+  const dedMult = Math.pow(N('gmmTables.dedStep', 0.955), dedIdx - N('gmmTables.dedRef', 2));
   aggregate *= dedMult;
   // Suma asegurada (ref 40.8M = 1.0)
   const sumMult = NT('gmmTables.sumMult', String(state.gmm.sumInsured), 1.0);

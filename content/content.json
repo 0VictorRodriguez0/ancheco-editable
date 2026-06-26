@@ -530,7 +530,9 @@
         "40.8": 1.0,
         "58.3": 1.12
       },
-      "maleRef25": 14260
+      "maleRef25": 14260,
+      "dedStep": 0.955,
+      "dedRef": 2
     },
     "patrimonialTables": {
       "rates": {
