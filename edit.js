@@ -182,6 +182,18 @@
     #ae-calc-card footer .ae-apply:disabled { background: #cbd5e1; cursor: not-allowed; }
     #ancheco-editor-bar .btn-calc { background: rgba(255,255,255,.12); color: #fff; }
     #ancheco-editor-bar .btn-calc:hover { background: rgba(255,255,255,.22); }
+    /* ===== Tabs del modal de Constantes ===== */
+    #ae-calc-card .ae-tabs { display:flex; gap:4px; padding: 10px 22px 0; border-bottom: 1px solid #eef2f7; overflow-x:auto; }
+    #ae-calc-card .ae-tab { background: transparent; border: 0; padding: 10px 16px; font-family: inherit; font-size: 13px; font-weight: 700; color: #64748b; cursor: pointer; border-bottom: 3px solid transparent; transition: color .15s, border-color .15s; white-space: nowrap; display:flex; align-items:center; gap:6px; }
+    #ae-calc-card .ae-tab:hover { color: #1e3a5f; }
+    #ae-calc-card .ae-tab.active { color: #e57a2c; border-bottom-color: #e57a2c; }
+    #ae-calc-card .ae-tab .ae-tab-icon { font-size: 16px; }
+    #ae-calc-card .ae-tab .ae-tab-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #1bbf6a; margin-left: 4px; }
+    #ae-calc-card .ae-panel { display: none; }
+    #ae-calc-card .ae-panel.active { display: block; }
+    #ae-calc-card .ae-panel-empty { padding: 40px 22px; text-align: center; color: #94a3b8; font-size: 13px; }
+    #ae-calc-card .ae-subhead { padding: 14px 22px 4px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; color: #94a3b8; display:flex; align-items:center; gap:6px; }
+    #ae-calc-card .ae-subhead .ae-icon { font-size: 14px; }
     /* ===== Formula Lab sub-modal ===== */
     #ae-flab-modal { position: fixed; inset: 0; z-index: 100000; background: rgba(15,23,42,.65); display:none; align-items:flex-start; justify-content:center; padding:32px 16px; overflow-y:auto; }
     #ae-flab-modal.show { display:flex; }
@@ -237,8 +249,16 @@
   //  - min/max/step: validación del input number
   //  - fallback: valor por defecto si content.json no lo tiene (debe coincidir con el del código)
   //  - affects: wizard que se re-renderiza al aplicar ('educativo' | 'gmm' | 'mascota' | 'patrimonial' | 'all')
+  // Tabs por producto. Cada tab agrupa fórmulas + constantes de ese cotizador.
+  const WIZARDS = [
+    { key: 'educativo',   icon: '🎓', label: 'Educativo' },
+    { key: 'gmm',         icon: '🏥', label: 'Gastos Médicos' },
+    { key: 'mascota',     icon: '🐾', label: 'Mascota' },
+    { key: 'patrimonial', icon: '🏠', label: 'Hogar' }
+  ];
+
   const CALC_FIELDS = [
-    { group: 'Plan Educativo · Profesional', items: [
+    { wizard: 'educativo', items: [
       { path: 'educativo.primas.5', label: 'Prima base — 5 años de pago', hint: 'Referencia: papá 37 años, hijo 1 año, meta $1.1M.', unit: '$', min: 1000, max: 500000, step: 100, fallback: 82670, affects: 'educativo' },
       { path: 'educativo.primas.10', label: 'Prima base — 10 años de pago', hint: 'Referencia: papá 37 años, hijo 1 año, meta $1.1M.', unit: '$', min: 1000, max: 500000, step: 100, fallback: 43735, affects: 'educativo' },
       { path: 'educativo.primas.alcanzada', label: 'Prima base — Hasta edad alcanzada', hint: 'Pago hasta los 18 años del menor.', unit: '$', min: 1000, max: 500000, step: 100, fallback: 25760, affects: 'educativo' },
@@ -246,17 +266,17 @@
       { path: 'educativo.refTitularAge', label: 'Edad de referencia del contratante', hint: 'Edad del papá del ejemplo del material.', unit: '', suffix: 'años', min: 18, max: 75, step: 1, fallback: 37, affects: 'educativo' },
       { path: 'educativo.ageFactorPerYear', label: 'Factor por año de edad del contratante', hint: 'Cuánto sube la prima por cada año adicional (0.04 = 4%).', unit: '', suffix: '× edad', min: 0, max: 0.20, step: 0.005, fallback: 0.04, affects: 'educativo' }
     ]},
-    { group: 'Gastos Médicos Mayores · Coberturas extra', items: [
+    { wizard: 'gmm', items: [
       { path: 'gmm.addons.cda', label: 'Cero Deducible por Accidente (CDA)', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 50000, step: 100, fallback: 1800, affects: 'gmm' },
       { path: 'gmm.addons.mp', label: 'Maternidad Plus Personaliza (MP)', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 50000, step: 100, fallback: 5200, affects: 'gmm' },
       { path: 'gmm.addons.ahr', label: 'Ampliación Hospitalaria Nacional (AHR)', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 50000, step: 100, fallback: 2800, affects: 'gmm' }
     ]},
-    { group: 'Mascota · Coberturas extra', items: [
+    { wizard: 'mascota', items: [
       { path: 'mascota.addons.fallece', label: 'Fallecimiento', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 20000, step: 10, fallback: 720, affects: 'mascota' },
       { path: 'mascota.addons.robo', label: 'Robo con violencia', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 20000, step: 10, fallback: 480, affects: 'mascota' },
       { path: 'mascota.addons.rc', label: 'RC mascota ampliada', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 20000, step: 10, fallback: 540, affects: 'mascota' }
     ]},
-    { group: 'Hogar / Patrimonial · Coberturas extra', items: [
+    { wizard: 'patrimonial', items: [
       { path: 'patrimonial.addons.funmascotas', label: 'Servicio funerario mascotas', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 5000, step: 1, fallback: 348, affects: 'patrimonial' }
     ]}
   ];
@@ -531,6 +551,66 @@
     if (modal) { modal.classList.add('show'); return; }
     modal = document.createElement('div');
     modal.id = 'ae-calc-modal';
+    // Cuenta cambios pendientes por wizard (para el dot verde en la tab)
+    const dirtyCountFor = (wKey) => {
+      let n = 0;
+      dirtyKeys.forEach(k => {
+        // calc.X.* o calc.formulas.X.*
+        if (k.startsWith('calc.formulas.' + wKey + '.')) n++;
+        else if (k.startsWith('calc.' + wKey + '.')) n++;
+      });
+      return n;
+    };
+
+    const tabsHtml = WIZARDS.map((w, i) => {
+      const dot = dirtyCountFor(w.key) > 0 ? '<span class="ae-tab-dot"></span>' : '';
+      return `<button type="button" class="ae-tab${i===0?' active':''}" data-tab="${w.key}"><span class="ae-tab-icon">${w.icon}</span>${w.label}${dot}</button>`;
+    }).join('');
+
+    const panelHtml = (wKey) => {
+      const formulas = FORMULA_DEFS.filter(f => f.path.split('.')[0] === wKey);
+      const constsGroup = CALC_FIELDS.find(g => g.wizard === wKey);
+      const consts = constsGroup ? constsGroup.items : [];
+      let html = '';
+      if (formulas.length) {
+        html += `<div class="ae-subhead"><span class="ae-icon">⚡</span> Fórmulas (click para editar)</div>`;
+        html += `<div class="ae-grp">${formulas.map(f => {
+          const cur = getByPath(workingContent, 'calc.formulas.' + f.path) || f.default;
+          const isDirty = dirtyKeys.has('calc.formulas.' + f.path);
+          return `
+            <div class="ae-row ae-row-formula" data-formula-path-row="${f.path}">
+              <div class="ae-lbl"><b>${f.label}</b><small>${f.hint}</small></div>
+              <div class="ae-inp ${isDirty ? 'dirty' : ''}">
+                <input type="text" readonly data-formula-path="${f.path}" value="${String(cur).replace(/"/g,'&quot;')}" title="Click para abrir el editor de fórmulas" />
+              </div>
+            </div>`;
+        }).join('')}</div>`;
+      }
+      if (consts.length) {
+        html += `<div class="ae-subhead"><span class="ae-icon">●</span> Números editables</div>`;
+        html += `<div class="ae-grp">${consts.map(it => {
+          const cur = getByPath(workingContent, 'calc.' + it.path);
+          const val = (typeof cur === 'number' && isFinite(cur)) ? cur : it.fallback;
+          const isDirty = dirtyKeys.has('calc.' + it.path);
+          return `
+            <div class="ae-row">
+              <div class="ae-lbl"><b>${it.label}</b><small>${it.hint}</small></div>
+              <div class="ae-inp ${isDirty ? 'dirty' : ''}">
+                ${it.unit === '$' ? '<span class="prefix">$</span>' : ''}
+                <input type="number" data-calc-path="${it.path}" data-calc-affects="${it.affects}" data-calc-fallback="${it.fallback}" min="${it.min}" max="${it.max}" step="${it.step}" value="${formatNum(val, it.step)}" />
+                ${it.suffix ? `<span class="suffix">${it.suffix}</span>` : ''}
+              </div>
+            </div>`;
+        }).join('')}</div>`;
+      }
+      if (!html) html = `<div class="ae-panel-empty">No hay valores editables para este producto todavía.</div>`;
+      return html;
+    };
+
+    const panelsHtml = WIZARDS.map((w, i) =>
+      `<div class="ae-panel${i===0?' active':''}" data-panel="${w.key}">${panelHtml(w.key)}</div>`
+    ).join('');
+
     modal.innerHTML = `
       <div id="ae-calc-card">
         <header>
@@ -538,40 +618,10 @@
           <button class="ae-x" type="button" aria-label="Cerrar">×</button>
         </header>
         <div class="ae-intro">
-          Aquí editás los <b>números</b> (●) y las <b>fórmulas</b> (⚡) que usan los cotizadores. Cambia uno, verás el efecto en vivo en la cotización. Después guarda con el botón <b>Guardar</b> de la barra de abajo.
+          Aquí editás los <b>números</b> (●) y las <b>fórmulas</b> (⚡) que usan los cotizadores. Elegí el producto en las pestañas de arriba, cambia un valor y verás el efecto en vivo. Después guarda con el botón <b>Guardar</b> de la barra de abajo.
         </div>
-        <div class="ae-grp">
-          <h3>⚡ Fórmulas editables</h3>
-          ${FORMULA_DEFS.map(f => {
-            const cur = getByPath(workingContent, 'calc.formulas.' + f.path) || f.default;
-            const isDirty = dirtyKeys.has('calc.formulas.' + f.path);
-            return `
-              <div class="ae-row ae-row-formula" data-formula-path-row="${f.path}">
-                <div class="ae-lbl"><b>${f.label}</b><small>${f.hint}</small></div>
-                <div class="ae-inp ${isDirty ? 'dirty' : ''}">
-                  <input type="text" readonly data-formula-path="${f.path}" value="${String(cur).replace(/"/g,'&quot;')}" title="Click en cualquier parte de esta fila para abrir el editor" />
-                </div>
-              </div>`;
-          }).join('')}
-        </div>
-        ${CALC_FIELDS.map(grp => `
-          <div class="ae-grp">
-            <h3>${grp.group}</h3>
-            ${grp.items.map(it => {
-              const cur = getByPath(workingContent, 'calc.' + it.path);
-              const val = (typeof cur === 'number' && isFinite(cur)) ? cur : it.fallback;
-              const isDirty = dirtyKeys.has('calc.' + it.path);
-              return `
-                <div class="ae-row">
-                  <div class="ae-lbl"><b>${it.label}</b><small>${it.hint}</small></div>
-                  <div class="ae-inp ${isDirty ? 'dirty' : ''}">
-                    ${it.unit === '$' ? '<span class="prefix">$</span>' : ''}
-                    <input type="number" data-calc-path="${it.path}" data-calc-affects="${it.affects}" data-calc-fallback="${it.fallback}" min="${it.min}" max="${it.max}" step="${it.step}" value="${formatNum(val, it.step)}" />
-                    ${it.suffix ? `<span class="suffix">${it.suffix}</span>` : ''}
-                  </div>
-                </div>`;
-            }).join('')}
-          </div>`).join('')}
+        <div class="ae-tabs">${tabsHtml}</div>
+        <div class="ae-panels">${panelsHtml}</div>
         <footer>
           <button class="ae-cancel" type="button">Cerrar</button>
         </footer>
@@ -583,6 +633,15 @@
     modal.querySelector('.ae-x').addEventListener('click', close);
     modal.querySelector('.ae-cancel').addEventListener('click', close);
     modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+
+    // Switch entre tabs
+    modal.querySelectorAll('.ae-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const wKey = tab.dataset.tab;
+        modal.querySelectorAll('.ae-tab').forEach(t => t.classList.toggle('active', t === tab));
+        modal.querySelectorAll('.ae-panel').forEach(p => p.classList.toggle('active', p.dataset.panel === wKey));
+      });
+    });
 
     // Click en una fila de fórmula → abre Formula Lab
     modal.querySelectorAll('.ae-row-formula').forEach(row => {
