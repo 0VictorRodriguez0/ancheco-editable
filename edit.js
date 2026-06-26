@@ -229,6 +229,44 @@
     #ae-calc-card .ae-eq-legend .ae-dot { width:10px; height:10px; border-radius:3px; display:inline-block; }
     #ae-calc-card .ae-eq-legend .ae-dot.fixed { background:#e2e8f0; border:1px solid #cbd5e1; }
     #ae-calc-card .ae-eq-legend .ae-dot.edit { background:#fffaf3; border:1.5px solid #e57a2c; }
+    /* ===== Popover universal (single/table/bracket) ===== */
+    #ae-pop { position:fixed; z-index:100001; background:#fff; border-radius:12px; box-shadow:0 14px 40px rgba(15,23,42,.25); font-family: Montserrat,system-ui,sans-serif; min-width:300px; max-width:380px; max-height:70vh; overflow:hidden; display:flex; flex-direction:column; border:1.5px solid #e2e8f0; }
+    #ae-pop.show { animation: ae-pop-in .15s ease-out; }
+    @keyframes ae-pop-in { from { opacity:0; transform:translateY(-4px) scale(.97); } to { opacity:1; transform:translateY(0) scale(1); } }
+    #ae-pop header { padding:12px 14px; border-bottom:1px solid #eef2f7; display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+    #ae-pop header h4 { margin:0; font-size:13px; font-weight:800; color:#1e3a5f; line-height:1.3; }
+    #ae-pop header h4 small { display:block; font-weight:500; color:#64748b; font-size:11px; margin-top:2px; }
+    #ae-pop header .ae-x { background:transparent; border:0; font-size:18px; cursor:pointer; color:#64748b; padding:0 4px; line-height:1; }
+    #ae-pop .ae-pop-body { padding:12px 14px; overflow-y:auto; flex:1; }
+    #ae-pop .ae-pop-single { display:flex; align-items:center; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:8px; padding:4px 10px; }
+    #ae-pop .ae-pop-single:focus-within { border-color:#e57a2c; background:#fff; }
+    #ae-pop .ae-pop-single .prefix, #ae-pop .ae-pop-single .suffix { color:#94a3b8; font-size:13px; font-weight:600; }
+    #ae-pop .ae-pop-single input { border:0; background:transparent; padding:9px 6px; font-size:15px; font-weight:700; color:#1e3a5f; width:100%; text-align:right; outline:none; font-family: 'SFMono-Regular',Consolas,Monaco,monospace; }
+    #ae-pop table.ae-pop-table { width:100%; border-collapse:collapse; }
+    #ae-pop table.ae-pop-table th, #ae-pop table.ae-pop-table td { padding:6px 8px; font-size:12px; }
+    #ae-pop table.ae-pop-table th { text-align:left; color:#64748b; font-weight:700; text-transform:uppercase; font-size:10px; letter-spacing:.5px; border-bottom:1px solid #e2e8f0; }
+    #ae-pop table.ae-pop-table td { border-bottom:1px solid #f1f5f9; }
+    #ae-pop table.ae-pop-table td:first-child { font-weight:700; color:#1e3a5f; }
+    #ae-pop table.ae-pop-table input { width:90px; border:1px solid #e2e8f0; border-radius:5px; padding:4px 6px; text-align:right; font-family:'SFMono-Regular',Consolas,Monaco,monospace; font-weight:700; color:#1e3a5f; outline:none; }
+    #ae-pop table.ae-pop-table input:focus { border-color:#e57a2c; }
+    #ae-pop .ae-pop-bracket .ae-br-row { display:grid; grid-template-columns:50px 1fr 90px 30px; gap:6px; align-items:center; padding:5px 0; border-bottom:1px solid #f1f5f9; }
+    #ae-pop .ae-pop-bracket .ae-br-row label { font-size:10px; color:#94a3b8; font-weight:700; text-transform:uppercase; }
+    #ae-pop .ae-pop-bracket .ae-br-row input { border:1px solid #e2e8f0; border-radius:5px; padding:4px 6px; font-size:12px; text-align:right; font-family:'SFMono-Regular',Consolas,Monaco,monospace; font-weight:700; color:#1e3a5f; outline:none; }
+    #ae-pop .ae-pop-bracket .ae-br-row input:focus { border-color:#e57a2c; }
+    #ae-pop .ae-pop-bracket .ae-br-del { background:transparent; border:0; cursor:pointer; color:#94a3b8; font-size:14px; }
+    #ae-pop .ae-pop-bracket .ae-br-del:hover { color:#d93636; }
+    #ae-pop .ae-pop-bracket .ae-br-add { width:100%; margin-top:6px; padding:6px; border:1.5px dashed #cbd5e1; background:transparent; border-radius:6px; cursor:pointer; font-size:11px; color:#64748b; font-weight:700; }
+    #ae-pop .ae-pop-bracket .ae-br-add:hover { border-color:#e57a2c; color:#e57a2c; }
+    #ae-pop .ae-pop-preview { padding:8px 12px; background:#fffaf3; border-top:1px solid #fde8c5; border-bottom:1px solid #fde8c5; font-size:11px; color:#7c2d12; font-family:'SFMono-Regular',Consolas,Monaco,monospace; }
+    #ae-pop .ae-pop-preview b { color:#c2410c; }
+    #ae-pop footer { padding:10px 14px; display:flex; justify-content:space-between; gap:8px; background:#f8fafc; border-top:1px solid #eef2f7; }
+    #ae-pop footer button { border:0; border-radius:999px; padding:7px 14px; font-weight:700; font-size:12px; cursor:pointer; font-family:inherit; }
+    #ae-pop footer .ae-restore { background:transparent; color:#64748b; border:1px solid #cbd5e1; }
+    #ae-pop footer .ae-cancel { background:transparent; color:#64748b; }
+    #ae-pop footer .ae-apply { background:#e57a2c; color:#fff; }
+    #ae-pop footer .ae-apply:disabled { background:#cbd5e1; cursor:not-allowed; }
+    #ae-pop-backdrop { position:fixed; inset:0; z-index:100000; background:transparent; }
+    .ae-eq-cap.editing { box-shadow:0 0 0 3px rgba(229,122,44,.35); transform:translateY(-1px); }
     /* ===== Formula Lab sub-modal ===== */
     #ae-flab-modal { position: fixed; inset: 0; z-index: 100000; background: rgba(15,23,42,.65); display:none; align-items:flex-start; justify-content:center; padding:32px 16px; overflow-y:auto; }
     #ae-flab-modal.show { display:flex; }
@@ -451,6 +489,255 @@
 
   function findFormulaDef(path) { return FORMULA_DEFS.find(f => f.path === path); }
 
+  // ============= KNOB REGISTRY (popover universal) =============
+  // Mapa de path → definición editable. Soporta 3 tipos:
+  //   single   — un solo número (calc.<path>)
+  //   table    — objeto con claves fijas; cada clave tiene su valor (calc.<path> = {key1: 0.85, key2: 1.0})
+  //   bracket  — array ordenado [{minVal, mult}, ...] (calc.<path> = [{minVal:0,mult:1},{minVal:5,mult:1.08}])
+  // Las cápsulas del howto leen este registry; si una cápsula tiene un path acá registrado,
+  // es editable y el popover sabe qué editor abrir.
+  const KNOB_REGISTRY = {
+    // ===== GMM =====
+    'gmmTables.maleRef25': { kind:'single', label:'Prima base hombre 25 años (Nivel B, suma 40.8M)', hint:'Es el ancla de toda la prima GMM. Subirlo 1% mueve todo el cotizador.', unit:'$', min:1000, max:100000, step:10, fallback:14260, affects:'gmm' },
+    'gmmTables.tierMult': { kind:'table', label:'Multiplicador por nivel hospitalario', hint:'Cuánto cobra cada nivel respecto a Nivel B (=1.0). A=más barato, D=más caro.', rows:[
+      { key:'A', label:'Nivel A · Premium (ABC, Ángeles, Amerimed)', fallback:0.85 },
+      { key:'B', label:'Nivel B · Alto (Galenia, Médica Sur, Costamed)', fallback:1.0 },
+      { key:'C', label:'Nivel C · Medio (Hospiten, Hospital de Tulum)', fallback:1.13 },
+      { key:'D', label:'Nivel D · Básico (Mayan, UMIS)', fallback:1.28 }
+    ], min:0.1, max:5, step:0.01, affects:'gmm' },
+    'gmmTables.sumMult': { kind:'table', label:'Multiplicador por suma asegurada', hint:'Referencia: 40.8M = 1.0. Sumas menores bajan, mayores suben.', rows:[
+      { key:'2.2',  label:'$2.2M · Básica', fallback:0.42 },
+      { key:'17.5', label:'$17.5M · Intermedia', fallback:0.82 },
+      { key:'40.8', label:'$40.8M · Personaliza estándar', fallback:1.0 },
+      { key:'58.3', label:'$58.3M · Premium', fallback:1.12 }
+    ], min:0.1, max:5, step:0.01, affects:'gmm' },
+    // ===== AUTO =====
+    'auto.baseRate': { kind:'single', label:'Tasa base (% del valor del auto)', hint:'Default 5% (0.05). Es el ancla de toda la prima Auto.', unit:'', suffix:'× valor', min:0.01, max:0.20, step:0.005, fallback:0.05, affects:'auto' },
+    'auto.covMult': { kind:'table', label:'Multiplicador por cobertura', hint:'Amplia = 1.0 (referencia). RC mucho más barato, Amplia Total más caro.', rows:[
+      { key:'rc',          label:'Responsabilidad Civil', fallback:0.35 },
+      { key:'limitada',    label:'Limitada', fallback:0.65 },
+      { key:'amplia',      label:'Amplia', fallback:1.0 },
+      { key:'ampliaTotal', label:'Amplia Total', fallback:1.176 }
+    ], min:0.05, max:3, step:0.005, affects:'auto' },
+    'auto.useMult': { kind:'table', label:'Multiplicador por uso del auto', hint:'Particular = 1.0. Comercial cobra más por más exposición.', rows:[
+      { key:'particular', label:'Particular',  fallback:1.0 },
+      { key:'comercial',  label:'Comercial',   fallback:1.3 }
+    ], min:0.5, max:5, step:0.05, affects:'auto' },
+    'auto.dtMult': { kind:'table', label:'Multiplicador por deducible de robo', hint:'Deducible mayor = prima menor. 10% es referencia.', rows:[
+      { key:'5',  label:'5% deducible',  fallback:1.15 },
+      { key:'10', label:'10% deducible', fallback:1.0 },
+      { key:'15', label:'15% deducible', fallback:0.9 }
+    ], min:0.5, max:2, step:0.01, affects:'auto' },
+    'auto.ddMult': { kind:'table', label:'Multiplicador por deducible de daños', hint:'Deducible mayor = prima menor. 5% es referencia.', rows:[
+      { key:'3',  label:'3% deducible',  fallback:1.15 },
+      { key:'5',  label:'5% deducible',  fallback:1.0 },
+      { key:'10', label:'10% deducible', fallback:0.88 }
+    ], min:0.5, max:2, step:0.01, affects:'auto' },
+    'auto.ageBrackets': { kind:'bracket', label:'Factor por edad del auto', hint:'Brackets escalonados: el sistema toma el bracket cuyo "Desde" sea el mayor ≤ edad. Default: 0→×1.0, 5→×1.08, 8→×1.18.', defaults:[
+      { minVal:0, mult:1.0 }, { minVal:5, mult:1.08 }, { minVal:8, mult:1.18 }
+    ], affects:'auto' },
+    // ===== MASCOTA =====
+    'mascotaTables.basePerPlan': { kind:'table', label:'Prima base por plan', hint:'El precio base de cada plan antes de factor edad y especie.', rows:[
+      { key:'esencial', label:'Cuidado Esencial', fallback:2050 },
+      { key:'superior', label:'Cuidado Superior', fallback:3650 },
+      { key:'maximo',   label:'Cuidado Máximo',   fallback:4490 }
+    ], min:0, max:50000, step:10, unit:'$', affects:'mascota' },
+    'mascotaTables.sumPorPlan': { kind:'table', label:'Suma asegurada por plan', hint:'Cuánto cubre cada plan en gastos médicos veterinarios anuales.', rows:[
+      { key:'esencial', label:'Cuidado Esencial', fallback:10000 },
+      { key:'superior', label:'Cuidado Superior', fallback:20000 },
+      { key:'maximo',   label:'Cuidado Máximo',   fallback:30000 }
+    ], min:0, max:200000, step:1000, unit:'$', affects:'mascota' },
+    'mascotaTables.factorEspecie': { kind:'table', label:'Multiplicador por especie', hint:'Perro = 1.1 (más caro por enfermedades comunes). Gato = 1.0.', rows:[
+      { key:'perro', label:'Perro', fallback:1.1 },
+      { key:'gato',  label:'Gato',  fallback:1.0 }
+    ], min:0.5, max:3, step:0.05, affects:'mascota' },
+    // ===== PATRIMONIAL =====
+    'patrimonialTables.rates.homeRate':    { kind:'single', label:'Tasa por valor de la casa (×)', hint:'Default 0.00098 = $980/año por cada $1M de valor de casa.', unit:'', suffix:'× casa', min:0.0001, max:0.01, step:0.00005, fallback:0.00098, affects:'patrimonial' },
+    'patrimonialTables.rates.contentsRate':{ kind:'single', label:'Tasa por contenidos (×)', hint:'Default 0.00220 = $2,200/año por cada $1M de contenidos.', unit:'', suffix:'× contenidos', min:0.0001, max:0.02, step:0.00005, fallback:0.00220, affects:'patrimonial' },
+    'patrimonialTables.rates.fixedBase':   { kind:'single', label:'Base fija del plan A tu medida', hint:'Suma fija que cubre extras premium (teletrabajo, menaje, etc.).', unit:'$', min:0, max:50000, step:10, fallback:5978, affects:'patrimonial' }
+  };
+
+  // ============= POPOVER UNIVERSAL =============
+  function closePopover() {
+    document.querySelector('.ae-eq-cap.editing')?.classList.remove('editing');
+    document.getElementById('ae-pop')?.remove();
+    document.getElementById('ae-pop-backdrop')?.remove();
+  }
+  function positionPopover(pop, anchor) {
+    const r = anchor.getBoundingClientRect();
+    const popR = pop.getBoundingClientRect();
+    const margin = 8;
+    let top = r.bottom + margin;
+    let left = r.left + r.width/2 - popR.width/2;
+    if (top + popR.height > window.innerHeight - 8) top = r.top - popR.height - margin;
+    if (left + popR.width > window.innerWidth - 8) left = window.innerWidth - popR.width - 8;
+    if (left < 8) left = 8;
+    pop.style.top = top + 'px';
+    pop.style.left = left + 'px';
+  }
+  function openKnobPopover(capEl) {
+    const path = capEl.dataset.editPath;
+    const knob = KNOB_REGISTRY[path];
+    if (!knob) return;
+    closePopover();
+    capEl.classList.add('editing');
+    // Backdrop transparente para capturar clicks fuera
+    const backdrop = document.createElement('div');
+    backdrop.id = 'ae-pop-backdrop';
+    backdrop.addEventListener('click', closePopover);
+    document.body.appendChild(backdrop);
+    // Estado temporal del knob (snapshot del CMS actual)
+    let staging;
+    if (knob.kind === 'single') {
+      staging = N(path, knob.fallback);
+    } else if (knob.kind === 'table') {
+      staging = {};
+      knob.rows.forEach(r => { staging[r.key] = NT(path, r.key, r.fallback); });
+    } else if (knob.kind === 'bracket') {
+      const existing = window.__cms?.get?.('calc.' + path);
+      staging = Array.isArray(existing) ? JSON.parse(JSON.stringify(existing)) : JSON.parse(JSON.stringify(knob.defaults));
+    }
+
+    const pop = document.createElement('div');
+    pop.id = 'ae-pop';
+    pop.classList.add('show');
+    const bodyHtml = (function() {
+      if (knob.kind === 'single') {
+        return `<div class="ae-pop-single">
+          ${knob.unit==='$' ? '<span class="prefix">$</span>' : ''}
+          <input type="number" min="${knob.min}" max="${knob.max}" step="${knob.step}" value="${staging}" />
+          ${knob.suffix ? `<span class="suffix">${knob.suffix}</span>` : ''}
+        </div>`;
+      } else if (knob.kind === 'table') {
+        return `<table class="ae-pop-table"><thead><tr><th>${knob.unit==='$'?'Opción':'Opción'}</th><th style="text-align:right">${knob.unit==='$'?'Valor ($)':'Multiplicador (×)'}</th></tr></thead><tbody>${
+          knob.rows.map(r => `<tr>
+            <td>${r.label}<div style="font-size:10px;color:#94a3b8;font-family:monospace">key: ${r.key}</div></td>
+            <td style="text-align:right"><input type="number" min="${knob.min}" max="${knob.max}" step="${knob.step}" data-row-key="${r.key}" value="${staging[r.key]}" /></td>
+          </tr>`).join('')
+        }</tbody></table>`;
+      } else if (knob.kind === 'bracket') {
+        return `<div class="ae-pop-bracket">
+          <div class="ae-br-row" style="border-bottom:0;padding-bottom:0;color:#94a3b8;font-size:10px;text-transform:uppercase;font-weight:700">
+            <label>Desde</label><label></label><label>Mult.</label><label></label>
+          </div>
+          ${staging.map((b, i) => `<div class="ae-br-row" data-br-idx="${i}">
+            <input type="number" min="0" max="100" step="1" data-br-field="minVal" value="${b.minVal}"/>
+            <span style="font-size:11px;color:#64748b">→</span>
+            <input type="number" min="0.1" max="10" step="0.01" data-br-field="mult" value="${b.mult}"/>
+            ${i===0 ? '<span title="Base no se borra" style="color:#cbd5e1;font-size:14px;text-align:center">·</span>' : '<button type="button" class="ae-br-del" data-br-del="'+i+'" title="Eliminar">×</button>'}
+          </div>`).join('')}
+          <button type="button" class="ae-br-add">+ Agregar bracket</button>
+        </div>`;
+      }
+      return '';
+    })();
+    pop.innerHTML = `
+      <header>
+        <h4>${knob.label}<small>${knob.hint || ''}</small></h4>
+        <button class="ae-x" type="button">×</button>
+      </header>
+      <div class="ae-pop-body">${bodyHtml}</div>
+      <div class="ae-pop-preview" id="ae-pop-preview"></div>
+      <footer>
+        <button type="button" class="ae-restore">↺ Default</button>
+        <div style="display:flex;gap:8px">
+          <button type="button" class="ae-cancel">Cancelar</button>
+          <button type="button" class="ae-apply">Aplicar</button>
+        </div>
+      </footer>`;
+    document.body.appendChild(pop);
+    positionPopover(pop, capEl);
+
+    function refreshPreview() {
+      const prev = pop.querySelector('#ae-pop-preview');
+      if (knob.kind === 'single') {
+        prev.innerHTML = `Valor: <b>${staging}</b>${knob.suffix ? ' ' + knob.suffix : ''}`;
+      } else if (knob.kind === 'table') {
+        prev.innerHTML = Object.entries(staging).map(([k, v]) => `${k}: <b>${v}</b>`).join(' · ');
+      } else if (knob.kind === 'bracket') {
+        const sorted = [...staging].sort((a, b) => a.minVal - b.minVal);
+        prev.innerHTML = sorted.map(b => `≥${b.minVal} → <b>×${b.mult}</b>`).join(' · ');
+      }
+    }
+
+    function commit() {
+      const cmsPath = 'calc.' + path;
+      setByPath(workingContent, cmsPath, staging);
+      if (window.__cms && window.__cms.data) setByPath(window.__cms.data, cmsPath, staging);
+      const original = getByPath(originalContent, cmsPath);
+      if (JSON.stringify(staging) === JSON.stringify(original)) dirtyKeys.delete(cmsPath);
+      else dirtyKeys.add(cmsPath);
+      try { if (typeof window.__cmsRecalc === 'function') window.__cmsRecalc(knob.affects); } catch(_) {}
+      renderBar();
+      // refresh howto del tab afectado
+      const calcModal = document.getElementById('ae-calc-modal');
+      const howtoBox = calcModal?.querySelector(`.ae-howto[data-howto="${knob.affects}"]`);
+      if (howtoBox) howtoBox.innerHTML = buildHowto(knob.affects);
+      closePopover();
+      toast('Cambio aplicado. La cotización se actualizó.');
+    }
+
+    // Event handlers según kind
+    if (knob.kind === 'single') {
+      const inp = pop.querySelector('input');
+      inp.addEventListener('input', () => { const v = parseFloat(inp.value); if (isFinite(v)) staging = v; refreshPreview(); });
+      inp.focus(); inp.select();
+    } else if (knob.kind === 'table') {
+      pop.querySelectorAll('input[data-row-key]').forEach(inp => {
+        inp.addEventListener('input', () => { const v = parseFloat(inp.value); if (isFinite(v)) staging[inp.dataset.rowKey] = v; refreshPreview(); });
+      });
+    } else if (knob.kind === 'bracket') {
+      const rerenderBrackets = () => {
+        const wrap = pop.querySelector('.ae-pop-bracket');
+        wrap.innerHTML = `<div class="ae-br-row" style="border-bottom:0;padding-bottom:0;color:#94a3b8;font-size:10px;text-transform:uppercase;font-weight:700"><label>Desde</label><label></label><label>Mult.</label><label></label></div>` +
+          staging.map((b, i) => `<div class="ae-br-row" data-br-idx="${i}">
+            <input type="number" min="0" max="100" step="1" data-br-field="minVal" value="${b.minVal}"/>
+            <span style="font-size:11px;color:#64748b">→</span>
+            <input type="number" min="0.1" max="10" step="0.01" data-br-field="mult" value="${b.mult}"/>
+            ${i===0 ? '<span title="Base no se borra" style="color:#cbd5e1;font-size:14px;text-align:center">·</span>' : '<button type="button" class="ae-br-del" data-br-del="'+i+'" title="Eliminar">×</button>'}
+          </div>`).join('') + `<button type="button" class="ae-br-add">+ Agregar bracket</button>`;
+        wireBracket();
+        refreshPreview();
+      };
+      const wireBracket = () => {
+        pop.querySelectorAll('.ae-pop-bracket input').forEach(inp => {
+          inp.addEventListener('input', () => {
+            const idx = parseInt(inp.closest('[data-br-idx]').dataset.brIdx);
+            const field = inp.dataset.brField;
+            const v = parseFloat(inp.value);
+            if (isFinite(v)) staging[idx][field] = v;
+            refreshPreview();
+          });
+        });
+        pop.querySelectorAll('.ae-br-del').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = parseInt(btn.dataset.brDel);
+            if (idx > 0) { staging.splice(idx, 1); rerenderBrackets(); }
+          });
+        });
+        pop.querySelector('.ae-br-add')?.addEventListener('click', () => {
+          const last = staging[staging.length - 1];
+          staging.push({ minVal: (last?.minVal || 0) + 1, mult: 1.0 });
+          rerenderBrackets();
+        });
+      };
+      wireBracket();
+    }
+    refreshPreview();
+    pop.querySelector('.ae-x').addEventListener('click', closePopover);
+    pop.querySelector('.ae-cancel').addEventListener('click', closePopover);
+    pop.querySelector('.ae-restore').addEventListener('click', () => {
+      if (!confirm('¿Restaurar el valor original del sistema?')) return;
+      if (knob.kind === 'single') staging = knob.fallback;
+      else if (knob.kind === 'table') { staging = {}; knob.rows.forEach(r => staging[r.key] = r.fallback); }
+      else if (knob.kind === 'bracket') staging = JSON.parse(JSON.stringify(knob.defaults));
+      // Re-render del body completo
+      closePopover();
+      setTimeout(() => openKnobPopover(capEl), 30);
+    });
+    pop.querySelector('.ae-apply').addEventListener('click', commit);
+  }
+
   // ============= "Cómo se calcula la cotización final" =============
   // Para cada producto, descompone el cálculo del cotizador con un escenario concreto.
   // Cada paso muestra: nombre legible · fórmula con valores actuales · resultado intermedio.
@@ -527,18 +814,18 @@
   }
 
   function buildHowtoMascota() {
-    const basePlan = 4490;
+    const basePlan = NT('mascotaTables.basePerPlan', 'maximo', 4490);
     const edad = 5;
     const factorEdad = 1 + Math.max(0, edad - 3) * 0.06;
-    const factorEspecie = 1.1;
+    const factorEspecie = NT('mascotaTables.factorEspecie', 'perro', 1.1);
     const addonFallece = N('mascota.addons.fallece', 720);
     const total = basePlan * factorEdad * factorEspecie + addonFallece;
     const eq = eqRender([
-      { name:'Prima base (Máximo)', value: fmtMoney(basePlan), editable:false, title:'Valor interno: $4,490 (no editable todavía)' },
+      { name:'Prima base (Máximo)', value: fmtMoney(basePlan), editable:true, kind:'table', path:'mascotaTables.basePerPlan' },
       { op:'×' },
       { name:'Factor por edad', value: `×${factorEdad.toFixed(2)}`, editable:false, title:'Fórmula interna: 1 + max(0, edad−3) × 0.06' },
       { op:'×' },
-      { name:'Factor por especie', value: `×${factorEspecie}`, editable:false, title:'Perro=×1.1, Gato=×1.0 (no editable todavía)' },
+      { name:'Factor por especie', value: `×${factorEspecie}`, editable:true, kind:'table', path:'mascotaTables.factorEspecie' },
       { op:'+' },
       { name:'Addon Fallecimiento', value: fmtMoney(addonFallece), editable:true, kind:'number', path:'mascota.addons.fallece' }
     ], { name:'Prima anual final', value: fmtMoney(Math.round(total)) });
@@ -549,28 +836,28 @@
   }
 
   function buildHowtoGmm() {
-    const maleRef25 = 14260;
+    const maleRef25 = N('gmmTables.maleRef25', 14260);
     const edad = 35;
     const ageMultFallback = edad <= 45 ? (1 + 0.0093*(edad-25)) : (1 + 0.0093*20 + 0.05*(edad-45));
     const ageMult = F('gmm.ageMultiplier', {edad}, ageMultFallback);
-    const tierMult = 1.0;
+    const tierMult = NT('gmmTables.tierMult', 'B', 1.0);
     const dedMult = Math.pow(0.955, -2);
-    const sumMult = 1.0;
+    const sumMult = NT('gmmTables.sumMult', '40.8', 1.0);
     const neta = maleRef25 * ageMult * tierMult * dedMult * sumMult;
     const derecho = N('factors.gmm.derechoPoliza', 970);
     const iva = N('factors.gmm.iva', 0.16);
     const totalFallback = (neta + derecho * 1) * (1 + iva);
     const total = F('gmm.totalConIVA', {prima_neta:neta, derecho_poliza:derecho, cantidad_asegurados:1, iva}, totalFallback);
     const eq = eqRender([
-      { name:'Base hombre 25 años', value: fmtMoney(maleRef25), editable:false, title:'Valor interno: $14,260 (no editable todavía)' },
+      { name:'Base hombre 25 años', value: fmtMoney(maleRef25), editable:true, kind:'number', path:'gmmTables.maleRef25' },
       { op:'×' },
       { name:'Factor por edad', value: `×${ageMult.toFixed(3)}`, editable:true, kind:'formula', path:'gmm.ageMultiplier' },
       { op:'×' },
-      { name:'Factor nivel B', value: `×${tierMult.toFixed(2)}`, editable:false, title:'Tier B = referencia (no editable todavía)' },
+      { name:'Factor nivel B', value: `×${tierMult.toFixed(2)}`, editable:true, kind:'table', path:'gmmTables.tierMult' },
       { op:'×' },
-      { name:'Factor deducible', value: `×${dedMult.toFixed(3)}`, editable:false, title:'0.955^(deducible − referencia)' },
+      { name:'Factor deducible', value: `×${dedMult.toFixed(3)}`, editable:false, title:'0.955^(deducible − referencia). Se puede editar desde aquí en versión futura.' },
       { op:'×' },
-      { name:'Factor suma asegurada', value: `×${sumMult.toFixed(2)}`, editable:false, title:'40.8M = referencia (no editable todavía)' },
+      { name:'Factor suma asegurada', value: `×${sumMult.toFixed(2)}`, editable:true, kind:'table', path:'gmmTables.sumMult' },
       { op:'+' },
       { name:'Derecho de póliza', value: fmtMoney(derecho), editable:true, kind:'formula', path:'gmm.totalConIVA', title:'Incluido en la fórmula editable "Total con derecho + IVA"' },
       { op:'×' },
@@ -584,7 +871,9 @@
 
   function buildHowtoPatrimonial() {
     const hv = 2000000, cv = 300000;
-    const homeRate = 0.00098, contentsRate = 0.00220, fixedBase = 5978;
+    const homeRate = N('patrimonialTables.rates.homeRate', 0.00098);
+    const contentsRate = N('patrimonialTables.rates.contentsRate', 0.00220);
+    const fixedBase = N('patrimonialTables.rates.fixedBase', 5978);
     const fHidromet = N('factors.patrimonial.factorHidromet', 1);
     const s1 = hv * homeRate;
     const s2 = cv * contentsRate;
@@ -592,11 +881,11 @@
     const hidromet = F('patrimonial.hidrometCosto', {prima_base:basePrima, factor_hidromet:fHidromet}, basePrima);
     const total = basePrima + hidromet;
     const eq = eqRender([
-      { name:'Edificio', value: fmtMoney(s1), editable:false, title:`$2,000,000 × 0.00098 (tarifa interna)` },
+      { name:'Edificio', value: fmtMoney(s1), editable:true, kind:'number', path:'patrimonialTables.rates.homeRate', title:`$2,000,000 × ${homeRate} — click para editar la tasa` },
       { op:'+' },
-      { name:'Contenidos', value: fmtMoney(s2), editable:false, title:`$300,000 × 0.00220 (tarifa interna)` },
+      { name:'Contenidos', value: fmtMoney(s2), editable:true, kind:'number', path:'patrimonialTables.rates.contentsRate', title:`$300,000 × ${contentsRate} — click para editar la tasa` },
       { op:'+' },
-      { name:'Base fija plan', value: fmtMoney(fixedBase), editable:false, title:'Extras del plan A tu medida (teletrabajo, menaje, etc.)' },
+      { name:'Base fija plan', value: fmtMoney(fixedBase), editable:true, kind:'number', path:'patrimonialTables.rates.fixedBase' },
       { op:'+' },
       { name:'Addon hidromet', value: fmtMoney(hidromet), editable:true, kind:'formula', path:'patrimonial.hidrometCosto' }
     ], { name:'Prima anual final', value: fmtMoney(Math.round(total)) });
@@ -607,29 +896,28 @@
   }
 
   function buildHowtoAuto() {
-    // Escenario: vehículo $300,000, año 2020 (edad 6), uso particular, cobertura amplia, deducible robo 5%/daños 5%
-    const v = 300000;
+    const v = 300000, edad = 6;
     const baseRate = N('auto.baseRate', 0.05);
-    const ageMult = 1.08; // age=6 cae en >=5 y <8
-    const useMult = 1.0; // particular
-    const covMult = 1.0; // amplia
-    const dtMult = 1.15; // 5% robo
-    const ddMult = 1.0; // 5% daños
+    const ageMult = NB('auto.ageBrackets', edad, 1.08);
+    const useMult = NT('auto.useMult', 'particular', 1.0);
+    const covMult = NT('auto.covMult', 'amplia', 1.0);
+    const dtMult = NT('auto.dtMult', '5', 1.15);
+    const ddMult = NT('auto.ddMult', '5', 1.0);
     const total = v * baseRate * ageMult * useMult * covMult * dtMult * ddMult;
     const eq = eqRender([
       { name:'Valor del auto', value: fmtMoney(v), editable:false, title:'Lo elige el cliente en el wizard (default $300,000)' },
       { op:'×' },
       { name:'Tasa base', value: `×${baseRate}`, editable:true, kind:'number', path:'auto.baseRate' },
       { op:'×' },
-      { name:'Factor edad (6 años)', value: `×${ageMult}`, editable:false, title:'Auto entre 5 y 8 años → 1.08 (interno)' },
+      { name:'Factor edad (6 años)', value: `×${ageMult}`, editable:true, kind:'bracket', path:'auto.ageBrackets' },
       { op:'×' },
-      { name:'Factor uso', value: `×${useMult}`, editable:false, title:'Particular = 1.0 / Comercial = 1.3 (interno)' },
+      { name:'Factor uso', value: `×${useMult}`, editable:true, kind:'table', path:'auto.useMult' },
       { op:'×' },
-      { name:'Factor cobertura', value: `×${covMult}`, editable:false, title:'Amplia = referencia (interno)' },
+      { name:'Factor cobertura', value: `×${covMult}`, editable:true, kind:'table', path:'auto.covMult' },
       { op:'×' },
-      { name:'Factor deducible robo', value: `×${dtMult}`, editable:false, title:'5%=1.15, 10%=1.0, 15%=0.9 (interno)' },
+      { name:'Factor deducible robo', value: `×${dtMult}`, editable:true, kind:'table', path:'auto.dtMult' },
       { op:'×' },
-      { name:'Factor deducible daños', value: `×${ddMult}`, editable:false, title:'3%=1.15, 5%=1.0, 10%=0.88 (interno)' }
+      { name:'Factor deducible daños', value: `×${ddMult}`, editable:true, kind:'table', path:'auto.ddMult' }
     ], { name:'Prima anual final', value: fmtMoney(Math.round(total)) });
     return `
       <p class="ae-howto-title">📐 Cómo se calcula la cotización final</p>
@@ -1069,7 +1357,11 @@
       if (kind === 'formula') {
         const def = findFormulaDef(path);
         if (def) openFormulaLab(def);
+      } else if (KNOB_REGISTRY[path]) {
+        // Popover universal inline (no scroll a otro lado)
+        openKnobPopover(cap);
       } else {
+        // Fallback: scroll a input number en la sección de constantes
         const inp = modal.querySelector(`input[data-calc-path="${path}"]`);
         if (inp) {
           inp.scrollIntoView({ block: 'center', behavior: 'smooth' });
