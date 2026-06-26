@@ -313,8 +313,10 @@
   const WIZARDS = [
     { key: 'educativo',   icon: '🎓', label: 'Educativo' },
     { key: 'gmm',         icon: '🏥', label: 'Gastos Médicos' },
+    { key: 'auto',        icon: '🚗', label: 'Auto' },
     { key: 'mascota',     icon: '🐾', label: 'Mascota' },
-    { key: 'patrimonial', icon: '🏠', label: 'Hogar' }
+    { key: 'patrimonial', icon: '🏠', label: 'Hogar' },
+    { key: 'ahorro',      icon: '💰', label: 'Ahorro' }
   ];
 
   const CALC_FIELDS = [
@@ -338,6 +340,12 @@
     ]},
     { wizard: 'patrimonial', items: [
       { path: 'patrimonial.addons.funmascotas', label: 'Servicio funerario mascotas', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 5000, step: 1, fallback: 348, affects: 'patrimonial' }
+    ]},
+    { wizard: 'auto', items: [
+      { path: 'auto.baseRate', label: 'Tasa base (% del valor del auto)', hint: 'Anualidad base = valor del auto × esta tasa. Default 5% (0.05).', unit: '', suffix: '× valor', min: 0.01, max: 0.20, step: 0.005, fallback: 0.05, affects: 'auto' },
+      { path: 'auto.addons.sustituto', label: 'Addon: Auto sustituto', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 10000, step: 10, fallback: 960, affects: 'auto' },
+      { path: 'auto.addons.llantas', label: 'Addon: Llantas y rines', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 10000, step: 10, fallback: 1511, affects: 'auto' },
+      { path: 'auto.addons.llave', label: 'Addon: Pérdida total de llave', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 10000, step: 10, fallback: 621, affects: 'auto' }
     ]}
   ];
 
@@ -598,12 +606,62 @@
       ${eq}`;
   }
 
+  function buildHowtoAuto() {
+    // Escenario: vehículo $300,000, año 2020 (edad 6), uso particular, cobertura amplia, deducible robo 5%/daños 5%
+    const v = 300000;
+    const baseRate = N('auto.baseRate', 0.05);
+    const ageMult = 1.08; // age=6 cae en >=5 y <8
+    const useMult = 1.0; // particular
+    const covMult = 1.0; // amplia
+    const dtMult = 1.15; // 5% robo
+    const ddMult = 1.0; // 5% daños
+    const total = v * baseRate * ageMult * useMult * covMult * dtMult * ddMult;
+    const eq = eqRender([
+      { name:'Valor del auto', value: fmtMoney(v), editable:false, title:'Lo elige el cliente en el wizard (default $300,000)' },
+      { op:'×' },
+      { name:'Tasa base', value: `×${baseRate}`, editable:true, kind:'number', path:'auto.baseRate' },
+      { op:'×' },
+      { name:'Factor edad (6 años)', value: `×${ageMult}`, editable:false, title:'Auto entre 5 y 8 años → 1.08 (interno)' },
+      { op:'×' },
+      { name:'Factor uso', value: `×${useMult}`, editable:false, title:'Particular = 1.0 / Comercial = 1.3 (interno)' },
+      { op:'×' },
+      { name:'Factor cobertura', value: `×${covMult}`, editable:false, title:'Amplia = referencia (interno)' },
+      { op:'×' },
+      { name:'Factor deducible robo', value: `×${dtMult}`, editable:false, title:'5%=1.15, 10%=1.0, 15%=0.9 (interno)' },
+      { op:'×' },
+      { name:'Factor deducible daños', value: `×${ddMult}`, editable:false, title:'3%=1.15, 5%=1.0, 10%=0.88 (interno)' }
+    ], { name:'Prima anual final', value: fmtMoney(Math.round(total)) });
+    return `
+      <p class="ae-howto-title">📐 Cómo se calcula la cotización final</p>
+      <p class="ae-howto-sub">Ejemplo: <b>Auto de $300,000, año 2020 (6 años), uso particular, cobertura amplia, deducibles 5%/5%, sin addons</b>.</p>
+      ${eq}`;
+  }
+
+  function buildHowtoAhorro() {
+    // El cotizador Ahorro NO calcula prima: la "cotización" es la aportación que elige el cliente.
+    // Lo que SE PROYECTA son los saldos futuros (a 65 y 70 años) usando la tabla AHORRO_MULT.
+    // Aquí explicamos visualmente esa diferencia para que Andy no confunda "prima" con "aportación".
+    const aportacion = 36000, anios = 10, totalAportado = aportacion * anios;
+    const eq = eqRender([
+      { name:'Aportación anual', value: fmtMoney(aportacion), editable:false, title:'Lo elige el cliente con el slider' },
+      { op:'×' },
+      { name:'Años aportando', value: anios.toString(), editable:false, title:'Lo elige el cliente (5/10/15 años)' }
+    ], { name:'Total aportado', value: fmtMoney(totalAportado) });
+    return `
+      <p class="ae-howto-title">📐 Cómo se calcula la cotización final</p>
+      <p class="ae-howto-sub"><b>Aclaración importante:</b> Ahorro/Inversión/Retiro NO tiene prima como GMM o Auto. El número que ve el cliente es la <b>aportación anual</b> que él mismo eligió. Lo que sí calculamos es la <b>proyección del saldo</b> a los 65 años usando tablas internas de rendimiento (calibradas a casos reales de Carola/Sofía/Elia del material GNP).</p>
+      ${eq}
+      <p class="ae-howto-sub" style="margin-top:10px"><b>Lo que se proyecta (no editable todavía desde aquí):</b> el saldo a los 65 años se interpola con la tabla AHORRO_MULT por edad de entrada y producto. Si AnCheco actualiza esos casos, hay que tocarlo del lado técnico.</p>`;
+  }
+
   function buildHowto(wizardKey) {
     try {
       if (wizardKey === 'educativo') return buildHowtoEducativo();
       if (wizardKey === 'mascota') return buildHowtoMascota();
       if (wizardKey === 'gmm') return buildHowtoGmm();
       if (wizardKey === 'patrimonial') return buildHowtoPatrimonial();
+      if (wizardKey === 'auto') return buildHowtoAuto();
+      if (wizardKey === 'ahorro') return buildHowtoAhorro();
     } catch(e) { return '<p class="ae-howto-sub" style="color:#d93636">No se pudo calcular el ejemplo: ' + e.message + '</p>'; }
     return '';
   }
@@ -871,6 +929,9 @@
       if (calcModal && calcModal.classList.contains('show')) {
         const inp = calcModal.querySelector(`input[data-formula-path="${def.path}"]`);
         if (inp) inp.value = expr;
+        // refrescar el howto del tab afectado (las cápsulas leen N()/F() en vivo)
+        const howtoBox = calcModal.querySelector(`.ae-howto[data-howto="${def.affects}"]`);
+        if (howtoBox) howtoBox.innerHTML = buildHowto(def.affects);
       }
       close();
       toast('Fórmula aplicada. La cotización se actualizó.');
@@ -896,8 +957,8 @@
     const dirtyCountFor = (wKey) => {
       let n = 0;
       dirtyKeys.forEach(k => {
-        // calc.X.* o calc.formulas.X.*
         if (k.startsWith('calc.formulas.' + wKey + '.')) n++;
+        else if (k.startsWith('calc.formulasCases.' + wKey + '.')) n++;
         else if (k.startsWith('calc.' + wKey + '.')) n++;
       });
       return n;
@@ -987,34 +1048,34 @@
       });
     });
 
-    // Click en una fila de fórmula → abre Formula Lab
-    modal.querySelectorAll('.ae-row-formula').forEach(row => {
-      row.addEventListener('click', () => {
+    // Click en una fila de fórmula → abre Formula Lab (event delegation para sobrevivir re-renders)
+    modal.addEventListener('click', (e) => {
+      const row = e.target.closest('.ae-row-formula');
+      if (row && modal.contains(row)) {
         const path = row.dataset.formulaPathRow;
         const def = findFormulaDef(path);
         if (def) openFormulaLab(def);
-      });
+      }
     });
 
-    // Click en una cápsula editable del bloque "Cómo se calcula" → abre el editor correspondiente
-    modal.querySelectorAll('.ae-eq-cap.editable').forEach(cap => {
-      cap.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const kind = cap.dataset.editKind;
-        const path = cap.dataset.editPath;
-        if (!path) return;
-        if (kind === 'formula') {
-          const def = findFormulaDef(path);
-          if (def) openFormulaLab(def);
-        } else {
-          // Hace scroll + focus en el input number con ese path
-          const inp = modal.querySelector(`input[data-calc-path="${path}"]`);
-          if (inp) {
-            inp.scrollIntoView({ block: 'center', behavior: 'smooth' });
-            setTimeout(() => { inp.focus(); inp.select && inp.select(); }, 300);
-          }
+    // Click en una cápsula editable del howto → abre editor (event delegation para sobrevivir re-renders)
+    modal.addEventListener('click', (e) => {
+      const cap = e.target.closest('.ae-eq-cap.editable');
+      if (!cap || !modal.contains(cap)) return;
+      e.stopPropagation();
+      const kind = cap.dataset.editKind;
+      const path = cap.dataset.editPath;
+      if (!path) return;
+      if (kind === 'formula') {
+        const def = findFormulaDef(path);
+        if (def) openFormulaLab(def);
+      } else {
+        const inp = modal.querySelector(`input[data-calc-path="${path}"]`);
+        if (inp) {
+          inp.scrollIntoView({ block: 'center', behavior: 'smooth' });
+          setTimeout(() => { inp.focus(); inp.select && inp.select(); }, 300);
         }
-      });
+      }
     });
 
     // Cambio en cualquier input → debounce 250ms → setByPath → recalc + dirty + render

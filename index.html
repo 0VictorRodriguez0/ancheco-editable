@@ -2135,7 +2135,7 @@ function autoCalcPrice(){
   //   Amplia $10,318  ·  Amplia Total $12,130 (+17.6%)
   // Fórmula:  v * 0.05 * factorEdad * factorUso * covMult * factorDed
   const v = state.auto.vehicleValue || 300000;
-  let base = v * 0.05; // tasa base Amplia (5% del valor)
+  let base = v * N('auto.baseRate', 0.05); // tasa base Amplia (5% del valor) — editable
   const age = Math.max(0, 2026 - state.auto.year);
   if(age >= 8) base *= 1.18;
   else if(age >= 5) base *= 1.08;
@@ -2150,7 +2150,7 @@ function autoCalcPrice(){
   }
   // Costos anuales de coberturas adicionales (aprox)
   // cero y agencia: precio pendiente de AnCheco (no suma al cotizador hasta confirmar)
-  const addonsCost = state.auto.addons.reduce((s,k)=>s+({sustituto:960,llantas:1511,llave:621}[k]||0),0);
+  const addonsCost = state.auto.addons.reduce((s,k)=>s+({sustituto:N('auto.addons.sustituto',960), llantas:N('auto.addons.llantas',1511), llave:N('auto.addons.llave',621)}[k]||0),0);
   return Math.round(base + addonsCost);
 }
 function autoSummaryLines(){

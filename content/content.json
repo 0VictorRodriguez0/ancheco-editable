@@ -468,6 +468,14 @@
         "funmascotas": 348
       }
     },
+    "auto": {
+      "baseRate": 0.05,
+      "addons": {
+        "sustituto": 960,
+        "llantas": 1511,
+        "llave": 621
+      }
+    },
     "formulas": {
       "educativo": {
         "ageFactor": "1 + (edad_titular - referencia_edad) * factor_por_anio",
