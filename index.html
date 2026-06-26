@@ -1787,9 +1787,9 @@ function gmmStepAddons(){
   const ad = state.gmm.addons;
   // Costos anuales estimados de coberturas adicionales reales GNP Personaliza Variable
   const items = [
-    ['cda','<span data-cms-html="auto.arr_label.87">Cero Deducible por Accidente (CDA)</span>','<span data-cms-html="gmm.addons.cda.desc">Si te accidentas (caída, choque, etc.), no pagas deducible — GNP cubre desde el primer peso.</span>',1800],
-    ['mp','<span data-cms-html="auto.arr_label.88">Maternidad Plus Personaliza (MP)</span>','<span data-cms-html="gmm.addons.mp.desc">3 opciones de cobertura: $47,000, $64,500 y $81,500. 10 meses de espera.</span>',5200],
-    ['ahr','<span data-cms-html="auto.arr_label.89">Ampliación Hospitalaria Nacional (AHR)</span>','<span data-cms-html="gmm.addons.ahr.desc">Acceso a hospitales de niveles superiores en otras regiones del país, no solo tu nivel base.</span>',2800],
+    ['cda','<span data-cms-html="auto.arr_label.87">Cero Deducible por Accidente (CDA)</span>','<span data-cms-html="gmm.addons.cda.desc">Si te accidentas (caída, choque, etc.), no pagas deducible — GNP cubre desde el primer peso.</span>',N('gmm.addons.cda',1800)],
+    ['mp','<span data-cms-html="auto.arr_label.88">Maternidad Plus Personaliza (MP)</span>','<span data-cms-html="gmm.addons.mp.desc">3 opciones de cobertura: $47,000, $64,500 y $81,500. 10 meses de espera.</span>',N('gmm.addons.mp',5200)],
+    ['ahr','<span data-cms-html="auto.arr_label.89">Ampliación Hospitalaria Nacional (AHR)</span>','<span data-cms-html="gmm.addons.ahr.desc">Acceso a hospitales de niveles superiores en otras regiones del país, no solo tu nivel base.</span>',N('gmm.addons.ahr',2800)],
     ['psico','<span data-cms-html="auto.arr_label.90">Asistencia Psicológica</span>','<span data-cms-html="gmm.addons.psico.desc">Ya viene incluida — 2 sesiones/mes por videollamada (50 min). Ansiedad, estrés, depresión, insomnio, problemas de pareja. Aplica para terapia de pareja y para menores con consentimiento del tutor.</span>',0]
   ];
   return `${stepDotsHTML(6, gmmSteps.length)}
@@ -1924,7 +1924,7 @@ function gmmCalcPrice(){
   const sumMult = {2.2:0.42, 17.5:0.82, 40.8:1.0, 58.3:1.12}[state.gmm.sumInsured] || 1.0;
   aggregate *= sumMult;
   // Coberturas adicionales (anuales, netas)
-  const addonsCost = state.gmm.addons.reduce((s,k)=>s+({cda:1800, mp:5200, ahr:2800}[k]||0), 0);
+  const addonsCost = state.gmm.addons.reduce((s,k)=>s+({cda:N('gmm.addons.cda',1800), mp:N('gmm.addons.mp',5200), ahr:N('gmm.addons.ahr',2800)}[k]||0), 0);
   aggregate += addonsCost;
   // Prima neta → total que paga el cliente: derecho de póliza (~$970/asegurado) + IVA 16%
   const total = (aggregate + 970*memberCount) * 1.16;
@@ -2223,7 +2223,7 @@ const GENERIC_FLOWS = {
       },
       addons:()=>{
         const ad = state.mascota.addons;
-        const items = [['fallece','<span data-cms-html="auto.arr_label.96">Fallecimiento</span>','<span data-cms-html="mascota.addons.fallece.meta">Indemnización por fallecimiento por enfermedad o accidente. Espera 360 días desde la firma.</span>',720],['robo','<span data-cms-html="auto.arr_label.97">Robo con violencia</span>','<span data-cms-html="mascota.addons.robo.meta">Indemnización tras presentar acta ante el MP.</span>',480],['rc','<span data-cms-html="auto.arr_label.98">RC mascota ampliada</span>','<span data-cms-html="mascota.addons.rc.meta">Cobertura ampliada de daños a terceros — la mordida importa.</span>',540]];
+        const items = [['fallece','<span data-cms-html="auto.arr_label.96">Fallecimiento</span>','<span data-cms-html="mascota.addons.fallece.meta">Indemnización por fallecimiento por enfermedad o accidente. Espera 360 días desde la firma.</span>',N('mascota.addons.fallece',720)],['robo','<span data-cms-html="auto.arr_label.97">Robo con violencia</span>','<span data-cms-html="mascota.addons.robo.meta">Indemnización tras presentar acta ante el MP.</span>',N('mascota.addons.robo',480)],['rc','<span data-cms-html="auto.arr_label.98">RC mascota ampliada</span>','<span data-cms-html="mascota.addons.rc.meta">Cobertura ampliada de daños a terceros — la mordida importa.</span>',N('mascota.addons.rc',540)]];
         return `${stepDotsHTML(2, 3)}
         <h3 class="step-title"><span data-cms-html="auto.step_title.17">Último paso: extras</span></h3>
         ${explainerHTML({_cmsKey:'auto.exp.17', intro:'Coberturas opcionales',
@@ -2260,7 +2260,7 @@ const GENERIC_FLOWS = {
       let base = basePerPlan[state.mascota.paquete] || basePerPlan.maximo;
       base *= 1 + Math.max(0,state.mascota.petAge-3)*0.06;
       if(state.mascota.species==='perro') base *= 1.1;
-      const ad = state.mascota.addons.reduce((s,k)=>s+({fallece:720,robo:480,rc:540}[k]||0),0);
+      const ad = state.mascota.addons.reduce((s,k)=>s+({fallece:N('mascota.addons.fallece',720),robo:N('mascota.addons.robo',480),rc:N('mascota.addons.rc',540)}[k]||0),0);
       return Math.round(base + ad);
     },
     summary:()=>{
@@ -2394,16 +2394,17 @@ const GENERIC_FLOWS = {
     title:'Plan Educativo · Profesional',
     steps:['edades','proteccion','plazo'],
     // Referencia AnCheco: Papá 37, hijo 1, meta $1.1M entregable a los 18 años. La prima escala con la proteccion y con la edad del contratante (Andy: "el costo depende de la edad del papá y el plazo del seguro").
-    refProteccion:1100000,
-    refTitularAge:37,
+    // Los valores numéricos viven en content.json bajo `calc.educativo.*` para que Andy los edite desde el panel "Constantes de cálculo"; los literales aquí son fallback.
+    get refProteccion(){ return N('educativo.refProteccion', 1100000); },
+    get refTitularAge(){ return N('educativo.refTitularAge', 37); },
     cases:{
-      '5':{prima:82670},
-      '10':{prima:43735},
-      'alcanzada':{prima:25760}
+      '5':{ get prima(){ return N('educativo.primas.5', 82670); } },
+      '10':{ get prima(){ return N('educativo.primas.10', 43735); } },
+      'alcanzada':{ get prima(){ return N('educativo.primas.alcanzada', 25760); } }
     },
     ageFactor:(age)=>{
-      // Aproximación: +4% por año sobre la referencia de 37, acotada entre 0.5x y 3x.
-      const f = 1 + (age - 37) * 0.04;
+      // Aproximación: +k por año sobre la edad de referencia, acotada entre 0.5x y 3x.
+      const f = 1 + (age - N('educativo.refTitularAge', 37)) * N('educativo.ageFactorPerYear', 0.04);
       return Math.max(0.5, Math.min(3, f));
     },
     render:{
@@ -2540,7 +2541,7 @@ const GENERIC_FLOWS = {
         const items = [
           ['hidromet','<span data-cms-html="auto.arr_label.99">Hidrometereologicos</span>','<span data-cms-html="patrimonial.addon.hidromet.desc">Cubre las pérdidas y/o daños físicos al inmueble, así como a sus cimentaciones e instalaciones fijas subterráneas, originados por Avalanchas de lodo, Granizo, Helada, Huracán, Inundación, Inundación por lluvia, Golpe de mar, Tsunami, Marejada, Nevada y Vientos tempestuosos.</span>',basePrima],
           ['terremoto','<span data-cms-html="auto.arr_label.100">Terremoto</span>','<span data-cms-html="patrimonial.addon.terremoto.desc">Se cubren las pérdidas por daños materiales al inmueble Asegurado, así como a sus cimientos e instalaciones fijas subterráneas, causados por Terremoto y/o Erupción Volcánica.</span>',0],
-          ['funmascotas','<span data-cms-html="auto.arr_label.101">Servicio funerario mascotas</span>','<span data-cms-html="patrimonial.addon.funmascotas.desc">En caso de fallecimiento de tu mascota, esta asistencia brinda los siguientes servicios; Recolección del cuerpo, Cremación individual de la mascota, Urna básica y Entrega a domicilio de las cenizas.</span>',348]
+          ['funmascotas','<span data-cms-html="auto.arr_label.101">Servicio funerario mascotas</span>','<span data-cms-html="patrimonial.addon.funmascotas.desc">En caso de fallecimiento de tu mascota, esta asistencia brinda los siguientes servicios; Recolección del cuerpo, Cremación individual de la mascota, Urna básica y Entrega a domicilio de las cenizas.</span>',N('patrimonial.addons.funmascotas',348)]
         ];
         return `${stepDotsHTML(2, 3)}
         <h3 class="step-title">${T('wizards.patrimonial.steps.addons.title','Coberturas adicionales')}</h3>
@@ -2563,7 +2564,7 @@ const GENERIC_FLOWS = {
       const p = PRODUCTOS_PATRIMONIAL.AMEDIDA;
       const hv = state.patrimonial.homeValue, cv = state.patrimonial.contentsValue;
       const basePrima = Math.round(hv*p.homeRate + cv*p.contentsRate + p.fixedBase);
-      const costs = {hidromet:basePrima, terremoto:0, funmascotas:348};
+      const costs = {hidromet:basePrima, terremoto:0, funmascotas:N('patrimonial.addons.funmascotas',348)};
       const ad = state.patrimonial.addons.reduce((s,k)=>s+(costs[k]||0),0);
       return basePrima + ad;
     },
@@ -2579,7 +2580,7 @@ const GENERIC_FLOWS = {
       p.coberturas.slice(0,4).forEach(c=>lines.push(['· '+c[0], c[1]]));
       if(state.patrimonial.addons.length){
         const addonLabels = {hidromet:'<span data-cms-html="patrimonial.summary.addon.hidromet">Hidrometeorológicos</span>', terremoto:'<span data-cms-html="patrimonial.summary.addon.terremoto">Terremoto/Erupción volcánica</span>', funmascotas:'<span data-cms-html="patrimonial.summary.addon.funmascotas">Servicio funerario mascotas</span>'};
-        const addonCosts = {hidromet:basePrima, terremoto:0, funmascotas:348};
+        const addonCosts = {hidromet:basePrima, terremoto:0, funmascotas:N('patrimonial.addons.funmascotas',348)};
         state.patrimonial.addons.forEach(k=>{
           const costoStr = addonCosts[k]===0 ? '<span data-cms-html="patrimonial.summary.addon.cotiza_aparte">Según CP (cotiza Andy aparte)</span>' : '$'+fmt(addonCosts[k])+'/año';
           lines.push(['+ '+addonLabels[k], costoStr]);
@@ -2751,6 +2752,28 @@ window.T = function(path, fallback) {
   const v = window.__cms.get(path);
   const txt = (typeof v === 'string') ? v : (fallback == null ? '' : fallback);
   return '<span data-cms-html="' + __cmsEscAttr(path) + '">' + txt + '</span>';
+};
+
+// N(path, fallback) — lee un valor numérico desde content.json con fallback seguro.
+// Si el CMS no tiene el path o el valor no es número finito, devuelve fallback.
+// Usado por los calculadores (price/summary) para que Andy pueda editar primas/factores
+// sin tocar JS desde el panel "Constantes de cálculo" del editor.
+window.N = function(path, fallback) {
+  const v = window.__cms && window.__cms.get ? window.__cms.get('calc.' + path) : undefined;
+  return (typeof v === 'number' && isFinite(v)) ? v : fallback;
+};
+
+// Hook que el editor invoca después de cambiar una constante numérica para que
+// el wizard activo re-renderice con los nuevos valores y se vea el efecto en vivo.
+// scope: 'educativo' | 'gmm' | 'mascota' | 'patrimonial' | 'auto' | 'ahorro' | 'all' | undefined
+window.__cmsRecalc = function(scope) {
+  try {
+    if (scope && scope !== 'all' && scope !== (typeof state !== 'undefined' ? state.type : null)) return;
+    if (typeof renderGeneric === 'function') renderGeneric();
+    if (typeof renderGenericQuote === 'function') renderGenericQuote();
+    if ((typeof state !== 'undefined' ? state.type : null) === 'gmm' && typeof renderGmm === 'function') { renderGmm(); typeof renderGmmQuote === 'function' && renderGmmQuote(); }
+    if ((typeof state !== 'undefined' ? state.type : null) === 'auto' && typeof renderAuto === 'function') { renderAuto(); typeof renderAutoQuote === 'function' && renderAutoQuote(); }
+  } catch (e) { /* no-op para visitantes */ }
 };
 
 // FIX BUG-001: sanitizador HTML mínimo para uso en visitantes públicos

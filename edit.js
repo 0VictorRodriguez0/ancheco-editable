@@ -149,8 +149,146 @@
     #ancheco-editor-toast.show { opacity: 1; transform: translateY(0); }
     #ancheco-editor-toast.error { background: #d93636; }
     #ancheco-editor-toast.warn  { background: #d97c0d; }
+    /* ===== Modal Constantes de cálculo ===== */
+    #ae-calc-modal { position: fixed; inset: 0; z-index: 99998; background: rgba(15,23,42,.55); display: none; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto; }
+    #ae-calc-modal.show { display: flex; }
+    #ae-calc-card { background: #fff; border-radius: 16px; max-width: 720px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,.25); font-family: Montserrat, system-ui, sans-serif; color: #1e3a5f; }
+    #ae-calc-card header { padding: 18px 22px; border-bottom: 1px solid #eef2f7; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    #ae-calc-card header h2 { margin:0; font-size: 18px; font-weight: 800; }
+    #ae-calc-card header .ae-x { background: transparent; border: 0; font-size: 22px; cursor: pointer; color: #64748b; padding: 0 6px; }
+    #ae-calc-card .ae-intro { padding: 14px 22px; background: #fff7ed; color: #7c2d12; font-size: 12.5px; line-height: 1.5; border-bottom: 1px solid #fde8c5; }
+    #ae-calc-card .ae-grp { padding: 16px 22px; border-bottom: 1px solid #f1f5f9; }
+    #ae-calc-card .ae-grp:last-child { border-bottom: 0; }
+    #ae-calc-card .ae-grp h3 { margin: 0 0 10px 0; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: #e57a2c; }
+    #ae-calc-card .ae-row { display: grid; grid-template-columns: 1fr 160px; gap: 14px; padding: 8px 0; align-items: center; }
+    #ae-calc-card .ae-row .ae-lbl { font-size: 13px; line-height: 1.35; }
+    #ae-calc-card .ae-row .ae-lbl b { display:block; font-weight: 700; color: #1e3a5f; }
+    #ae-calc-card .ae-row .ae-lbl small { display:block; color: #64748b; font-size: 11.5px; margin-top: 2px; }
+    #ae-calc-card .ae-row .ae-inp { display: flex; align-items: center; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 0 10px; transition: border-color .15s, background .15s; }
+    #ae-calc-card .ae-row .ae-inp:focus-within { border-color: #e57a2c; background: #fff; }
+    #ae-calc-card .ae-row .ae-inp.dirty { border-color: #1bbf6a; background: #ecfdf5; }
+    #ae-calc-card .ae-row .ae-inp .prefix, #ae-calc-card .ae-row .ae-inp .suffix { color: #94a3b8; font-size: 13px; font-weight: 600; }
+    #ae-calc-card .ae-row .ae-inp input { border: 0; background: transparent; padding: 9px 6px; font-size: 14px; font-weight: 700; color: #1e3a5f; width: 100%; text-align: right; font-family: inherit; outline: none; }
+    #ae-calc-card .ae-row .ae-inp input[type=number]::-webkit-outer-spin-button,
+    #ae-calc-card .ae-row .ae-inp input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    #ae-calc-card footer { padding: 14px 22px; display: flex; gap: 10px; justify-content: flex-end; background: #f8fafc; border-radius: 0 0 16px 16px; }
+    #ae-calc-card footer button { border: 0; border-radius: 999px; padding: 9px 18px; font-weight: 700; font-size: 13px; cursor: pointer; font-family: inherit; }
+    #ae-calc-card footer .ae-cancel { background: transparent; color: #64748b; }
+    #ae-calc-card footer .ae-apply { background: #e57a2c; color: #fff; }
+    #ae-calc-card footer .ae-apply:disabled { background: #cbd5e1; cursor: not-allowed; }
+    #ancheco-editor-bar .btn-calc { background: rgba(255,255,255,.12); color: #fff; }
+    #ancheco-editor-bar .btn-calc:hover { background: rgba(255,255,255,.22); }
   `;
   document.head.appendChild(style);
+
+  // ============= CONSTANTES DE CÁLCULO (Tier 1) =============
+  // Define las constantes editables del modal "Constantes de cálculo". Cada item:
+  //  - path: ruta dentro de calc.* en content.json
+  //  - label / hint: textos amigables que Andy verá (sin tecnicismos)
+  //  - unit: prefijo/sufijo del input ('$' antes, '%' después, '' nada)
+  //  - min/max/step: validación del input number
+  //  - fallback: valor por defecto si content.json no lo tiene (debe coincidir con el del código)
+  //  - affects: wizard que se re-renderiza al aplicar ('educativo' | 'gmm' | 'mascota' | 'patrimonial' | 'all')
+  const CALC_FIELDS = [
+    { group: 'Plan Educativo · Profesional', items: [
+      { path: 'educativo.primas.5', label: 'Prima base — 5 años de pago', hint: 'Referencia: papá 37 años, hijo 1 año, meta $1.1M.', unit: '$', min: 1000, max: 500000, step: 100, fallback: 82670, affects: 'educativo' },
+      { path: 'educativo.primas.10', label: 'Prima base — 10 años de pago', hint: 'Referencia: papá 37 años, hijo 1 año, meta $1.1M.', unit: '$', min: 1000, max: 500000, step: 100, fallback: 43735, affects: 'educativo' },
+      { path: 'educativo.primas.alcanzada', label: 'Prima base — Hasta edad alcanzada', hint: 'Pago hasta los 18 años del menor.', unit: '$', min: 1000, max: 500000, step: 100, fallback: 25760, affects: 'educativo' },
+      { path: 'educativo.refProteccion', label: 'Protección de referencia', hint: 'Suma asegurada del ejemplo del material (anclaje del cálculo).', unit: '$', min: 100000, max: 10000000, step: 50000, fallback: 1100000, affects: 'educativo' },
+      { path: 'educativo.refTitularAge', label: 'Edad de referencia del contratante', hint: 'Edad del papá del ejemplo del material.', unit: '', suffix: 'años', min: 18, max: 75, step: 1, fallback: 37, affects: 'educativo' },
+      { path: 'educativo.ageFactorPerYear', label: 'Factor por año de edad del contratante', hint: 'Cuánto sube la prima por cada año adicional (0.04 = 4%).', unit: '', suffix: '× edad', min: 0, max: 0.20, step: 0.005, fallback: 0.04, affects: 'educativo' }
+    ]},
+    { group: 'Gastos Médicos Mayores · Coberturas extra', items: [
+      { path: 'gmm.addons.cda', label: 'Cero Deducible por Accidente (CDA)', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 50000, step: 100, fallback: 1800, affects: 'gmm' },
+      { path: 'gmm.addons.mp', label: 'Maternidad Plus Personaliza (MP)', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 50000, step: 100, fallback: 5200, affects: 'gmm' },
+      { path: 'gmm.addons.ahr', label: 'Ampliación Hospitalaria Nacional (AHR)', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 50000, step: 100, fallback: 2800, affects: 'gmm' }
+    ]},
+    { group: 'Mascota · Coberturas extra', items: [
+      { path: 'mascota.addons.fallece', label: 'Fallecimiento', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 20000, step: 10, fallback: 720, affects: 'mascota' },
+      { path: 'mascota.addons.robo', label: 'Robo con violencia', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 20000, step: 10, fallback: 480, affects: 'mascota' },
+      { path: 'mascota.addons.rc', label: 'RC mascota ampliada', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 20000, step: 10, fallback: 540, affects: 'mascota' }
+    ]},
+    { group: 'Hogar / Patrimonial · Coberturas extra', items: [
+      { path: 'patrimonial.addons.funmascotas', label: 'Servicio funerario mascotas', hint: 'Anualidad fija que se suma cuando el cliente lo selecciona.', unit: '$', min: 0, max: 5000, step: 1, fallback: 348, affects: 'patrimonial' }
+    ]}
+  ];
+
+  function formatNum(v, step) {
+    if (typeof v !== 'number' || !isFinite(v)) return '';
+    // Decimales según el step (0.005 → 3, 1 → 0)
+    const dec = (step != null && step < 1) ? Math.min(4, String(step).split('.')[1]?.length || 2) : 0;
+    return v.toFixed(dec).replace(/\.?0+$/, '');
+  }
+
+  function openCalcModal() {
+    let modal = document.getElementById('ae-calc-modal');
+    if (modal) { modal.classList.add('show'); return; }
+    modal = document.createElement('div');
+    modal.id = 'ae-calc-modal';
+    modal.innerHTML = `
+      <div id="ae-calc-card">
+        <header>
+          <h2>Constantes de cálculo</h2>
+          <button class="ae-x" type="button" aria-label="Cerrar">×</button>
+        </header>
+        <div class="ae-intro">
+          Aquí editás los <b>números</b> que usan los cotizadores. Cambia uno, presiona <b>Aplicar</b> y verás el efecto en vivo en la cotización. Después guarda con el botón <b>Guardar</b> de la barra de abajo. Las fórmulas que combinan estos números viven en el código y solo el equipo técnico las cambia.
+        </div>
+        ${CALC_FIELDS.map(grp => `
+          <div class="ae-grp">
+            <h3>${grp.group}</h3>
+            ${grp.items.map(it => {
+              const cur = getByPath(workingContent, 'calc.' + it.path);
+              const val = (typeof cur === 'number' && isFinite(cur)) ? cur : it.fallback;
+              const isDirty = dirtyKeys.has('calc.' + it.path);
+              return `
+                <div class="ae-row">
+                  <div class="ae-lbl"><b>${it.label}</b><small>${it.hint}</small></div>
+                  <div class="ae-inp ${isDirty ? 'dirty' : ''}">
+                    ${it.unit === '$' ? '<span class="prefix">$</span>' : ''}
+                    <input type="number" data-calc-path="${it.path}" data-calc-affects="${it.affects}" data-calc-fallback="${it.fallback}" min="${it.min}" max="${it.max}" step="${it.step}" value="${formatNum(val, it.step)}" />
+                    ${it.suffix ? `<span class="suffix">${it.suffix}</span>` : ''}
+                  </div>
+                </div>`;
+            }).join('')}
+          </div>`).join('')}
+        <footer>
+          <button class="ae-cancel" type="button">Cerrar</button>
+        </footer>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    modal.classList.add('show');
+    const close = () => modal.classList.remove('show');
+    modal.querySelector('.ae-x').addEventListener('click', close);
+    modal.querySelector('.ae-cancel').addEventListener('click', close);
+    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+
+    // Cambio en cualquier input → debounce 250ms → setByPath → recalc + dirty + render
+    let debounceTimer = null;
+    modal.addEventListener('input', (e) => {
+      const inp = e.target.closest('input[data-calc-path]');
+      if (!inp) return;
+      const path = 'calc.' + inp.dataset.calcPath;
+      const affects = inp.dataset.calcAffects;
+      const fallback = parseFloat(inp.dataset.calcFallback);
+      const raw = inp.value.trim();
+      const parsed = raw === '' ? fallback : parseFloat(raw);
+      const wrap = inp.closest('.ae-inp');
+      if (!isFinite(parsed)) { wrap?.style.setProperty('border-color', '#d93636'); return; }
+      wrap?.style.removeProperty('border-color');
+      setByPath(workingContent, path, parsed);
+      if (window.__cms && window.__cms.data) setByPath(window.__cms.data, path, parsed);
+      const original = getByPath(originalContent, path);
+      if (parsed === original) { dirtyKeys.delete(path); wrap?.classList.remove('dirty'); }
+      else { dirtyKeys.add(path); wrap?.classList.add('dirty'); }
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        try { if (typeof window.__cmsRecalc === 'function') window.__cmsRecalc(affects); } catch(_) {}
+        renderBar();
+      }, 250);
+    });
+  }
 
   // ============= BARRA FLOTANTE =============
   function renderBar() {
@@ -165,6 +303,7 @@
           <span id="ae-count">0 cambios sin guardar</span>
         </div>
         <button class="btn-logout" id="ae-logout" title="Cerrar sesión (borra el token guardado)">⎋</button>
+        <button class="btn-calc" id="ae-calc" title="Editar las constantes de cálculo (primas base, factores, etc.)">⚙ Constantes</button>
         <button class="btn-ghost" id="ae-discard">Descartar</button>
         <button class="btn-save" id="ae-save">Guardar</button>
       `;
@@ -172,6 +311,7 @@
       bar.querySelector('#ae-save').addEventListener('click', save);
       bar.querySelector('#ae-discard').addEventListener('click', discard);
       bar.querySelector('#ae-logout').addEventListener('click', logout);
+      bar.querySelector('#ae-calc').addEventListener('click', openCalcModal);
     }
     const n = dirtyKeys.size;
     bar.querySelector('#ae-count').textContent =

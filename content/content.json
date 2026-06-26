@@ -437,5 +437,36 @@
     "summary": {
       "prima_base": ""
     }
+  },
+  "calc": {
+    "educativo": {
+      "refProteccion": 1100000,
+      "refTitularAge": 37,
+      "ageFactorPerYear": 0.04,
+      "primas": {
+        "5": 82670,
+        "10": 43735,
+        "alcanzada": 25760
+      }
+    },
+    "gmm": {
+      "addons": {
+        "cda": 1800,
+        "mp": 5200,
+        "ahr": 2800
+      }
+    },
+    "mascota": {
+      "addons": {
+        "fallece": 720,
+        "robo": 480,
+        "rc": 540
+      }
+    },
+    "patrimonial": {
+      "addons": {
+        "funmascotas": 348
+      }
+    }
   }
 }
