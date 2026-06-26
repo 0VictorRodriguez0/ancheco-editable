@@ -194,6 +194,22 @@
     #ae-calc-card .ae-panel-empty { padding: 40px 22px; text-align: center; color: #94a3b8; font-size: 13px; }
     #ae-calc-card .ae-subhead { padding: 14px 22px 4px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; color: #94a3b8; display:flex; align-items:center; gap:6px; }
     #ae-calc-card .ae-subhead .ae-icon { font-size: 14px; }
+    /* ===== Bloque "Cómo se calcula la cotización final" ===== */
+    #ae-calc-card .ae-howto { margin: 14px 22px; padding: 16px; background: linear-gradient(180deg,#fff7ed 0%,#fffaf3 100%); border: 1.5px solid #fde8c5; border-radius: 12px; }
+    #ae-calc-card .ae-howto-title { font-size: 13px; font-weight: 800; color: #c2410c; margin: 0 0 4px 0; display:flex; align-items:center; gap:6px; }
+    #ae-calc-card .ae-howto-sub { font-size: 12px; color: #7c2d12; margin: 0 0 12px 0; line-height: 1.45; }
+    #ae-calc-card .ae-howto-sub b { color: #c2410c; }
+    #ae-calc-card .ae-step { display: grid; grid-template-columns: 28px 1fr 130px; gap: 10px; align-items: center; background: #fff; border: 1px solid #fde8c5; border-radius: 8px; padding: 10px 12px; margin-bottom: 6px; font-family: 'SFMono-Regular', Consolas, Monaco, monospace; font-size: 12px; }
+    #ae-calc-card .ae-step .ae-step-num { width: 22px; height: 22px; background: #e57a2c; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 11px; font-family: Montserrat, system-ui, sans-serif; }
+    #ae-calc-card .ae-step .ae-step-body { line-height: 1.45; }
+    #ae-calc-card .ae-step .ae-step-name { font-family: Montserrat, system-ui, sans-serif; font-weight: 700; color: #1e3a5f; font-size: 12px; margin-bottom: 2px; }
+    #ae-calc-card .ae-step .ae-step-formula { color: #64748b; font-size: 11.5px; }
+    #ae-calc-card .ae-step .ae-step-val { font-weight: 800; color: #1e3a5f; text-align: right; font-size: 13px; }
+    #ae-calc-card .ae-step.ae-step-total { background: #1e3a5f; border-color: #1e3a5f; margin-top: 10px; }
+    #ae-calc-card .ae-step.ae-step-total .ae-step-num { background: #fff; color: #e57a2c; }
+    #ae-calc-card .ae-step.ae-step-total .ae-step-name { color: #fff; font-size: 13px; }
+    #ae-calc-card .ae-step.ae-step-total .ae-step-formula { color: #cbd5e1; }
+    #ae-calc-card .ae-step.ae-step-total .ae-step-val { color: #fff; font-size: 18px; }
     /* ===== Formula Lab sub-modal ===== */
     #ae-flab-modal { position: fixed; inset: 0; z-index: 100000; background: rgba(15,23,42,.65); display:none; align-items:flex-start; justify-content:center; padding:32px 16px; overflow-y:auto; }
     #ae-flab-modal.show { display:flex; }
@@ -407,6 +423,140 @@
   ];
 
   function findFormulaDef(path) { return FORMULA_DEFS.find(f => f.path === path); }
+
+  // ============= "Cómo se calcula la cotización final" =============
+  // Para cada producto, descompone el cálculo del cotizador con un escenario concreto.
+  // Cada paso muestra: nombre legible · fórmula con valores actuales · resultado intermedio.
+  // El total final aparece en una caja oscura destacada.
+  // Lee N() / F() / hardcoded para que cambios de Andy se reflejen al re-abrir el modal.
+  function moneyOrNum(v, isMoney) { return isMoney ? fmtMoney(v) : (Math.round(v*100)/100).toString(); }
+
+  function howtoStep(num, name, formula, value, isTotal) {
+    const cls = isTotal ? 'ae-step ae-step-total' : 'ae-step';
+    return `<div class="${cls}">
+      <div class="ae-step-num">${num}</div>
+      <div class="ae-step-body">
+        <div class="ae-step-name">${name}</div>
+        <div class="ae-step-formula">${formula}</div>
+      </div>
+      <div class="ae-step-val">${value}</div>
+    </div>`;
+  }
+
+  function buildHowtoEducativo() {
+    // Escenario: Papá 37 años, hijo 1 año, plazo 10 años, protección $1,000,000
+    const refProt = N('educativo.refProteccion', 1100000);
+    const refEdad = N('educativo.refTitularAge', 37);
+    const fpa = N('educativo.ageFactorPerYear', 0.04);
+    const prima10 = N('educativo.primas.10', 43735);
+    const proteccion = 1000000;
+    const edadTitular = 37;
+    // Step 1
+    const s1 = prima10;
+    // Step 2: factor protección
+    const factorProt = proteccion / refProt;
+    const s2 = s1 * factorProt;
+    // Step 3: factor edad
+    const factorEdad = Math.max(0.5, Math.min(3, F('educativo.ageFactor', {edad_titular:edadTitular, referencia_edad:refEdad, factor_por_anio:fpa}, 1+(edadTitular-refEdad)*fpa)));
+    const s3 = s2 * factorEdad;
+    return `
+      <p class="ae-howto-title">📐 Cómo se calcula la cotización final</p>
+      <p class="ae-howto-sub">Ejemplo: <b>Papá de 37 años, hijo de 1 año, plazo de 10 años, protección $1,000,000</b>. Si cambias la prima base, la protección de referencia o el factor por edad, los pasos de abajo se recalculan.</p>
+      ${howtoStep(1, 'Prima base del plazo (10 años)', `Valor editable en "Números editables → Prima base — 10 años"`, fmtMoney(s1))}
+      ${howtoStep(2, 'Factor por protección elegida', `${fmtMoney(proteccion)} ÷ ${fmtMoney(refProt)} = ×${factorProt.toFixed(3)}`, fmtMoney(s2))}
+      ${howtoStep(3, 'Factor por edad del contratante', `1 + (${edadTitular} − ${refEdad}) × ${fpa} = ×${factorEdad.toFixed(3)}`, fmtMoney(s3))}
+      ${howtoStep('=', 'Prima anual final', `Redondeado al peso`, fmtMoney(Math.round(s3)), true)}
+    `;
+  }
+
+  function buildHowtoMascota() {
+    // Escenario: Perro de 5 años, plan Cuidado Máximo, con addon Fallecimiento
+    const basePlan = 4490; // hardcoded — todavía no es editable en Tier 1
+    const edad = 5;
+    const factorEdad = 1 + Math.max(0, edad - 3) * 0.06; // 6% por año >3
+    const factorEspecie = 1.1; // perro
+    const addonFallece = N('mascota.addons.fallece', 720);
+    const s1 = basePlan;
+    const s2 = s1 * factorEdad;
+    const s3 = s2 * factorEspecie;
+    const s4 = s3 + addonFallece;
+    return `
+      <p class="ae-howto-title">📐 Cómo se calcula la cotización final</p>
+      <p class="ae-howto-sub">Ejemplo: <b>Perro de 5 años, plan Cuidado Máximo, con addon "Fallecimiento"</b>. Editar los costos de addon abajo cambia el resultado del Paso 4.</p>
+      ${howtoStep(1, 'Prima base del plan (Cuidado Máximo)', `Valor interno (no editable todavía): $4,490`, fmtMoney(s1))}
+      ${howtoStep(2, 'Factor por edad del animal', `1 + max(0, ${edad}−3) × 0.06 = ×${factorEdad.toFixed(2)}`, fmtMoney(s2))}
+      ${howtoStep(3, 'Factor por especie (perro = ×1.1)', `${fmtMoney(s2)} × 1.1`, fmtMoney(s3))}
+      ${howtoStep(4, 'Suma del addon "Fallecimiento"', `${fmtMoney(s3)} + ${fmtMoney(addonFallece)}`, fmtMoney(s4))}
+      ${howtoStep('=', 'Prima anual final', `Redondeado al peso`, fmtMoney(Math.round(s4)), true)}
+    `;
+  }
+
+  function buildHowtoGmm() {
+    // Escenario: Hombre, 35 años, no fumador, individual, Nivel B, deducible $21k, suma $40.8M, sin addons
+    const maleRef25 = 14260; // hardcoded todavía
+    const edad = 35;
+    const ageMultFallback = edad <= 45 ? (1 + 0.0093*(edad-25)) : (1 + 0.0093*20 + 0.05*(edad-45));
+    const ageMult = F('gmm.ageMultiplier', {edad}, ageMultFallback);
+    const fMujer = N('factors.gmm.factorMujer', 1.19); // no aplica (hombre)
+    const fFumador = N('factors.gmm.factorFumador', 1.20); // no aplica (no fuma)
+    const tierMult = 1.0; // Nivel B
+    const dedMult = Math.pow(0.955, -2); // dedIdx=0, ref=2 → 0.955^-2 ≈ 1.097
+    const sumMult = 1.0; // 40.8M = referencia
+    const s1 = maleRef25;
+    const s2 = s1 * ageMult;
+    const s3 = s2 * tierMult;
+    const s4 = s3 * dedMult;
+    const s5 = s4 * sumMult;
+    const derecho = N('factors.gmm.derechoPoliza', 970);
+    const iva = N('factors.gmm.iva', 0.16);
+    const totalFallback = (s5 + derecho * 1) * (1 + iva);
+    const total = F('gmm.totalConIVA', {prima_neta:s5, derecho_poliza:derecho, cantidad_asegurados:1, iva}, totalFallback);
+    return `
+      <p class="ae-howto-title">📐 Cómo se calcula la cotización final</p>
+      <p class="ae-howto-sub">Ejemplo: <b>Hombre, 35 años, no fumador, individual, Nivel B, deducible $21,000, suma asegurada $40.8M, sin addons</b>. Hombre y no-fumador no aplican recargo en este caso.</p>
+      ${howtoStep(1, 'Prima base hombre 25 años (Nivel B)', `Valor interno (no editable todavía): $14,260`, fmtMoney(s1))}
+      ${howtoStep(2, 'Factor por edad (35)', `Fórmula editable "Multiplicador por edad" = ×${ageMult.toFixed(3)}`, fmtMoney(s2))}
+      ${howtoStep(3, 'Factor por nivel hospitalario (B = 1.0)', `Sin cambio`, fmtMoney(s3))}
+      ${howtoStep(4, 'Factor por deducible elegido', `0.955^(−2) = ×${dedMult.toFixed(3)}`, fmtMoney(s4))}
+      ${howtoStep(5, 'Factor por suma asegurada (40.8M = 1.0)', `Sin cambio`, fmtMoney(s5))}
+      ${howtoStep(6, 'Suma derecho de póliza + IVA', `Fórmula editable "Total con derecho + IVA"`, fmtMoney(total))}
+      ${howtoStep('=', 'Prima anual final', `Redondeado al peso`, fmtMoney(Math.round(total)), true)}
+    `;
+  }
+
+  function buildHowtoPatrimonial() {
+    // Escenario: Casa $2M, contenidos $300k, plan A tu medida, addon Hidrometeorológicos
+    const hv = 2000000, cv = 300000;
+    const homeRate = 0.00098, contentsRate = 0.00220, fixedBase = 5978;
+    const fHidromet = N('factors.patrimonial.factorHidromet', 1);
+    const s1 = hv * homeRate;
+    const s2 = cv * contentsRate;
+    const s3 = fixedBase;
+    const basePrima = s1 + s2 + s3;
+    const hidromet = F('patrimonial.hidrometCosto', {prima_base:basePrima, factor_hidromet:fHidromet}, basePrima);
+    const total = basePrima + hidromet;
+    return `
+      <p class="ae-howto-title">📐 Cómo se calcula la cotización final</p>
+      <p class="ae-howto-sub">Ejemplo: <b>Casa de $2,000,000, contenidos $300,000, plan "A tu medida", con addon Hidrometeorológicos</b>. Los 3 primeros pasos arman la prima base, los siguientes 2 suman el addon de huracán.</p>
+      ${howtoStep(1, 'Edificio (incendio + naturales)', `${fmtMoney(hv)} × 0.00098`, fmtMoney(s1))}
+      ${howtoStep(2, 'Contenidos generales', `${fmtMoney(cv)} × 0.00220`, fmtMoney(s2))}
+      ${howtoStep(3, 'Base fija del plan "A tu medida"', `Cobertura premium (teletrabajo, menaje, etc.)`, fmtMoney(s3))}
+      ${howtoStep(4, 'Prima base (suma de 1+2+3)', `${fmtMoney(s1)} + ${fmtMoney(s2)} + ${fmtMoney(s3)}`, fmtMoney(basePrima))}
+      ${howtoStep(5, 'Addon Hidrometeorológicos', `Fórmula editable: ${fmtMoney(basePrima)} × ${fHidromet}`, fmtMoney(hidromet))}
+      ${howtoStep('=', 'Prima anual final', `${fmtMoney(basePrima)} + ${fmtMoney(hidromet)}`, fmtMoney(Math.round(total)), true)}
+    `;
+  }
+
+  function buildHowto(wizardKey) {
+    try {
+      if (wizardKey === 'educativo') return buildHowtoEducativo();
+      if (wizardKey === 'mascota') return buildHowtoMascota();
+      if (wizardKey === 'gmm') return buildHowtoGmm();
+      if (wizardKey === 'patrimonial') return buildHowtoPatrimonial();
+    } catch(e) { return '<p class="ae-howto-sub" style="color:#d93636">No se pudo calcular el ejemplo: ' + e.message + '</p>'; }
+    return '';
+  }
+
   function fmtMoney(v) { return '$' + Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
   function fmtPlain(v) { return (typeof v === 'number') ? (Math.round(v*1000)/1000).toString() : '—'; }
 
@@ -712,6 +862,9 @@
       const constsGroup = CALC_FIELDS.find(g => g.wizard === wKey);
       const consts = constsGroup ? constsGroup.items : [];
       let html = '';
+      // Bloque "Cómo se calcula la cotización final" arriba del todo
+      const howtoHtml = buildHowto(wKey);
+      if (howtoHtml) html += `<div class="ae-howto" data-howto="${wKey}">${howtoHtml}</div>`;
       if (formulas.length) {
         html += `<div class="ae-subhead"><span class="ae-icon">⚡</span> Fórmulas (click para editar)</div>`;
         html += `<div class="ae-grp">${formulas.map(f => {
@@ -814,6 +967,9 @@
       debounceTimer = setTimeout(() => {
         try { if (typeof window.__cmsRecalc === 'function') window.__cmsRecalc(affects); } catch(_) {}
         renderBar();
+        // Refrescar el "Cómo se calcula" del tab activo (lee N() en vivo)
+        const howtoBox = modal.querySelector(`.ae-howto[data-howto="${affects}"]`);
+        if (howtoBox) howtoBox.innerHTML = buildHowto(affects);
       }, 250);
     });
   }
