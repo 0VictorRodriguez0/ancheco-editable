@@ -29,6 +29,10 @@
   const CONTENT_PATH = 'content/content.json';
   const BRANCH = 'main';
   const STORAGE_KEY = 'ancheco_editor_pat';
+  // Modo demo local: cuando se corre desde localhost, no pedimos PAT ni hacemos commits;
+  // se carga content.json del server local y los cambios solo viven en memoria.
+  // Sirve para que Andy (o quien sea) pruebe el editor antes de tocar producción.
+  const IS_LOCAL = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
 
   let token = localStorage.getItem(STORAGE_KEY);
   let originalContent = null;
@@ -347,6 +351,12 @@
   const ghUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CONTENT_PATH}`;
 
   async function loadFromGitHub() {
+    if (IS_LOCAL) {
+      const res = await fetch(`/${CONTENT_PATH}?t=${Date.now()}`, { cache: 'no-store' });
+      if (!res.ok) throw new Error(`GET local → ${res.status}`);
+      fileSha = 'local-demo';
+      return await res.json();
+    }
     const res = await fetch(`${ghUrl}?ref=${BRANCH}&t=${Date.now()}`, { headers: ghHeaders() });
     if (!res.ok) {
       const err = new Error(`GET → ${res.status} ${res.statusText}`);
@@ -360,6 +370,11 @@
   }
 
   async function pushToGitHub(newContent) {
+    if (IS_LOCAL) {
+      // En modo demo local no persiste; solo simulamos el delay y retornamos.
+      await new Promise(r => setTimeout(r, 200));
+      return;
+    }
     const json = JSON.stringify(newContent, null, 2) + '\n';
     const b64 = btoa(unescape(encodeURIComponent(json)));
     const changedList = Array.from(dirtyKeys).slice(0, 6).join(', ');
@@ -505,7 +520,10 @@
       dirtyKeys.clear();
       $$('.dirty').forEach(el => el.classList.remove('dirty'));
       btn.textContent = 'Guardar';
-      toast('Guardado. Cambios en vivo en ~1 minuto.');
+      toast(IS_LOCAL
+        ? 'Modo demo local: simulamos el guardado, pero no escribe a GitHub.'
+        : 'Guardado. Cambios en vivo en ~1 minuto.',
+        IS_LOCAL ? 'warn' : undefined);
     } catch (e) {
       btn.textContent = 'Guardar';
       // FIX BUG-007: conflicto de SHA — refrescar y pedir reintento
@@ -588,7 +606,7 @@
 
   // ============= INIT =============
   async function init() {
-    if (!token) {
+    if (!IS_LOCAL && !token) {
       token = prompt(
         'Pega tu Personal Access Token de GitHub (fine-grained, scope: Contents R/W de ancheco-editable).\n\n' +
         'Solo se guarda en este navegador (localStorage). Usa el botón ⎋ en la barra para cerrar sesión.'
@@ -624,7 +642,10 @@
       makeEditable();
       watchDOM();
       renderBar();
-      toast('Editor cargado. Click en cualquier texto resaltado para editar.');
+      toast(IS_LOCAL
+        ? 'Modo demo local. Editás libremente pero los cambios NO se persisten.'
+        : 'Editor cargado. Click en cualquier texto resaltado para editar.',
+        IS_LOCAL ? 'warn' : undefined);
     }, 400);
   }
 
