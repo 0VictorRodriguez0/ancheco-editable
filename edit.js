@@ -515,6 +515,7 @@
     'gmmTables.dedRef': { kind:'single', label:'Índice del deducible de referencia', hint:'Qué opción de deducible vale 1.0. Default 2 = la 3ra opción (10 opciones totales: índices 0-9).', unit:'', suffix:'(0-9)', min:0, max:9, step:1, fallback:2, affects:'gmm' },
     // ===== AUTO =====
     'auto.baseRate': { kind:'single', label:'Tasa base (% del valor del auto)', hint:'Default 5% (0.05). Es el ancla de toda la prima Auto.', unit:'', suffix:'× valor', min:0.01, max:0.20, step:0.005, fallback:0.05, affects:'auto' },
+    'auto.defaultVehicleValue': { kind:'single', label:'Valor estimado del auto (default)', hint:'El cliente NO ingresa el valor del auto en el wizard. Esto es el monto que se usa por defecto en la pre-cotización. Ajustalo al valor promedio típico de tu cartera.', unit:'$', min:50000, max:5000000, step:10000, fallback:300000, affects:'auto' },
     'auto.covMult': { kind:'table', label:'Multiplicador por cobertura', hint:'Amplia = 1.0 (referencia). RC mucho más barato, Amplia Total más caro.', rows:[
       { key:'rc',          label:'Responsabilidad Civil', fallback:0.35 },
       { key:'limitada',    label:'Limitada', fallback:0.65 },
@@ -900,7 +901,7 @@
   }
 
   function buildHowtoAuto() {
-    const v = 300000, edad = 6;
+    const v = N('auto.defaultVehicleValue', 300000), edad = 6;
     const baseRate = N('auto.baseRate', 0.05);
     const ageMult = NB('auto.ageBrackets', edad, 1.08);
     const useMult = NT('auto.useMult', 'particular', 1.0);
@@ -909,7 +910,7 @@
     const ddMult = NT('auto.ddMult', '5', 1.0);
     const total = v * baseRate * ageMult * useMult * covMult * dtMult * ddMult;
     const eq = eqRender([
-      { name:'Valor del auto', value: fmtMoney(v), editable:false, title:'Lo elige el cliente en el wizard (default $300,000)' },
+      { name:'Valor del auto (default)', value: fmtMoney(v), editable:true, kind:'number', path:'auto.defaultVehicleValue', title:'El cliente NO lo elige en el wizard. Click para ajustar el monto default usado en la pre-cotización.' },
       { op:'×' },
       { name:'Tasa base', value: `×${baseRate}`, editable:true, kind:'number', path:'auto.baseRate' },
       { op:'×' },

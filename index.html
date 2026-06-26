@@ -2134,7 +2134,7 @@ function autoCalcPrice(){
   // Mazda CX-5 2015 (11 años) · valor $178,000 · particular · 51 años · Cancún
   //   Amplia $10,318  ·  Amplia Total $12,130 (+17.6%)
   // Fórmula:  v * 0.05 * factorEdad * factorUso * covMult * factorDed
-  const v = state.auto.vehicleValue || 300000;
+  const v = state.auto.vehicleValue || N('auto.defaultVehicleValue', 300000);
   let base = v * N('auto.baseRate', 0.05); // tasa base Amplia (5% del valor) — editable
   const age = Math.max(0, 2026 - state.auto.year);
   // Factor edad por brackets editables (default: 0→1.0, 5→1.08, 8→1.18)

@@ -470,6 +470,7 @@
     },
     "auto": {
       "baseRate": 0.05,
+      "defaultVehicleValue": 300000,
       "addons": {
         "sustituto": 960,
         "llantas": 1511,
