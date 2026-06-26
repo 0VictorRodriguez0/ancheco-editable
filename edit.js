@@ -210,6 +210,25 @@
     #ae-calc-card .ae-step.ae-step-total .ae-step-name { color: #fff; font-size: 13px; }
     #ae-calc-card .ae-step.ae-step-total .ae-step-formula { color: #cbd5e1; }
     #ae-calc-card .ae-step.ae-step-total .ae-step-val { color: #fff; font-size: 18px; }
+    /* ===== Ecuación visual (cápsulas + operadores) ===== */
+    #ae-calc-card .ae-eq { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:8px 6px; padding: 14px 6px; background:#fff; border:1px solid #fde8c5; border-radius:10px; margin-bottom:10px; }
+    #ae-calc-card .ae-eq-cap { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:10px; padding:8px 12px; min-width:90px; transition: all .15s; }
+    #ae-calc-card .ae-eq-cap.editable { background:#fffaf3; border-color:#fde8c5; cursor:pointer; position:relative; }
+    #ae-calc-card .ae-eq-cap.editable:hover { background:#fef3e8; border-color:#e57a2c; transform:translateY(-1px); box-shadow:0 4px 10px rgba(229,122,44,.15); }
+    #ae-calc-card .ae-eq-cap.editable::after { content:'✎'; position:absolute; top:-7px; right:-7px; background:#e57a2c; color:#fff; width:18px; height:18px; border-radius:50%; font-size:10px; display:flex; align-items:center; justify-content:center; font-family: Montserrat,sans-serif; font-weight:700; }
+    #ae-calc-card .ae-eq-cap .ae-eq-name { font-family: Montserrat, system-ui, sans-serif; font-size:10px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:.4px; text-align:center; max-width:160px; line-height:1.25; }
+    #ae-calc-card .ae-eq-cap .ae-eq-val { font-family:'SFMono-Regular',Consolas,Monaco,monospace; font-size:14px; font-weight:800; color:#1e3a5f; margin-top:2px; }
+    #ae-calc-card .ae-eq-cap.editable .ae-eq-val { color:#e57a2c; }
+    #ae-calc-card .ae-eq-op { font-family:'SFMono-Regular',Consolas,Monaco,monospace; font-size:22px; font-weight:800; color:#94a3b8; padding:0 4px; }
+    #ae-calc-card .ae-eq-eq { font-family:'SFMono-Regular',Consolas,Monaco,monospace; font-size:22px; font-weight:800; color:#1e3a5f; padding:0 6px; }
+    #ae-calc-card .ae-eq-result { background:#1e3a5f; color:#fff; padding:10px 16px; border-radius:10px; display:flex; flex-direction:column; align-items:center; gap:2px; }
+    #ae-calc-card .ae-eq-result .ae-eq-name { color:#fde8c5; font-family: Montserrat, system-ui, sans-serif; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; }
+    #ae-calc-card .ae-eq-result .ae-eq-val { font-family:'SFMono-Regular',Consolas,Monaco,monospace; font-size:20px; font-weight:800; margin-top:2px; }
+    #ae-calc-card .ae-eq-legend { display:flex; gap:14px; flex-wrap:wrap; font-size:11px; color:#64748b; margin-top:8px; padding-left:4px; }
+    #ae-calc-card .ae-eq-legend span { display:flex; align-items:center; gap:5px; }
+    #ae-calc-card .ae-eq-legend .ae-dot { width:10px; height:10px; border-radius:3px; display:inline-block; }
+    #ae-calc-card .ae-eq-legend .ae-dot.fixed { background:#e2e8f0; border:1px solid #cbd5e1; }
+    #ae-calc-card .ae-eq-legend .ae-dot.edit { background:#fffaf3; border:1.5px solid #e57a2c; }
     /* ===== Formula Lab sub-modal ===== */
     #ae-flab-modal { position: fixed; inset: 0; z-index: 100000; background: rgba(15,23,42,.65); display:none; align-items:flex-start; justify-content:center; padding:32px 16px; overflow-y:auto; }
     #ae-flab-modal.show { display:flex; }
@@ -443,108 +462,140 @@
     </div>`;
   }
 
+  // Construye la ecuación visual con cápsulas y operadores.
+  // parts: array de {name, value, editable, kind?, path?} alternando cápsulas y operadores.
+  // Para operador: {op: '×' | '+' | '÷' | '−'}
+  // Para cápsula editable: {name, value, editable:true, kind:'number'|'formula', path:'educativo.primas.10'}
+  //   - kind:'number' → al hacer click busca en CALC_FIELDS por path y abre el modal padre con foco en ese input
+  //   - kind:'formula' → al hacer click abre Formula Lab para esa fórmula
+  // Total: {name, value} — caja oscura destacada al final.
+  function eqCapsule(p) {
+    if (p.op) return `<div class="ae-eq-op">${p.op}</div>`;
+    if (p.eq) return `<div class="ae-eq-eq">=</div>`;
+    const editable = p.editable ? 'editable' : '';
+    const dataAttrs = p.editable ? `data-edit-kind="${p.kind||''}" data-edit-path="${p.path||''}"` : '';
+    const title = p.editable ? (p.kind === 'formula' ? 'Click para editar esta fórmula' : 'Click para editar este número') : (p.title || 'Valor interno (no editable todavía)');
+    return `<div class="ae-eq-cap ${editable}" ${dataAttrs} title="${title}">
+      <div class="ae-eq-name">${p.name}</div>
+      <div class="ae-eq-val">${p.value}</div>
+    </div>`;
+  }
+  function eqRender(parts, total) {
+    return `
+      <div class="ae-eq">
+        ${parts.map(eqCapsule).join('')}
+        <div class="ae-eq-eq">=</div>
+        <div class="ae-eq-result">
+          <div class="ae-eq-name">${total.name}</div>
+          <div class="ae-eq-val">${total.value}</div>
+        </div>
+      </div>
+      <div class="ae-eq-legend">
+        <span><span class="ae-dot fixed"></span> Valor interno (lo cambia el equipo técnico)</span>
+        <span><span class="ae-dot edit"></span> Editable — click en la cápsula para abrir el editor</span>
+      </div>`;
+  }
+
   function buildHowtoEducativo() {
-    // Escenario: Papá 37 años, hijo 1 año, plazo 10 años, protección $1,000,000
     const refProt = N('educativo.refProteccion', 1100000);
     const refEdad = N('educativo.refTitularAge', 37);
     const fpa = N('educativo.ageFactorPerYear', 0.04);
     const prima10 = N('educativo.primas.10', 43735);
-    const proteccion = 1000000;
-    const edadTitular = 37;
-    // Step 1
-    const s1 = prima10;
-    // Step 2: factor protección
+    const proteccion = 1000000, edadTitular = 37;
     const factorProt = proteccion / refProt;
-    const s2 = s1 * factorProt;
-    // Step 3: factor edad
     const factorEdad = Math.max(0.5, Math.min(3, F('educativo.ageFactor', {edad_titular:edadTitular, referencia_edad:refEdad, factor_por_anio:fpa}, 1+(edadTitular-refEdad)*fpa)));
-    const s3 = s2 * factorEdad;
+    const total = prima10 * factorProt * factorEdad;
+    const eq = eqRender([
+      { name:'Prima base 10 años', value: fmtMoney(prima10), editable:true, kind:'number', path:'educativo.primas.10' },
+      { op:'×' },
+      { name:'Factor por protección', value: `×${factorProt.toFixed(3)}`, editable:true, kind:'number', path:'educativo.refProteccion', title:'Depende de la "Protección de referencia" — click para editar' },
+      { op:'×' },
+      { name:'Factor por edad', value: `×${factorEdad.toFixed(3)}`, editable:true, kind:'formula', path:'educativo.ageFactor', title:'Fórmula editable — click para abrir el Formula Lab' }
+    ], { name:'Prima anual final', value: fmtMoney(Math.round(total)) });
     return `
       <p class="ae-howto-title">📐 Cómo se calcula la cotización final</p>
-      <p class="ae-howto-sub">Ejemplo: <b>Papá de 37 años, hijo de 1 año, plazo de 10 años, protección $1,000,000</b>. Si cambias la prima base, la protección de referencia o el factor por edad, los pasos de abajo se recalculan.</p>
-      ${howtoStep(1, 'Prima base del plazo (10 años)', `Valor editable en "Números editables → Prima base — 10 años"`, fmtMoney(s1))}
-      ${howtoStep(2, 'Factor por protección elegida', `${fmtMoney(proteccion)} ÷ ${fmtMoney(refProt)} = ×${factorProt.toFixed(3)}`, fmtMoney(s2))}
-      ${howtoStep(3, 'Factor por edad del contratante', `1 + (${edadTitular} − ${refEdad}) × ${fpa} = ×${factorEdad.toFixed(3)}`, fmtMoney(s3))}
-      ${howtoStep('=', 'Prima anual final', `Redondeado al peso`, fmtMoney(Math.round(s3)), true)}
-    `;
+      <p class="ae-howto-sub">Ejemplo: <b>Papá de 37 años, hijo de 1 año, plazo de 10 años, protección $1,000,000</b>.</p>
+      ${eq}`;
   }
 
   function buildHowtoMascota() {
-    // Escenario: Perro de 5 años, plan Cuidado Máximo, con addon Fallecimiento
-    const basePlan = 4490; // hardcoded — todavía no es editable en Tier 1
+    const basePlan = 4490;
     const edad = 5;
-    const factorEdad = 1 + Math.max(0, edad - 3) * 0.06; // 6% por año >3
-    const factorEspecie = 1.1; // perro
+    const factorEdad = 1 + Math.max(0, edad - 3) * 0.06;
+    const factorEspecie = 1.1;
     const addonFallece = N('mascota.addons.fallece', 720);
-    const s1 = basePlan;
-    const s2 = s1 * factorEdad;
-    const s3 = s2 * factorEspecie;
-    const s4 = s3 + addonFallece;
+    const total = basePlan * factorEdad * factorEspecie + addonFallece;
+    const eq = eqRender([
+      { name:'Prima base (Máximo)', value: fmtMoney(basePlan), editable:false, title:'Valor interno: $4,490 (no editable todavía)' },
+      { op:'×' },
+      { name:'Factor por edad', value: `×${factorEdad.toFixed(2)}`, editable:false, title:'Fórmula interna: 1 + max(0, edad−3) × 0.06' },
+      { op:'×' },
+      { name:'Factor por especie', value: `×${factorEspecie}`, editable:false, title:'Perro=×1.1, Gato=×1.0 (no editable todavía)' },
+      { op:'+' },
+      { name:'Addon Fallecimiento', value: fmtMoney(addonFallece), editable:true, kind:'number', path:'mascota.addons.fallece' }
+    ], { name:'Prima anual final', value: fmtMoney(Math.round(total)) });
     return `
       <p class="ae-howto-title">📐 Cómo se calcula la cotización final</p>
-      <p class="ae-howto-sub">Ejemplo: <b>Perro de 5 años, plan Cuidado Máximo, con addon "Fallecimiento"</b>. Editar los costos de addon abajo cambia el resultado del Paso 4.</p>
-      ${howtoStep(1, 'Prima base del plan (Cuidado Máximo)', `Valor interno (no editable todavía): $4,490`, fmtMoney(s1))}
-      ${howtoStep(2, 'Factor por edad del animal', `1 + max(0, ${edad}−3) × 0.06 = ×${factorEdad.toFixed(2)}`, fmtMoney(s2))}
-      ${howtoStep(3, 'Factor por especie (perro = ×1.1)', `${fmtMoney(s2)} × 1.1`, fmtMoney(s3))}
-      ${howtoStep(4, 'Suma del addon "Fallecimiento"', `${fmtMoney(s3)} + ${fmtMoney(addonFallece)}`, fmtMoney(s4))}
-      ${howtoStep('=', 'Prima anual final', `Redondeado al peso`, fmtMoney(Math.round(s4)), true)}
-    `;
+      <p class="ae-howto-sub">Ejemplo: <b>Perro de 5 años, plan Cuidado Máximo, con addon "Fallecimiento"</b>.</p>
+      ${eq}`;
   }
 
   function buildHowtoGmm() {
-    // Escenario: Hombre, 35 años, no fumador, individual, Nivel B, deducible $21k, suma $40.8M, sin addons
-    const maleRef25 = 14260; // hardcoded todavía
+    const maleRef25 = 14260;
     const edad = 35;
     const ageMultFallback = edad <= 45 ? (1 + 0.0093*(edad-25)) : (1 + 0.0093*20 + 0.05*(edad-45));
     const ageMult = F('gmm.ageMultiplier', {edad}, ageMultFallback);
-    const fMujer = N('factors.gmm.factorMujer', 1.19); // no aplica (hombre)
-    const fFumador = N('factors.gmm.factorFumador', 1.20); // no aplica (no fuma)
-    const tierMult = 1.0; // Nivel B
-    const dedMult = Math.pow(0.955, -2); // dedIdx=0, ref=2 → 0.955^-2 ≈ 1.097
-    const sumMult = 1.0; // 40.8M = referencia
-    const s1 = maleRef25;
-    const s2 = s1 * ageMult;
-    const s3 = s2 * tierMult;
-    const s4 = s3 * dedMult;
-    const s5 = s4 * sumMult;
+    const tierMult = 1.0;
+    const dedMult = Math.pow(0.955, -2);
+    const sumMult = 1.0;
+    const neta = maleRef25 * ageMult * tierMult * dedMult * sumMult;
     const derecho = N('factors.gmm.derechoPoliza', 970);
     const iva = N('factors.gmm.iva', 0.16);
-    const totalFallback = (s5 + derecho * 1) * (1 + iva);
-    const total = F('gmm.totalConIVA', {prima_neta:s5, derecho_poliza:derecho, cantidad_asegurados:1, iva}, totalFallback);
+    const totalFallback = (neta + derecho * 1) * (1 + iva);
+    const total = F('gmm.totalConIVA', {prima_neta:neta, derecho_poliza:derecho, cantidad_asegurados:1, iva}, totalFallback);
+    const eq = eqRender([
+      { name:'Base hombre 25 años', value: fmtMoney(maleRef25), editable:false, title:'Valor interno: $14,260 (no editable todavía)' },
+      { op:'×' },
+      { name:'Factor por edad', value: `×${ageMult.toFixed(3)}`, editable:true, kind:'formula', path:'gmm.ageMultiplier' },
+      { op:'×' },
+      { name:'Factor nivel B', value: `×${tierMult.toFixed(2)}`, editable:false, title:'Tier B = referencia (no editable todavía)' },
+      { op:'×' },
+      { name:'Factor deducible', value: `×${dedMult.toFixed(3)}`, editable:false, title:'0.955^(deducible − referencia)' },
+      { op:'×' },
+      { name:'Factor suma asegurada', value: `×${sumMult.toFixed(2)}`, editable:false, title:'40.8M = referencia (no editable todavía)' },
+      { op:'+' },
+      { name:'Derecho de póliza', value: fmtMoney(derecho), editable:true, kind:'formula', path:'gmm.totalConIVA', title:'Incluido en la fórmula editable "Total con derecho + IVA"' },
+      { op:'×' },
+      { name:'IVA', value: `×${(1+iva).toFixed(2)}`, editable:true, kind:'formula', path:'gmm.totalConIVA' }
+    ], { name:'Prima anual final', value: fmtMoney(Math.round(total)) });
     return `
       <p class="ae-howto-title">📐 Cómo se calcula la cotización final</p>
-      <p class="ae-howto-sub">Ejemplo: <b>Hombre, 35 años, no fumador, individual, Nivel B, deducible $21,000, suma asegurada $40.8M, sin addons</b>. Hombre y no-fumador no aplican recargo en este caso.</p>
-      ${howtoStep(1, 'Prima base hombre 25 años (Nivel B)', `Valor interno (no editable todavía): $14,260`, fmtMoney(s1))}
-      ${howtoStep(2, 'Factor por edad (35)', `Fórmula editable "Multiplicador por edad" = ×${ageMult.toFixed(3)}`, fmtMoney(s2))}
-      ${howtoStep(3, 'Factor por nivel hospitalario (B = 1.0)', `Sin cambio`, fmtMoney(s3))}
-      ${howtoStep(4, 'Factor por deducible elegido', `0.955^(−2) = ×${dedMult.toFixed(3)}`, fmtMoney(s4))}
-      ${howtoStep(5, 'Factor por suma asegurada (40.8M = 1.0)', `Sin cambio`, fmtMoney(s5))}
-      ${howtoStep(6, 'Suma derecho de póliza + IVA', `Fórmula editable "Total con derecho + IVA"`, fmtMoney(total))}
-      ${howtoStep('=', 'Prima anual final', `Redondeado al peso`, fmtMoney(Math.round(total)), true)}
-    `;
+      <p class="ae-howto-sub">Ejemplo: <b>Hombre, 35 años, no fumador, individual, Nivel B, deducible $21,000, suma asegurada $40.8M, sin addons</b>.</p>
+      ${eq}`;
   }
 
   function buildHowtoPatrimonial() {
-    // Escenario: Casa $2M, contenidos $300k, plan A tu medida, addon Hidrometeorológicos
     const hv = 2000000, cv = 300000;
     const homeRate = 0.00098, contentsRate = 0.00220, fixedBase = 5978;
     const fHidromet = N('factors.patrimonial.factorHidromet', 1);
     const s1 = hv * homeRate;
     const s2 = cv * contentsRate;
-    const s3 = fixedBase;
-    const basePrima = s1 + s2 + s3;
+    const basePrima = s1 + s2 + fixedBase;
     const hidromet = F('patrimonial.hidrometCosto', {prima_base:basePrima, factor_hidromet:fHidromet}, basePrima);
     const total = basePrima + hidromet;
+    const eq = eqRender([
+      { name:'Edificio', value: fmtMoney(s1), editable:false, title:`$2,000,000 × 0.00098 (tarifa interna)` },
+      { op:'+' },
+      { name:'Contenidos', value: fmtMoney(s2), editable:false, title:`$300,000 × 0.00220 (tarifa interna)` },
+      { op:'+' },
+      { name:'Base fija plan', value: fmtMoney(fixedBase), editable:false, title:'Extras del plan A tu medida (teletrabajo, menaje, etc.)' },
+      { op:'+' },
+      { name:'Addon hidromet', value: fmtMoney(hidromet), editable:true, kind:'formula', path:'patrimonial.hidrometCosto' }
+    ], { name:'Prima anual final', value: fmtMoney(Math.round(total)) });
     return `
       <p class="ae-howto-title">📐 Cómo se calcula la cotización final</p>
-      <p class="ae-howto-sub">Ejemplo: <b>Casa de $2,000,000, contenidos $300,000, plan "A tu medida", con addon Hidrometeorológicos</b>. Los 3 primeros pasos arman la prima base, los siguientes 2 suman el addon de huracán.</p>
-      ${howtoStep(1, 'Edificio (incendio + naturales)', `${fmtMoney(hv)} × 0.00098`, fmtMoney(s1))}
-      ${howtoStep(2, 'Contenidos generales', `${fmtMoney(cv)} × 0.00220`, fmtMoney(s2))}
-      ${howtoStep(3, 'Base fija del plan "A tu medida"', `Cobertura premium (teletrabajo, menaje, etc.)`, fmtMoney(s3))}
-      ${howtoStep(4, 'Prima base (suma de 1+2+3)', `${fmtMoney(s1)} + ${fmtMoney(s2)} + ${fmtMoney(s3)}`, fmtMoney(basePrima))}
-      ${howtoStep(5, 'Addon Hidrometeorológicos', `Fórmula editable: ${fmtMoney(basePrima)} × ${fHidromet}`, fmtMoney(hidromet))}
-      ${howtoStep('=', 'Prima anual final', `${fmtMoney(basePrima)} + ${fmtMoney(hidromet)}`, fmtMoney(Math.round(total)), true)}
-    `;
+      <p class="ae-howto-sub">Ejemplo: <b>Casa de $2,000,000, contenidos $300,000, plan "A tu medida", con addon Hidrometeorológicos</b>.</p>
+      ${eq}`;
   }
 
   function buildHowto(wizardKey) {
@@ -942,6 +993,27 @@
         const path = row.dataset.formulaPathRow;
         const def = findFormulaDef(path);
         if (def) openFormulaLab(def);
+      });
+    });
+
+    // Click en una cápsula editable del bloque "Cómo se calcula" → abre el editor correspondiente
+    modal.querySelectorAll('.ae-eq-cap.editable').forEach(cap => {
+      cap.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const kind = cap.dataset.editKind;
+        const path = cap.dataset.editPath;
+        if (!path) return;
+        if (kind === 'formula') {
+          const def = findFormulaDef(path);
+          if (def) openFormulaLab(def);
+        } else {
+          // Hace scroll + focus en el input number con ese path
+          const inp = modal.querySelector(`input[data-calc-path="${path}"]`);
+          if (inp) {
+            inp.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            setTimeout(() => { inp.focus(); inp.select && inp.select(); }, 300);
+          }
+        }
       });
     });
 
