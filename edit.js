@@ -557,7 +557,29 @@
     // ===== PATRIMONIAL =====
     'patrimonialTables.rates.homeRate':    { kind:'single', label:'Tasa por valor de la casa (×)', hint:'Default 0.00098 = $980/año por cada $1M de valor de casa.', unit:'', suffix:'× casa', min:0.0001, max:0.01, step:0.00005, fallback:0.00098, affects:'patrimonial' },
     'patrimonialTables.rates.contentsRate':{ kind:'single', label:'Tasa por contenidos (×)', hint:'Default 0.00220 = $2,200/año por cada $1M de contenidos.', unit:'', suffix:'× contenidos', min:0.0001, max:0.02, step:0.00005, fallback:0.00220, affects:'patrimonial' },
-    'patrimonialTables.rates.fixedBase':   { kind:'single', label:'Base fija del plan A tu medida', hint:'Suma fija que cubre extras premium (teletrabajo, menaje, etc.).', unit:'$', min:0, max:50000, step:10, fallback:5978, affects:'patrimonial' }
+    'patrimonialTables.rates.fixedBase':   { kind:'single', label:'Base fija del plan A tu medida', hint:'Suma fija que cubre extras premium (teletrabajo, menaje, etc.).', unit:'$', min:0, max:50000, step:10, fallback:5978, affects:'patrimonial' },
+    // ===== AHORRO =====
+    'ahorroTables.indexacionAnual': { kind:'single', label:'Indexación anual de aportes', hint:'Cuánto sube cada año la aportación. Default 1.05 = sube 5% anual. Afecta el "Total que aportas" y la proyección a 65/70.', unit:'', suffix:'× cada año', min:1, max:1.20, step:0.005, fallback:1.05, affects:'ahorro' },
+    'ahorroTables.retiroEdad65': { kind:'single', label:'Edad de retiro principal', hint:'Andy muestra el saldo proyectado a esta edad. Default 65 (puede cambiar a 60, 67, etc.).', unit:'', suffix:'años', min:50, max:85, step:1, fallback:65, affects:'ahorro' },
+    'ahorroTables.retiroEdad70': { kind:'single', label:'Edad de retiro tardío', hint:'Segunda edad de proyección. Default 70.', unit:'', suffix:'años', min:50, max:90, step:1, fallback:70, affects:'ahorro' },
+    'ahorroTables.sumaVidaMult.trasciende': { kind:'table', label:'Seguro de vida — TRASCIENDE (× aportación)', hint:'Cuántas veces la aportación anual obtiene el cliente como seguro de vida desde día 1. Por bracket de edad. Anclas reales: Carola 5y=80x, Sofía 18y=25x.', rows:[
+      { key:'10',  label:'Hasta 10 años', fallback:80 },
+      { key:'20',  label:'11–20 años',    fallback:25 },
+      { key:'35',  label:'21–35 años',    fallback:12 },
+      { key:'999', label:'36+ años',      fallback:6  }
+    ], min:1, max:200, step:0.5, affects:'ahorro' },
+    'ahorroTables.sumaVidaMult.capitaliza': { kind:'table', label:'Seguro de vida — CAPITALIZA (× aportación)', hint:'Multiplicador por bracket de edad para CAPITALIZA.', rows:[
+      { key:'10',  label:'Hasta 10 años', fallback:30  },
+      { key:'25',  label:'11–25 años',    fallback:12  },
+      { key:'40',  label:'26–40 años',    fallback:7   },
+      { key:'999', label:'41+ años',      fallback:5.5 }
+    ], min:1, max:200, step:0.5, affects:'ahorro' },
+    'ahorroTables.sumaVidaMult.otros': { kind:'table', label:'Seguro de vida — CONSOLIDA y PROYECTA (× aportación)', hint:'Multiplicador por bracket de edad para CONSOLIDA y PROYECTA (comparten tabla).', rows:[
+      { key:'10',  label:'Hasta 10 años', fallback:25  },
+      { key:'25',  label:'11–25 años',    fallback:10  },
+      { key:'40',  label:'26–40 años',    fallback:6   },
+      { key:'999', label:'41+ años',      fallback:4.5 }
+    ], min:1, max:200, step:0.5, affects:'ahorro' }
   };
 
   // ============= POPOVER UNIVERSAL =============
@@ -984,20 +1006,36 @@
   }
 
   function buildHowtoAhorro() {
-    // El cotizador Ahorro NO calcula prima: la "cotización" es la aportación que elige el cliente.
-    // Lo que SE PROYECTA son los saldos futuros (a 65 y 70 años) usando la tabla AHORRO_MULT.
-    // Aquí explicamos visualmente esa diferencia para que Andy no confunda "prima" con "aportación".
-    const aportacion = 36000, anios = 10, totalAportado = aportacion * anios;
-    const eq = eqRender([
-      { name:'Aportación anual', value: fmtMoney(aportacion), editable:false, title:'Lo elige el cliente con el slider' },
+    // Escenario: cliente TRASCIENDE, 18 años, aporta $36,000/año durante 10 años
+    const aportacion = 36000, anios = 10, edad = 18;
+    const idxAnual = N('ahorroTables.indexacionAnual', 1.05);
+    const retiro65 = N('ahorroTables.retiroEdad65', 65);
+    // Total aportado indexado: C * ((idx^Y - 1) / (idx - 1))
+    const totalAportado = Math.round(aportacion * ((Math.pow(idxAnual, anios) - 1) / (idxAnual - 1)));
+    // Seguro de vida desde día 1 — para TRASCIENDE edad 18 → bracket "20"
+    const sumaVidaMult = NT('ahorroTables.sumaVidaMult.trasciende', '20', 25);
+    const sumaVida = Math.round(aportacion * sumaVidaMult);
+    const eqAportes = eqRender([
+      { name:'Aportación anual', value: fmtMoney(aportacion), editable:false, title:'Lo elige el cliente con el slider del wizard' },
       { op:'×' },
-      { name:'Años aportando', value: anios.toString(), editable:false, title:'Lo elige el cliente (5/10/15 años)' }
-    ], { name:'Total aportado', value: fmtMoney(totalAportado) });
+      { name:'Años aportando', value: anios.toString(), editable:false, title:'Lo elige el cliente (5/10/15 años)' },
+      { op:'×' },
+      { name:'Factor indexación', value: `×${idxAnual}`, editable:true, kind:'number', path:'ahorroTables.indexacionAnual' }
+    ], { name:'Total aportado (indexado)', value: fmtMoney(totalAportado) });
+    const eqSeguro = eqRender([
+      { name:'Aportación anual', value: fmtMoney(aportacion), editable:false, title:'Misma de arriba' },
+      { op:'×' },
+      { name:'Multiplicador TRASCIENDE 11–20 años', value: `×${sumaVidaMult}`, editable:true, kind:'table', path:'ahorroTables.sumaVidaMult.trasciende' }
+    ], { name:'Seguro de vida desde día 1', value: fmtMoney(sumaVida) });
     return `
       <p class="ae-howto-title">📐 Cómo se calcula la cotización final</p>
-      <p class="ae-howto-sub"><b>Aclaración importante:</b> Ahorro/Inversión/Retiro NO tiene prima como GMM o Auto. El número que ve el cliente es la <b>aportación anual</b> que él mismo eligió. Lo que sí calculamos es la <b>proyección del saldo</b> a los 65 años usando tablas internas de rendimiento (calibradas a casos reales de Carola/Sofía/Elia del material GNP).</p>
-      ${eq}
-      <p class="ae-howto-sub" style="margin-top:10px"><b>Lo que se proyecta (no editable todavía desde aquí):</b> el saldo a los 65 años se interpola con la tabla AHORRO_MULT por edad de entrada y producto. Si AnCheco actualiza esos casos, hay que tocarlo del lado técnico.</p>`;
+      <p class="ae-howto-sub"><b>Aclaración:</b> Ahorro no tiene "prima" como GMM/Auto. El cliente elige cuánto aportar al año. Lo que mostramos son las 2 cifras que más le importan: <b>total aportado</b> (sube cada año por inflación) y <b>seguro de vida</b> (incluido desde el día 1, escala con la aportación).</p>
+      <p class="ae-howto-sub" style="margin-top:6px"><b>Ejemplo:</b> TRASCIENDE, 18 años, aporta $36,000/año durante 10 años.</p>
+      <div style="font-size:11px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin:12px 0 4px">Total aportado</div>
+      ${eqAportes}
+      <div style="font-size:11px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin:12px 0 4px">Seguro de vida desde día 1</div>
+      ${eqSeguro}
+      <p class="ae-howto-sub" style="margin-top:10px"><b>Proyección a los ${retiro65} años:</b> se interpola con tabla AHORRO_MULT (rendimientos reales del PPT GNP). Esa tabla es compleja matemáticamente; si necesitan recalibrarla con nuevos casos del PPT, nos avisan y la actualizamos del lado técnico.</p>`;
   }
 
   function buildHowto(wizardKey) {

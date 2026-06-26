@@ -1264,23 +1264,19 @@ const PRODUCTOS_PATRIMONIAL = {
 /* Suma asegurada de vida real GNP — depende de edad y producto.
    Anclado a casos PPT: Carola 5y TRASCIENDE = 81x · Sofía 18y TRASCIENDE = 25x · Elia 43y CAPITALIZA = 5.6x */
 function sumaVidaAhorro(productName, age, contrib){
-  let mult;
-  if(productName === 'TRASCIENDE'){
-    if(age <= 10) mult = 80;
-    else if(age <= 20) mult = 25;
-    else if(age <= 35) mult = 12;
-    else mult = 6;
-  } else if(productName === 'CAPITALIZA'){
-    if(age <= 10) mult = 30;
-    else if(age <= 25) mult = 12;
-    else if(age <= 40) mult = 7;
-    else mult = 5.5;
-  } else { // CONSOLIDA, PROYECTA
-    if(age <= 10) mult = 25;
-    else if(age <= 25) mult = 10;
-    else if(age <= 40) mult = 6;
-    else mult = 4.5;
-  }
+  // Brackets editables desde el panel "Constantes": calc.ahorroTables.sumaVidaMult.<key>.<bracket>
+  // Para cada producto, se busca el bracket cuyo upper-bound (key) sea el menor >= age.
+  const key = (productName === 'TRASCIENDE') ? 'trasciende'
+            : (productName === 'CAPITALIZA') ? 'capitaliza'
+            : 'otros'; // CONSOLIDA + PROYECTA comparten tabla
+  const fallbacks = {
+    trasciende: { '10':80, '20':25, '35':12, '999':6 },
+    capitaliza: { '10':30, '25':12, '40':7,  '999':5.5 },
+    otros:      { '10':25, '25':10, '40':6,  '999':4.5 }
+  }[key];
+  const cutoffs = Object.keys(fallbacks).map(Number).sort((a,b)=>a-b);
+  const cutoff = cutoffs.find(c => age <= c) ?? cutoffs[cutoffs.length-1];
+  const mult = NT('ahorroTables.sumaVidaMult.' + key, String(cutoff), fallbacks[String(cutoff)]);
   return Math.round(contrib * mult);
 }
 
@@ -1304,7 +1300,8 @@ function ahorroMult(age, key){
 function ahorroRateFromMult(age){
   const target = ahorroMult(age,'m65');
   const H = Math.max(1, 65-age);
-  const f = r => { let s=0; for(let k=0;k<10;k++){ s += Math.pow(1.05,k)*Math.pow(1+r,H-k); } return s; };
+  const idx = N('ahorroTables.indexacionAnual', 1.05);
+  const f = r => { let s=0; for(let k=0;k<10;k++){ s += Math.pow(idx,k)*Math.pow(1+r,H-k); } return s; };
   let lo=0.0, hi=0.15;
   for(let i=0;i<50;i++){ const mid=(lo+hi)/2; if(f(mid)<target) lo=mid; else hi=mid; }
   return (lo+hi)/2;
@@ -2375,23 +2372,29 @@ const GENERIC_FLOWS = {
         // Total aportado se deriva de la recuperación real (las aportaciones se indexan a inflación)
         totalAportado = Math.round(fv65 / ahorroMult(age, 'rec65'));
       } else {
-        // Plazo distinto de 10: tasa efectiva calibrada al caso real de esa edad, aporte indexado 5%
-        const r = ahorroRateFromMult(age), H = Math.max(1, 65 - age);
-        const fvAt = h => { let s=0; for(let k=0;k<Y;k++){ s += C*Math.pow(1.05,k)*Math.pow(1+r,h-k); } return s; };
-        fv65 = fvAt(H); fv70 = fvAt(H+5);
-        totalAportado = Math.round(C * ((Math.pow(1.05, Y) - 1) / 0.05));
+        // Plazo distinto de 10: tasa efectiva calibrada al caso real de esa edad, aporte indexado anual
+        const retiro65 = N('ahorroTables.retiroEdad65', 65);
+        const indexAnual = N('ahorroTables.indexacionAnual', 1.05);
+        const r = ahorroRateFromMult(age), H = Math.max(1, retiro65 - age);
+        const fvAt = h => { let s=0; for(let k=0;k<Y;k++){ s += C*Math.pow(indexAnual,k)*Math.pow(1+r,h-k); } return s; };
+        const retiro70 = N('ahorroTables.retiroEdad70', 70);
+        fv65 = fvAt(H); fv70 = fvAt(H + (retiro70 - retiro65));
+        totalAportado = Math.round(C * ((Math.pow(indexAnual, Y) - 1) / (indexAnual - 1)));
       }
       const recupPct = Math.round(fv65 / totalAportado * 100);
       const sumaVida = sumaVidaAhorro(state.ahorro.product, state.ahorro.age, state.ahorro.annualContribution);
+      const retiroLbl65 = N('ahorroTables.retiroEdad65', 65);
+      const retiroLbl70 = N('ahorroTables.retiroEdad70', 70);
+      const idxPct = Math.round((N('ahorroTables.indexacionAnual', 1.05) - 1) * 100);
       return [
         ['Producto', p.name+' · '+p.tag],
         ['Tu edad', state.ahorro.age+' años'],
         ['Aportación', '$'+fmt(state.ahorro.annualContribution)+'/año durante '+state.ahorro.years+' años'],
-        ['Total que aportas (indexado 5%)', '$'+fmt(totalAportado)],
+        ['Total que aportas (indexado '+idxPct+'%)', '$'+fmt(totalAportado)],
         ['Seguro de vida desde día 1', '$'+fmt(Math.round(sumaVida))],
-        ['Saldo proyectado a los 65', '$'+fmt(Math.round(fv65))+' (libre de impuestos)'],
-        ['Recuperación a los 65', recupPct+'% de lo aportado'],
-        ['Saldo proyectado a los 70', '$'+fmt(Math.round(fv70))]
+        ['Saldo proyectado a los '+retiroLbl65, '$'+fmt(Math.round(fv65))+' (libre de impuestos)'],
+        ['Recuperación a los '+retiroLbl65, recupPct+'% de lo aportado'],
+        ['Saldo proyectado a los '+retiroLbl70, '$'+fmt(Math.round(fv70))]
       ];
     }
   },

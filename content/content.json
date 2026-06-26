@@ -542,6 +542,16 @@
         "fixedBase": 5978
       }
     },
+    "ahorroTables": {
+      "indexacionAnual": 1.05,
+      "retiroEdad65": 65,
+      "retiroEdad70": 70,
+      "sumaVidaMult": {
+        "trasciende": { "10": 80, "20": 25, "35": 12, "999": 6 },
+        "capitaliza": { "10": 30, "25": 12, "40": 7, "999": 5.5 },
+        "otros":      { "10": 25, "25": 10, "40": 6, "999": 4.5 }
+      }
+    },
     "formulas": {
       "educativo": {
         "ageFactor": "1 + (edad_titular - referencia_edad) * factor_por_anio",
