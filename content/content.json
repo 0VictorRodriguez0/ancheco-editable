@@ -467,6 +467,30 @@
       "addons": {
         "funmascotas": 348
       }
+    },
+    "formulas": {
+      "educativo": {
+        "ageFactor": "1 + (edad_titular - referencia_edad) * factor_por_anio",
+        "primaFinal": "prima_base * (proteccion_elegida / proteccion_referencia) * factor_edad"
+      },
+      "gmm": {
+        "ageMultiplier": "edad <= 45 ? (1 + 0.0093 * (edad - 25)) : (1 + 0.0093 * 20 + 0.05 * (edad - 45))",
+        "totalConIVA": "(prima_neta + derecho_poliza * cantidad_asegurados) * (1 + iva)"
+      },
+      "patrimonial": {
+        "hidrometCosto": "prima_base * factor_hidromet"
+      }
+    },
+    "factors": {
+      "gmm": {
+        "derechoPoliza": 970,
+        "iva": 0.16,
+        "factorMujer": 1.19,
+        "factorFumador": 1.20
+      },
+      "patrimonial": {
+        "factorHidromet": 1
+      }
     }
   }
 }

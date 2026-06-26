@@ -12,6 +12,8 @@
 <link rel="dns-prefetch" href="https://images.unsplash.com">
 <link rel="preload" as="image" href="https://assets.cdn.filesafe.space/rVjgvCfROlpVxS3cj2CG/media/b90358d9-ef38-4b6d-8835-985758cd8fa4.webp" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Great+Vibes&display=swap" rel="stylesheet">
+<!-- expr-eval-fork: parser de expresiones aritméticas seguro (sin eval). Usado por F() para evaluar fórmulas editables desde content.json. -->
+<script src="https://cdn.jsdelivr.net/npm/expr-eval-fork@3.0.2/dist/bundle.min.js"></script>
 <style>
 /* ============ ANCHECO BRAND TOKENS ============ */
 :root{
@@ -1890,10 +1892,12 @@ function gmmCalcPrice(){
   function personBase(age, sex, isSelf){
     // Prima NETA en config de referencia (Nivel B, suma 40.8M, deducible medio)
     const maleRef25 = 14260;
-    const ageMult = age <= 45 ? (1 + 0.0093*(age-25)) : (1 + 0.0093*20 + 0.05*(age-45));
+    // Fórmula editable por Andy: calc.formulas.gmm.ageMultiplier (var: edad)
+    const ageMultFallback = age <= 45 ? (1 + 0.0093*(age-25)) : (1 + 0.0093*20 + 0.05*(age-45));
+    const ageMult = F('gmm.ageMultiplier', { edad: age }, ageMultFallback);
     let p = maleRef25 * ageMult;
-    if(sex==='F' && age < 55) p *= 1.19;
-    if(isSelf && state.gmm.smoker) p *= 1.20;
+    if(sex==='F' && age < 55) p *= N('factors.gmm.factorMujer', 1.19);
+    if(isSelf && state.gmm.smoker) p *= N('factors.gmm.factorFumador', 1.20);
     return p;
   }
   let aggregate = personBase(state.gmm.age, state.gmm.sex, true);
@@ -1926,8 +1930,12 @@ function gmmCalcPrice(){
   // Coberturas adicionales (anuales, netas)
   const addonsCost = state.gmm.addons.reduce((s,k)=>s+({cda:N('gmm.addons.cda',1800), mp:N('gmm.addons.mp',5200), ahr:N('gmm.addons.ahr',2800)}[k]||0), 0);
   aggregate += addonsCost;
-  // Prima neta → total que paga el cliente: derecho de póliza (~$970/asegurado) + IVA 16%
-  const total = (aggregate + 970*memberCount) * 1.16;
+  // Fórmula editable: calc.formulas.gmm.totalConIVA (vars: prima_neta, derecho_poliza, cantidad_asegurados, iva)
+  const derecho = N('factors.gmm.derechoPoliza', 970);
+  const iva = N('factors.gmm.iva', 0.16);
+  const totalVars = { prima_neta: aggregate, derecho_poliza: derecho, cantidad_asegurados: memberCount, iva: iva };
+  const totalFallback = (aggregate + derecho * memberCount) * (1 + iva);
+  const total = F('gmm.totalConIVA', totalVars, totalFallback);
   return Math.round(total);
 }
 function gmmSummaryLines(){
@@ -2403,8 +2411,16 @@ const GENERIC_FLOWS = {
       'alcanzada':{ get prima(){ return N('educativo.primas.alcanzada', 25760); } }
     },
     ageFactor:(age)=>{
-      // Aproximación: +k por año sobre la edad de referencia, acotada entre 0.5x y 3x.
-      const f = 1 + (age - N('educativo.refTitularAge', 37)) * N('educativo.ageFactorPerYear', 0.04);
+      // Fórmula editable por Andy desde Formula Lab: calc.formulas.educativo.ageFactor
+      // Vars expuestas: edad_titular, referencia_edad, factor_por_anio
+      const vars = {
+        edad_titular: age,
+        referencia_edad: N('educativo.refTitularAge', 37),
+        factor_por_anio: N('educativo.ageFactorPerYear', 0.04)
+      };
+      const fallback = 1 + (vars.edad_titular - vars.referencia_edad) * vars.factor_por_anio;
+      const f = F('educativo.ageFactor', vars, fallback);
+      // Clamps duros [0.5, 3] viven en código (no editables) para que Andy no pueda multiplicar precios x100 por accidente.
       return Math.max(0.5, Math.min(3, f));
     },
     render:{
@@ -2539,7 +2555,7 @@ const GENERIC_FLOWS = {
         const p = PRODUCTOS_PATRIMONIAL.AMEDIDA;
         const basePrima = Math.round(hv*p.homeRate + cv*p.contentsRate + p.fixedBase);
         const items = [
-          ['hidromet','<span data-cms-html="auto.arr_label.99">Hidrometereologicos</span>','<span data-cms-html="patrimonial.addon.hidromet.desc">Cubre las pérdidas y/o daños físicos al inmueble, así como a sus cimentaciones e instalaciones fijas subterráneas, originados por Avalanchas de lodo, Granizo, Helada, Huracán, Inundación, Inundación por lluvia, Golpe de mar, Tsunami, Marejada, Nevada y Vientos tempestuosos.</span>',basePrima],
+          ['hidromet','<span data-cms-html="auto.arr_label.99">Hidrometereologicos</span>','<span data-cms-html="patrimonial.addon.hidromet.desc">Cubre las pérdidas y/o daños físicos al inmueble, así como a sus cimentaciones e instalaciones fijas subterráneas, originados por Avalanchas de lodo, Granizo, Helada, Huracán, Inundación, Inundación por lluvia, Golpe de mar, Tsunami, Marejada, Nevada y Vientos tempestuosos.</span>',F('patrimonial.hidrometCosto',{prima_base:basePrima,factor_hidromet:N('factors.patrimonial.factorHidromet',1)},basePrima)],
           ['terremoto','<span data-cms-html="auto.arr_label.100">Terremoto</span>','<span data-cms-html="patrimonial.addon.terremoto.desc">Se cubren las pérdidas por daños materiales al inmueble Asegurado, así como a sus cimientos e instalaciones fijas subterráneas, causados por Terremoto y/o Erupción Volcánica.</span>',0],
           ['funmascotas','<span data-cms-html="auto.arr_label.101">Servicio funerario mascotas</span>','<span data-cms-html="patrimonial.addon.funmascotas.desc">En caso de fallecimiento de tu mascota, esta asistencia brinda los siguientes servicios; Recolección del cuerpo, Cremación individual de la mascota, Urna básica y Entrega a domicilio de las cenizas.</span>',N('patrimonial.addons.funmascotas',348)]
         ];
@@ -2564,7 +2580,7 @@ const GENERIC_FLOWS = {
       const p = PRODUCTOS_PATRIMONIAL.AMEDIDA;
       const hv = state.patrimonial.homeValue, cv = state.patrimonial.contentsValue;
       const basePrima = Math.round(hv*p.homeRate + cv*p.contentsRate + p.fixedBase);
-      const costs = {hidromet:basePrima, terremoto:0, funmascotas:N('patrimonial.addons.funmascotas',348)};
+      const costs = {hidromet:F('patrimonial.hidrometCosto',{prima_base:basePrima,factor_hidromet:N('factors.patrimonial.factorHidromet',1)},basePrima), terremoto:0, funmascotas:N('patrimonial.addons.funmascotas',348)};
       const ad = state.patrimonial.addons.reduce((s,k)=>s+(costs[k]||0),0);
       return basePrima + ad;
     },
@@ -2580,7 +2596,7 @@ const GENERIC_FLOWS = {
       p.coberturas.slice(0,4).forEach(c=>lines.push(['· '+c[0], c[1]]));
       if(state.patrimonial.addons.length){
         const addonLabels = {hidromet:'<span data-cms-html="patrimonial.summary.addon.hidromet">Hidrometeorológicos</span>', terremoto:'<span data-cms-html="patrimonial.summary.addon.terremoto">Terremoto/Erupción volcánica</span>', funmascotas:'<span data-cms-html="patrimonial.summary.addon.funmascotas">Servicio funerario mascotas</span>'};
-        const addonCosts = {hidromet:basePrima, terremoto:0, funmascotas:N('patrimonial.addons.funmascotas',348)};
+        const addonCosts = {hidromet:F('patrimonial.hidrometCosto',{prima_base:basePrima,factor_hidromet:N('factors.patrimonial.factorHidromet',1)},basePrima), terremoto:0, funmascotas:N('patrimonial.addons.funmascotas',348)};
         state.patrimonial.addons.forEach(k=>{
           const costoStr = addonCosts[k]===0 ? '<span data-cms-html="patrimonial.summary.addon.cotiza_aparte">Según CP (cotiza Andy aparte)</span>' : '$'+fmt(addonCosts[k])+'/año';
           lines.push(['+ '+addonLabels[k], costoStr]);
@@ -2761,6 +2777,45 @@ window.T = function(path, fallback) {
 window.N = function(path, fallback) {
   const v = window.__cms && window.__cms.get ? window.__cms.get('calc.' + path) : undefined;
   return (typeof v === 'number' && isFinite(v)) ? v : fallback;
+};
+
+// Cache de fórmulas ya parseadas — expr-eval no es trivial, evita reparsear en cada render.
+window.__formulaCache = new Map();
+
+// F(path, vars, fallback) — evalúa una fórmula aritmética editable.
+// La fórmula vive en content.json bajo `calc.formulas.<path>` como string (ej. "1 + (edad - 37) * 0.04").
+// Triple capa de seguridad:
+//   1) si expr-eval no cargó → devuelve fallback (puede pasar offline)
+//   2) si la fórmula no parsea o usa variables no permitidas → devuelve fallback
+//   3) si el resultado no es número finito (NaN/Infinity/división por 0) → devuelve fallback
+// Las variables disponibles se inyectan en `vars` (objeto plano {nombre: valor}).
+// `fallback` debe ser el cálculo hardcoded equivalente para que la página nunca falle.
+window.F = function(path, vars, fallback) {
+  try {
+    if (typeof exprEval === 'undefined') return fallback;
+    const expr = window.__cms && window.__cms.get ? window.__cms.get('calc.formulas.' + path) : undefined;
+    if (typeof expr !== 'string' || !expr.trim()) return fallback;
+    let parsed = window.__formulaCache.get(expr);
+    if (!parsed) {
+      const p = new exprEval.Parser();
+      parsed = p.parse(expr);
+      // Whitelist: las variables usadas en la fórmula deben estar en `vars`.
+      const used = parsed.variables();
+      const allowed = new Set(Object.keys(vars || {}));
+      for (const v of used) { if (!allowed.has(v)) { parsed = null; break; } }
+      if (parsed) window.__formulaCache.set(expr, parsed);
+      else return fallback;
+    }
+    const r = parsed.evaluate(vars || {});
+    return (typeof r === 'number' && isFinite(r)) ? r : fallback;
+  } catch (e) {
+    return fallback;
+  }
+};
+
+// Invalida el cache cuando Andy edita una fórmula — llamado por edit.js.
+window.__cmsFormulaInvalidate = function() {
+  window.__formulaCache && window.__formulaCache.clear();
 };
 
 // Hook que el editor invoca después de cambiar una constante numérica para que

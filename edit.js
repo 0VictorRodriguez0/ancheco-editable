@@ -182,6 +182,50 @@
     #ae-calc-card footer .ae-apply:disabled { background: #cbd5e1; cursor: not-allowed; }
     #ancheco-editor-bar .btn-calc { background: rgba(255,255,255,.12); color: #fff; }
     #ancheco-editor-bar .btn-calc:hover { background: rgba(255,255,255,.22); }
+    /* ===== Formula Lab sub-modal ===== */
+    #ae-flab-modal { position: fixed; inset: 0; z-index: 100000; background: rgba(15,23,42,.65); display:none; align-items:flex-start; justify-content:center; padding:32px 16px; overflow-y:auto; }
+    #ae-flab-modal.show { display:flex; }
+    #ae-flab-card { background:#fff; border-radius:16px; max-width:920px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,.3); font-family:Montserrat,system-ui,sans-serif; color:#1e3a5f; }
+    #ae-flab-card header { padding:16px 22px; border-bottom:1px solid #eef2f7; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    #ae-flab-card header h2 { margin:0; font-size:16px; font-weight:800; }
+    #ae-flab-card header h2 small { display:block; font-weight:500; color:#64748b; font-size:11px; margin-top:2px; }
+    #ae-flab-card .ae-flab-grid { display:grid; grid-template-columns: 1.5fr 220px; gap:0; }
+    #ae-flab-card .ae-flab-left { padding:16px 22px; border-right:1px solid #f1f5f9; }
+    #ae-flab-card .ae-flab-right { padding:16px 22px; background:#f8fafc; max-height:520px; overflow-y:auto; }
+    #ae-flab-card .ae-flab-section { margin-bottom: 18px; }
+    #ae-flab-card .ae-flab-section h3 { margin: 0 0 8px 0; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: #64748b; }
+    #ae-flab-card textarea#ae-flab-expr { width:100%; box-sizing:border-box; min-height:90px; resize:vertical; padding:12px 14px; border:2px solid #e2e8f0; border-radius:10px; font-family:'SFMono-Regular',Consolas,Monaco,monospace; font-size:14px; line-height:1.5; color:#1e3a5f; background:#fafbfc; transition: border-color .15s, background .15s; outline:none; }
+    #ae-flab-card textarea#ae-flab-expr:focus { border-color:#e57a2c; background:#fff; }
+    #ae-flab-card textarea#ae-flab-expr.ok { border-color:#1bbf6a; }
+    #ae-flab-card textarea#ae-flab-expr.err { border-color:#d93636; background:#fef2f2; }
+    #ae-flab-card .ae-flab-status { font-size:12px; margin-top:8px; font-weight:600; }
+    #ae-flab-card .ae-flab-status.ok { color:#1bbf6a; }
+    #ae-flab-card .ae-flab-status.err { color:#d93636; }
+    #ae-flab-card .ae-flab-vars { list-style:none; padding:0; margin:0; }
+    #ae-flab-card .ae-flab-vars li { margin-bottom:6px; }
+    #ae-flab-card .ae-flab-vars button { width:100%; text-align:left; background:#fff; border:1px solid #e2e8f0; border-radius:6px; padding:6px 10px; cursor:pointer; font-family:'SFMono-Regular',Consolas,Monaco,monospace; font-size:12px; color:#1e3a5f; transition: all .12s; }
+    #ae-flab-card .ae-flab-vars button:hover { background:#fef3e8; border-color:#e57a2c; }
+    #ae-flab-card .ae-flab-vars small { display:block; color:#64748b; font-size:10px; font-family: Montserrat,sans-serif; margin-top:2px; font-weight:500; }
+    #ae-flab-card .ae-flab-preview { display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-top:6px; }
+    #ae-flab-card .ae-flab-preview .pv { background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px; text-align:center; }
+    #ae-flab-card .ae-flab-preview .pv .pv-label { font-size:10px; color:#64748b; text-transform:uppercase; letter-spacing:.5px; font-weight:700; }
+    #ae-flab-card .ae-flab-preview .pv .pv-val { font-size:18px; font-weight:800; color:#1e3a5f; margin-top:4px; }
+    #ae-flab-card .ae-flab-preview .pv .pv-delta { font-size:11px; font-weight:600; margin-top:2px; }
+    #ae-flab-card .ae-flab-preview .pv .pv-delta.up { color:#d97c0d; }
+    #ae-flab-card .ae-flab-preview .pv .pv-delta.down { color:#1bbf6a; }
+    #ae-flab-card .ae-flab-preview .pv .pv-delta.zero { color:#94a3b8; }
+    #ae-flab-card footer { padding:14px 22px; display:flex; gap:10px; justify-content:space-between; background:#f8fafc; border-radius:0 0 16px 16px; border-top:1px solid #f1f5f9; }
+    #ae-flab-card footer button { border:0; border-radius:999px; padding:9px 18px; font-weight:700; font-size:13px; cursor:pointer; font-family:inherit; }
+    #ae-flab-card footer .ae-restore { background:transparent; color:#64748b; border:1px solid #cbd5e1; }
+    #ae-flab-card footer .ae-cancel { background:transparent; color:#64748b; }
+    #ae-flab-card footer .ae-apply { background:#e57a2c; color:#fff; }
+    #ae-flab-card footer .ae-apply:disabled { background:#cbd5e1; cursor:not-allowed; }
+    /* Distinción visual en el modal padre: ● constante vs ⚡ fórmula */
+    #ae-calc-card .ae-row.ae-row-formula { background: #fffaf3; border-radius: 8px; padding-left: 8px; padding-right: 8px; margin-left: -8px; margin-right: -8px; cursor: pointer; }
+    #ae-calc-card .ae-row.ae-row-formula:hover { background: #fef3e8; }
+    #ae-calc-card .ae-row.ae-row-formula .ae-lbl b::before { content: '⚡ '; }
+    #ae-calc-card .ae-row.ae-row-formula .ae-inp { background:#fff; pointer-events:none; }
+    #ae-calc-card .ae-row.ae-row-formula .ae-inp input { font-family:'SFMono-Regular',Consolas,Monaco,monospace; font-size:11px; text-align:left; padding:6px; color:#64748b; }
   `;
   document.head.appendChild(style);
 
@@ -217,6 +261,262 @@
     ]}
   ];
 
+  // ============= FORMULAS (Fase 1 MVP) =============
+  // Definiciones de las fórmulas editables. Cada fórmula tiene:
+  //  - path: ruta en calc.formulas.* del content.json
+  //  - label / hint: textos amigables que Andy verá en el modal
+  //  - default: fórmula hardcoded original (botón "Restaurar default")
+  //  - vars: lista de variables disponibles con descripción y valor de ejemplo
+  //  - preview: 3 escenarios fijos para probar la fórmula en vivo (joven/promedio/mayor)
+  //  - format: 'money' (formatea como $X) o 'plain' (número simple, ej. factor 1.04)
+  const FORMULA_DEFS = [
+    {
+      path: 'educativo.ageFactor',
+      label: 'Educativo · Factor por edad del contratante',
+      hint: 'Cuánto multiplica la prima base según la edad del papá/mamá. Si pones 1, todas las edades pagan lo mismo.',
+      default: '1 + (edad_titular - referencia_edad) * factor_por_anio',
+      affects: 'educativo',
+      format: 'plain',
+      vars: [
+        { name: 'edad_titular', desc: 'Edad del papá/mamá que contrata', sample: 37 },
+        { name: 'referencia_edad', desc: 'Edad del ejemplo del material', sample: 37 },
+        { name: 'factor_por_anio', desc: 'Cuánto sube por cada año de edad', sample: 0.04 }
+      ],
+      preview: [
+        { label: 'Joven (25)', vars: { edad_titular: 25, referencia_edad: 37, factor_por_anio: 0.04 } },
+        { label: 'Promedio (40)', vars: { edad_titular: 40, referencia_edad: 37, factor_por_anio: 0.04 } },
+        { label: 'Mayor (60)', vars: { edad_titular: 60, referencia_edad: 37, factor_por_anio: 0.04 } }
+      ]
+    },
+    {
+      path: 'gmm.ageMultiplier',
+      label: 'GMM · Multiplicador por edad',
+      hint: 'Cuánto sube la prima de GMM con la edad. Usa el operador "?" para ramas: "condición ? valorSi : valorNo".',
+      default: 'edad <= 45 ? (1 + 0.0093 * (edad - 25)) : (1 + 0.0093 * 20 + 0.05 * (edad - 45))',
+      affects: 'gmm',
+      format: 'plain',
+      vars: [
+        { name: 'edad', desc: 'Edad del asegurado', sample: 35 }
+      ],
+      preview: [
+        { label: 'Joven (25)', vars: { edad: 25 } },
+        { label: 'Promedio (45)', vars: { edad: 45 } },
+        { label: 'Mayor (65)', vars: { edad: 65 } }
+      ]
+    },
+    {
+      path: 'gmm.totalConIVA',
+      label: 'GMM · Total con derecho de póliza + IVA',
+      hint: 'Cómo se calcula el total final cobrado al cliente desde la prima neta.',
+      default: '(prima_neta + derecho_poliza * cantidad_asegurados) * (1 + iva)',
+      affects: 'gmm',
+      format: 'money',
+      vars: [
+        { name: 'prima_neta', desc: 'Prima sin impuestos ni derechos', sample: 25000 },
+        { name: 'derecho_poliza', desc: 'Cargo por asegurado ($970 típico)', sample: 970 },
+        { name: 'cantidad_asegurados', desc: 'Cuántas personas en la póliza', sample: 1 },
+        { name: 'iva', desc: 'IVA en decimal (0.16 = 16%)', sample: 0.16 }
+      ],
+      preview: [
+        { label: 'Individual', vars: { prima_neta: 25000, derecho_poliza: 970, cantidad_asegurados: 1, iva: 0.16 } },
+        { label: 'Pareja', vars: { prima_neta: 48000, derecho_poliza: 970, cantidad_asegurados: 2, iva: 0.16 } },
+        { label: 'Familia 4', vars: { prima_neta: 75000, derecho_poliza: 970, cantidad_asegurados: 4, iva: 0.16 } }
+      ]
+    },
+    {
+      path: 'patrimonial.hidrometCosto',
+      label: 'Hogar · Costo de cobertura Hidrometeorológicos',
+      hint: 'Andy dijo "duplica más o menos la anualidad". Hoy es prima base × 1 (igual al base). Cambia el factor para ajustar.',
+      default: 'prima_base * factor_hidromet',
+      affects: 'patrimonial',
+      format: 'money',
+      vars: [
+        { name: 'prima_base', desc: 'Prima base de la casa antes de extras', sample: 8598 },
+        { name: 'factor_hidromet', desc: 'Multiplicador (1 = duplica la anualidad)', sample: 1 }
+      ],
+      preview: [
+        { label: 'Casa $1M', vars: { prima_base: 3500, factor_hidromet: 1 } },
+        { label: 'Casa $2M', vars: { prima_base: 8598, factor_hidromet: 1 } },
+        { label: 'Casa $5M', vars: { prima_base: 22000, factor_hidromet: 1 } }
+      ]
+    },
+    {
+      path: 'educativo.primaFinal',
+      label: 'Educativo · Prima final',
+      hint: 'Cómo se combina la prima base del plazo con la protección elegida y la edad del titular.',
+      default: 'prima_base * (proteccion_elegida / proteccion_referencia) * factor_edad',
+      affects: 'educativo',
+      format: 'money',
+      vars: [
+        { name: 'prima_base', desc: 'Prima del plazo elegido (5/10/alcanzada años)', sample: 43735 },
+        { name: 'proteccion_elegida', desc: 'Suma asegurada que escogió el cliente', sample: 1000000 },
+        { name: 'proteccion_referencia', desc: 'Suma del ejemplo del material', sample: 1100000 },
+        { name: 'factor_edad', desc: 'Multiplicador por edad del titular', sample: 1 }
+      ],
+      preview: [
+        { label: '$500k', vars: { prima_base: 43735, proteccion_elegida: 500000, proteccion_referencia: 1100000, factor_edad: 1 } },
+        { label: '$1M', vars: { prima_base: 43735, proteccion_elegida: 1000000, proteccion_referencia: 1100000, factor_edad: 1 } },
+        { label: '$1.5M', vars: { prima_base: 43735, proteccion_elegida: 1500000, proteccion_referencia: 1100000, factor_edad: 1 } }
+      ]
+    }
+  ];
+
+  function findFormulaDef(path) { return FORMULA_DEFS.find(f => f.path === path); }
+  function fmtMoney(v) { return '$' + Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  function fmtPlain(v) { return (typeof v === 'number') ? (Math.round(v*1000)/1000).toString() : '—'; }
+
+  function evalFormula(expr, vars) {
+    try {
+      if (typeof exprEval === 'undefined') return { ok: false, err: 'expr-eval no cargó' };
+      const p = new exprEval.Parser();
+      const parsed = p.parse(expr);
+      const used = parsed.variables();
+      const allowed = new Set(Object.keys(vars));
+      for (const v of used) {
+        if (!allowed.has(v)) return { ok: false, err: `Variable "${v}" no existe. Disponibles: ${[...allowed].join(', ')}` };
+      }
+      const r = parsed.evaluate(vars);
+      if (typeof r !== 'number' || !isFinite(r)) return { ok: false, err: 'Resultado no es un número válido' };
+      return { ok: true, value: r };
+    } catch (e) {
+      return { ok: false, err: e.message };
+    }
+  }
+
+  function openFormulaLab(def) {
+    let modal = document.getElementById('ae-flab-modal');
+    if (modal) modal.remove();
+    modal = document.createElement('div');
+    modal.id = 'ae-flab-modal';
+    const currentExpr = getByPath(workingContent, 'calc.formulas.' + def.path) || def.default;
+    modal.innerHTML = `
+      <div id="ae-flab-card">
+        <header>
+          <h2>${def.label}<small>${def.hint}</small></h2>
+          <button class="ae-x" type="button" style="background:transparent;border:0;font-size:22px;cursor:pointer;color:#64748b;padding:0 6px">×</button>
+        </header>
+        <div class="ae-flab-grid">
+          <div class="ae-flab-left">
+            <div class="ae-flab-section">
+              <h3>Fórmula</h3>
+              <textarea id="ae-flab-expr" spellcheck="false">${String(currentExpr).replace(/</g,'&lt;')}</textarea>
+              <div id="ae-flab-status" class="ae-flab-status ok">✓ Compila bien</div>
+            </div>
+            <div class="ae-flab-section">
+              <h3>Vista previa (cómo cambia el resultado al editar)</h3>
+              <div class="ae-flab-preview" id="ae-flab-preview"></div>
+            </div>
+          </div>
+          <div class="ae-flab-right">
+            <div class="ae-flab-section">
+              <h3>Variables disponibles<br><span style="font-weight:500;text-transform:none;color:#94a3b8">(click para insertar)</span></h3>
+              <ul class="ae-flab-vars">
+                ${def.vars.map(v => `<li><button type="button" data-var="${v.name}">${v.name}<small>${v.desc}</small></button></li>`).join('')}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <footer>
+          <button type="button" class="ae-restore">↺ Restaurar default</button>
+          <div style="display:flex;gap:10px">
+            <button type="button" class="ae-cancel">Cancelar</button>
+            <button type="button" class="ae-apply">Aplicar</button>
+          </div>
+        </footer>
+      </div>`;
+    document.body.appendChild(modal);
+    modal.classList.add('show');
+    const ta = modal.querySelector('#ae-flab-expr');
+    const statusEl = modal.querySelector('#ae-flab-status');
+    const previewEl = modal.querySelector('#ae-flab-preview');
+    const applyBtn = modal.querySelector('.ae-apply');
+    const close = () => modal.remove();
+
+    function renderPreview(expr) {
+      // calcula los 3 escenarios con la fórmula NUEVA y el default; muestra delta
+      const fmt = def.format === 'money' ? fmtMoney : fmtPlain;
+      previewEl.innerHTML = def.preview.map(p => {
+        const newRes = evalFormula(expr, p.vars);
+        const defRes = evalFormula(def.default, p.vars);
+        if (!newRes.ok || !defRes.ok) {
+          return `<div class="pv"><div class="pv-label">${p.label}</div><div class="pv-val" style="color:#d93636">—</div><div class="pv-delta zero">no calcula</div></div>`;
+        }
+        let deltaClass = 'zero', deltaStr = '0%';
+        if (defRes.value !== 0) {
+          const pct = ((newRes.value - defRes.value) / Math.abs(defRes.value)) * 100;
+          if (Math.abs(pct) < 0.5) { deltaClass = 'zero'; deltaStr = '0%'; }
+          else if (pct > 0) { deltaClass = 'up'; deltaStr = '+' + pct.toFixed(1) + '%'; }
+          else { deltaClass = 'down'; deltaStr = pct.toFixed(1) + '%'; }
+        }
+        return `<div class="pv"><div class="pv-label">${p.label}</div><div class="pv-val">${fmt(newRes.value)}</div><div class="pv-delta ${deltaClass}">${deltaStr} vs default</div></div>`;
+      }).join('');
+    }
+    function validate() {
+      const expr = ta.value.trim();
+      if (!expr) {
+        ta.classList.remove('ok','err'); ta.classList.add('err');
+        statusEl.className = 'ae-flab-status err'; statusEl.textContent = '✗ La fórmula está vacía';
+        applyBtn.disabled = true;
+        return false;
+      }
+      const sampleVars = {}; def.vars.forEach(v => sampleVars[v.name] = v.sample);
+      const r = evalFormula(expr, sampleVars);
+      if (r.ok) {
+        ta.classList.remove('err'); ta.classList.add('ok');
+        statusEl.className = 'ae-flab-status ok'; statusEl.textContent = '✓ Compila bien';
+        applyBtn.disabled = false;
+        renderPreview(expr);
+        return true;
+      } else {
+        ta.classList.remove('ok'); ta.classList.add('err');
+        statusEl.className = 'ae-flab-status err'; statusEl.textContent = '✗ ' + r.err;
+        applyBtn.disabled = true;
+        renderPreview(def.default); // muestra el default cuando hay error
+        return false;
+      }
+    }
+    ta.addEventListener('input', validate);
+    modal.querySelector('.ae-x').addEventListener('click', close);
+    modal.querySelector('.ae-cancel').addEventListener('click', close);
+    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+    modal.querySelectorAll('button[data-var]').forEach(b => b.addEventListener('click', () => {
+      const v = b.dataset.var;
+      const start = ta.selectionStart, end = ta.selectionEnd;
+      ta.value = ta.value.slice(0, start) + v + ta.value.slice(end);
+      ta.focus(); ta.selectionStart = ta.selectionEnd = start + v.length;
+      validate();
+    }));
+    modal.querySelector('.ae-restore').addEventListener('click', () => {
+      if (!confirm('¿Restaurar la fórmula default del sistema?')) return;
+      ta.value = def.default; validate();
+    });
+    modal.querySelector('.ae-apply').addEventListener('click', () => {
+      const expr = ta.value.trim();
+      if (!validate()) return;
+      const path = 'calc.formulas.' + def.path;
+      setByPath(workingContent, path, expr);
+      if (window.__cms && window.__cms.data) setByPath(window.__cms.data, path, expr);
+      // invalida cache de fórmulas + marca dirty + re-renderiza wizard
+      if (typeof window.__cmsFormulaInvalidate === 'function') window.__cmsFormulaInvalidate();
+      const original = getByPath(originalContent, path) || def.default;
+      if (expr === original) dirtyKeys.delete(path);
+      else dirtyKeys.add(path);
+      try { if (typeof window.__cmsRecalc === 'function') window.__cmsRecalc(def.affects); } catch(_) {}
+      renderBar();
+      // si el modal padre está abierto, refrescá la fila de fórmulas
+      const calcModal = document.getElementById('ae-calc-modal');
+      if (calcModal && calcModal.classList.contains('show')) {
+        const inp = calcModal.querySelector(`input[data-formula-path="${def.path}"]`);
+        if (inp) inp.value = expr;
+        const row = calcModal.querySelector(`[data-formula-path="${def.path}"]`)?.closest('.ae-row');
+        if (row) row.classList.add('ae-row-formula');
+      }
+      close();
+      toast('Fórmula aplicada. La cotización se actualizó.');
+    });
+    validate(); // estado inicial
+  }
+
   function formatNum(v, step) {
     if (typeof v !== 'number' || !isFinite(v)) return '';
     // Decimales según el step (0.005 → 3, 1 → 0)
@@ -238,7 +538,21 @@
           <button class="ae-x" type="button" aria-label="Cerrar">×</button>
         </header>
         <div class="ae-intro">
-          Aquí editás los <b>números</b> que usan los cotizadores. Cambia uno, presiona <b>Aplicar</b> y verás el efecto en vivo en la cotización. Después guarda con el botón <b>Guardar</b> de la barra de abajo. Las fórmulas que combinan estos números viven en el código y solo el equipo técnico las cambia.
+          Aquí editás los <b>números</b> (●) y las <b>fórmulas</b> (⚡) que usan los cotizadores. Cambia uno, verás el efecto en vivo en la cotización. Después guarda con el botón <b>Guardar</b> de la barra de abajo.
+        </div>
+        <div class="ae-grp">
+          <h3>⚡ Fórmulas editables</h3>
+          ${FORMULA_DEFS.map(f => {
+            const cur = getByPath(workingContent, 'calc.formulas.' + f.path) || f.default;
+            const isDirty = dirtyKeys.has('calc.formulas.' + f.path);
+            return `
+              <div class="ae-row ae-row-formula" data-formula-path-row="${f.path}">
+                <div class="ae-lbl"><b>${f.label}</b><small>${f.hint}</small></div>
+                <div class="ae-inp ${isDirty ? 'dirty' : ''}">
+                  <input type="text" readonly data-formula-path="${f.path}" value="${String(cur).replace(/"/g,'&quot;')}" title="Click en cualquier parte de esta fila para abrir el editor" />
+                </div>
+              </div>`;
+          }).join('')}
         </div>
         ${CALC_FIELDS.map(grp => `
           <div class="ae-grp">
@@ -269,6 +583,15 @@
     modal.querySelector('.ae-x').addEventListener('click', close);
     modal.querySelector('.ae-cancel').addEventListener('click', close);
     modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+
+    // Click en una fila de fórmula → abre Formula Lab
+    modal.querySelectorAll('.ae-row-formula').forEach(row => {
+      row.addEventListener('click', () => {
+        const path = row.dataset.formulaPathRow;
+        const def = findFormulaDef(path);
+        if (def) openFormulaLab(def);
+      });
+    });
 
     // Cambio en cualquier input → debounce 250ms → setByPath → recalc + dirty + render
     let debounceTimer = null;
