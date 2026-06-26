@@ -470,7 +470,7 @@
     },
     "auto": {
       "baseRate": 0.05,
-      "defaultVehicleValue": 300000,
+      "defaultVehicleValue": 400000,
       "addons": {
         "sustituto": 960,
         "llantas": 1511,
@@ -479,27 +479,36 @@
       "covMult": {
         "rc": 0.35,
         "limitada": 0.65,
-        "amplia": 1.0,
+        "amplia": 1,
         "ampliaTotal": 1.176
       },
       "useMult": {
-        "particular": 1.0,
+        "particular": 1,
         "comercial": 1.3
       },
       "dtMult": {
         "5": 1.15,
-        "10": 1.0,
+        "10": 1,
         "15": 0.9
       },
       "ddMult": {
         "3": 1.15,
-        "5": 1.0,
+        "5": 1,
         "10": 0.88
       },
       "ageBrackets": [
-        { "minVal": 0, "mult": 1.0 },
-        { "minVal": 5, "mult": 1.08 },
-        { "minVal": 8, "mult": 1.18 }
+        {
+          "minVal": 0,
+          "mult": 1
+        },
+        {
+          "minVal": 5,
+          "mult": 1.08
+        },
+        {
+          "minVal": 8,
+          "mult": 1.18
+        }
       ]
     },
     "mascotaTables": {
@@ -515,20 +524,20 @@
       },
       "factorEspecie": {
         "perro": 1.1,
-        "gato": 1.0
+        "gato": 1
       }
     },
     "gmmTables": {
       "tierMult": {
         "A": 0.85,
-        "B": 1.0,
+        "B": 1,
         "C": 1.13,
         "D": 1.28
       },
       "sumMult": {
         "2.2": 0.42,
         "17.5": 0.82,
-        "40.8": 1.0,
+        "40.8": 1,
         "58.3": 1.12
       },
       "maleRef25": 14260,
@@ -538,7 +547,7 @@
     "patrimonialTables": {
       "rates": {
         "homeRate": 0.00098,
-        "contentsRate": 0.00220,
+        "contentsRate": 0.0022,
         "fixedBase": 5978
       }
     },
@@ -547,9 +556,24 @@
       "retiroEdad65": 65,
       "retiroEdad70": 70,
       "sumaVidaMult": {
-        "trasciende": { "10": 80, "20": 25, "35": 12, "999": 6 },
-        "capitaliza": { "10": 30, "25": 12, "40": 7, "999": 5.5 },
-        "otros":      { "10": 25, "25": 10, "40": 6, "999": 4.5 }
+        "trasciende": {
+          "10": 80,
+          "20": 25,
+          "35": 12,
+          "999": 6
+        },
+        "capitaliza": {
+          "10": 30,
+          "25": 12,
+          "40": 7,
+          "999": 5.5
+        },
+        "otros": {
+          "10": 25,
+          "25": 10,
+          "40": 6,
+          "999": 4.5
+        }
       }
     },
     "formulas": {
@@ -570,7 +594,7 @@
         "derechoPoliza": 970,
         "iva": 0.16,
         "factorMujer": 1.19,
-        "factorFumador": 1.20
+        "factorFumador": 1.2
       },
       "patrimonial": {
         "factorHidromet": 1
