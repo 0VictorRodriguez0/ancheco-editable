@@ -217,7 +217,9 @@
     if (typeof v !== 'number' || !isFinite(v)) return '';
     // Decimales según el step (0.005 → 3, 1 → 0)
     const dec = (step != null && step < 1) ? Math.min(4, String(step).split('.')[1]?.length || 2) : 0;
-    return v.toFixed(dec).replace(/\.?0+$/, '');
+    if (dec === 0) return String(Math.round(v)); // enteros: sin tocar
+    // Decimales: strip ceros finales SOLO después del punto, conservar el resto
+    return Number(v).toFixed(dec).replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
   }
 
   function openCalcModal() {
