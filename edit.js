@@ -232,6 +232,31 @@
     #ae-flab-card footer .ae-cancel { background:transparent; color:#64748b; }
     #ae-flab-card footer .ae-apply { background:#e57a2c; color:#fff; }
     #ae-flab-card footer .ae-apply:disabled { background:#cbd5e1; cursor:not-allowed; }
+    /* ===== Breakdown "Cómo se calcula" ===== */
+    #ae-flab-card .ae-breakdown { background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 14px; font-family:'SFMono-Regular',Consolas,Monaco,monospace; font-size:13px; line-height:1.6; color:#1e3a5f; }
+    #ae-flab-card .ae-breakdown .ae-bd-line { display:flex; justify-content:space-between; gap:10px; align-items:baseline; padding:3px 0; border-bottom:1px dashed #e2e8f0; }
+    #ae-flab-card .ae-breakdown .ae-bd-line:last-child { border-bottom:0; padding-top:8px; margin-top:4px; border-top:1.5px solid #1e3a5f; font-weight:800; font-size:15px; color:#e57a2c; }
+    #ae-flab-card .ae-breakdown .ae-bd-step { color:#64748b; font-family: Montserrat, system-ui, sans-serif; font-size:12px; }
+    #ae-flab-card .ae-breakdown .ae-bd-step b { color:#1e3a5f; font-weight:700; }
+    #ae-flab-card .ae-breakdown .ae-bd-val { font-weight:700; }
+    /* ===== Casos editables ===== */
+    #ae-flab-card .ae-cases { display:flex; flex-direction:column; gap:8px; }
+    #ae-flab-card .ae-case { background:#fff; border:1.5px solid #e2e8f0; border-radius:10px; padding:10px 12px; transition: border-color .15s; }
+    #ae-flab-card .ae-case.custom { border-color:#fde8c5; background:#fffaf3; }
+    #ae-flab-card .ae-case-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+    #ae-flab-card .ae-case-name { font-weight:700; font-size:13px; color:#1e3a5f; background:transparent; border:0; padding:2px 0; font-family:inherit; outline:none; flex:1; min-width:0; }
+    #ae-flab-card .ae-case-name:focus { border-bottom:1px solid #e57a2c; }
+    #ae-flab-card .ae-case-actions { display:flex; gap:6px; align-items:center; flex-shrink:0; }
+    #ae-flab-card .ae-case-result { font-family:'SFMono-Regular',Consolas,Monaco,monospace; font-size:14px; font-weight:800; color:#e57a2c; }
+    #ae-flab-card .ae-case-result.bad { color:#d93636; font-size:11px; font-weight:600; }
+    #ae-flab-card .ae-case-del { background:transparent; border:0; cursor:pointer; color:#94a3b8; font-size:16px; padding:0 4px; line-height:1; }
+    #ae-flab-card .ae-case-del:hover { color:#d93636; }
+    #ae-flab-card .ae-case-vars { display:grid; grid-template-columns:1fr 110px; gap:4px 8px; align-items:center; }
+    #ae-flab-card .ae-case-vars label { font-size:11px; color:#64748b; font-family: Montserrat, system-ui, sans-serif; font-weight:600; }
+    #ae-flab-card .ae-case-vars input { background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:4px 8px; font-size:12px; font-weight:700; color:#1e3a5f; font-family:'SFMono-Regular',Consolas,Monaco,monospace; text-align:right; outline:none; }
+    #ae-flab-card .ae-case-vars input:focus { border-color:#e57a2c; background:#fff; }
+    #ae-flab-card .ae-case-add { background:transparent; border:1.5px dashed #cbd5e1; color:#64748b; padding:8px; border-radius:10px; cursor:pointer; font-family:inherit; font-size:12px; font-weight:700; transition: all .15s; }
+    #ae-flab-card .ae-case-add:hover { border-color:#e57a2c; color:#e57a2c; background:#fffaf3; }
     /* Distinción visual en el modal padre: ● constante vs ⚡ fórmula */
     #ae-calc-card .ae-row.ae-row-formula { background: #fffaf3; border-radius: 8px; padding-left: 8px; padding-right: 8px; margin-left: -8px; margin-right: -8px; cursor: pointer; }
     #ae-calc-card .ae-row.ae-row-formula:hover { background: #fef3e8; }
@@ -403,12 +428,52 @@
     }
   }
 
+  // Construye el breakdown paso a paso: muestra la fórmula con los valores sustituidos
+  // y, si la fórmula es de operaciones simples, descompone los pasos intermedios.
+  function buildBreakdown(expr, vars, format) {
+    const fmt = format === 'money' ? fmtMoney : fmtPlain;
+    // Línea 1: la fórmula con cada variable reemplazada por su valor visible
+    let sustituida = expr;
+    // Reemplazamos variables del más largo al más corto para evitar colisiones (ej. "edad" dentro de "edad_titular")
+    const sortedVars = Object.keys(vars).sort((a,b) => b.length - a.length);
+    sortedVars.forEach(v => {
+      const re = new RegExp('\\b' + v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'g');
+      const val = vars[v];
+      const display = (typeof val === 'number' && Math.abs(val) >= 1000 && format === 'money') ? fmtMoney(val) : String(val);
+      sustituida = sustituida.replace(re, display);
+    });
+    const r = evalFormula(expr, vars);
+    const finalVal = r.ok ? fmt(r.value) : '—';
+    return `
+      <div class="ae-bd-line">
+        <span class="ae-bd-step"><b>Fórmula:</b></span>
+        <span class="ae-bd-val">${expr.replace(/</g,'&lt;')}</span>
+      </div>
+      <div class="ae-bd-line">
+        <span class="ae-bd-step"><b>Con valores:</b></span>
+        <span class="ae-bd-val">${sustituida.replace(/</g,'&lt;')}</span>
+      </div>
+      <div class="ae-bd-line">
+        <span class="ae-bd-step"><b>Resultado:</b></span>
+        <span class="ae-bd-val">${finalVal}</span>
+      </div>`;
+  }
+
   function openFormulaLab(def) {
     let modal = document.getElementById('ae-flab-modal');
     if (modal) modal.remove();
     modal = document.createElement('div');
     modal.id = 'ae-flab-modal';
     const currentExpr = getByPath(workingContent, 'calc.formulas.' + def.path) || def.default;
+    // Casos: arrancan con los del def y se les suman los custom guardados en content.json
+    const customCasesPath = 'calc.formulasCases.' + def.path;
+    const customCases = getByPath(workingContent, customCasesPath);
+    const baseCases = def.preview.map(p => ({ label: p.label, vars: {...p.vars}, builtin: true }));
+    const initialCases = [
+      ...baseCases,
+      ...(Array.isArray(customCases) ? customCases.map(c => ({...c, builtin: false})) : [])
+    ];
+
     modal.innerHTML = `
       <div id="ae-flab-card">
         <header>
@@ -418,13 +483,18 @@
         <div class="ae-flab-grid">
           <div class="ae-flab-left">
             <div class="ae-flab-section">
-              <h3>Fórmula</h3>
+              <h3>1. Fórmula</h3>
               <textarea id="ae-flab-expr" spellcheck="false">${String(currentExpr).replace(/</g,'&lt;')}</textarea>
               <div id="ae-flab-status" class="ae-flab-status ok">✓ Compila bien</div>
             </div>
             <div class="ae-flab-section">
-              <h3>Vista previa (cómo cambia el resultado al editar)</h3>
-              <div class="ae-flab-preview" id="ae-flab-preview"></div>
+              <h3>2. Cómo se calcula (usando el primer caso de prueba)</h3>
+              <div class="ae-breakdown" id="ae-flab-breakdown">—</div>
+            </div>
+            <div class="ae-flab-section">
+              <h3>3. Casos de prueba — editá los valores para probar la fórmula con tus criterios</h3>
+              <div class="ae-cases" id="ae-flab-cases"></div>
+              <button type="button" class="ae-case-add" id="ae-flab-add-case" style="margin-top:8px;width:100%">+ Agregar caso propio</button>
             </div>
           </div>
           <div class="ae-flab-right">
@@ -448,53 +518,77 @@
     modal.classList.add('show');
     const ta = modal.querySelector('#ae-flab-expr');
     const statusEl = modal.querySelector('#ae-flab-status');
-    const previewEl = modal.querySelector('#ae-flab-preview');
+    const casesEl = modal.querySelector('#ae-flab-cases');
+    const breakdownEl = modal.querySelector('#ae-flab-breakdown');
     const applyBtn = modal.querySelector('.ae-apply');
     const close = () => modal.remove();
 
-    function renderPreview(expr) {
-      // calcula los 3 escenarios con la fórmula NUEVA y el default; muestra delta
+    // Estado mutable de los casos (incluye custom)
+    let cases = initialCases;
+
+    function renderCases() {
+      const expr = ta.value.trim();
       const fmt = def.format === 'money' ? fmtMoney : fmtPlain;
-      previewEl.innerHTML = def.preview.map(p => {
-        const newRes = evalFormula(expr, p.vars);
-        const defRes = evalFormula(def.default, p.vars);
-        if (!newRes.ok || !defRes.ok) {
-          return `<div class="pv"><div class="pv-label">${p.label}</div><div class="pv-val" style="color:#d93636">—</div><div class="pv-delta zero">no calcula</div></div>`;
-        }
-        let deltaClass = 'zero', deltaStr = '0%';
-        if (defRes.value !== 0) {
-          const pct = ((newRes.value - defRes.value) / Math.abs(defRes.value)) * 100;
-          if (Math.abs(pct) < 0.5) { deltaClass = 'zero'; deltaStr = '0%'; }
-          else if (pct > 0) { deltaClass = 'up'; deltaStr = '+' + pct.toFixed(1) + '%'; }
-          else { deltaClass = 'down'; deltaStr = pct.toFixed(1) + '%'; }
-        }
-        return `<div class="pv"><div class="pv-label">${p.label}</div><div class="pv-val">${fmt(newRes.value)}</div><div class="pv-delta ${deltaClass}">${deltaStr} vs default</div></div>`;
+      casesEl.innerHTML = cases.map((c, idx) => {
+        const r = expr ? evalFormula(expr, c.vars) : { ok: false, err: 'vacía' };
+        const resultHtml = r.ok
+          ? `<span class="ae-case-result">${fmt(r.value)}</span>`
+          : `<span class="ae-case-result bad" title="${r.err.replace(/"/g,'&quot;')}">no calcula</span>`;
+        const delHtml = c.builtin ? '' : `<button type="button" class="ae-case-del" data-del="${idx}" title="Eliminar caso">×</button>`;
+        const nameHtml = c.builtin
+          ? `<span class="ae-case-name" style="cursor:default">${c.label}</span>`
+          : `<input class="ae-case-name" data-case-name="${idx}" value="${String(c.label).replace(/"/g,'&quot;')}" placeholder="Nombre del caso" />`;
+        return `
+          <div class="ae-case ${c.builtin?'':'custom'}" data-case-idx="${idx}">
+            <div class="ae-case-head">
+              ${nameHtml}
+              <div class="ae-case-actions">
+                ${resultHtml}
+                ${delHtml}
+              </div>
+            </div>
+            <div class="ae-case-vars">
+              ${def.vars.map(v => `
+                <label>${v.name} <span style="color:#94a3b8;font-weight:500">— ${v.desc}</span></label>
+                <input type="number" step="any" data-case-var="${idx}|${v.name}" value="${c.vars[v.name] != null ? c.vars[v.name] : ''}" placeholder="${v.sample}"/>
+              `).join('')}
+            </div>
+          </div>`;
       }).join('');
     }
+
+    function renderBreakdown() {
+      const expr = ta.value.trim();
+      if (!expr || !cases.length) { breakdownEl.innerHTML = '<span style="color:#94a3b8;font-family:Montserrat,system-ui,sans-serif;font-size:12px">Escribe una fórmula y agrega un caso de prueba para ver el cálculo paso a paso.</span>'; return; }
+      breakdownEl.innerHTML = buildBreakdown(expr, cases[0].vars, def.format);
+    }
+
     function validate() {
       const expr = ta.value.trim();
       if (!expr) {
         ta.classList.remove('ok','err'); ta.classList.add('err');
         statusEl.className = 'ae-flab-status err'; statusEl.textContent = '✗ La fórmula está vacía';
         applyBtn.disabled = true;
+        renderCases(); renderBreakdown();
         return false;
       }
-      const sampleVars = {}; def.vars.forEach(v => sampleVars[v.name] = v.sample);
+      // Validar con el primer caso (o sample por defecto si no hay casos)
+      const sampleVars = (cases[0] && cases[0].vars) ? cases[0].vars : (() => { const s = {}; def.vars.forEach(v => s[v.name] = v.sample); return s; })();
       const r = evalFormula(expr, sampleVars);
       if (r.ok) {
         ta.classList.remove('err'); ta.classList.add('ok');
         statusEl.className = 'ae-flab-status ok'; statusEl.textContent = '✓ Compila bien';
         applyBtn.disabled = false;
-        renderPreview(expr);
-        return true;
       } else {
         ta.classList.remove('ok'); ta.classList.add('err');
         statusEl.className = 'ae-flab-status err'; statusEl.textContent = '✗ ' + r.err;
         applyBtn.disabled = true;
-        renderPreview(def.default); // muestra el default cuando hay error
-        return false;
       }
+      renderCases();
+      renderBreakdown();
+      return r.ok;
     }
+
     ta.addEventListener('input', validate);
     modal.querySelector('.ae-x').addEventListener('click', close);
     modal.querySelector('.ae-cancel').addEventListener('click', close);
@@ -506,8 +600,51 @@
       ta.focus(); ta.selectionStart = ta.selectionEnd = start + v.length;
       validate();
     }));
+    // Edición de los inputs de variables y nombre de cada caso
+    casesEl.addEventListener('input', (e) => {
+      const tgt = e.target;
+      if (tgt.matches('[data-case-var]')) {
+        const [idxStr, varName] = tgt.dataset.caseVar.split('|');
+        const idx = parseInt(idxStr);
+        const raw = tgt.value.trim();
+        const num = raw === '' ? def.vars.find(v => v.name === varName).sample : parseFloat(raw);
+        if (cases[idx]) {
+          cases[idx].vars[varName] = isFinite(num) ? num : 0;
+          // Re-evaluar solo este caso (no toda la lista para no perder focus)
+          const expr = ta.value.trim();
+          const fmt = def.format === 'money' ? fmtMoney : fmtPlain;
+          const r = expr ? evalFormula(expr, cases[idx].vars) : { ok: false };
+          const resEl = casesEl.querySelector(`.ae-case[data-case-idx="${idx}"] .ae-case-result`);
+          if (resEl) {
+            if (r.ok) { resEl.className = 'ae-case-result'; resEl.textContent = fmt(r.value); }
+            else { resEl.className = 'ae-case-result bad'; resEl.textContent = 'no calcula'; }
+          }
+          if (idx === 0) renderBreakdown();
+        }
+      } else if (tgt.matches('[data-case-name]')) {
+        const idx = parseInt(tgt.dataset.caseName);
+        if (cases[idx]) cases[idx].label = tgt.value;
+      }
+    });
+    casesEl.addEventListener('click', (e) => {
+      const del = e.target.closest('[data-del]');
+      if (del) {
+        const idx = parseInt(del.dataset.del);
+        if (cases[idx] && !cases[idx].builtin) {
+          cases.splice(idx, 1);
+          renderCases();
+          renderBreakdown();
+        }
+      }
+    });
+    modal.querySelector('#ae-flab-add-case').addEventListener('click', () => {
+      const newVars = {};
+      def.vars.forEach(v => newVars[v.name] = v.sample);
+      cases.push({ label: 'Caso ' + (cases.filter(c => !c.builtin).length + 1), vars: newVars, builtin: false });
+      renderCases();
+    });
     modal.querySelector('.ae-restore').addEventListener('click', () => {
-      if (!confirm('¿Restaurar la fórmula default del sistema?')) return;
+      if (!confirm('¿Restaurar la fórmula default del sistema?\n(Los casos de prueba que agregaste se mantienen.)')) return;
       ta.value = def.default; validate();
     });
     modal.querySelector('.ae-apply').addEventListener('click', () => {
@@ -516,20 +653,23 @@
       const path = 'calc.formulas.' + def.path;
       setByPath(workingContent, path, expr);
       if (window.__cms && window.__cms.data) setByPath(window.__cms.data, path, expr);
-      // invalida cache de fórmulas + marca dirty + re-renderiza wizard
+      // Persistir casos custom (sin los builtin) en calc.formulasCases.<path>
+      const customToSave = cases.filter(c => !c.builtin).map(c => ({ label: c.label, vars: c.vars }));
+      setByPath(workingContent, customCasesPath, customToSave);
+      if (window.__cms && window.__cms.data) setByPath(window.__cms.data, customCasesPath, customToSave);
+      // invalida cache + marca dirty + re-renderiza wizard
       if (typeof window.__cmsFormulaInvalidate === 'function') window.__cmsFormulaInvalidate();
       const original = getByPath(originalContent, path) || def.default;
-      if (expr === original) dirtyKeys.delete(path);
-      else dirtyKeys.add(path);
+      if (expr === original) dirtyKeys.delete(path); else dirtyKeys.add(path);
+      const originalCases = getByPath(originalContent, customCasesPath);
+      if (JSON.stringify(customToSave) === JSON.stringify(originalCases || [])) dirtyKeys.delete(customCasesPath);
+      else dirtyKeys.add(customCasesPath);
       try { if (typeof window.__cmsRecalc === 'function') window.__cmsRecalc(def.affects); } catch(_) {}
       renderBar();
-      // si el modal padre está abierto, refrescá la fila de fórmulas
       const calcModal = document.getElementById('ae-calc-modal');
       if (calcModal && calcModal.classList.contains('show')) {
         const inp = calcModal.querySelector(`input[data-formula-path="${def.path}"]`);
         if (inp) inp.value = expr;
-        const row = calcModal.querySelector(`[data-formula-path="${def.path}"]`)?.closest('.ae-row');
-        if (row) row.classList.add('ae-row-formula');
       }
       close();
       toast('Fórmula aplicada. La cotización se actualizó.');
