@@ -663,7 +663,52 @@
       }
     }
 
+    // Valida un número contra min/max del knob (clamp duro). Devuelve {ok, msg} (msg vacío si OK).
+    function validateNumber(v, knob, ctx) {
+      if (typeof v !== 'number' || !isFinite(v)) return { ok: false, msg: 'No es un número válido' };
+      const min = (ctx && ctx.min != null) ? ctx.min : knob.min;
+      const max = (ctx && ctx.max != null) ? ctx.max : knob.max;
+      if (typeof min === 'number' && v < min) return { ok: false, msg: `Valor mínimo permitido: ${min}` };
+      if (typeof max === 'number' && v > max) return { ok: false, msg: `Valor máximo permitido: ${max}` };
+      return { ok: true, msg: '' };
+    }
+
     function commit() {
+      // FIX 1+2: validación dura antes de guardar (min/max del registry, no solo HTML hints)
+      let err = null;
+      if (knob.kind === 'single') {
+        const r = validateNumber(staging, knob);
+        if (!r.ok) err = r.msg;
+      } else if (knob.kind === 'table') {
+        for (const row of knob.rows) {
+          const r = validateNumber(staging[row.key], knob);
+          if (!r.ok) { err = `${row.label}: ${r.msg}`; break; }
+        }
+      } else if (knob.kind === 'bracket') {
+        if (!Array.isArray(staging) || staging.length === 0) { err = 'Debe haber al menos un bracket'; }
+        else {
+          // FIX 4: ordenar, deduplicar minVal y garantizar primer bracket en minVal:0
+          const seen = new Set();
+          for (const b of staging) {
+            const rMin = validateNumber(b.minVal, knob, { min: 0, max: 200 });
+            const rMult = validateNumber(b.mult, knob, { min: 0.01, max: 50 });
+            if (!rMin.ok) { err = `Bracket "Desde": ${rMin.msg}`; break; }
+            if (!rMult.ok) { err = `Bracket "Mult": ${rMult.msg}`; break; }
+            if (seen.has(b.minVal)) { err = `Bracket "Desde" duplicado: ${b.minVal}. Cada bracket debe tener un umbral único.`; break; }
+            seen.add(b.minVal);
+          }
+          if (!err) {
+            staging.sort((a, b) => a.minVal - b.minVal);
+            if (staging[0].minVal !== 0) {
+              err = 'El primer bracket debe ser "Desde 0" (sin éste, no hay cobertura para valores menores al primer bracket).';
+            }
+          }
+        }
+      }
+      if (err) {
+        toast('No se puede aplicar: ' + err, 'error');
+        return;
+      }
       const cmsPath = 'calc.' + path;
       setByPath(workingContent, cmsPath, staging);
       if (window.__cms && window.__cms.data) setByPath(window.__cms.data, cmsPath, staging);
@@ -676,6 +721,14 @@
       const calcModal = document.getElementById('ae-calc-modal');
       const howtoBox = calcModal?.querySelector(`.ae-howto[data-howto="${knob.affects}"]`);
       if (howtoBox) howtoBox.innerHTML = buildHowto(knob.affects);
+      // FIX 3: si la constante también está expuesta como input en "Números editables", refrescar el input
+      if (knob.kind === 'single' && calcModal) {
+        const sectionInp = calcModal.querySelector(`input[data-calc-path="${path}"]`);
+        if (sectionInp) {
+          sectionInp.value = formatNum(staging, knob.step);
+          sectionInp.closest('.ae-inp')?.classList.toggle('dirty', dirtyKeys.has(cmsPath));
+        }
+      }
       closePopover();
       toast('Cambio aplicado. La cotización se actualizó.');
     }
@@ -1386,8 +1439,16 @@
       const raw = inp.value.trim();
       const parsed = raw === '' ? fallback : parseFloat(raw);
       const wrap = inp.closest('.ae-inp');
-      if (!isFinite(parsed)) { wrap?.style.setProperty('border-color', '#d93636'); return; }
+      // FIX 1+2: clamp duro contra min/max del input (no solo isFinite). Si Andy mete 0 o negativo
+      // donde no aplica, se marca rojo y NO se persiste — evita destruir el cotizador.
+      const minAttr = parseFloat(inp.min), maxAttr = parseFloat(inp.max);
+      if (!isFinite(parsed) || (isFinite(minAttr) && parsed < minAttr) || (isFinite(maxAttr) && parsed > maxAttr)) {
+        wrap?.style.setProperty('border-color', '#d93636');
+        inp.title = !isFinite(parsed) ? 'No es un número válido' : `Fuera de rango (mínimo ${minAttr}, máximo ${maxAttr})`;
+        return;
+      }
       wrap?.style.removeProperty('border-color');
+      inp.title = '';
       setByPath(workingContent, path, parsed);
       if (window.__cms && window.__cms.data) setByPath(window.__cms.data, path, parsed);
       const original = getByPath(originalContent, path);
