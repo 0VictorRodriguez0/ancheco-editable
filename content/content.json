@@ -470,7 +470,7 @@
     },
     "auto": {
       "baseRate": 0.05,
-      "defaultVehicleValue": 400000,
+      "defaultVehicleValue": 300000,
       "addons": {
         "sustituto": 960,
         "llantas": 1511,
@@ -555,8 +555,16 @@
         "vitalMax": 3000000
       },
       "rates": {
-        "vital":   { "homeRate": 0.00095, "contentsRate": 0.00220, "fixedBase": 0 },
-        "amedida": { "homeRate": 0.00098, "contentsRate": 0.00220, "fixedBase": 5978 }
+        "vital": {
+          "homeRate": 0.00095,
+          "contentsRate": 0.0022,
+          "fixedBase": 0
+        },
+        "amedida": {
+          "homeRate": 0.00098,
+          "contentsRate": 0.0022,
+          "fixedBase": 5978
+        }
       },
       "factorHidromet": 0.75
     },
