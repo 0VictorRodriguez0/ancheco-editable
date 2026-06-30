@@ -498,7 +498,12 @@
   // es editable y el popover sabe qué editor abrir.
   const KNOB_REGISTRY = {
     // ===== GMM =====
-    'gmmTables.maleRef25': { kind:'single', label:'Prima base hombre 25 años (Nivel B, suma 40.8M)', hint:'Es el ancla de toda la prima GMM. Subirlo 1% mueve todo el cotizador.', unit:'$', min:1000, max:100000, step:10, fallback:14260, affects:'gmm' },
+    'gmmTables.primaBaseByAge': { kind:'table', label:'Prima base NETA por edad (Nivel B, suma 40.8M, sin fumador)', hint:'Tabla de anclas con interpolación lineal entre puntos. Estos son valores NETOS: el sistema les suma derecho de póliza ($970) y IVA (16%) automáticamente. Calibrado al material de Andy — total con IVA da: 25→$18,100, 35→$25,812, 50→$38,056, 65→$101,664.', rows:[
+      { key:'25', label:'25 años (total c/IVA ≈ $18,100)', fallback:14633 },
+      { key:'35', label:'35 años (total c/IVA ≈ $25,812)', fallback:21282 },
+      { key:'50', label:'50 años (total c/IVA ≈ $38,056)', fallback:31837 },
+      { key:'65', label:'65 años (total c/IVA ≈ $101,664)', fallback:86671 }
+    ], min:1000, max:500000, step:100, unit:'$', affects:'gmm' },
     'gmmTables.tierMult': { kind:'table', label:'Multiplicador por nivel hospitalario', hint:'Cuánto cobra cada nivel respecto a Nivel B (=1.0). A=más barato, D=más caro.', rows:[
       { key:'A', label:'Nivel A · Premium (ABC, Ángeles, Amerimed)', fallback:0.85 },
       { key:'B', label:'Nivel B · Alto (Galenia, Médica Sur, Costamed)', fallback:1.0 },
@@ -555,9 +560,15 @@
       { key:'gato',  label:'Gato',  fallback:1.0 }
     ], min:0.5, max:3, step:0.05, affects:'mascota' },
     // ===== PATRIMONIAL =====
-    'patrimonialTables.rates.homeRate':    { kind:'single', label:'Tasa por valor de la casa (×)', hint:'Default 0.00098 = $980/año por cada $1M de valor de casa.', unit:'', suffix:'× casa', min:0.0001, max:0.01, step:0.00005, fallback:0.00098, affects:'patrimonial' },
-    'patrimonialTables.rates.contentsRate':{ kind:'single', label:'Tasa por contenidos (×)', hint:'Default 0.00220 = $2,200/año por cada $1M de contenidos.', unit:'', suffix:'× contenidos', min:0.0001, max:0.02, step:0.00005, fallback:0.00220, affects:'patrimonial' },
-    'patrimonialTables.rates.fixedBase':   { kind:'single', label:'Base fija del plan A tu medida', hint:'Suma fija que cubre extras premium (teletrabajo, menaje, etc.).', unit:'$', min:0, max:50000, step:10, fallback:5978, affects:'patrimonial' },
+    // Hogar usa auto-selección de paquete: VITAL si valor casa ≤ vitalMax, AMEDIDA si mayor.
+    'patrimonialTables.umbrales.vitalMax': { kind:'single', label:'Umbral Vital → A tu medida (valor de casa)', hint:'Casas con valor menor o igual a este monto cotizan con paquete VITAL (más económico, sin extras premium). Casas con valor mayor cotizan con paquete A TU MEDIDA (incluye teletrabajo, menaje, RC ampliada, funmascotas).', unit:'$', min:200000, max:10000000, step:50000, fallback:1500000, affects:'patrimonial' },
+    'patrimonialTables.rates.vital.homeRate':    { kind:'single', label:'Vital · Tasa por valor de la casa', hint:'Default 0.00095 = $950/año por cada $1M. Calibrado contra PDF real Hogar Vital ($4,018).', unit:'', suffix:'× casa', min:0.0001, max:0.01, step:0.00005, fallback:0.00095, affects:'patrimonial' },
+    'patrimonialTables.rates.vital.contentsRate':{ kind:'single', label:'Vital · Tasa por contenidos', hint:'Default 0.00220 = $2,200/año por cada $1M de contenidos.', unit:'', suffix:'× contenidos', min:0.0001, max:0.02, step:0.00005, fallback:0.00220, affects:'patrimonial' },
+    'patrimonialTables.rates.vital.fixedBase':   { kind:'single', label:'Vital · Base fija', hint:'Vital no tiene extras premium = $0.', unit:'$', min:0, max:50000, step:10, fallback:0, affects:'patrimonial' },
+    'patrimonialTables.rates.amedida.homeRate':    { kind:'single', label:'A tu medida · Tasa por valor de la casa', hint:'Default 0.00098. Calibrado contra PDF real A tu medida ($8,794).', unit:'', suffix:'× casa', min:0.0001, max:0.01, step:0.00005, fallback:0.00098, affects:'patrimonial' },
+    'patrimonialTables.rates.amedida.contentsRate':{ kind:'single', label:'A tu medida · Tasa por contenidos', hint:'Default 0.00220.', unit:'', suffix:'× contenidos', min:0.0001, max:0.02, step:0.00005, fallback:0.00220, affects:'patrimonial' },
+    'patrimonialTables.rates.amedida.fixedBase':   { kind:'single', label:'A tu medida · Base fija (extras premium)', hint:'Cubre teletrabajo $25k, menaje $150k, tránsito $50k, RC $3M, funmascotas.', unit:'$', min:0, max:50000, step:10, fallback:5978, affects:'patrimonial' },
+    'patrimonialTables.factorHidromet':    { kind:'single', label:'Factor del addon Hidrometeorológicos', hint:'Cuánto cuesta el addon de huracán como múltiplo de la prima base. Default 0.75 = +75% de la prima base. Calibrado al PDF real (delta $6,585 / base $8,794).', unit:'', suffix:'× base', min:0, max:3, step:0.05, fallback:0.75, affects:'patrimonial' },
     // ===== AHORRO =====
     'ahorroTables.indexacionAnual': { kind:'single', label:'Indexación anual de aportes', hint:'Cuánto sube cada año la aportación. Default 1.05 = sube 5% anual. Afecta el "Total que aportas" y la proyección a 65/70.', unit:'', suffix:'× cada año', min:1, max:1.20, step:0.005, fallback:1.05, affects:'ahorro' },
     'ahorroTables.retiroEdad65': { kind:'single', label:'Edad de retiro principal', hint:'Andy muestra el saldo proyectado a esta edad. Default 65 (puede cambiar a 60, 67, etc.).', unit:'', suffix:'años', min:50, max:85, step:1, fallback:65, affects:'ahorro' },
@@ -914,28 +925,27 @@
   }
 
   function buildHowtoGmm() {
-    const maleRef25 = N('gmmTables.maleRef25', 14260);
+    // Tabla de anclas calibrada al material de Andy: {25:18100, 35:25812, 50:38056, 65:101664}.
+    // Para edad 35 da exactamente $25,812 (anclaje real). Edades intermedias se interpolan.
+    const tbl = window.__cms?.data?.calc?.gmmTables?.primaBaseByAge || { "25":14633, "35":21282, "50":31837, "65":86671 };
     const edad = 35;
-    const ageMultFallback = edad <= 45 ? (1 + 0.0093*(edad-25)) : (1 + 0.0093*20 + 0.05*(edad-45));
-    const ageMult = F('gmm.ageMultiplier', {edad}, ageMultFallback);
+    const primaBaseEdad = tbl[String(edad)] || 21282;
     const tierMult = NT('gmmTables.tierMult', 'B', 1.0);
     const dedStep = N('gmmTables.dedStep', 0.955);
     const dedRef = N('gmmTables.dedRef', 2);
-    const dedMult = Math.pow(dedStep, 0 - dedRef); // dedIdx=0 (primera opción)
+    const dedMult = Math.pow(dedStep, 0 - dedRef);
     const sumMult = NT('gmmTables.sumMult', '40.8', 1.0);
-    const neta = maleRef25 * ageMult * tierMult * dedMult * sumMult;
+    const neta = primaBaseEdad * tierMult * dedMult * sumMult;
     const derecho = N('factors.gmm.derechoPoliza', 970);
     const iva = N('factors.gmm.iva', 0.16);
     const totalFallback = (neta + derecho * 1) * (1 + iva);
     const total = F('gmm.totalConIVA', {prima_neta:neta, derecho_poliza:derecho, cantidad_asegurados:1, iva}, totalFallback);
     const eq = eqRender([
-      { name:'Base hombre 25 años', value: fmtMoney(maleRef25), editable:true, kind:'number', path:'gmmTables.maleRef25' },
-      { op:'×' },
-      { name:'Factor por edad', value: `×${ageMult.toFixed(3)}`, editable:true, kind:'formula', path:'gmm.ageMultiplier' },
+      { name:'Prima base neta 35 años', value: fmtMoney(primaBaseEdad), editable:true, kind:'table', path:'gmmTables.primaBaseByAge', title:'Tabla editable de valores NETOS (sin IVA ni derecho). El total final con IVA da: 25→$18,100, 35→$25,812, 50→$38,056, 65→$101,664. Edades intermedias se interpolan linealmente.' },
       { op:'×' },
       { name:'Factor nivel B', value: `×${tierMult.toFixed(2)}`, editable:true, kind:'table', path:'gmmTables.tierMult' },
       { op:'×' },
-      { name:'Factor deducible', value: `×${dedMult.toFixed(3)}`, editable:true, kind:'number', path:'gmmTables.dedStep', title:`${dedStep}^(0 − ${dedRef}) = ${dedMult.toFixed(3)} — click para editar el step (el índice de referencia también es editable en "Números editables")` },
+      { name:'Factor deducible', value: `×${dedMult.toFixed(3)}`, editable:true, kind:'number', path:'gmmTables.dedStep', title:`${dedStep}^(0 − ${dedRef}) = ${dedMult.toFixed(3)} — click para editar el step` },
       { op:'×' },
       { name:'Factor suma asegurada', value: `×${sumMult.toFixed(2)}`, editable:true, kind:'table', path:'gmmTables.sumMult' },
       { op:'+' },
@@ -945,33 +955,39 @@
     ], { name:'Prima anual final', value: fmtMoney(Math.round(total)) });
     return `
       <p class="ae-howto-title">📐 Cómo se calcula la cotización final</p>
-      <p class="ae-howto-sub">Ejemplo: <b>Hombre, 35 años, no fumador, individual, Nivel B, deducible $21,000, suma asegurada $40.8M, sin addons</b>.</p>
+      <p class="ae-howto-sub">Ejemplo: <b>Hombre, 35 años, no fumador, individual, Nivel B, deducible $21,000, suma asegurada $40.8M, sin addons</b>. La prima base por edad sale de una tabla con 4 anclas reales (25/35/50/65); edades intermedias se interpolan.</p>
       ${eq}`;
   }
 
   function buildHowtoPatrimonial() {
     const hv = 2000000, cv = 300000;
-    const homeRate = N('patrimonialTables.rates.homeRate', 0.00098);
-    const contentsRate = N('patrimonialTables.rates.contentsRate', 0.00220);
-    const fixedBase = N('patrimonialTables.rates.fixedBase', 5978);
-    const fHidromet = N('factors.patrimonial.factorHidromet', 1);
+    const umbral = N('patrimonialTables.umbrales.vitalMax', 1500000);
+    const pickPkg = hv <= umbral ? 'vital' : 'amedida';
+    const pkgLabel = pickPkg === 'vital' ? 'Vital' : 'A tu medida';
+    const homeRate = N(`patrimonialTables.rates.${pickPkg}.homeRate`, pickPkg === 'vital' ? 0.00095 : 0.00098);
+    const contentsRate = N(`patrimonialTables.rates.${pickPkg}.contentsRate`, 0.00220);
+    const fixedBase = N(`patrimonialTables.rates.${pickPkg}.fixedBase`, pickPkg === 'vital' ? 0 : 5978);
+    const fHidromet = N('patrimonialTables.factorHidromet', 0.75);
     const s1 = hv * homeRate;
     const s2 = cv * contentsRate;
     const basePrima = s1 + s2 + fixedBase;
-    const hidromet = F('patrimonial.hidrometCosto', {prima_base:basePrima, factor_hidromet:fHidromet}, basePrima);
+    const hidromet = F('patrimonial.hidrometCosto', {prima_base:basePrima, factor_hidromet:fHidromet}, basePrima * fHidromet);
     const total = basePrima + hidromet;
-    const eq = eqRender([
-      { name:'Edificio', value: fmtMoney(s1), editable:true, kind:'number', path:'patrimonialTables.rates.homeRate', title:`$2,000,000 × ${homeRate} — click para editar la tasa` },
+    const parts = [
+      { name:'Paquete (auto)', value: pkgLabel, editable:true, kind:'number', path:'patrimonialTables.umbrales.vitalMax', title:`Se eligió ${pkgLabel} porque la casa vale ${fmtMoney(hv)} ${hv <= umbral ? '≤' : '>'} umbral ${fmtMoney(umbral)}. Click para editar el umbral.` },
+      { op:'·' },
+      { name:'Edificio', value: fmtMoney(s1), editable:true, kind:'number', path:`patrimonialTables.rates.${pickPkg}.homeRate`, title:`${fmtMoney(hv)} × ${homeRate}` },
       { op:'+' },
-      { name:'Contenidos', value: fmtMoney(s2), editable:true, kind:'number', path:'patrimonialTables.rates.contentsRate', title:`$300,000 × ${contentsRate} — click para editar la tasa` },
+      { name:'Contenidos', value: fmtMoney(s2), editable:true, kind:'number', path:`patrimonialTables.rates.${pickPkg}.contentsRate`, title:`${fmtMoney(cv)} × ${contentsRate}` },
       { op:'+' },
-      { name:'Base fija plan', value: fmtMoney(fixedBase), editable:true, kind:'number', path:'patrimonialTables.rates.fixedBase' },
+      { name:'Base fija plan', value: fmtMoney(fixedBase), editable:true, kind:'number', path:`patrimonialTables.rates.${pickPkg}.fixedBase` },
       { op:'+' },
-      { name:'Addon hidromet', value: fmtMoney(hidromet), editable:true, kind:'formula', path:'patrimonial.hidrometCosto' }
-    ], { name:'Prima anual final', value: fmtMoney(Math.round(total)) });
+      { name:'Addon hidromet', value: fmtMoney(hidromet), editable:true, kind:'number', path:'patrimonialTables.factorHidromet', title:`Prima base ${fmtMoney(basePrima)} × factor ${fHidromet} = ${fmtMoney(hidromet)}` }
+    ];
+    const eq = eqRender(parts, { name:'Prima anual final', value: fmtMoney(Math.round(total)) });
     return `
       <p class="ae-howto-title">📐 Cómo se calcula la cotización final</p>
-      <p class="ae-howto-sub">Ejemplo: <b>Casa de $2,000,000, contenidos $300,000, plan "A tu medida", con addon Hidrometeorológicos</b>.</p>
+      <p class="ae-howto-sub">Ejemplo: <b>Casa de $2,000,000, contenidos $300,000, con addon Hidrometeorológicos</b>. El sistema elige automáticamente el paquete según el valor de la casa: ≤${fmtMoney(umbral)} usa <b>Vital</b>, mayor usa <b>A tu medida</b>.</p>
       ${eq}`;
   }
 

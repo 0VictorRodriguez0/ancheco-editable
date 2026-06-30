@@ -542,14 +542,23 @@
       },
       "maleRef25": 14260,
       "dedStep": 0.955,
-      "dedRef": 2
+      "dedRef": 2,
+      "primaBaseByAge": {
+        "25": 14633,
+        "35": 21282,
+        "50": 31837,
+        "65": 86671
+      }
     },
     "patrimonialTables": {
+      "umbrales": {
+        "vitalMax": 3000000
+      },
       "rates": {
-        "homeRate": 0.00098,
-        "contentsRate": 0.0022,
-        "fixedBase": 5978
-      }
+        "vital":   { "homeRate": 0.00095, "contentsRate": 0.00220, "fixedBase": 0 },
+        "amedida": { "homeRate": 0.00098, "contentsRate": 0.00220, "fixedBase": 5978 }
+      },
+      "factorHidromet": 0.75
     },
     "ahorroTables": {
       "indexacionAnual": 1.05,

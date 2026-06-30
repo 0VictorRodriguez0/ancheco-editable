@@ -1887,12 +1887,27 @@ function bindGmm(){
    Vanesa 25 F = ~$20,814 total. Personaliza Variable es ANUAL. */
 function gmmCalcPrice(){
   function personBase(age, sex, isSelf){
-    // Prima NETA en config de referencia (Nivel B, suma 40.8M, deducible medio)
-    const maleRef25 = N('gmmTables.maleRef25', 14260);
-    // Fórmula editable por Andy: calc.formulas.gmm.ageMultiplier (var: edad)
-    const ageMultFallback = age <= 45 ? (1 + 0.0093*(age-25)) : (1 + 0.0093*20 + 0.05*(age-45));
-    const ageMult = F('gmm.ageMultiplier', { edad: age }, ageMultFallback);
-    let p = maleRef25 * ageMult;
+    // Prima NETA en config de referencia (Nivel B, suma 40.8M, deducible medio).
+    // Antes era una curva lineal con base maleRef25; ahora usa tabla de anclas calibrada
+    // a los 4 puntos reales del material de Andy: 25→18100, 35→25812, 50→38056, 65→101664.
+    // La curva real de GNP es exponencial después de los 40 — la tabla con interpolación
+    // lineal entre anclas reproduce mejor que cualquier fórmula cerrada simple.
+    // NETO (sin derecho de póliza ni IVA). Esos cargos se aplican después por la fórmula totalConIVA.
+    // Calibrado al material de Andy: total con IVA = $25,812 a los 35 años → neto = (25812/1.16) − 970 = $21,282.
+    const tbl = window.__cms?.get?.('calc.gmmTables.primaBaseByAge') || { "25":14633, "35":21282, "50":31837, "65":86671 };
+    const edades = Object.keys(tbl).map(Number).sort((a,b)=>a-b);
+    let p;
+    if (age <= edades[0]) p = tbl[String(edades[0])];
+    else if (age >= edades[edades.length-1]) p = tbl[String(edades[edades.length-1])];
+    else {
+      for (let i = 0; i < edades.length - 1; i++) {
+        if (age >= edades[i] && age <= edades[i+1]) {
+          const t = (age - edades[i]) / (edades[i+1] - edades[i]);
+          p = tbl[String(edades[i])] + t * (tbl[String(edades[i+1])] - tbl[String(edades[i])]);
+          break;
+        }
+      }
+    }
     if(sex==='F' && age < 55) p *= N('factors.gmm.factorMujer', 1.19);
     if(isSelf && state.gmm.smoker) p *= N('factors.gmm.factorFumador', 1.20);
     return p;
@@ -2552,10 +2567,13 @@ const GENERIC_FLOWS = {
       addons:()=>{
         const ad = state.patrimonial.addons;
         const hv = state.patrimonial.homeValue, cv = state.patrimonial.contentsValue;
-        const p = PRODUCTOS_PATRIMONIAL.AMEDIDA;
-        const basePrima = Math.round(hv*N('patrimonialTables.rates.homeRate', p.homeRate) + cv*N('patrimonialTables.rates.contentsRate', p.contentsRate) + N('patrimonialTables.rates.fixedBase', p.fixedBase));
+        // Auto-selección de paquete por valor de casa (Andy: cliente no elige paquete).
+        // <= vitalMax → VITAL (rates más bajos, sin extras premium). > vitalMax → AMEDIDA.
+        const pickPkg = hv <= N('patrimonialTables.umbrales.vitalMax', 1500000) ? 'vital' : 'amedida';
+        const p = PRODUCTOS_PATRIMONIAL[pickPkg === 'vital' ? 'VITAL' : 'AMEDIDA'];
+        const basePrima = Math.round(hv*N('patrimonialTables.rates.' + pickPkg + '.homeRate', p.homeRate) + cv*N('patrimonialTables.rates.' + pickPkg + '.contentsRate', p.contentsRate) + N('patrimonialTables.rates.' + pickPkg + '.fixedBase', p.fixedBase));
         const items = [
-          ['hidromet','<span data-cms-html="auto.arr_label.99">Hidrometereologicos</span>','<span data-cms-html="patrimonial.addon.hidromet.desc">Cubre las pérdidas y/o daños físicos al inmueble, así como a sus cimentaciones e instalaciones fijas subterráneas, originados por Avalanchas de lodo, Granizo, Helada, Huracán, Inundación, Inundación por lluvia, Golpe de mar, Tsunami, Marejada, Nevada y Vientos tempestuosos.</span>',F('patrimonial.hidrometCosto',{prima_base:basePrima,factor_hidromet:N('factors.patrimonial.factorHidromet',1)},basePrima)],
+          ['hidromet','<span data-cms-html="auto.arr_label.99">Hidrometereologicos</span>','<span data-cms-html="patrimonial.addon.hidromet.desc">Cubre las pérdidas y/o daños físicos al inmueble, así como a sus cimentaciones e instalaciones fijas subterráneas, originados por Avalanchas de lodo, Granizo, Helada, Huracán, Inundación, Inundación por lluvia, Golpe de mar, Tsunami, Marejada, Nevada y Vientos tempestuosos.</span>',F('patrimonial.hidrometCosto',{prima_base:basePrima,factor_hidromet:N('patrimonialTables.factorHidromet',0.75)},basePrima)],
           ['terremoto','<span data-cms-html="auto.arr_label.100">Terremoto</span>','<span data-cms-html="patrimonial.addon.terremoto.desc">Se cubren las pérdidas por daños materiales al inmueble Asegurado, así como a sus cimientos e instalaciones fijas subterráneas, causados por Terremoto y/o Erupción Volcánica.</span>',0],
           ['funmascotas','<span data-cms-html="auto.arr_label.101">Servicio funerario mascotas</span>','<span data-cms-html="patrimonial.addon.funmascotas.desc">En caso de fallecimiento de tu mascota, esta asistencia brinda los siguientes servicios; Recolección del cuerpo, Cremación individual de la mascota, Urna básica y Entrega a domicilio de las cenizas.</span>',N('patrimonial.addons.funmascotas',348)]
         ];
@@ -2577,17 +2595,19 @@ const GENERIC_FLOWS = {
     },
     price:()=>{
       // Hidromet ≈ duplica la prima base (instrucción AnCheco: varía pero más o menos duplica la anualidad).
-      const p = PRODUCTOS_PATRIMONIAL.AMEDIDA;
       const hv = state.patrimonial.homeValue, cv = state.patrimonial.contentsValue;
-      const basePrima = Math.round(hv*N('patrimonialTables.rates.homeRate', p.homeRate) + cv*N('patrimonialTables.rates.contentsRate', p.contentsRate) + N('patrimonialTables.rates.fixedBase', p.fixedBase));
-      const costs = {hidromet:F('patrimonial.hidrometCosto',{prima_base:basePrima,factor_hidromet:N('factors.patrimonial.factorHidromet',1)},basePrima), terremoto:0, funmascotas:N('patrimonial.addons.funmascotas',348)};
+      const pickPkg = hv <= N('patrimonialTables.umbrales.vitalMax', 1500000) ? 'vital' : 'amedida';
+      const p = PRODUCTOS_PATRIMONIAL[pickPkg === 'vital' ? 'VITAL' : 'AMEDIDA'];
+      const basePrima = Math.round(hv*N('patrimonialTables.rates.' + pickPkg + '.homeRate', p.homeRate) + cv*N('patrimonialTables.rates.' + pickPkg + '.contentsRate', p.contentsRate) + N('patrimonialTables.rates.' + pickPkg + '.fixedBase', p.fixedBase));
+      const costs = {hidromet:F('patrimonial.hidrometCosto',{prima_base:basePrima,factor_hidromet:N('patrimonialTables.factorHidromet',0.75)},basePrima), terremoto:0, funmascotas:N('patrimonial.addons.funmascotas',348)};
       const ad = state.patrimonial.addons.reduce((s,k)=>s+(costs[k]||0),0);
       return basePrima + ad;
     },
     summary:()=>{
-      const p = PRODUCTOS_PATRIMONIAL.AMEDIDA;
       const hv = state.patrimonial.homeValue, cv = state.patrimonial.contentsValue;
-      const basePrima = Math.round(hv*N('patrimonialTables.rates.homeRate', p.homeRate) + cv*N('patrimonialTables.rates.contentsRate', p.contentsRate) + N('patrimonialTables.rates.fixedBase', p.fixedBase));
+      const pickPkg = hv <= N('patrimonialTables.umbrales.vitalMax', 1500000) ? 'vital' : 'amedida';
+      const p = PRODUCTOS_PATRIMONIAL[pickPkg === 'vital' ? 'VITAL' : 'AMEDIDA'];
+      const basePrima = Math.round(hv*N('patrimonialTables.rates.' + pickPkg + '.homeRate', p.homeRate) + cv*N('patrimonialTables.rates.' + pickPkg + '.contentsRate', p.contentsRate) + N('patrimonialTables.rates.' + pickPkg + '.fixedBase', p.fixedBase));
       const lines = [
         ['<span data-cms-html="patrimonial.summary.paquete">Plan</span>','<span data-cms-html="patrimonial.summary.paquete_value">GNP Hogar · A tu medida</span>'],
         ['<span data-cms-html="patrimonial.summary.valor_casa">Valor casa (reconstrucción)</span>','$'+fmt(hv)],
@@ -2596,7 +2616,7 @@ const GENERIC_FLOWS = {
       p.coberturas.slice(0,4).forEach(c=>lines.push(['· '+c[0], c[1]]));
       if(state.patrimonial.addons.length){
         const addonLabels = {hidromet:'<span data-cms-html="patrimonial.summary.addon.hidromet">Hidrometeorológicos</span>', terremoto:'<span data-cms-html="patrimonial.summary.addon.terremoto">Terremoto/Erupción volcánica</span>', funmascotas:'<span data-cms-html="patrimonial.summary.addon.funmascotas">Servicio funerario mascotas</span>'};
-        const addonCosts = {hidromet:F('patrimonial.hidrometCosto',{prima_base:basePrima,factor_hidromet:N('factors.patrimonial.factorHidromet',1)},basePrima), terremoto:0, funmascotas:N('patrimonial.addons.funmascotas',348)};
+        const addonCosts = {hidromet:F('patrimonial.hidrometCosto',{prima_base:basePrima,factor_hidromet:N('patrimonialTables.factorHidromet',0.75)},basePrima), terremoto:0, funmascotas:N('patrimonial.addons.funmascotas',348)};
         state.patrimonial.addons.forEach(k=>{
           const costoStr = addonCosts[k]===0 ? '<span data-cms-html="patrimonial.summary.addon.cotiza_aparte">Según CP (cotiza Andy aparte)</span>' : '$'+fmt(addonCosts[k])+'/año';
           lines.push(['+ '+addonLabels[k], costoStr]);
