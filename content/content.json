@@ -162,8 +162,8 @@
         "rec": "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Una suma asegurada de&nbsp;<strong>$40,800,000</strong>&nbsp;te alcanza perfectamente para cubrir cualquier posible evento o enfermedad catastrófica, historicamente no se ha registrado ninguna enfermedad que sus gastos hayan superado los 20 millones de pesos anuales.<br>Bajar la suma casi no abarata la anualidad&nbsp; y te deja expuesto a un gasto grande."
       },
       "7": {
-        "body": "El plan base ya incluye <strong>Asistencia en Viajes</strong>, <strong>Membresía Médica Móvil</strong> (orientación médica telefónica, orientación por videollamada, consulta médica a domicilio, ambulancia por emergencia, traslados programados a costo preferencial, concierge para referencias médicas y hospitalarias),&nbsp;<strong>Ayuda para Maternidad básica ($21,000)&nbsp;</strong>y&nbsp;<strong>Consultas Psicológicas.&nbsp;</strong>&nbsp;&nbsp;<br>",
-        "rec": "<br>Incluye siempre&nbsp;<strong>0 deducible en accidentes&nbsp;</strong>y&nbsp;<strong>Ampliacion Hospitalaria Nacional</strong>. así podrás utilizar mas tu seguro y en cualquier parte de Mexico sin ninguna penalización.&nbsp;<br>Agrega&nbsp;<strong>Maternidad Plus</strong>&nbsp;\n\nsi planeas embarazo en los próximos 2-3 años, vale la pena.&nbsp;(10 meses de espera).&nbsp;&nbsp;<br><br>Estas son las coberturas&nbsp;<strong>opcionales</strong>&nbsp;que puedes agregar.",
+        "body": "El plan base incluye <strong>Asistencia en Viajes</strong>, <strong>Membresía Médica Móvil</strong> (orientación médica telefónica, orientación por videollamada, consulta médica a domicilio, ambulancia por emergencia, traslados programados a costo preferencial, concierge para referencias médicas y hospitalarias),&nbsp;<strong>Ayuda para Maternidad básica ($21,000)&nbsp;</strong>y&nbsp;<strong>Consultas Psicológicas.&nbsp;</strong>&nbsp;&nbsp;<br>",
+        "rec": "<br>Agrega&nbsp;<strong>Maternidad Plus</strong>&nbsp;\n\nsi planeas embarazo en los próximos 2-3 años, vale la pena.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(10 meses de período de espera).&nbsp;&nbsp;<br>",
         "example": ""
       },
       "8": {
@@ -341,7 +341,10 @@
         "desc": "3 opciones de cobertura: $47,000, $64,500 y $81,500.&nbsp;\n\n<strong>10 meses de espera</strong>."
       },
       "ahr": {
-        "desc": "Acceso a todos los Hopitales del país, no solo tu ciudad base."
+        "desc": "Acceso a todos los Hopitales del país, no solo en tu ciudad base."
+      },
+      "psico": {
+        "desc": "Incluye 2 terapias al mes por videollamada (50 min). Ansiedad, estrés, depresión, insomnio, problemas de pareja. Aplica para terapia de pareja y para menores con consentimiento del tutor."
       }
     },
     "benefits": {
