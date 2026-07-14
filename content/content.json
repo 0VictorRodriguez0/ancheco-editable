@@ -378,7 +378,10 @@
         "def": ""
       }
     },
-    "tier_choice_note": "El nivel hospitalario lo eliges en el momento en que vas a usar tu seguro, no al contratarlo; por lo tanto el deducible y el coaseguro a pagar variará de acuerdo a tu elección."
+    "tier_choice_note": "El nivel hospitalario lo eliges en el momento en que vas a usar tu seguro, no al contratarlo; por lo tanto el deducible y el coaseguro a pagar variará de acuerdo a tu elección.",
+    "optional": {
+      "title": "MATERNIDAD PLUS — costo a cotizar aparte"
+    }
   },
   "productos": {
     "ahorro": {
