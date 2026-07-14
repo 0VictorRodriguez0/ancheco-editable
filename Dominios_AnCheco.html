@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Variaciones de dominio para AnCheco</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #ffffff; color: #0f172a; font-family: 'Inter Tight', system-ui, sans-serif; font-size: 10px; line-height: 1.35; }
+  body { padding: 24px 26px; }
+
+  .header { text-align: left; margin-bottom: 12px; }
+  .badge {
+    display: inline-block; background: #2563EB !important; color: #fff !important;
+    padding: 4px 10px; border-radius: 3px;
+    font-size: 8.5px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase;
+    margin-bottom: 10px;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  h1 { font-size: 20px; font-weight: 700; color: #0f172a; letter-spacing: -0.3px; margin-bottom: 4px; }
+  .sub { font-size: 10.5px; color: #64748b; margin-bottom: 8px; }
+  .note { font-size: 9.5px; color: #475569; padding: 7px 11px; background: #F8FAFC !important; border-left: 3px solid #2563EB !important; margin-bottom: 5px;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .note.red { background: #FEF2F2 !important; border-left-color: #DC2626 !important; color: #7F1D1D; }
+
+  table {
+    width: 100%; border-collapse: collapse; font-size: 9.5px;
+    border: 1px solid #E2E8F0; margin-top: 10px;
+  }
+  th {
+    background: #F1F5F9 !important; color: #0f172a !important;
+    text-align: left; padding: 7px 8px;
+    font-weight: 600; font-size: 8.5px; letter-spacing: 0.3px; text-transform: uppercase;
+    border-bottom: 2px solid #2563EB !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  td {
+    padding: 7px 8px;
+    border-bottom: 1px solid #E2E8F0;
+    vertical-align: middle;
+  }
+  td.dom { font-weight: 700; color: #0f172a; white-space: nowrap; font-size: 10px; }
+  td.cell {
+    line-height: 1.4;
+    font-size: 9px;
+  }
+  td.cell .prov-link {
+    display: inline-block;
+    color: #2563EB;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 9.5px;
+    margin-bottom: 2px;
+    border-bottom: 1px dotted #2563EB;
+  }
+  td.cell .prov-link:hover { text-decoration: underline; }
+  td.cell b { color: #2563EB; font-weight: 600; display: block; margin-top: 1px; }
+  td.cell i { color: #78350F; font-style: normal; font-weight: 500; font-size: 8.5px; display: block; }
+  td.empty {
+    color: #CBD5E1;
+    font-style: italic;
+    font-size: 9px;
+    text-align: center;
+  }
+
+  tr.top td {
+    background: #F0FDF4 !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  tr.top td.dom::after {
+    content: " ★"; color: #22C55E; font-size: 10px;
+  }
+  tr.grp td {
+    background: #EFF6FF !important;
+    font-weight: 600; color: #1E3A8A;
+    font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px;
+    padding: 6px 8px;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  .foot {
+    margin-top: 12px; padding-top: 8px;
+    border-top: 1px solid #E2E8F0;
+    font-size: 8.5px; color: #64748b; text-align: center;
+  }
+  .legend {
+    padding: 6px 10px;
+    font-size: 8.5px; color: #64748b; margin-top: 4px;
+  }
+  .legend b { color: #2563EB; }
+  .legend i { color: #78350F; font-style: normal; }
+
+  @media print {
+    body { padding: 16px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">AInnovation × AnCheco</div>
+  <h1>Variaciones de dominio para AnCheco</h1>
+  <div class="sub">Precios verificados en cada proveedor · 3 de julio de 2026</div>
+  <div class="note red">
+    <b>ancheco.com está ocupado.</b> Su recuperación cuesta entre USD $2,000 y $15,000 en el mercado secundario.
+  </div>
+  <div class="note">
+    Todos los dominios listados están <b>disponibles</b>. El símbolo ★ marca las opciones más fieles a la marca ANCHECO. El nombre de cada proveedor en la tabla es un enlace directo al buscador con el dominio precargado.
+  </div>
+  <div class="legend">
+    <b>Precio</b> = primer año &nbsp;·&nbsp; <i>Renovación</i> = precio anual después
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 24%;">Dominio</th>
+      <th style="width: 25%;">GoDaddy</th>
+      <th style="width: 25%;">Hostinger</th>
+      <th>Domain.com</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <!-- GRUPO 1: NOMBRE PURO -->
+    <tr class="grp"><td colspan="4">Nombre puro — ANCHECO</td></tr>
+
+    <tr class="top">
+      <td class="dom">ancheco.com.mx</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=ancheco.com.mx">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $619.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=ancheco.com.mx&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $612.99</i>
+      </td>
+      <td class="empty">—</td>
+    </tr>
+    <tr class="top">
+      <td class="dom">ancheco.mx</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=ancheco.mx">GoDaddy →</a>
+        <b>$2,099 (3 años)</b><i>Renov. $1,050/año</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=ancheco.mx&from=domain-name-search">Hostinger →</a>
+        <b>$99.99 (3 años)</b><i>Renov. $816.99</i>
+      </td>
+      <td class="empty">—</td>
+    </tr>
+    <tr>
+      <td class="dom">ancheco.net</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=ancheco.net">GoDaddy →</a>
+        <b>$0.01 MXN</b><i>Renov. $449.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=ancheco.net&from=domain-name-search">Hostinger →</a>
+        <b>$244.99 MXN</b><i>Renov. $367.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.domain.com/v2/products/domain/domain-search-results?brand=domain&siteID=46172437&promo=5DOMAINOFFERPR2&enableAiSearch=true&domainName=ancheco.net">Domain.com →</a>
+        <b>$5.00 USD (1er año)</b><i>Renov. $19.99 USD/año</i>
+      </td>
+    </tr>
+    <tr>
+      <td class="dom">ancheco.org</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=ancheco.org">GoDaddy →</a>
+        <b>$169.99 MXN</b><i>Renov. $449.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=ancheco.org&from=domain-name-search">Hostinger →</a>
+        <b>$183.99 MXN</b><i>Renov. $367.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.domain.com/v2/products/domain/domain-search-results?brand=domain&siteID=46172437&promo=5DOMAINOFFERPR2&enableAiSearch=true&domainName=ancheco.org">Domain.com →</a>
+        <b>$5.00 USD (1er año)</b><i>Renov. $19.99 USD/año</i>
+      </td>
+    </tr>
+
+    <!-- GRUPO 2: CON "SEGUROS" -->
+    <tr class="grp"><td colspan="4">Con la palabra "seguros"</td></tr>
+
+    <tr class="top">
+      <td class="dom">anchecoseguros.com</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=anchecoseguros.com">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $399.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=anchecoseguros.com&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $329.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.domain.com/v2/products/domain/domain-search-results?brand=domain&siteID=46172437&promo=5DOMAINOFFERPR2&enableAiSearch=true&domainName=anchecoseguros.com">Domain.com →</a>
+        <b>$5.00 USD (1er año)</b><i>Renov. $19.99 USD/año</i>
+      </td>
+    </tr>
+    <tr>
+      <td class="dom">anchecoseguros.mx</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=anchecoseguros.mx">GoDaddy →</a>
+        <b>$1,049.99 MXN</b><i>Renov. $1,049.99/año</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=anchecoseguros.mx&from=domain-name-search">Hostinger →</a>
+        <b>$99.99 (3 años)</b><i>Renov. $816.99</i>
+      </td>
+      <td class="empty">—</td>
+    </tr>
+    <tr>
+      <td class="dom">anchecoseguros.com.mx</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=anchecoseguros.com.mx">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $619.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=anchecoseguros.com.mx&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $612.99</i>
+      </td>
+      <td class="empty">—</td>
+    </tr>
+    <tr>
+      <td class="dom">segurosancheco.com</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=segurosancheco.com">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $399.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=segurosancheco.com&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $329.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.domain.com/v2/products/domain/domain-search-results?brand=domain&siteID=46172437&promo=5DOMAINOFFERPR2&enableAiSearch=true&domainName=segurosancheco.com">Domain.com →</a>
+        <b>$5.00 USD (1er año)</b><i>Renov. $19.99 USD/año</i>
+      </td>
+    </tr>
+    <tr>
+      <td class="dom">segurosancheco.mx</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=segurosancheco.mx">GoDaddy →</a>
+        <b>$1,049.99 MXN</b><i>Renov. $1,049.99/año</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=segurosancheco.mx&from=domain-name-search">Hostinger →</a>
+        <b>$99.99 (3 años)</b><i>Renov. $816.99</i>
+      </td>
+      <td class="empty">—</td>
+    </tr>
+
+    <!-- GRUPO 3: CON "ASESORES" -->
+    <tr class="grp"><td colspan="4">Con "asesores" — enfoque consultivo</td></tr>
+
+    <tr>
+      <td class="dom">asesoresancheco.com</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=asesoresancheco.com">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $399.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=asesoresancheco.com&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $329.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.domain.com/v2/products/domain/domain-search-results?brand=domain&siteID=46172437&promo=5DOMAINOFFERPR2&enableAiSearch=true&domainName=asesoresancheco.com">Domain.com →</a>
+        <b>$5.00 USD (1er año)</b><i>Renov. $19.99 USD/año</i>
+      </td>
+    </tr>
+    <tr>
+      <td class="dom">asesoresancheco.mx</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=asesoresancheco.mx">GoDaddy →</a>
+        <b>$1,049.99 MXN</b><i>Renov. $1,049.99/año</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=asesoresancheco.mx&from=domain-name-search">Hostinger →</a>
+        <b>$99.99 (3 años)</b><i>Renov. $816.99</i>
+      </td>
+      <td class="empty">—</td>
+    </tr>
+    <tr>
+      <td class="dom">asesoresancheco.com.mx</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=asesoresancheco.com.mx">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $619.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=asesoresancheco.com.mx&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $612.99</i>
+      </td>
+      <td class="empty">—</td>
+    </tr>
+    <tr>
+      <td class="dom">anchecoasesores.com</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=anchecoasesores.com">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $399.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=anchecoasesores.com&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $329.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.domain.com/v2/products/domain/domain-search-results?brand=domain&siteID=46172437&promo=5DOMAINOFFERPR2&enableAiSearch=true&domainName=anchecoasesores.com">Domain.com →</a>
+        <b>$5.00 USD (1er año)</b><i>Renov. $19.99 USD/año</i>
+      </td>
+    </tr>
+
+    <!-- GRUPO 4: CON "AGENCIA" / "BROKER" / "GRUPO" -->
+    <tr class="grp"><td colspan="4">Con "agencia", "broker" o "grupo"</td></tr>
+
+    <tr>
+      <td class="dom">anchecoagencia.com</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=anchecoagencia.com">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $399.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=anchecoagencia.com&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $329.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.domain.com/v2/products/domain/domain-search-results?brand=domain&siteID=46172437&promo=5DOMAINOFFERPR2&enableAiSearch=true&domainName=anchecoagencia.com">Domain.com →</a>
+        <b>$5.00 USD (1er año)</b><i>Renov. $19.99 USD/año</i>
+      </td>
+    </tr>
+    <tr>
+      <td class="dom">anchecoagencia.com.mx</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=anchecoagencia.com.mx">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $619.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=anchecoagencia.com.mx&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $612.99</i>
+      </td>
+      <td class="empty">—</td>
+    </tr>
+    <tr>
+      <td class="dom">anchecobroker.com</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=anchecobroker.com">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $399.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=anchecobroker.com&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $329.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.domain.com/v2/products/domain/domain-search-results?brand=domain&siteID=46172437&promo=5DOMAINOFFERPR2&enableAiSearch=true&domainName=anchecobroker.com">Domain.com →</a>
+        <b>$5.00 USD (1er año)</b><i>Renov. $19.99 USD/año</i>
+      </td>
+    </tr>
+    <tr>
+      <td class="dom">grupoancheco.com</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=grupoancheco.com">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $399.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=grupoancheco.com&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $329.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.domain.com/v2/products/domain/domain-search-results?brand=domain&siteID=46172437&promo=5DOMAINOFFERPR2&enableAiSearch=true&domainName=grupoancheco.com">Domain.com →</a>
+        <b>$5.00 USD (1er año)</b><i>Renov. $19.99 USD/año</i>
+      </td>
+    </tr>
+    <tr>
+      <td class="dom">grupoancheco.com.mx</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=grupoancheco.com.mx">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $619.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=grupoancheco.com.mx&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $612.99</i>
+      </td>
+      <td class="empty">—</td>
+    </tr>
+
+    <!-- GRUPO 5: BRANDING FUERTE -->
+    <tr class="grp"><td colspan="4">Branding con acción — "protege" y "consultores"</td></tr>
+
+    <tr>
+      <td class="dom">anchecoprotege.com</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=anchecoprotege.com">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $399.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=anchecoprotege.com&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $329.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.domain.com/v2/products/domain/domain-search-results?brand=domain&siteID=46172437&promo=5DOMAINOFFERPR2&enableAiSearch=true&domainName=anchecoprotege.com">Domain.com →</a>
+        <b>$5.00 USD (1er año)</b><i>Renov. $19.99 USD/año</i>
+      </td>
+    </tr>
+    <tr>
+      <td class="dom">proteccionancheco.com</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=proteccionancheco.com">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $399.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=proteccionancheco.com&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $329.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.domain.com/v2/products/domain/domain-search-results?brand=domain&siteID=46172437&promo=5DOMAINOFFERPR2&enableAiSearch=true&domainName=proteccionancheco.com">Domain.com →</a>
+        <b>$5.00 USD (1er año)</b><i>Renov. $19.99 USD/año</i>
+      </td>
+    </tr>
+    <tr>
+      <td class="dom">anchecoconsultores.com</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=anchecoconsultores.com">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $399.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=anchecoconsultores.com&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $329.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.domain.com/v2/products/domain/domain-search-results?brand=domain&siteID=46172437&promo=5DOMAINOFFERPR2&enableAiSearch=true&domainName=anchecoconsultores.com">Domain.com →</a>
+        <b>$5.00 USD (1er año)</b><i>Renov. $19.99 USD/año</i>
+      </td>
+    </tr>
+
+    <!-- GRUPO 6: NOMBRE DEL AGENTE -->
+    <tr class="grp"><td colspan="4">Nombre del agente — Andy Cherro Corallo</td></tr>
+
+    <tr>
+      <td class="dom">andycherro.com</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=andycherro.com">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $399.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=andycherro.com&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $329.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.domain.com/v2/products/domain/domain-search-results?brand=domain&siteID=46172437&promo=5DOMAINOFFERPR2&enableAiSearch=true&domainName=andycherro.com">Domain.com →</a>
+        <b>$5.00 USD (1er año)</b><i>Renov. $19.99 USD/año</i>
+      </td>
+    </tr>
+    <tr>
+      <td class="dom">andycherro.mx</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=andycherro.mx">GoDaddy →</a>
+        <b>$1,049.99 MXN</b><i>Renov. $1,049.99/año</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=andycherro.mx&from=domain-name-search">Hostinger →</a>
+        <b>$99.99 (3 años)</b><i>Renov. $816.99</i>
+      </td>
+      <td class="empty">—</td>
+    </tr>
+    <tr>
+      <td class="dom">andycherroseguros.com</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=andycherroseguros.com">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $399.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=andycherroseguros.com&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $329.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.domain.com/v2/products/domain/domain-search-results?brand=domain&siteID=46172437&promo=5DOMAINOFFERPR2&enableAiSearch=true&domainName=andycherroseguros.com">Domain.com →</a>
+        <b>$5.00 USD (1er año)</b><i>Renov. $19.99 USD/año</i>
+      </td>
+    </tr>
+    <tr>
+      <td class="dom">cherrocorallo.com</td>
+      <td class="cell">
+        <a class="prov-link" href="https://mx.godaddy.com/domainsearch/find?checkAvail=1&domainToCheck=cherrocorallo.com">GoDaddy →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $399.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.hostinger.com/mx/domain-name-results?domain=cherrocorallo.com&from=domain-name-search">Hostinger →</a>
+        <b>$0.01 (3 años)</b><i>Renov. $329.99</i>
+      </td>
+      <td class="cell">
+        <a class="prov-link" href="https://www.domain.com/v2/products/domain/domain-search-results?brand=domain&siteID=46172437&promo=5DOMAINOFFERPR2&enableAiSearch=true&domainName=cherrocorallo.com">Domain.com →</a>
+        <b>$5.00 USD (1er año)</b><i>Renov. $19.99 USD/año</i>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+<div class="foot">
+  <b>AInnovation × AnCheco</b> · 3 de julio de 2026 · Precios verificados directamente en cada proveedor. Sujetos a promociones vigentes.
+</div>
+
+</body>
+</html>

@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Cómo se calculan las cotizaciones — AnCheco</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #ffffff; color: #0f172a; font-family: 'Inter Tight', system-ui, -apple-system, sans-serif; font-size: 12px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  body { padding: 24px 32px; }
+
+  .page {
+    padding: 20px 0 40px 0;
+    page-break-inside: avoid;
+  }
+  .page-break {
+    page-break-after: always;
+    height: 0; margin: 0; padding: 0; border: none;
+  }
+
+  /* Cover */
+  .cover { text-align: center; padding: 60px 20px 40px 20px; }
+  .cover-badge {
+    display: inline-block;
+    background: #2563EB !important;
+    color: #ffffff !important;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .cover h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  .cover .subtitle {
+    font-size: 15px;
+    color: #64748b;
+    font-weight: 400;
+    margin-bottom: 40px;
+  }
+  .cover-meta {
+    margin-top: 60px;
+    font-size: 11px;
+    color: #64748b;
+    line-height: 1.9;
+  }
+  .cover-meta strong { color: #0f172a; font-weight: 600; }
+  .cover-note {
+    margin: 30px auto 0 auto;
+    max-width: 480px;
+    padding: 14px 18px;
+    background: #F8FAFC !important;
+    border-left: 3px solid #2563EB !important;
+    text-align: left;
+    font-size: 11px;
+    color: #334155;
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Section header */
+  h2.section {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.3px;
+  }
+  .section-line {
+    height: 3px;
+    width: 36px;
+    background: #2563EB !important;
+    margin-bottom: 20px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .section-intro {
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  /* Summary table */
+  table.summary {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    margin-top: 8px;
+  }
+  table.summary th {
+    background: #F1F5F9 !important;
+    color: #0f172a !important;
+    text-align: left;
+    padding: 10px 12px;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    border-bottom: 2px solid #2563EB !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  table.summary td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #E2E8F0;
+    vertical-align: top;
+  }
+  table.summary td.name {
+    font-weight: 600;
+    color: #0f172a;
+    white-space: nowrap;
+  }
+
+  /* Product block */
+  .product {
+    page-break-inside: avoid;
+    page-break-before: auto;
+    margin-bottom: 20px;
+  }
+  .product-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+  .product-num {
+    display: inline-block;
+    background: #2563EB !important;
+    color: #ffffff !important;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 26px;
+    font-size: 12px;
+    font-weight: 700;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    flex-shrink: 0;
+  }
+  .product h2.product-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.4px;
+    line-height: 1.1;
+  }
+  .product-line {
+    height: 2px;
+    background: #E2E8F0;
+    margin: 10px 0 18px 0;
+  }
+
+  h3.block-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #2563EB;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin: 18px 0 10px 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Formula capsules */
+  .formula {
+    padding: 16px 18px;
+    background: #F8FAFC !important;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    line-height: 1.9;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .cap {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    background: #EEF2FF !important;
+    color: #1E40AF !important;
+    border: 1px solid #C7D2FE;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .cap.final {
+    background: #DCFCE7 !important;
+    color: #14532D !important;
+    border-color: #86EFAC;
+    font-weight: 600;
+  }
+  .cap.const {
+    background: #FEF3C7 !important;
+    color: #78350F !important;
+    border-color: #FDE68A;
+  }
+  .op {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 12px;
+  }
+
+  /* Values table */
+  table.values {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    margin-top: 6px;
+    border: 1px solid #E2E8F0;
+  }
+  table.values th {
+    background: #F8FAFC !important;
+    color: #0f172a !important;
+    text-align: left;
+    padding: 9px 11px;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #E2E8F0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  table.values td {
+    padding: 8px 11px;
+    border-bottom: 1px solid #F1F5F9;
+    vertical-align: top;
+  }
+  table.values tr:last-child td { border-bottom: none; }
+  table.values td.concept { font-weight: 500; color: #0f172a; }
+  table.values td.value {
+    font-family: 'Inter Tight', monospace;
+    color: #2563EB;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  table.values td.desc { color: #475569; font-size: 10.5px; }
+
+  /* Example */
+  .example {
+    padding: 16px 18px;
+    background: #FAFBFC !important;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .example .who {
+    font-size: 11px;
+    color: #475569;
+    margin-bottom: 12px;
+    font-style: italic;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #CBD5E1;
+  }
+  .example .step {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    font-size: 11px;
+    color: #334155;
+    border-bottom: 1px dotted #E2E8F0;
+  }
+  .example .step:last-of-type { border-bottom: none; }
+  .example .step .label { }
+  .example .step .amount {
+    font-weight: 600;
+    color: #0f172a;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .example .result {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: #DCFCE7 !important;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .example .result .label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #14532D !important;
+  }
+  .example .result .amount {
+    font-size: 15px;
+    font-weight: 700;
+    color: #14532D !important;
+  }
+
+  /* Note bar */
+  .note {
+    margin-top: 14px;
+    padding: 10px 14px;
+    border-left: 3px solid #94A3B8;
+    background: #F8FAFC !important;
+    font-size: 10.5px;
+    color: #475569;
+    line-height: 1.55;
+    border-radius: 0 4px 4px 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .note.calibrated { border-left-color: #22C55E !important; background: #F0FDF4 !important; color: #14532D !important; }
+  .note strong { font-weight: 600; }
+
+  /* Closing */
+  .closing {
+    padding: 30px 40px;
+    background: #F8FAFC !important;
+    border-radius: 8px;
+    text-align: center;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .closing h2 { font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 12px; letter-spacing: -0.3px; }
+  .closing p { font-size: 12px; color: #475569; line-height: 1.7; margin-bottom: 8px; }
+  .closing .brand {
+    margin-top: 24px;
+    font-size: 10px;
+    color: #64748b;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  @media print {
+    body { padding: 0; margin: 0; }
+    .page { padding: 20px 22px; }
+    .page-break { page-break-after: always !important; }
+    .product { page-break-inside: avoid !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== PORTADA ==================== -->
+<div class="page cover">
+  <div class="cover-badge">AInnovation × AnCheco</div>
+  <h1>Cómo se calculan<br>las cotizaciones</h1>
+  <p class="subtitle">Guía del simulador integrado en la página web</p>
+
+  <div class="cover-note">
+    Las primas que arroja el simulador son <strong>estimaciones</strong>, calculadas a partir de tablas que reproducen los materiales oficiales de GNP y que están calibradas contra cotizaciones reales. La cotización oficial siempre la emite GNP con la información completa del cliente.
+  </div>
+
+  <div class="cover-meta">
+    <div>Documento interno preparado por <strong>AInnovation</strong></div>
+    <div>para <strong>Andrea Cherro Corallo</strong></div>
+    <div>3 de julio de 2026</div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==================== RESUMEN ==================== -->
+<div class="page">
+  <h2 class="section">Resumen de los seis productos</h2>
+  <div class="section-line"></div>
+  <p class="section-intro">Cada producto sigue una receta distinta. Esta tabla muestra en una línea cómo se arma la prima anual en cada uno. Los detalles y ejemplos completos están en las páginas siguientes.</p>
+
+  <table class="summary">
+    <thead>
+      <tr>
+        <th style="width: 22%;">Producto</th>
+        <th>La fórmula en una línea</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="name">Educativo</td>
+        <td>Prima base según plazo × ajuste por edad del contratante × ajuste por monto de protección</td>
+      </tr>
+      <tr>
+        <td class="name">Gastos Médicos Mayores</td>
+        <td>Prima base por edad × factor sexo × factor fumador × nivel hospitalario × ajuste deducible × factor suma + adicionales + derecho de póliza + IVA</td>
+      </tr>
+      <tr>
+        <td class="name">Auto</td>
+        <td>Valor del auto × 5% × antigüedad × uso × cobertura × deducible robo × deducible daños + extras</td>
+      </tr>
+      <tr>
+        <td class="name">Mascota</td>
+        <td>Prima base del paquete × ajuste por edad × factor especie + extras</td>
+      </tr>
+      <tr>
+        <td class="name">Hogar / Patrimonial</td>
+        <td>(Valor casa × tarifa casa) + (Valor contenidos × 0.22%) + cargo fijo + addons</td>
+      </tr>
+      <tr>
+        <td class="name">Ahorro</td>
+        <td>Aportación anual (indexada 5%) × plazo → saldo proyectado con multiplicador por edad + seguro de vida incluido</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==================== 1. EDUCATIVO ==================== -->
+<div class="page product">
+  <div class="product-header">
+    <span class="product-num">1</span>
+    <h2 class="product-title">Seguro Educativo</h2>
+  </div>
+  <div class="product-line"></div>
+
+  <h3 class="block-title">La fórmula</h3>
+  <div class="formula">
+    <span class="cap const">Prima base plazo</span>
+    <span class="op">×</span>
+    <span class="cap">Ajuste edad contratante</span>
+    <span class="op">×</span>
+    <span class="cap">Ajuste monto protección</span>
+    <span class="op">=</span>
+    <span class="cap final">Prima anual</span>
+  </div>
+
+  <h3 class="block-title">Los valores que usa</h3>
+  <table class="values">
+    <thead>
+      <tr><th style="width: 40%;">Concepto</th><th style="width: 22%;">Valor</th><th>Aplica en</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="concept">Prima base plazo 5 años</td><td class="value">$82,670</td><td class="desc">Si paga en 5 años</td></tr>
+      <tr><td class="concept">Prima base plazo 10 años</td><td class="value">$43,735</td><td class="desc">Si paga en 10 años</td></tr>
+      <tr><td class="concept">Prima base hasta edad alcanzada</td><td class="value">$25,760</td><td class="desc">Si paga hasta que el menor cumpla 18</td></tr>
+      <tr><td class="concept">Edad del contratante de referencia</td><td class="value">37 años</td><td class="desc">Punto de comparación</td></tr>
+      <tr><td class="concept">Ajuste por cada año de diferencia</td><td class="value">4%</td><td class="desc">Sube o baja según edad real vs 37</td></tr>
+      <tr><td class="concept">Protección de referencia</td><td class="value">$1,100,000</td><td class="desc">Monto contra el que se compara</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="block-title">Ejemplo con números</h3>
+  <div class="example">
+    <div class="who">Papá de 40 años. Plan educativo para su hijo de 5 años. Protección garantizada: $1,000,000. Plazo: 10 años.</div>
+    <div class="step"><span class="label">Ajuste por edad — 40 años son 3 más que los 37 de referencia: 1 + (3 × 4%)</span><span class="amount">× 1.1200</span></div>
+    <div class="step"><span class="label">Ajuste por monto — $1,000,000 ÷ $1,100,000</span><span class="amount">× 0.9091</span></div>
+    <div class="step"><span class="label">Factor combinado — 1.12 × 0.9091</span><span class="amount">1.0182</span></div>
+    <div class="step"><span class="label">Prima base plazo 10 años</span><span class="amount">$43,735</span></div>
+    <div class="step"><span class="label">Prima × factor combinado — 43,735 × 1.0182</span><span class="amount">$44,530</span></div>
+    <div class="result"><span class="label">Prima anual estimada</span><span class="amount">$44,530</span></div>
+  </div>
+
+  <div class="note">
+    <strong>Nota:</strong> este producto usa constantes redondas basadas en el material oficial, no en un PDF de cotización individual. La cifra real en GNP puede variar por sexo del titular, fumador, historial médico y ajustes actuariales anuales que el simulador no toma en cuenta.
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==================== 2. GMM ==================== -->
+<div class="page product">
+  <div class="product-header">
+    <span class="product-num">2</span>
+    <h2 class="product-title">Gastos Médicos Mayores</h2>
+  </div>
+  <div class="product-line"></div>
+
+  <h3 class="block-title">La fórmula</h3>
+  <div class="formula">
+    <span class="cap">Prima base por edad</span>
+    <span class="op">×</span>
+    <span class="cap const">Sexo</span>
+    <span class="op">×</span>
+    <span class="cap const">Fumador</span>
+    <span class="op">×</span>
+    <span class="cap const">Nivel</span>
+    <span class="op">×</span>
+    <span class="cap const">Deducible</span>
+    <span class="op">×</span>
+    <span class="cap const">Suma</span>
+    <span class="op">+</span>
+    <span class="cap">Adicionales</span>
+    <span class="op">+</span>
+    <span class="cap const">Derecho $970</span>
+    <span class="op">×</span>
+    <span class="cap const">1.16 (IVA)</span>
+    <span class="op">=</span>
+    <span class="cap final">Prima anual</span>
+  </div>
+
+  <h3 class="block-title">Prima base neta por edad del titular (Nivel B, suma $40.8M, deducible medio)</h3>
+  <table class="values">
+    <thead><tr><th style="width: 35%;">Edad ancla</th><th style="width: 30%;">Prima neta anual</th><th>Cómo funciona</th></tr></thead>
+    <tbody>
+      <tr><td class="concept">25 años</td><td class="value">$14,633</td><td class="desc" rowspan="4">Para edades intermedias el sistema interpola en línea recta entre las dos anclas más cercanas</td></tr>
+      <tr><td class="concept">35 años</td><td class="value">$21,282</td></tr>
+      <tr><td class="concept">50 años</td><td class="value">$31,837</td></tr>
+      <tr><td class="concept">65 años</td><td class="value">$86,671</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="block-title">Multiplicadores que se aplican</h3>
+  <table class="values">
+    <thead><tr><th style="width: 40%;">Concepto</th><th style="width: 22%;">Valor</th><th>Aplica cuando</th></tr></thead>
+    <tbody>
+      <tr><td class="concept">Factor mujer</td><td class="value">× 1.19</td><td class="desc">Titular mujer menor de 55</td></tr>
+      <tr><td class="concept">Factor fumador</td><td class="value">× 1.20</td><td class="desc">Titular declara que fuma (solo al titular)</td></tr>
+      <tr><td class="concept">Nivel A Premium</td><td class="value">× 1.28</td><td class="desc">Nivel hospitalario más alto</td></tr>
+      <tr><td class="concept">Nivel B Preferente</td><td class="value">× 1.00</td><td class="desc">Referencia</td></tr>
+      <tr><td class="concept">Nivel C Media / D Esencial</td><td class="value">× 0.85</td><td class="desc">Niveles económicos</td></tr>
+      <tr><td class="concept">Escalón por deducible</td><td class="value">× 0.955 ^ n</td><td class="desc">Un escalón menos por cada opción arriba de la 3</td></tr>
+      <tr><td class="concept">Suma $2.2M / $17.5M / $40.8M / $58.3M</td><td class="value">0.42 / 0.82 / 1.00 / 1.12</td><td class="desc">Multiplicador según suma asegurada</td></tr>
+      <tr><td class="concept">Derecho de póliza</td><td class="value">$970</td><td class="desc">Por cada asegurado, se suma antes del IVA</td></tr>
+      <tr><td class="concept">IVA</td><td class="value">× 1.16</td><td class="desc">Al total neto más derecho</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="block-title">Ejemplo con números</h3>
+  <div class="example">
+    <div class="who">Hombre de 40 años, no fumador, individual, Nivel B Preferente, deducible medio (opción 3, la referencia), suma asegurada $40.8M, sin coberturas adicionales.</div>
+    <div class="step"><span class="label">Prima base por edad 40 — interpolando: 21,282 + (5÷15) × (31,837 − 21,282)</span><span class="amount">$24,800</span></div>
+    <div class="step"><span class="label">Ajuste sexo (hombre)</span><span class="amount">× 1.00</span></div>
+    <div class="step"><span class="label">Ajuste fumador (no)</span><span class="amount">× 1.00</span></div>
+    <div class="step"><span class="label">Nivel B (referencia)</span><span class="amount">× 1.00</span></div>
+    <div class="step"><span class="label">Deducible opción 3 (referencia): 0.955 ^ 0</span><span class="amount">× 1.00</span></div>
+    <div class="step"><span class="label">Suma $40.8M (referencia)</span><span class="amount">× 1.00</span></div>
+    <div class="step"><span class="label">Prima neta</span><span class="amount">$24,800</span></div>
+    <div class="step"><span class="label">Derecho de póliza — 1 asegurado × $970</span><span class="amount">+ $970</span></div>
+    <div class="step"><span class="label">Subtotal antes de IVA</span><span class="amount">$25,770</span></div>
+    <div class="step"><span class="label">IVA 16% — 25,770 × 1.16</span><span class="amount">$29,893</span></div>
+    <div class="result"><span class="label">Prima anual con IVA</span><span class="amount">$29,893</span></div>
+  </div>
+
+  <div class="note calibrated">
+    <strong>Calibrado:</strong> las cuatro anclas de edad y los factores de sexo y fumador reproducen las primas netas reales de los PDFs oficiales de GNP que usted compartió (póliza familiar 697309037 y material del 19 de mayo). En las edades intermedias (entre 40 y 50) el simulador puede quedar unos pesos por encima o por debajo del PDF, porque la curva real es exponencial y aquí se aproxima en línea recta entre anclas.
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==================== 3. AUTO ==================== -->
+<div class="page product">
+  <div class="product-header">
+    <span class="product-num">3</span>
+    <h2 class="product-title">Seguro de Auto</h2>
+  </div>
+  <div class="product-line"></div>
+
+  <h3 class="block-title">La fórmula</h3>
+  <div class="formula">
+    <span class="cap">Valor del auto</span>
+    <span class="op">×</span>
+    <span class="cap const">5%</span>
+    <span class="op">×</span>
+    <span class="cap const">Antigüedad</span>
+    <span class="op">×</span>
+    <span class="cap const">Uso</span>
+    <span class="op">×</span>
+    <span class="cap const">Cobertura</span>
+    <span class="op">×</span>
+    <span class="cap const">Deducible robo</span>
+    <span class="op">×</span>
+    <span class="cap const">Deducible daños</span>
+    <span class="op">+</span>
+    <span class="cap">Extras</span>
+    <span class="op">=</span>
+    <span class="cap final">Prima anual</span>
+  </div>
+
+  <h3 class="block-title">Los valores que usa</h3>
+  <table class="values">
+    <thead><tr><th style="width: 40%;">Concepto</th><th style="width: 22%;">Valor</th><th>Aplica en</th></tr></thead>
+    <tbody>
+      <tr><td class="concept">Tasa base</td><td class="value">5% del valor</td><td class="desc">Referencia: Amplia particular seminuevo</td></tr>
+      <tr><td class="concept">Antigüedad 0 a 4 años</td><td class="value">× 1.00</td><td class="desc">Sin recargo</td></tr>
+      <tr><td class="concept">Antigüedad 5 a 7 años</td><td class="value">× 1.08</td><td class="desc">Recargo 8%</td></tr>
+      <tr><td class="concept">Antigüedad 8 años o más</td><td class="value">× 1.18</td><td class="desc">Recargo 18%</td></tr>
+      <tr><td class="concept">Uso particular / comercial</td><td class="value">1.00 / 1.30</td><td class="desc">Comercial: Uber, DiDi, taxi, reparto</td></tr>
+      <tr><td class="concept">RC / Limitada / Amplia / Amplia Total</td><td class="value">0.35 / 0.65 / 1.00 / 1.176</td><td class="desc">Multiplicador por tipo de cobertura</td></tr>
+      <tr><td class="concept">Deducible robo 5% / 10% / 15%</td><td class="value">1.15 / 1.00 / 0.90</td><td class="desc">Deducible más alto = prima más baja</td></tr>
+      <tr><td class="concept">Deducible daños 3% / 5% / 10%</td><td class="value">1.15 / 1.00 / 0.88</td><td class="desc">Deducible más alto = prima más baja</td></tr>
+      <tr><td class="concept">Auto sustituto</td><td class="value">+ $960</td><td class="desc">Extra opcional</td></tr>
+      <tr><td class="concept">Llantas y rines</td><td class="value">+ $1,511</td><td class="desc">Extra opcional</td></tr>
+      <tr><td class="concept">Llave de repuesto</td><td class="value">+ $621</td><td class="desc">Extra opcional</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="block-title">Ejemplo con números</h3>
+  <div class="example">
+    <div class="who">Honda Civic 2020 valuado en $300,000. Uso particular. Cobertura Amplia. Deducible 10% robo, 5% daños. Sin coberturas extras.</div>
+    <div class="step"><span class="label">Prima base — $300,000 × 5%</span><span class="amount">$15,000</span></div>
+    <div class="step"><span class="label">Antigüedad — 6 años (2026 − 2020), cae en 5 a 7</span><span class="amount">× 1.08</span></div>
+    <div class="step"><span class="label">Subtotal — 15,000 × 1.08</span><span class="amount">$16,200</span></div>
+    <div class="step"><span class="label">Uso particular</span><span class="amount">× 1.00</span></div>
+    <div class="step"><span class="label">Cobertura Amplia (referencia)</span><span class="amount">× 1.00</span></div>
+    <div class="step"><span class="label">Deducible robo 10% (referencia)</span><span class="amount">× 1.00</span></div>
+    <div class="step"><span class="label">Deducible daños 5% (referencia)</span><span class="amount">× 1.00</span></div>
+    <div class="step"><span class="label">Extras</span><span class="amount">+ $0</span></div>
+    <div class="result"><span class="label">Prima anual estimada</span><span class="amount">$16,200</span></div>
+  </div>
+
+  <div class="note calibrated">
+    <strong>Calibrado:</strong> contra el PDF real de un Mazda CX-5 2015, valor $178,000, cobertura Amplia (Cancún), que arrojó $10,318 al año en la póliza real. Amplia Total en ese mismo PDF salió $12,130, con un incremento del 17.6%, exactamente el multiplicador que usa el simulador (1.176).
+  </div>
+  <div class="note">
+    <strong>Nota:</strong> el simulador no pregunta edad del conductor ni código postal. En clientes menores de 25 o mayores de 65, o en ciudades como Cancún y CDMX, la prima real puede subir entre 20% y 30%. Ajuste manualmente al cotizar en GNP.
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==================== 4. MASCOTA ==================== -->
+<div class="page product">
+  <div class="product-header">
+    <span class="product-num">4</span>
+    <h2 class="product-title">Seguro Mascota</h2>
+  </div>
+  <div class="product-line"></div>
+
+  <h3 class="block-title">La fórmula</h3>
+  <div class="formula">
+    <span class="cap const">Prima base del paquete</span>
+    <span class="op">×</span>
+    <span class="cap">Ajuste por edad</span>
+    <span class="op">×</span>
+    <span class="cap const">Especie</span>
+    <span class="op">+</span>
+    <span class="cap">Extras</span>
+    <span class="op">=</span>
+    <span class="cap final">Prima anual</span>
+  </div>
+
+  <h3 class="block-title">Los valores que usa</h3>
+  <table class="values">
+    <thead><tr><th style="width: 40%;">Concepto</th><th style="width: 22%;">Valor</th><th>Aplica en</th></tr></thead>
+    <tbody>
+      <tr><td class="concept">Cuidado Esencial — base / suma</td><td class="value">$2,050 / $10,000</td><td class="desc">Paquete chico (perro de 3 años)</td></tr>
+      <tr><td class="concept">Cuidado Superior — base / suma</td><td class="value">$3,650 / $20,000</td><td class="desc">Paquete intermedio</td></tr>
+      <tr><td class="concept">Cuidado Máximo — base / suma</td><td class="value">$4,490 / $30,000</td><td class="desc">Paquete completo</td></tr>
+      <tr><td class="concept">Factor especie — perro / gato</td><td class="value">1.10 / 1.00</td><td class="desc">Perro paga 10% más</td></tr>
+      <tr><td class="concept">Ajuste por edad</td><td class="value">+ 6% por año</td><td class="desc">A partir del 4° año (0 a 3 años no ajusta)</td></tr>
+      <tr><td class="concept">Extra Fallecimiento</td><td class="value">+ $720</td><td class="desc">Indemnización por deceso</td></tr>
+      <tr><td class="concept">Extra Robo con violencia</td><td class="value">+ $480</td><td class="desc">Indemnización si roban a la mascota</td></tr>
+      <tr><td class="concept">Extra RC ampliada</td><td class="value">+ $540</td><td class="desc">Cobertura ampliada de daños a terceros</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="block-title">Ejemplo con números</h3>
+  <div class="example">
+    <div class="who">Perro mestizo macho de 5 años. Paquete Cuidado Máximo. Extra RC ampliada (por ser raza mediana-grande).</div>
+    <div class="step"><span class="label">Prima base Máximo</span><span class="amount">$4,490</span></div>
+    <div class="step"><span class="label">Ajuste edad — 2 años arriba de 3, recargo 12%</span><span class="amount">× 1.12</span></div>
+    <div class="step"><span class="label">Subtotal — 4,490 × 1.12</span><span class="amount">$5,028.80</span></div>
+    <div class="step"><span class="label">Factor especie perro</span><span class="amount">× 1.10</span></div>
+    <div class="step"><span class="label">Subtotal — 5,028.80 × 1.10</span><span class="amount">$5,531.68</span></div>
+    <div class="step"><span class="label">Extra RC ampliada</span><span class="amount">+ $540</span></div>
+    <div class="step"><span class="label">Redondeo al peso</span><span class="amount">$6,072</span></div>
+    <div class="result"><span class="label">Prima anual estimada</span><span class="amount">$6,072</span></div>
+  </div>
+
+  <div class="note calibrated">
+    <strong>Calibrado:</strong> contra el PDF real folio MVD26060673421 (perro mestizo macho 5 años, junio 2026): Esencial $2,525, Superior $4,495 y Máximo $5,532. Sin el extra de RC ampliada, el simulador da exactamente $5,532.
+  </div>
+  <div class="note">
+    <strong>Nota:</strong> el simulador no pregunta raza específica ni tamaño. En razas peligrosas (Pitbull, Rottweiler y otras) la prima real puede requerir suscripción especial. Comunique al cliente los tiempos de espera: 10 días para accidentes, 180 días para enfermedades, 360 días para el extra de Fallecimiento.
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==================== 5. HOGAR ==================== -->
+<div class="page product">
+  <div class="product-header">
+    <span class="product-num">5</span>
+    <h2 class="product-title">Seguro Patrimonial (Hogar)</h2>
+  </div>
+  <div class="product-line"></div>
+
+  <h3 class="block-title">La fórmula</h3>
+  <div class="formula">
+    <span class="cap">(Valor casa × tarifa casa)</span>
+    <span class="op">+</span>
+    <span class="cap">(Valor contenidos × 0.22%)</span>
+    <span class="op">+</span>
+    <span class="cap const">Cargo fijo</span>
+    <span class="op">+</span>
+    <span class="cap">Addons</span>
+    <span class="op">=</span>
+    <span class="cap final">Prima anual</span>
+  </div>
+
+  <h3 class="block-title">Los valores que usa</h3>
+  <table class="values">
+    <thead><tr><th style="width: 40%;">Concepto</th><th style="width: 22%;">Valor</th><th>Aplica en</th></tr></thead>
+    <tbody>
+      <tr><td class="concept">Umbral para elegir paquete</td><td class="value">$3,000,000</td><td class="desc">Hasta este monto va VITAL; arriba, A TU MEDIDA</td></tr>
+      <tr><td class="concept">Tarifa casa VITAL</td><td class="value">0.095%</td><td class="desc">Sobre el valor de la casa</td></tr>
+      <tr><td class="concept">Tarifa contenidos VITAL</td><td class="value">0.220%</td><td class="desc">Sobre el valor de contenidos</td></tr>
+      <tr><td class="concept">Cargo fijo VITAL</td><td class="value">$0</td><td class="desc">Sin cargo fijo</td></tr>
+      <tr><td class="concept">Tarifa casa A TU MEDIDA</td><td class="value">0.098%</td><td class="desc">Sobre el valor de la casa</td></tr>
+      <tr><td class="concept">Tarifa contenidos A TU MEDIDA</td><td class="value">0.220%</td><td class="desc">Igual que VITAL</td></tr>
+      <tr><td class="concept">Cargo fijo A TU MEDIDA</td><td class="value">$5,978</td><td class="desc">RC $3M, teletrabajo, funeraria mascotas</td></tr>
+      <tr><td class="concept">Addon Hidrometeorológicos</td><td class="value">+ 75%</td><td class="desc">Sobre la prima base</td></tr>
+      <tr><td class="concept">Addon Terremoto</td><td class="value">Según CP</td><td class="desc">Cotización aparte en GNP</td></tr>
+      <tr><td class="concept">Addon Funerario Mascotas</td><td class="value">+ $348</td><td class="desc">Cargo fijo anual</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="block-title">Ejemplo con números</h3>
+  <div class="example">
+    <div class="who">Familia en Cancún. Casa: $2,500,000. Contenidos: $500,000. Agregan Hidrometeorológicos por zona costera.</div>
+    <div class="step"><span class="label">Paquete — casa $2,500,000 ≤ $3,000,000 → VITAL</span><span class="amount">VITAL</span></div>
+    <div class="step"><span class="label">Parte casa — $2,500,000 × 0.095%</span><span class="amount">$2,375</span></div>
+    <div class="step"><span class="label">Parte contenidos — $500,000 × 0.220%</span><span class="amount">$1,100</span></div>
+    <div class="step"><span class="label">Cargo fijo VITAL</span><span class="amount">+ $0</span></div>
+    <div class="step"><span class="label">Prima base — 2,375 + 1,100 + 0</span><span class="amount">$3,475</span></div>
+    <div class="step"><span class="label">Addon Hidrometeorológicos — $3,475 × 75%</span><span class="amount">+ $2,606</span></div>
+    <div class="step"><span class="label">Total — 3,475 + 2,606</span><span class="amount">$6,081</span></div>
+    <div class="result"><span class="label">Prima anual estimada</span><span class="amount">$6,081</span></div>
+  </div>
+
+  <div class="note">
+    <strong>Nota:</strong> este producto es el más simplificado. El simulador elige el paquete automáticamente por el valor de la casa; para presentar A TU MEDIDA en una casa de menor valor o el paquete PLUS, cotice directo en GNP. No pregunta código postal, materiales, número de pisos ni antigüedad, aunque GNP sí los considera. Los porcentajes de tarifa son valores base coherentes con el mercado, pero pueden diferir del emisor oficial en un rango del 10% al 20%.
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==================== 6. AHORRO ==================== -->
+<div class="page product">
+  <div class="product-header">
+    <span class="product-num">6</span>
+    <h2 class="product-title">Seguro con Ahorro</h2>
+  </div>
+  <div class="product-line"></div>
+
+  <h3 class="block-title">La fórmula (proyección de saldo, no prima)</h3>
+  <div class="formula">
+    <span class="cap">Aportación anual</span>
+    <span class="op">×</span>
+    <span class="cap const">Indexación 5%</span>
+    <span class="op">×</span>
+    <span class="cap">Plazo</span>
+    <span class="op">→</span>
+    <span class="cap const">Multiplicador por edad</span>
+    <span class="op">=</span>
+    <span class="cap final">Saldo a 65 / 70 años</span>
+  </div>
+
+  <h3 class="block-title">Multiplicadores de saldo proyectado (calibrados contra material oficial)</h3>
+  <table class="values">
+    <thead><tr><th style="width: 40%;">Caso de referencia</th><th style="width: 22%;">A los 65 años</th><th>A los 70 años</th></tr></thead>
+    <tbody>
+      <tr><td class="concept">Carola, 5 años</td><td class="value">× 453.13</td><td class="desc">× 647.22</td></tr>
+      <tr><td class="concept">Sofía, 18 años</td><td class="value">× 217.71</td><td class="desc">× 313.55</td></tr>
+      <tr><td class="concept">Elia, 43 años</td><td class="value">× 43.45</td><td class="desc">× 67.47</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="block-title">Seguro de vida incluido desde el día 1 (multiplicador de la aportación anual)</h3>
+  <table class="values">
+    <thead><tr><th style="width: 30%;">Edad</th><th style="width: 23%;">TRASCIENDE</th><th style="width: 23%;">CAPITALIZA</th><th>CONSOLIDA / PROYECTA</th></tr></thead>
+    <tbody>
+      <tr><td class="concept">Hasta 10 años</td><td class="value">× 80</td><td class="value">× 30</td><td class="desc">× 25</td></tr>
+      <tr><td class="concept">11 a 20 años</td><td class="value">× 25</td><td class="value">× 12</td><td class="desc">× 10</td></tr>
+      <tr><td class="concept">21 a 25 años</td><td class="value">× 12</td><td class="value">× 12</td><td class="desc">× 10</td></tr>
+      <tr><td class="concept">26 a 35 años</td><td class="value">× 12</td><td class="value">× 7</td><td class="desc">× 6</td></tr>
+      <tr><td class="concept">36 a 40 años</td><td class="value">× 6</td><td class="value">× 7</td><td class="desc">× 6</td></tr>
+      <tr><td class="concept">Más de 40 años</td><td class="value">× 6</td><td class="value">× 5.5</td><td class="desc">× 4.5</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="block-title">Ejemplo con números</h3>
+  <div class="example">
+    <div class="who">Sofía, 18 años. Producto TRASCIENDE. Aportación: $36,000 al año. Plazo: 10 años (aportación se indexa 5% cada año).</div>
+    <div class="step"><span class="label">Total aportado en 10 años, con indexación 5% anual</span><span class="amount">~ $453,000</span></div>
+    <div class="step"><span class="label">Saldo a los 65 años — $36,000 × 217.71</span><span class="amount">$7,837,560</span></div>
+    <div class="step"><span class="label">Saldo a los 70 años — $36,000 × 313.55</span><span class="amount">$11,287,800</span></div>
+    <div class="step"><span class="label">Seguro de vida desde día 1 — 18 años → tramo 11-20 TRASCIENDE (× 25): $36,000 × 25</span><span class="amount">$900,000</span></div>
+    <div class="result"><span class="label">Saldo proyectado a los 65 años</span><span class="amount">$7,837,560</span></div>
+  </div>
+
+  <div class="note calibrated">
+    <strong>Calibrado:</strong> los tres casos de referencia (Carola, Sofía y Elia) están calculados contra el material oficial "Ahorro Inteligente 2026" de GNP. Para edades intermedias el sistema interpola entre esos tres puntos. Los resultados son muy cercanos al material oficial para el plazo estándar de 10 años.
+  </div>
+  <div class="note">
+    <strong>Nota:</strong> la "prima" en este producto no es un cargo por seguro, es la aportación que decide el cliente. PROYECTA solo permite 10 años en el simulador (aunque GNP también acepta 15); ajuste manualmente si el cliente lo pide. En edades extremas (menores de 5 o mayores de 43) los números pueden desviarse un poco del material oficial.
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==================== CIERRE ==================== -->
+<div class="page">
+  <div class="closing">
+    <h2>Todos los valores son editables</h2>
+    <p>
+      Los precios base, factores, multiplicadores y coberturas opcionales que aparecen en este documento se pueden ajustar desde el panel de administración de la página, en la sección <strong>Constantes de cálculo</strong>. Los cambios se reflejan al instante en la cotizadora pública.
+    </p>
+    <p>
+      Cuando GNP actualice tarifas o cuando detecte desviaciones consistentes con el cotizador oficial, ajuste los valores directamente. Este documento se actualizará en la siguiente revisión.
+    </p>
+    <div class="brand">AInnovation × AnCheco · 2026</div>
+  </div>
+</div>
+
+</body>
+</html>

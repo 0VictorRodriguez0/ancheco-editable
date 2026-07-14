@@ -1770,30 +1770,43 @@ function gmmStepSum(){
 }
 function gmmStepAddons(){
   const ad = state.gmm.addons;
-  // Costos anuales estimados de coberturas adicionales reales GNP Personaliza Variable
-  const items = [
-    ['cda','<span data-cms-html="auto.arr_label.87">Cero Deducible por Accidente (CDA)</span>','<span data-cms-html="gmm.addons.cda.desc">Si te accidentas (caída, choque, etc.), no pagas deducible — GNP cubre desde el primer peso.</span>',N('gmm.addons.cda',1800)],
-    ['mp','<span data-cms-html="auto.arr_label.88">Maternidad Plus Personaliza (MP)</span>','<span data-cms-html="gmm.addons.mp.desc">3 opciones de cobertura: $47,000, $64,500 y $81,500. 10 meses de espera.</span>',N('gmm.addons.mp',5200)],
-    ['ahr','<span data-cms-html="auto.arr_label.89">Ampliación Hospitalaria Nacional (AHR)</span>','<span data-cms-html="gmm.addons.ahr.desc">Acceso a hospitales de niveles superiores en otras regiones del país, no solo tu nivel base.</span>',N('gmm.addons.ahr',2800)],
-    ['psico','<span data-cms-html="auto.arr_label.90">Asistencia Psicológica</span>','<span data-cms-html="gmm.addons.psico.desc">Ya viene incluida — 2 sesiones/mes por videollamada (50 min). Ansiedad, estrés, depresión, insomnio, problemas de pareja. Aplica para terapia de pareja y para menores con consentimiento del tutor.</span>',0]
+  // Coberturas opcionales: seleccionables SIN costo fijo. El precio real depende de
+  // edad y otros factores, Andy lo cotiza aparte. Marcarlas solo las deja como
+  // "pendiente de cotizar" en el resumen; no suma al monto que se muestra.
+  const optItems = [
+    ['mp','<span data-cms-html="auto.arr_label.88">Maternidad Plus Personaliza (MP)</span>','<span data-cms-html="gmm.addons.mp.desc">3 opciones de cobertura: $47,000, $64,500 y $81,500. 10 meses de espera.</span>']
   ];
   return `${stepDotsHTML(6, gmmSteps.length)}
   <h3 class="step-title"><span data-cms-html="auto.step_title.7">Coberturas adicionales — Personaliza Variable</span></h3>
-  ${explainerHTML({_cmsKey:'auto.exp.7', intro:'Lo que puedes agregar',
-    body:`El plan base ya incluye <strong>Asistencia en Viajes</strong>, <strong>Membresía Médica Móvil</strong> (orientación médica telefónica, orientación por videollamada, consulta médica a domicilio, ambulancia por emergencia, traslados programados a costo preferencial, concierge para referencias médicas y hospitalarias) y <strong>Ayuda para Maternidad básica</strong>. Estas son las coberturas <strong>opcionales</strong> que puedes agregar.`,
-    rec:`<strong>CDA siempre vale la pena</strong>. <strong>MP</strong> solo si hay plan de embarazo cercano (10 meses de espera). <strong>AHR</strong> si viajas frecuentemente a otras regiones.`
+  ${explainerHTML({_cmsKey:'auto.exp.7', intro:'Lo que ya incluye tu plan',
+    body:`El plan base ya incluye <strong>Asistencia en Viajes</strong>, <strong>Membresía Médica Móvil</strong> (orientación médica telefónica, orientación por videollamada, consulta médica a domicilio, ambulancia por emergencia, traslados programados a costo preferencial, concierge para referencias médicas y hospitalarias) y <strong>Ayuda para Maternidad básica</strong>.`,
+    rec:`Agrega <strong>Maternidad Plus</strong> si planeas embarazo en los próximos 2-3 años, vale la pena. (10 meses de período de espera).`
   })}
-  <div class="opts">
-    ${items.map(([k,l,m,p])=>`
-      <button class="opt ${ad.includes(k)?'selected':''}" data-addon="${k}">
-        ${k==='cda'?REC_BADGE:''}
-        ${k==='psico'?'<span class="opt-pill" style="background:var(--success)"><span data-cms-html="auto.opt_pill.40">incluido</span></span>':''}
-        <div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div>
-        ${p>0?`<span class="opt-pill">+${fmtMx(p)}<span data-cms-html="gmm.addons.year_suffix">/año</span></span>`:''}
-      </button>`).join('')}
+  <div class="opts" style="margin-top:20px">
+    <button class="opt">
+      <span class="opt-pill" style="background:var(--success)"><span data-cms-html="auto.opt_pill.40">incluido</span></span>
+      <div class="opt-body"><div class="opt-label"><span data-cms-html="auto.arr_label.90">Asistencia Psicológica</span></div><div class="opt-meta"><span data-cms-html="gmm.addons.psico.desc">Ya viene incluida — 2 sesiones/mes por videollamada (50 min). Ansiedad, estrés, depresión, insomnio, problemas de pareja. Aplica para terapia de pareja y para menores con consentimiento del tutor.</span></div></div>
+    </button>
+  </div>
+  <div style="margin-top:20px">
+    <div style="font-weight:900;font-size:14px;color:var(--navy);letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px"><span data-cms-html="gmm.optional.title">Coberturas opcionales — costo a cotizar aparte</span></div>
+    <div class="opts">
+      ${optItems.map(([k,l,m])=>`
+        <button class="opt ${ad.includes(k)?'selected':''}" data-addon="${k}">
+          <div class="opt-body"><div class="opt-label">${l}</div><div class="opt-meta">${m}</div></div>
+          <span class="opt-pill" style="background:var(--warning);color:var(--white)"><span data-cms-html="gmm.optional.pill">Cotización aparte</span></span>
+        </button>`).join('')}
+    </div>
+    <p style="margin-top:10px;font-size:12px;color:var(--gray-400)"><span data-cms-html="gmm.optional.note">Estas coberturas dependen de edad y otros factores, por eso el costo se cotiza directamente con Andy. Marcarlas no cambia el monto que ves.</span></p>
   </div>
   <div style="margin-top:24px;padding:18px;background:var(--gray-50);border-radius:14px">
     <div style="font-weight:900;font-size:14px;color:var(--navy);letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px"><span data-cms-html="gmm.benefits.title">Beneficios incluidos sin costo extra</span></div>
+    <details style="margin-bottom:8px" open><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0"><span data-cms-html="auto.arr_label.87">Cero Deducible por Accidente (CDA)</span></summary>
+      <p style="margin:6px 0 10px 0;color:var(--gray-700);font-size:13px;line-height:1.6"><span data-cms-html="gmm.addons.cda.desc">Si te accidentas (caída, choque, etc.), no pagas deducible — GNP cubre desde el primer peso.</span></p>
+    </details>
+    <details style="margin-bottom:8px" open><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0"><span data-cms-html="auto.arr_label.89">Ampliación Hospitalaria Nacional (AHR)</span></summary>
+      <p style="margin:6px 0 10px 0;color:var(--gray-700);font-size:13px;line-height:1.6"><span data-cms-html="gmm.addons.ahr.desc">Acceso a hospitales de niveles superiores en otras regiones del país, no solo tu nivel base.</span></p>
+    </details>
     <details style="margin-bottom:8px"><summary style="cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0"><span data-cms-html="gmm.benefits.cuida.title">GNP Cuida tu Salud</span></summary>
       <ul style="margin:6px 0 10px 18px;color:var(--gray-700);font-size:13px;line-height:1.6">
         <li><span data-cms-html="gmm.benefits.cuida.prevencion"><strong>Prevención y Diagnóstico:</strong> Check-up básico (incluye química de 3 elementos), cuidado dental (higiene dental incluida), vacunas con 20% de descuento.</span></li>
@@ -1913,8 +1926,10 @@ function gmmCalcPrice(){
   // Suma asegurada (ref 40.8M = 1.0)
   const sumMult = NT('gmmTables.sumMult', String(state.gmm.sumInsured), 1.0);
   aggregate *= sumMult;
-  // Coberturas adicionales (anuales, netas)
-  const addonsCost = state.gmm.addons.reduce((s,k)=>s+({cda:N('gmm.addons.cda',1800), mp:N('gmm.addons.mp',5200), ahr:N('gmm.addons.ahr',2800)}[k]||0), 0);
+  // Coberturas adicionales: ninguna suma a la cotización.
+  // MP se marca como "opcional a cotizar aparte" (Andy define el costo real después).
+  // CDA y AHR pasaron a beneficios incluidos sin costo extra.
+  const addonsCost = 0;
   aggregate += addonsCost;
   // Fórmula editable: calc.formulas.gmm.totalConIVA (vars: prima_neta, derecho_poliza, cantidad_asegurados, iva)
   const derecho = N('factors.gmm.derechoPoliza', 970);
